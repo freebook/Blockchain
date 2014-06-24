@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="homebrew">
+	<title>Homebrew</title>
+	<para></para>
+	<section>
+		<title>Install Homebrew</title>
+		<screen>
+		<![CDATA[
+ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+		]]>
+		</screen>
+		<screen>
+
+		</screen>
+		<para></para>
+		<screen>
+
+		</screen>
+		<para></para>
+		<screen>
+
+		</screen>
+		<para></para>
+		<screen>
+
+		</screen>
+		<para></para>
+		<screen>
+		<![CDATA[
+
+		]]>
+		</screen>
+		<para></para>
+	</section>
+</section>
