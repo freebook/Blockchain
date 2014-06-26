@@ -10,29 +10,29 @@ ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 		]]>
 		</screen>
 		<screen>
-            MacBook-Pro:Mac netkiller$ ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
-            ==> This script will install:
-            /usr/local/bin/brew
-            /usr/local/Library/...
-            /usr/local/share/man/man1/brew.1
-            
-            Press RETURN to continue or any other key to abort
-            ==> /usr/bin/sudo /bin/chmod g+rwx /Library/Caches/Homebrew
-            Password:
-            ==> Downloading and installing Homebrew...
-            remote: Counting objects: 181683, done.
-            remote: Compressing objects: 100% (50028/50028), done.
-            remote: Total 181683 (delta 130487), reused 181683 (delta 130487)
-            Receiving objects: 100% (181683/181683), 35.61 MiB | 199.00 KiB/s, done.
-            Resolving deltas: 100% (130487/130487), done.
-            From https://github.com/Homebrew/homebrew
-            * [new branch]      master     -> origin/master
-            HEAD is now at 157e172 pike: 7.8.866
-            ==> Installation successful!
-            ==> Next steps
-            Run `brew doctor` before you install anything
-            Run `brew help` to get started
-            MacBook-Pro:Mac netkiller$
+MacBook-Pro:Mac netkiller$ ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+==> This script will install:
+/usr/local/bin/brew
+/usr/local/Library/...
+/usr/local/share/man/man1/brew.1
+
+Press RETURN to continue or any other key to abort
+==> /usr/bin/sudo /bin/chmod g+rwx /Library/Caches/Homebrew
+Password:
+==> Downloading and installing Homebrew...
+remote: Counting objects: 181683, done.
+remote: Compressing objects: 100% (50028/50028), done.
+remote: Total 181683 (delta 130487), reused 181683 (delta 130487)
+Receiving objects: 100% (181683/181683), 35.61 MiB | 199.00 KiB/s, done.
+Resolving deltas: 100% (130487/130487), done.
+From https://github.com/Homebrew/homebrew
+* [new branch]      master     -> origin/master
+HEAD is now at 157e172 pike: 7.8.866
+==> Installation successful!
+==> Next steps
+Run `brew doctor` before you install anything
+Run `brew help` to get started
+MacBook-Pro:Mac netkiller$
 		</screen>
 		<para></para>
 		<screen>

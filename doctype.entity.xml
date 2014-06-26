@@ -1,3 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ENTITY part.mac.xml					SYSTEM "part.mac.xml">
 <!ENTITY chapter.mac.xml				SYSTEM "chapter.mac.xml">
+<!ENTITY chapter.applications.xml		SYSTEM "chapter.applications.xml">
