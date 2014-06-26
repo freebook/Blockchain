@@ -25,23 +25,7 @@
 				A1B7A1851959B326003A904D /* Makefile */,
 				A1B7A1841959B31D003A904D /* book.xml */,
 				A1B7A1811959B252003A904D /* File.xml */,
-				A1B7A1821959B2F4003A904D /* New Group1 */,
 			);
-			sourceTree = "<group>";
-		};
-		A1B7A1801959B23B003A904D /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
-		A1B7A1821959B2F4003A904D /* New Group1 */ = {
-			isa = PBXGroup;
-			children = (
-				A1B7A1801959B23B003A904D /* New Group */,
-			);
-			name = "New Group1";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,6 +180,7 @@
 				A1B7A17F1959B21C003A904D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
