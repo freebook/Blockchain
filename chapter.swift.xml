@@ -1,3 +1,79 @@
-<chapter id="swift">
-  <title>Swift</title>
+<chapter id="index"><?dbhtml dir="swift"?>
+  	<title>Swift</title>
+	<section>
+		<title>constant and variable</title>
+		<para>constant</para>
+		<screen>
+let str = "Hello"
+let dou:Double = 70
+let flo:Float64 = 12
+		</screen>
+		<para>variable</para>
+		<screen>
+var name = "Neo"	
+		</screen>
+		<para>\()</para>
+		<screen>
+var name:String = "Neo"
+var age:Int = 33
+var author = "My name is \(name), I am \(String(age)) years old."
+		</screen>
+	</section>  
+	<section>
+		<title>Array and Dictionary</title>
+		<para>array</para>
+		<screen>
+		<![CDATA[
+let emptyArray = []
+let emptyDictionary = [:]
+
+let emptyArray = String[]()	
+let emptyDictionary = Dictionary<String, Float>()
+
+let array = ["Apple","OS","X"]
+
+let week = [
+    "Mon":"Monday",
+    "Tue":"Tuesday",
+    "Wed":"Wednesday",
+    "Thu":"Thursday",
+    "Fri":"Friday",
+    "Sat":"Saturday",
+    "Sun":"Sunday"
+]
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>Control Flow</title>
+		<screen>
+let array = ["Apple","OS","X"]
+var str = ""
+for tmp in array {
+    str += " " + tmp
+}		
+		</screen>
+		<screen>
+let week = [
+    "Mon":"Monday",
+    "Tue":"Tuesday",
+    "Wed":"Wednesday",
+    "Thu":"Thursday",
+    "Fri":"Friday",
+    "Sat":"Saturday",
+    "Sun":"Sunday"
+]
+
+for (key, val) in week {
+    println(key+"=>"+val)
+}
+
+var n = 0
+for i in 0..1000 {
+    n += i
+}
+
+println(n)
+		</screen>
+	</section>
 </chapter>
