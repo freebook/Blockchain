@@ -165,14 +165,28 @@ contract TokenERC20 {
 	</section>
 	<section id="token.deploy">
 		<title>部署合约</title>
-		<graphic format="png" fileref="../images/ethereum/coin/coin1.png" srccredit="netkiller" />
-		<graphic format="png" fileref="../images/ethereum/coin/coin2.png" srccredit="netkiller" />
-		<graphic format="png" fileref="../images/ethereum/coin/coin3.png" srccredit="netkiller" />
-		<graphic format="png" fileref="../images/ethereum/coin/coin4.png" srccredit="netkiller" />
-		<graphic format="png" fileref="../images/ethereum/coin/coin5.png" srccredit="netkiller" />
-		<graphic format="png" fileref="../images/ethereum/coin/coin6.png" srccredit="netkiller" />
-		<graphic format="png" fileref="../images/ethereum/coin/coin7.png" srccredit="netkiller" />
-		<graphic format="png" fileref="../images/ethereum/coin/coin8.png" srccredit="netkiller" />
-		<graphic format="png" fileref="../images/ethereum/coin/coin9.png" srccredit="netkiller" />
+		<para>启动 Ethereum Wallet，点击 CONTRACTS 按钮，进入合约管理界面</para>
+		<graphic format="png" fileref="../images/ethereum/coin/coin1.png" width="1024" srccredit="netkiller" />
+		<para>点击 DEPLOY NEW CONTRACT 按钮，部署一个新合约</para>
+		<graphic format="png" fileref="../images/ethereum/coin/coin2.png" width="1024" srccredit="netkiller" />
+		<para>复制粘贴合约文件到 SOLIDITY CONTRACT SOURCE CODE 下方</para>
+		<para>SELECT CONTRACT TO DEPLOY 列表选择 “Token ERC 20”</para>
+		<para>Initial supply 是初始发行货币量</para>
+		<para>Token name 是代币名称</para>
+		<para>Token symbol 是代币符号</para>
+		<graphic format="png" fileref="../images/ethereum/coin/coin3.png" width="1024" srccredit="netkiller" />
+		<para>拉动滚动调，找到下方 “DEPLOY”按钮，点击该按钮。</para>
+		<graphic format="png" fileref="../images/ethereum/coin/coin4.png" width="1024" srccredit="netkiller" />
+		<para>输入账号密码，并点击“SEND TRANSACTION” 按钮。</para>
+		<graphic format="png" fileref="../images/ethereum/coin/coin5.png" width="1024" srccredit="netkiller" />
+		<para>ERC20代币创建完成</para>
+		
+	</section>
+	<section id="">
+		<title>代币转账</title>
+		<graphic format="png" fileref="../images/ethereum/coin/coin6.png" width="1024" srccredit="netkiller" />
+		<graphic format="png" fileref="../images/ethereum/coin/coin7.png" width="1024" srccredit="netkiller" />
+		<graphic format="png" fileref="../images/ethereum/coin/coin8.png" width="1024" srccredit="netkiller" />
+		<graphic format="png" fileref="../images/ethereum/coin/coin9.png" width="1024" srccredit="netkiller" />
 	</section>
 </chapter>
