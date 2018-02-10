@@ -87,4 +87,7 @@ IPC endpoint opened: /Users/neo/Library/Ethereum/geth.ipc
 		srccredit="netkiller" />
 		</section>
 	</section>
+	
+	&chapter.ethereum.coin.xml;
+	
 </chapter>

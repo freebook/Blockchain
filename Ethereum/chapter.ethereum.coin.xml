@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="coin">
+<section id="coin">
 	<title>创建代币</title>
 	<ulink url="https://ethereum.org/token" />
 	<section id="token.contract">
@@ -193,4 +193,4 @@ contract TokenERC20 {
 		<para>进入目标账号查看余额。</para>
 		<graphic format="png" fileref="../images/ethereum/coin/coin9.png" width="1024" srccredit="netkiller" />
 	</section>
-</chapter>
+</section>
