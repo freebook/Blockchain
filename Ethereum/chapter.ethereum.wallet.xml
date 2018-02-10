@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<chapter id="wallet">
+	<title>Ethereum Wallet(Mist)</title>
+	<para>开始学习以太坊时阅读大量文章常常会提到 Mist 一头雾水，后来才知道 Mist 就是 Ethereum Wallet。
+		Ethereum Wallet 是软件名字， Mist 是项目名字。
+	</para>
+	<para>
+		Ethereum Wallet 可以在以太坊首页下载，如果你需要安装历史版本可以访问
+		<ulink url="https://github.com/ethereum/mist/releases">https://github.com/ethereum/mist/releases</ulink>
+	</para>
+
+	<para>参数：</para>
+	<screen>
+				<![CDATA[
+neo@MacBook-Pro ~ %  "/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --help
+Usage: /Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet --help
+[Mist options] [Node options]
+
+Mist options:
+  --mode, -m              App UI mode: wallet, mist.[string] [default: "wallet"]
+  --node                  Node to use: geth, eth        [string] [default: null]
+  --network               Network to connect to: main, test
+                                                        [string] [default: null]
+  --rpc                   Path to node IPC socket file OR HTTP RPC hostport (if
+                          IPC socket file then --node-ipcpath will be set with
+                          this value).                                  [string]
+  --swarmurl              URL serving the Swarm HTTP API. If null, Mist will
+                          open a local node.
+                                     [string] [default: "http://localhost:8500"]
+  --gethpath              Path to Geth executable to use instead of default.
+                                                                        [string]
+  --ethpath               Path to Eth executable to use instead of default.
+                                                                        [string]
+  --ignore-gpu-blacklist  Ignores GPU blacklist (needed for some Linux
+                          installations).                              [boolean]
+  --reset-tabs            Reset Mist tabs to their default settings.   [boolean]
+  --logfile               Logs will be written to this file in addition to the
+                          console.                                      [string]
+  --loglevel              Minimum logging threshold: info, debug, error, trace
+                          (shows all logs, including possible passwords over
+                          IPC!).                      [string] [default: "info"]
+  --syncmode              Geth synchronization mode: [fast|light|full]  [string]
+  --version, -v           Display Mist version.                        [boolean]
+  --skiptimesynccheck     Disable checks for the presence of automatic time sync
+                          on your OS.                                  [boolean]
+
+Node options:
+  -  To pass options to the underlying node (e.g. Geth) use the --node- prefix,
+     e.g. --node-datadir
+
+Options:
+  -h, --help  Show help                                                [boolean]				
+				]]>
+	</screen>
+
+
+	<graphic format="png" fileref="../images/ethereum/wallet/EthereumWallet.png"
+		srccredit="netkiller" />
+	<section id="">
+		<title>连接到钱包</title>
+		<section id="">
+			<title>IPC</title>
+			<para>钱包默认是连接到下面地址。</para>
+			<screen>
+				<![CDATA[
+IPC endpoint opened: /Users/neo/Library/Ethereum/geth.ipc
+				]]>
+			</screen>
+			<para>连接到其他ipc地址</para>
+			<screen>
+				<![CDATA[
+"/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --rpc /Users/other/Library/Ethereum/geth.ipc
+				]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>TCP</title>
+			<para>如果需要连接到远程节点上，需要使用命令行，方法如下。启动钱包并连接到远程开发环境，localhost 改为你的IP地址即可。
+			</para>
+			<screen>
+				<![CDATA[
+"/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --rpc http://localhost:8545				
+				]]>
+			</screen>
+			<graphic format="png" fileref="../images/ethereum/wallet/EthereumWalletTcp.png"
+		srccredit="netkiller" />
+		</section>
+	</section>
+</chapter>

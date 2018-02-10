@@ -127,67 +127,7 @@ brew install solidity
 				<title>Ethereum Wallet</title>
 				<para>下载安装以太坊钱包（大陆网络可能下载有问题，需要翻墙）</para>
 				<ulink url="https://github.com/ethereum/mist/releases/download/v0.9.3/Ethereum-Wallet-macosx-0-9-3.dmg" />
-				<para>参数：</para>
-				<screen>
-				<![CDATA[
-neo@MacBook-Pro ~ %  "/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --help
-Usage: /Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet --help
-[Mist options] [Node options]
-
-Mist options:
-  --mode, -m              App UI mode: wallet, mist.[string] [default: "wallet"]
-  --node                  Node to use: geth, eth        [string] [default: null]
-  --network               Network to connect to: main, test
-                                                        [string] [default: null]
-  --rpc                   Path to node IPC socket file OR HTTP RPC hostport (if
-                          IPC socket file then --node-ipcpath will be set with
-                          this value).                                  [string]
-  --swarmurl              URL serving the Swarm HTTP API. If null, Mist will
-                          open a local node.
-                                     [string] [default: "http://localhost:8500"]
-  --gethpath              Path to Geth executable to use instead of default.
-                                                                        [string]
-  --ethpath               Path to Eth executable to use instead of default.
-                                                                        [string]
-  --ignore-gpu-blacklist  Ignores GPU blacklist (needed for some Linux
-                          installations).                              [boolean]
-  --reset-tabs            Reset Mist tabs to their default settings.   [boolean]
-  --logfile               Logs will be written to this file in addition to the
-                          console.                                      [string]
-  --loglevel              Minimum logging threshold: info, debug, error, trace
-                          (shows all logs, including possible passwords over
-                          IPC!).                      [string] [default: "info"]
-  --syncmode              Geth synchronization mode: [fast|light|full]  [string]
-  --version, -v           Display Mist version.                        [boolean]
-  --skiptimesynccheck     Disable checks for the presence of automatic time sync
-                          on your OS.                                  [boolean]
-
-Node options:
-  -  To pass options to the underlying node (e.g. Geth) use the --node- prefix,
-     e.g. --node-datadir
-
-Options:
-  -h, --help  Show help                                                [boolean]				
-				]]>
-				</screen>
-				<para>钱包默认是连接到下面地址。</para>
-				<screen>
-				<![CDATA[
-IPC endpoint opened: /Users/neo/Library/Ethereum/geth.ipc
-				]]>
-				</screen>
-				<para>连接到其他ipc地址</para>
-				<screen>
-				<![CDATA[
-"/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --rpc /Users/other/Library/Ethereum/geth.ipc
-				]]>
-				</screen>
-				<para>如果需要连接到远程节点上，需要使用命令行，方法如下。启动钱包并连接到远程开发环境，localhost 改为你的IP地址即可。</para>
-				<screen>
-				<![CDATA[
-"/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --rpc http://localhost:8545				
-				]]>
-				</screen>
+				
 			</section>
 		</section>
 		<section id="make">
@@ -345,6 +285,21 @@ data
 		]]>
 			</screen>
 		</section>
+		<section id="genesis.json.account">
+			<title>创建主账号</title>
+			<screen>
+			<![CDATA[
+neo@netkiller ~/ethereum % geth account new
+Your new account is locked with a password. Please give a password. Do not forget this password.
+Passphrase: 
+Repeat passphrase: 
+Address: {39211a30bfe33d4b12fcbd786472c8a552b93389}			
+			]]>
+			</screen>
+			<tip>
+				<para>密码可以直接回车，但是后面 Ethereum Wallet 遇到了麻烦， Ethereum Wallet 要求密码必须是8为数</para>
+			</tip>
+		</section>
 		<section id="genesis.json.startup">
 			<title>启动节点</title>
 			<screen>
@@ -393,43 +348,7 @@ networkid: 设置当前区块链的网络ID，用于区分不同的网络，是�
 console: 启动命令行模式，可以在Geth中执行命令			
 			]]>
 			</literallayout>
-			<section id="rpcaddr">
-				<title>rpcaddr</title>
-				<para>默认是 127.0.0.1 </para>
-				<para>HTTP endpoint closed: http://127.0.0.1:8545</para>
-				<para>通过 --rpcaddr="0.0.0.0" 指定监听地址</para>
-				<para>HTTP endpoint opened: http://0.0.0.0:8545</para>
-				<screen>
-				<![CDATA[
-neo@netkiller ~/ethereum % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover console  
-INFO [01-20|01:41:33] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
-INFO [01-20|01:41:33] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
-INFO [01-20|01:41:34] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
-INFO [01-20|01:41:34] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
-INFO [01-20|01:41:34] Disk storage enabled for ethash DAGs     dir=/home/neo/.ethash               count=2
-INFO [01-20|01:41:34] Initialising Ethereum protocol           versions="[63 62]" network=123456
-INFO [01-20|01:41:34] Loaded most recent local header          number=531 hash=1a2707…3a27bc td=79083846
-INFO [01-20|01:41:34] Loaded most recent local full block      number=531 hash=1a2707…3a27bc td=79083846
-INFO [01-20|01:41:34] Loaded most recent local fast block      number=531 hash=1a2707…3a27bc td=79083846
-INFO [01-20|01:41:34] Loaded local transaction journal         transactions=0 dropped=0
-INFO [01-20|01:41:34] Regenerated local transaction journal    transactions=0 accounts=0
-WARN [01-20|01:41:34] Blockchain not empty, fast sync disabled 
-INFO [01-20|01:41:34] Starting P2P networking 
-INFO [01-20|01:41:34] RLPx listener up                         self="enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@[::]:30303?discport=0"
-INFO [01-20|01:41:34] IPC endpoint opened: /home/neo/.ethereum/geth.ipc 
-INFO [01-20|01:41:34] HTTP endpoint opened: http://0.0.0.0:8545 
-Welcome to the Geth JavaScript console!
-
-instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
-coinbase: 0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6
-at block: 531 (Tue, 14 Nov 2017 17:36:05 HST)
- datadir: /home/neo/.ethereum
- modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
-
-> INFO [01-20|01:41:40] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"
-				]]>
-				</screen>
-			</section>
+			
 		</section>
 		<section id="genesis.json.miner">
 			<title>使用节点进行挖矿</title>
@@ -733,6 +652,45 @@ $ geth --rpcapi personal,db,eth,net,web3 --rpc --rinkeby
 			]]>
 
 			</screen>
+			
+			<section id="rpcaddr">
+				<title>rpcaddr</title>
+				<para>默认是 127.0.0.1 </para>
+				<para>HTTP endpoint closed: http://127.0.0.1:8545</para>
+				<para>通过 --rpcaddr="0.0.0.0" 指定监听地址</para>
+				<para>HTTP endpoint opened: http://0.0.0.0:8545</para>
+				<screen>
+				<![CDATA[
+neo@netkiller ~/ethereum % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover console  
+INFO [01-20|01:41:33] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+INFO [01-20|01:41:33] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
+INFO [01-20|01:41:34] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
+INFO [01-20|01:41:34] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
+INFO [01-20|01:41:34] Disk storage enabled for ethash DAGs     dir=/home/neo/.ethash               count=2
+INFO [01-20|01:41:34] Initialising Ethereum protocol           versions="[63 62]" network=123456
+INFO [01-20|01:41:34] Loaded most recent local header          number=531 hash=1a2707…3a27bc td=79083846
+INFO [01-20|01:41:34] Loaded most recent local full block      number=531 hash=1a2707…3a27bc td=79083846
+INFO [01-20|01:41:34] Loaded most recent local fast block      number=531 hash=1a2707…3a27bc td=79083846
+INFO [01-20|01:41:34] Loaded local transaction journal         transactions=0 dropped=0
+INFO [01-20|01:41:34] Regenerated local transaction journal    transactions=0 accounts=0
+WARN [01-20|01:41:34] Blockchain not empty, fast sync disabled 
+INFO [01-20|01:41:34] Starting P2P networking 
+INFO [01-20|01:41:34] RLPx listener up                         self="enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@[::]:30303?discport=0"
+INFO [01-20|01:41:34] IPC endpoint opened: /home/neo/.ethereum/geth.ipc 
+INFO [01-20|01:41:34] HTTP endpoint opened: http://0.0.0.0:8545 
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+coinbase: 0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6
+at block: 531 (Tue, 14 Nov 2017 17:36:05 HST)
+ datadir: /home/neo/.ethereum
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> INFO [01-20|01:41:40] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"
+				]]>
+				</screen>
+			</section>
+			
 		</section>
 		<section id="geth.password">
 			<title>配置自动解锁账号</title>
@@ -1027,6 +985,15 @@ null
 
 > web3.fromWei(eth.getBalance(eth.accounts[1]))
 10
+				]]>
+				</screen>
+				
+				<para>从账号0想账号1转账</para>
+				<screen>
+				<![CDATA[
+> personal.unlockAccount(eth.accounts[0],"password",50000)
+true
+> eth.sendTransaction({from: eth.accounts[0], to: eth.accounts[1], value: web3.toWei(1, "ether")})				
 				]]>
 				</screen>
 			</section>
@@ -1413,11 +1380,7 @@ true
 			</section>
 		</section>
 	</section>
-	<section id="mist">
-		<title>Ethereum Wallet(Mist)</title>
-		<para>开始学习以太坊时阅读大量文章常常会提到 Mist 一头雾水，后来才知道 Mist 就是 Ethereum Wallet。 Ethereum Wallet 是软件名字， Mist 是项目名字。</para>
-		<para>Ethereum Wallet 可以在以太坊首页下载，如果你需要安装历史版本可以访问 <ulink url="https://github.com/ethereum/mist/releases">https://github.com/ethereum/mist/releases</ulink></para>
-	</section>
+	
 	<section id="summary">
 		<title>总结</title>
 		<section id="example.single">
@@ -1713,94 +1676,5 @@ neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/
 			</section>
 		</section>
 	</section>
-	<section id="faq">
-		<title>FAQ</title>
-		<section id="faq.unlock">
-			<title>Error: authentication needed: password or unlock</title>
-			<screen>
-			<![CDATA[
-> eth.sendTransaction({from: '0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6', to: '0xe8abf98484325fd6afc59b804ac15804b978e607', value: web3.toWei(1, "ether")})
-Error: authentication needed: password or unlock
-    at web3.js:3143:20
-    at web3.js:6347:15
-    at web3.js:5081:36
-    at <anonymous>:1:1			
-			]]>
-			</screen>
-			<para>解锁转出账号</para>
-			<screen>
-			<![CDATA[
-> personal.unlockAccount("0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6", "your_password", 300)
-true
-> eth.sendTransaction({from: '0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6', to: '0xe8abf98484325fd6afc59b804ac15804b978e607', value: web3.toWei(1, "ether")})
-"0xd9e8c8fdc71e24ee8052048de4ff0acd7157b872393f37344c8ec2083f3fe48f"			
-			]]>
-			</screen>
-		</section>
-		<section id="faq.add.node">
-			<title>新增节点后不生效</title>
-			<para>新增节点显示 true ,但是使用 admin.peers 查看不到。</para>
-			<screen>
-			<![CDATA[
-> admin.addPeer("enode://c4586276391b3c88ec23889d1bc825d0c7d69bd5765d4545686f835608068b8dc48799d2686a04ea0f9e17aed099bf9b56935679fa6493e9b17151624a320714@172.16.0.17:30303")
-true
-> admin.peers
-[]			
-			]]>
-			</screen>
-
-			<para>查看节点，如果发现 ip: "::" 同时 discovery: 0</para>
-			<screen>
-			<![CDATA[
-> admin.nodeInfo
-{
-  enode: "enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@[::]:30303?discport=0",
-  id: "9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527",
-  ip: "::",
-  listenAddr: "[::]:30303",
-  name: "Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1",
-  ports: {
-    discovery: 0,
-    listener: 30303
-  },
-  protocols: {
-    eth: {
-      difficulty: 131072,
-      genesis: "0x611596e7979cd4e7ca1531260fa706093a5492ecbdf58f20a39545397e424d04",
-      head: "0x611596e7979cd4e7ca1531260fa706093a5492ecbdf58f20a39545397e424d04",
-      network: 123456
-    }
-  }
-}
-> 
-			]]>
-			</screen>
-
-			<para>解决方案启动时可能增加了 --nodiscover 参数，去掉参数后可以解决。</para>
-
-			<para>有三种方法新增节点</para>
-			<para>第一种，启动指定</para>
-			<screen>
-			<![CDATA[
-geth --bootnodes enode://pubkey1@ip1:port1,enode://pubkey2@ip2:port2,enode://pubkey3@ip3:port3
-			]]>
-			</screen>
-			<para>第二种，在控制台中添加</para>
-			<screen>
-			<![CDATA[
-> admin.addPeer('enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@172.16.0.1:30303')				
-			]]>
-			</screen>
-			<para>第三种，在文件 ~/.ethereum/geth/static-nodes.json 中添加节点数据</para>
-			<screen>
-			<![CDATA[
-[
-  "enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@172.16.0.17:30303",
-  "enode://pubkey@ip:port"
-]
-			]]>
-			</screen>
-			<para>这个文件内容是一个数组，类似 ["","",""] 。</para>
-		</section>
-	</section>
+	
 </chapter>
