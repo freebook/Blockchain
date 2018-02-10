@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="ethereum.go">
+	<title>Go 开发环境</title>
+	<section id="">
+		<title></title>
+		<screen>
+		<![CDATA[
+go get github.com/ethereum/go-ethereum
+		]]>
+		</screen>
+		
+	</section>
+</chapter>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+neo@MacBook-Pro ~/Library/Ethereum % geth attach
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable/darwin-amd64/go1.9.4
+coinbase: 0x5c18a33df2cc41a1beddc91133b8422e89f041b7
+at block: 1257 (Sat, 10 Feb 2018 19:08:17 CST)
+ datadir: /Users/neo/Library/Ethereum
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+>
+
+
+s='contract zhaoxiCoin{address public minter;mapping(address=>uint) public balances;event Sent(address from,address to,uint amount);function zhaoxiCoin(){minter=msg.sender;}function mint(address receiver,uint amount){if(msg.sender!=minter) return;balances[receiver]+=amount;}function send(address receiver,uint amount){if(balances[msg.sender]<amount)return;balances[msg.sender]-=amount;balances[receiver]+=amount;Sent(msg.sender,receiver,amount);}}'
+
+compiled=web3.eth.compile.solidity(s);
+
+
+
+
+var fs = require('fs');
+var exec = require('child_process').execSync;
+
+exec(`solc --bin --abi --optimize -o bin contract.sol`);
+
+var abi = fs.readFileSync('bin/contract.sol:Contract.abi');
+var compiled = '0x' + fs.readFileSync("bin/Contract.bin");
+
+
+solc --bin --abi --optimize -o bin contract.sol
+
+
+ var abi = <abi from solc>;
+ var myContract = eth.contract(abi); 
+ var bytecode = '0x' + <bytecode from solc>;
+ var txDeploy = {from:eth.coinbase, data: bytecode, gas: 1000000}; 
+ var myContractPartialInstance = myContract.new(txDeploy); 
+
+ // Mine block containing transaction...
+
+ var myContractInstance = myContract.at(myContractPartialInstance.address);
+ 
+ 
+ 
+ ----------
+ var fs = require('fs');
+ var abi = fs.readFileSync('output/Netkiller.abi');
+ 
+
+ 
+ 

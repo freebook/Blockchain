@@ -69,6 +69,47 @@ neo@netkiller ~/ethereum/truffle-project % tree
 			]]>
 			</screen>
 		</section>
+		<section id="mycontracts">
+			<title>创建合约</title>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.18;
+
+contract Netkiller {
+    string name;
+    int num;
+    function Netkiller() public{
+        name = "default";
+        num = 1;
+    }
+    function setName(string _name) public{
+        name = _name;
+    }
+    function getName() public view returns(string){
+        return name;
+    }
+    function setNum(int n) public{
+        num = n;
+    }
+    function addNum(int m) public view returns(int res){
+        res = m + num;
+    }
+}
+
+			]]>
+			</programlisting>
+			<programlisting>
+			<![CDATA[
+neo@netkiller ~/ethereum/truffle-project % vim migrations/2_initial_migration.js
+
+var Netkiller = artifacts.require("./Netkiller.sol");
+
+module.exports = function(deployer) {
+  deployer.deploy(Netkiller);
+};
+			]]>
+			</programlisting>
+		</section>
 		<section id="truffle.js">
 			<title>配置 Truffle</title>
 			<para>打开文件 truffle.js </para>
@@ -105,6 +146,7 @@ module.exports = {
 			<![CDATA[
 neo@netkiller ~/ethereum/truffle-project % truffle compile
 Compiling ./contracts/Migrations.sol...
+Compiling ./contracts/Netkiller.sol...
 Writing artifacts to ./build/contracts
 			]]>
 			</screen>
@@ -115,7 +157,8 @@ Writing artifacts to ./build/contracts
 neo@netkiller ~/ethereum/truffle-project % find build 
 build
 build/contracts
-build/contracts/Migrations.json			
+build/contracts/Migrations.json
+build/contracts/Netkiller.json
 			]]>
 			</screen>
 		</section>
