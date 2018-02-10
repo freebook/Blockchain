@@ -1,4 +1,4 @@
-Mac
+Blockchain
 ===
 
-Apple Mac OS X 手札
+Netkiller Blockchain 手札
