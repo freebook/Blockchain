@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ENTITY part.mac.xml					SYSTEM "part.mac.xml">
-<!ENTITY chapter.mac.xml				SYSTEM "chapter.mac.xml">
-<!ENTITY chapter.applications.xml		SYSTEM "chapter.applications.xml">
+<!ENTITY part.ethereum.xml					SYSTEM "part.ethereum.xml">
+<!ENTITY part.hyperledger.xml				SYSTEM "part.hyperledger.xml">
+<!ENTITY part.mac.xml						SYSTEM "part.mac.xml">
+<!ENTITY chapter.mac.xml						SYSTEM "chapter.mac.xml">
+<!ENTITY chapter.applications.xml			SYSTEM "chapter.applications.xml">
