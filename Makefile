@@ -2,8 +2,8 @@ XSLTPROC = /usr/bin/xsltproc
 DSSSL = ../docbook-xsl/docbook.xsl
 TMPDIR = $(shell mktemp -d --suffix=.tmp -p /tmp mysql.html.XXXXXX)
 WORKSPACE=~/workspace
-PROJECT=Mac
-DOCBOOK=mac
+PROJECT=Blockchain
+DOCBOOK=blockchain
 PUBLIC_HTML=~/public_html
 PROJECT_DIR=$(WORKSPACE)/$(PROJECT)
 HTML_DIR=$(PUBLIC_HTML)/$(DOCBOOK)
