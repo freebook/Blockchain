@@ -3,4 +3,7 @@
 	<title>Ethereum</title>
 	&chapter.ethereum.xml;
 	&chapter.ethereum.solidity.xml;
+	&chapter.ethereum.wallet.xml;
+	&chapter.ethereum.coin.xml;
+	&chapter.ethereum.faq.xml;
 </part>
