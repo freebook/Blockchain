@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY chapter.ethereum.xml				SYSTEM "chapter.ethereum.xml">
+<!ENTITY chapter.ethereum.solidity.xml		SYSTEM "chapter.ethereum.solidity.xml">

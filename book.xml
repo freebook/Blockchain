@@ -9,36 +9,38 @@
 	<!ENTITY BG7NYT "&Neo;">
 	<!ENTITY Netkiller "<emphasis><trademark>Netkiller</trademark></emphasis>">
 
-	<!ENTITY book.info.author.xml		SYSTEM "../common/book.info.author.xml">
-	<!ENTITY book.info.legalnotice.xml 	SYSTEM "../common/book.info.legalnotice.xml">
-	<!ENTITY book.info.abstract.xml 	SYSTEM "../common/book.info.abstract.xml">
-    <!ENTITY book.preface.xml           SYSTEM "../common/book.preface.xml">
-	<!ENTITY preface.about.me.xml       SYSTEM "../common/about.me.xml">
-	<!ENTITY book.dedication.xml       	SYSTEM "../common/book.dedication.xml">
+	<!ENTITY % common.doctype.entity.xml 	SYSTEM "../common/doctype.entity.xml">
+	%common.doctype.entity.xml;
 
 	<!ENTITY % doctype.entity.xml 			SYSTEM "doctype.entity.xml">
 	%doctype.entity.xml;
+	
+	<!ENTITY % ethereum.doctype.entity.xml 			SYSTEM "Ethereum/doctype.entity.xml">
+	%ethereum.doctype.entity.xml;
+	
+	<!ENTITY % hyperledger.doctype.entity.xml 		SYSTEM "Hyperledger/doctype.entity.xml">
+	%hyperledger.doctype.entity.xml;
 
 ]>
 <book xml:base="http://netkiller.sourceforge.net/linux/www"
 	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
 	<info>
-		<title>Netkiller Mac 手札</title>
-		<subtitle>Apple Mac OS X ...</subtitle>
+		<title>Netkiller Blockchain 手札</title>
+		<subtitle>本文作者最近在找工作，有意向致电 13113668890</subtitle>
+		<!-- <subtitle></subtitle> -->
 
 		&book.info.author.xml;
 
 		<copyright>
-			<year>2014</year>
+			<year>2018</year>
 			<holder>Netkiller(Neo Chan). All rights reserved.</holder>
 		</copyright>
-
 		<publisher>
 			<publishername>Neo</publishername>
 		</publisher>
 		<isbn>ISBN#</isbn>
 		<edition>User's Guide version 1.0 for Linux</edition>
-		<pubdate>2014-06-23</pubdate>
+		<pubdate>$Data$</pubdate>
 		<releaseinfo>文档始创于<date>2014-06-23</date></releaseinfo>
 
 		&book.info.legalnotice.xml;
@@ -50,8 +52,8 @@
 	&book.dedication.xml;
 
 <!-- =========================================================================== -->
-	&chapter.mac.xml;
-	&chapter.applications.xml;
+	&part.ethereum.xml;
+	&part.hyperledger.xml;
 <!-- =========================================================================== -->
 
 </book>

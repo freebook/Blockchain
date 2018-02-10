@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<part id="index"><?dbhtml dir="ethereum" ?>
+	<title>Ethereum</title>
+	&chapter.ethereum.xml;
+	&chapter.ethereum.solidity.xml;
+</part>
