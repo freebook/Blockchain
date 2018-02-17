@@ -1417,31 +1417,10 @@ PeerOrgs:
 			<title>configtx.yaml</title>
 		</section>
 	</section>
-	<section id="">
-		<title>Chaincode</title>
-		<section id="">
-			<title>在宿主主机上编译合约</title>
-			<para>编译所以来的库文件</para>
-			<screen>
-			<![CDATA[
-yum install libtool-ltdl-devel
-go get github.com/hyperledger/fabric		
-			]]>
-			</screen>
-			<para>编译合约文件</para>
-			<screen>
-			<![CDATA[
-[root@localhost ~]# cd ~/netkiller/chaincode/chaincode_example02/
-[root@localhost chaincode_example02]#
-
-[root@localhost chaincode_example02]# go build chaincode_example02.go 
-
-[root@localhost chaincode_example02]# ls
-chaincode_example02  chaincode_example02.go  chaincode_example02_test.go 
-			]]>
-			</screen>
-		</section>
-	</section>
+<!-- 	<section id="chaincode">
+		<title>编译 Chaincode</title>
+		
+	</section> -->
 	<section id="hyperledger.fabric-ca">
 		<title>hyperledger/fabric-ca	</title>
 		<para>go 安装方式</para>
@@ -1496,43 +1475,5 @@ curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X POS
 
 		</section>
 	</section>
-	<section id="FAQ">
-		<title>FAQ</title>
-		<section id="">
-			<title></title>
-			<screen>
-			<![CDATA[
-ERROR: manifest for hyperledger/fabric-orderer:latest not found
-ERROR: manifest for hyperledger/fabric-couchdb:latest not found
-ERROR: manifest for hyperledger/fabric-ca:latest not found	
-ERROR: manifest for hyperledger/fabric-tools:latest not found		
-			]]>
-			</screen>
-			<para>解决方案</para>
-			<screen>
-			<![CDATA[
-docker pull hyperledger/fabric-membersrvc:latest \
-&& docker pull hyperledger/fabric-peer:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-orderer:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-couchdb:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-ca:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-tools:x86_64-1.0.5
 
-docker tag hyperledger/fabric-peer:x86_64-1.0.5 hyperledger/fabric-peer \
-&& docker tag hyperledger/fabric-orderer:x86_64-1.0.5 hyperledger/fabric-orderer \
-&& docker tag hyperledger/fabric-couchdb:x86_64-1.0.5 hyperledger/fabric-couchdb \
-&& docker tag hyperledger/fabric-ca:x86_64-1.0.5 hyperledger/fabric-ca \
-&& docker tag hyperledger/fabric-tools:x86_64-1.0.5 hyperledger/fabric-tools
-			]]>
-			</screen>
-		</section>
-		<section id="hyperledger.uninstall">
-			<title>卸载 hyperledger 环境</title>
-			<screen>
-			<![CDATA[
-docker rmi -f $(docker images -q)			
-			]]>
-			</screen>
-		</section>
-	</section>
 </chapter>

@@ -283,7 +283,8 @@ root@78d23b3b2b37:/opt/gopath/src/chaincode# CORE_PEER_ADDRESS=peer:7051 CORE_CH
 2018-02-17 04:07:31.156 UTC [shim] SetupChaincodeLogging -> INFO 002 Chaincode (build level: ) starting up ...		
 		]]>
 		</screen>
-		<para>CORE_CHAINCODE_ID_NAME=chaincode_example02:1.0 记住这里的配置，下面会用到</para>
+		<para>CORE_CHAINCODE_ID_NAME=chaincode_example02:1.0 记住这里的配置，下面会用到
+		</para>
 	</section>
 	<section id="chaincode.test ">
 		<title>测试</title>
@@ -681,5 +682,29 @@ Query Response:{"Name":"a","Amount":"50"}
 		<section id="">
 			<title></title>
 		</section>
+	</section>
+	<section id="chaincode.build">
+		<title>在宿主主机上编译合约</title>
+		<para>编译 chaincode 可以在 docker 容器中进行，也可以在 docker 外面进行。方法如下：</para>
+		<para>安装依赖的库文件</para>
+		<screen>
+			<![CDATA[
+yum install libtool-ltdl-devel
+go get github.com/hyperledger/fabric		
+			]]>
+		</screen>
+		<para>编译合约文件</para>
+		<screen>
+			<![CDATA[
+[root@localhost ~]# cd ~/netkiller/chaincode/chaincode_example02/
+[root@localhost chaincode_example02]#
+
+[root@localhost chaincode_example02]# go build chaincode_example02.go 
+
+[root@localhost chaincode_example02]# ls
+chaincode_example02  chaincode_example02.go  chaincode_example02_test.go 
+			]]>
+		</screen>
+		<tip><para>由于 docker 容器中没有 vim/nano 命令，无法编译 .go 文件，所以在宿主主机编译更为方便。</para></tip>
 	</section>
 </chapter>
