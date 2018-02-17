@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="blockchain">
+	<title>区块链</title>
+	<para>区块链可以说是2018年最火的技术，相信很多开发者已经跃跃欲试投入到区块链开发队伍当中来，可是又感觉无从下手，你会发现世面上的书籍大多是将理论纸上谈兵，都是一些无法落地的异想天开的想法，本书将用大量实例讲解如何让技术落地。</para>
+	<para>目前区块链技术无论是 Ethereum 还 Hyperledger 都处在高速发展阶段，每次版本迭代更新变化巨大，至少还需要一到三年才能变成成熟的技术。</para>
+<!-- 
+	<section>
+		<title></title>
+		<screen>
+		<![CDATA[
+
+		]]>
+		</screen>
+		<screen>
+
+		</screen>
+		<para></para>
+		<screen>
+
+		</screen>
+		<para></para>
+		<screen>
+
+		</screen>
+		<para></para>
+		<screen>
+
+		</screen>
+		<para></para>
+		<screen>
+		<![CDATA[
+
+		]]>
+		</screen>
+		<para></para>
+	</section>
+-->	
+</section>
