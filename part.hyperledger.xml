@@ -2,5 +2,6 @@
 <part id="index"><?dbhtml dir="hyperledger" ?>
 	<title>Hyperledger</title>
 	&chapter.hyperledger.xml;
+	&chapter.hyperledger.chaincode.xml;
 	&chapter.hyperledger.cluster.xml;
 </part>

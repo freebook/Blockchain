@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+JSON-RPC
+
+curl -XPOST -H "Accept: application/json" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x39211a30bfe33d4b12fcbd786472c8a552b93389", "latest"],"id":1}' http://localhost:8545
+
+ -->
+
+<chapter id="web3.js">
+	<title>web3.js</title>
+	<screen>
+	<![CDATA[
+npm install web3	
+	]]>
+	</screen>
+	<programlisting>
+	<![CDATA[
+var Web3 = require('web3');
+var web3 = new Web3();
+
+//console.log(web3);
+web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+
+var coinbase = web3.eth.coinbase;
+var balance = web3.eth.getBalance(coinbase);
+
+console.log(coinbase);	
+	]]>
+	</programlisting>
+</chapter>
+
