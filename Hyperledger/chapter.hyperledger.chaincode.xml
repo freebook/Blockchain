@@ -612,5 +612,25 @@ Query Result: 250
 2018-02-17 04:55:29.823 UTC [main] main -> INFO 007 Exiting.....
 		]]>
 		</screen>
+		<para>chaincode 终端也会显示下面内容。</para>
+		<screen>
+		<![CDATA[
+root@78d23b3b2b37:/opt/gopath/src/chaincode# CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=chaincode_example02:1.0 ./chaincode_example02 
+2018-02-17 04:51:25.481 UTC [shim] SetupChaincodeLogging -> INFO 001 Chaincode log level not provided; defaulting to: INFO
+2018-02-17 04:51:25.482 UTC [shim] SetupChaincodeLogging -> INFO 002 Chaincode (build level: ) starting up ...
+ex02 Init
+Aval = 100, Bval = 200
+ex02 Invoke
+Query Response:{"Name":"a","Amount":"100"}
+ex02 Invoke
+Query Response:{"Name":"b","Amount":"200"}
+ex02 Invoke
+Aval = 50, Bval = 250
+ex02 Invoke
+Query Response:{"Name":"b","Amount":"250"}
+ex02 Invoke
+Query Response:{"Name":"a","Amount":"50"}		
+		]]>
+		</screen>
 	</section>
 </chapter>
