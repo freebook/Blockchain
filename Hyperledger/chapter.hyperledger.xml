@@ -1496,68 +1496,6 @@ curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X POS
 
 		</section>
 	</section>
-	<section id="fabric-sdk-node">
-		<title>Hyperledger Fabric Client SDK for Node.js</title>
-		<section id="">
-			<title>package.json</title>
-			<screen>
-			<![CDATA[
-[root@localhost fabcar]# cat package.json 
-{
-    "name": "fabcar",
-    "version": "1.0.0",
-    "description": "Hyperledger Fabric Car Sample Application",
-    "main": "fabcar.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "dependencies": {
-        "fabric-ca-client": "^1.0.2",
-        "fabric-client": "^1.0.2",
-        "grpc": "^1.6.0"
-    },
-    "author": "Anthony O'Dowd",
-    "license": "Apache-2.0",
-    "keywords": [
-        "Hyperledger",
-        "Fabric",
-        "Car",
-        "Sample",
-        "Application"
-    ]
-}
-			]]>
-			</screen>
-		</section>
-
-	</section>
-	<section id="fabric-sdk-java">
-		<title>fabric-sdk-java</title>
-		<section id="java.sdk.maven">
-			<title>Maven</title>
-			<screen>
-			<![CDATA[
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>cn.netkiller</groupId>
-	<artifactId>fabric-sdk-java</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.hyperledger.fabric-sdk-java/fabric-sdk-java -->
-		<dependency>
-			<groupId>org.hyperledger.fabric-sdk-java</groupId>
-			<artifactId>fabric-sdk-java</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-
-	</dependencies>
-</project>			
-			]]>
-			</screen>
-		</section>
-	</section>
-
 	<section id="FAQ">
 		<title>FAQ</title>
 		<section id="">

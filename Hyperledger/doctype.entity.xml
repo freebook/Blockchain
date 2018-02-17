@@ -2,3 +2,4 @@
 <!ENTITY chapter.hyperledger.xml				SYSTEM "chapter.hyperledger.xml">
 <!ENTITY chapter.hyperledger.chaincode.xml	SYSTEM "chapter.hyperledger.chaincode.xml">
 <!ENTITY chapter.hyperledger.cluster.xml		SYSTEM "chapter.hyperledger.cluster.xml">
+<!ENTITY chapter.hyperledger.sdk.xml			SYSTEM "chapter.hyperledger.sdk.xml">

@@ -633,4 +633,53 @@ Query Response:{"Name":"a","Amount":"50"}
 		]]>
 		</screen>
 	</section>
+	<section id="chaincode.node.js">
+		<title>Node.js 测试程序</title>
+		<screen>
+		<![CDATA[
+[root@localhost chaincode-docker-devmode]# mkdir devel
+[root@localhost chaincode-docker-devmode]# cd devel/
+[root@localhost devel]#		
+		]]>
+		</screen>
+		<section id="chaincode.package.json">
+			<title>创建 package.json 文件</title>
+			<screen>
+			<![CDATA[
+{
+    "name": "chaincode_example02",
+    "version": "1.0.0",
+    "description": "Hyperledger Fabric 'chaincode_example02' Sample Application by netkiller<netkiller@msn.com>",
+    "main": "chaincode_example02.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "fabric-ca-client": "^1.0.2",
+        "fabric-client": "^1.0.2",
+        "grpc": "^1.6.0"
+    },
+    "author": "netkiller <netkiller@msn.com>",
+    "license": "Apache-2.0",
+    "keywords": [
+        "Hyperledger",
+        "Fabric",
+        "chaincode_example02"
+    ]
+}
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[
+[root@localhost devel]# npm install			
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title></title>
+		</section>
+		<section id="">
+			<title></title>
+		</section>
+	</section>
 </chapter>

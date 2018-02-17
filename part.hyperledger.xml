@@ -4,4 +4,5 @@
 	&chapter.hyperledger.xml;
 	&chapter.hyperledger.chaincode.xml;
 	&chapter.hyperledger.cluster.xml;
+	&chapter.hyperledger.sdk.xml;
 </part>
