@@ -1417,10 +1417,7 @@ PeerOrgs:
 			<title>configtx.yaml</title>
 		</section>
 	</section>
-<!-- 	<section id="chaincode">
-		<title>编译 Chaincode</title>
-		
-	</section> -->
+
 	<section id="hyperledger.fabric-ca">
 		<title>hyperledger/fabric-ca	</title>
 		<para>go 安装方式</para>

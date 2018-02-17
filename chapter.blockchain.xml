@@ -1,38 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="blockchain">
 	<title>区块链</title>
-	<para>区块链可以说是2018年最火的技术，相信很多开发者已经跃跃欲试投入到区块链开发队伍当中来，可是又感觉无从下手，你会发现世面上的书籍大多是将理论纸上谈兵，都是一些无法落地的异想天开的想法，本书将用大量实例讲解如何让技术落地。</para>
-	<para>目前区块链技术无论是 Ethereum 还 Hyperledger 都处在高速发展阶段，每次版本迭代更新变化巨大，至少还需要一到三年才能变成成熟的技术。</para>
-<!-- 
-	<section>
-		<title></title>
-		<screen>
-		<![CDATA[
+	<para>区块链可以说是2018年最火的技术，相信很多开发者已经跃跃欲试投入到区块链开发队伍当中来，可是又感觉无从下手，你会发现世面上的书籍大多是将理论纸上谈兵，都是一些无法落地的异想天开的想法，本书将用大量实例讲解如何让技术落地。
+	</para>
+	<para>目前区块链技术无论是 Ethereum 还 Hyperledger
+		都处在高速发展阶段，每次版本迭代更新变化巨大，至少还需要一到三年才能变成成熟的技术。
+	</para>
 
-		]]>
-		</screen>
-		<screen>
-
-		</screen>
-		<para></para>
-		<screen>
-
-		</screen>
-		<para></para>
-		<screen>
-
-		</screen>
-		<para></para>
-		<screen>
-
-		</screen>
-		<para></para>
-		<screen>
-		<![CDATA[
-
-		]]>
-		</screen>
-		<para></para>
+	<section id="background">
+		<title>区块链是什么</title>
+		<para>区块链是什么？一句话，它是一种特殊的（非关系型）分布式数据库，这种数据库只能做插入和查找操作，并且没有管理员。</para>
+		<para>首先，区块链的主要作用是储存信息。任何需要保存的信息，都可以写入区块链，也可以从里面读取，所以它是数据库。</para>
+		<para>其次，任何人都可以架设服务器，加入区块链网络，成为一个节点。区块链的世界里面，没有中心节点，每个节点都是平等的，都保存着整个数据库。你可以向任何一个节点，写入/读取数据，因为所有节点最后都会同步，保证区块链一致。
+		</para>
 	</section>
--->	
+	<section id="what.contracts">
+		<title>什么是只能合约？</title>
+		<para>你可以理解为存储过程+数据库结构，这样应该很好理解了把？</para>
+	</section>
+	<section id="how">
+		<title>我们应用怎么做？</title>
+		<para>很简单，通过IP地址与端口号连接到区块链系统，通过API（通常是 json-rpc）调用合约方法完成一笔交易，产生一笔区块记录。</para>
+		<para>理论上区块链比数据库简单。</para>
+	</section>
+<!-- 	<section>
+		<title></title>
+	</section> -->
+	
 </chapter>

@@ -9,13 +9,6 @@
 			<keyword>solidity</keyword>
 		</keywordset>
 	</info>
-	<section id="background">
-		<title>背景</title>
-		<para>区块链是什么？一句话，它是一种特殊的（非关系型）分布式数据库，这种数据库只能做插入和查找操作，并且没有管理员。</para>
-		<para>首先，区块链的主要作用是储存信息。任何需要保存的信息，都可以写入区块链，也可以从里面读取，所以它是数据库。</para>
-		<para>其次，任何人都可以架设服务器，加入区块链网络，成为一个节点。区块链的世界里面，没有中心节点，每个节点都是平等的，都保存着整个数据库。你可以向任何一个节点，写入/读取数据，因为所有节点最后都会同步，保证区块链一致。</para>
-	</section>
-
 	<section id="overview">
 		<title>软件安装与配置</title>
 		<section id="ubuntu">
