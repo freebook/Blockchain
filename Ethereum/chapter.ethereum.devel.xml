@@ -1,20 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-JSON-RPC
-
-curl -XPOST -H "Accept: application/json" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x39211a30bfe33d4b12fcbd786472c8a552b93389", "latest"],"id":1}' http://localhost:8545
-
- -->
-
 <chapter id="web3.js">
 	<title>web3.js</title>
-	<screen>
+
+	<section id="web3.js.setup">
+		<title>开发环境</title>
+		<screen>
 	<![CDATA[
-npm install web3	
+npm init
+npm install web3 --save
+npm install solc
 	]]>
-	</screen>
-	<programlisting>
-	<![CDATA[
+		</screen>
+	</section>
+
+	<section id="web3.js.pm2">
+		<title>使用 pm2 启动以太坊</title>
+		<screen>
+		<![CDATA[
+npm install -g pm2
+		]]>
+		</screen>
+		<para>创建 ~/geth.json 文件</para>
+		<programlisting>
+		<![CDATA[
+[
+  {
+    "name"              : "geth",
+    "cwd"               : "/usr/bin/",
+    "script"            : "geth",
+    "args"              : "--rpcapi eth,web3 --rpc --dev --datadir /home/neo/ethereum",
+    "log_date_format"   : "YYYY-MM-DD HH:mm Z",
+    "out_file"      : "/home/neo/ethereum/log/geth_out.log",
+    "error_file"    : "/home/neo/ethereum/log/geth_err.log",
+    "log_file"      : "/home/neo/ethereum/log/geth_log.log",
+    "merge_logs"        : false,
+    "watch"             : false,
+    "max_restarts"      : 10,
+    "exec_interpreter"  : "none",
+    "exec_mode"         : "fork_mode"
+  }
+]
+		]]>
+		</programlisting>
+		<para>启动以太坊</para>
+		<screen>
+		<![CDATA[
+pm2 start geth.json
+		]]>
+		</screen>
+	</section>
+	<section id="web3.js.connect">
+		<title>连接到以太坊客户端</title>
+		<programlisting>
+		<![CDATA[
 var Web3 = require('web3');
 var web3 = new Web3();
 
@@ -25,7 +63,8 @@ var coinbase = web3.eth.coinbase;
 var balance = web3.eth.getBalance(coinbase);
 
 console.log(coinbase);	
-	]]>
-	</programlisting>
+		]]>
+		</programlisting>
+	</section>
 </chapter>
 

@@ -562,6 +562,14 @@ neo@netkiller ~/ethereum % geth --exec 'eth.coinbase' attach http://172.16.0.10:
 				]]>
 				</screen>
 			</section>
+			<section id="geth.ws">
+				<title>WebSocket 方式</title>
+				<screen>
+				<![CDATA[
+$ geth attach ws://191.168.1.1:8546
+				]]>
+				</screen>
+			</section>
 		</section>
 		<section id="geth.account">
 			<title>账号管理</title>
@@ -751,7 +759,7 @@ geth --mine --minerthreads=16 --etherbase=0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bc
 				</screen>
 			</section>
 		</section>
-		<section id="">
+		<section id="geth.contract">
 			<title>运行智能合约</title>
 			<programlisting>
 			<![CDATA[
@@ -821,6 +829,13 @@ test.addNum(567);
 		</section>
 		<section id="geth.log">
 			<title>日志</title>
+			<para>--verbosity 日志输出级别控制</para>
+			<screen>
+			<![CDATA[
+geth --verbosity 0 console
+			]]>
+			</screen>
+			<para>日志输出到文件中。</para>
 			<screen>
 			<![CDATA[
 geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*"  2>> /tmp/geth.log			
@@ -1441,6 +1456,16 @@ true
 			</section>
 		</section>
 	</section>
+	
+	<section id="ethereum.jsonrpc">
+		<title>jsonrpc 原生交口调用</title>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~ % curl -XPOST -H "Accept: application/json" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x5c18a33df2cc41a1beddc91133b8422e89f041b7", "latest"],"id":1}' http://localhost:8545 
+{"jsonrpc":"2.0","id":1,"result":"0x153e5f3aeb667075800"}		
+		]]>
+		</screen>
+	</section>	
 	
 	<section id="summary">
 		<title>总结</title>
