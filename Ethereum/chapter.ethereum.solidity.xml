@@ -685,6 +685,31 @@ contract StringTest {
 				<tip><para>注意：汉字采用UTF8编码，一个汉字等于3个字节，当你使用 length("景峯") 测试时会返回长度 6。</para></tip>
 			</section>
 		</section>
+		<section id="solidity.type.bool">
+			<title>布尔(Booleans)</title>
+			<para>bool: 可能的取值为常量值true和false。支持的运算符：</para>
+			<screen>
+			<![CDATA[
+! 逻辑非
+
+&& 逻辑与
+
+|| 逻辑或
+
+== 等于
+
+!= 不等于
+
+bool a = true;
+bool b = !a;
+
+// a == b -> false
+// a != b -> true
+// a || b -> true
+// a && b -> false			
+			]]>
+			</screen>
+		</section>
 		<section id="solidity.type.array">
 			<title>数组</title>
 			<programlisting>
@@ -861,13 +886,28 @@ contract Students {
 			</programlisting>
 
 		</section>
-		<section id="address">
+		<section id="solidity.type.address">
 			<title>address</title>
 			<screen>
 				<![CDATA[
 address public minter;
 				]]>
 			</screen>
+			<para>下面是一个获得账号余额的例子。</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract AddressTest{
+    
+    function getBalance(address _addr) public constant returns (uint){
+        return _addr.balance;
+    }
+
+}			
+			]]>
+			</programlisting>
 			<section>
 				<title>payable</title>
 
@@ -1168,7 +1208,7 @@ contract owned {
 
 	</section>
 	<section id="solidity.oop">
-		<title>面向兑奖编程</title>
+		<title>面向对象编程</title>
 		<section id="solidity.is">
 			<title>继承</title>
 			<para>例子 mortal 继承 owned</para>

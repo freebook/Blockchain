@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- http://web3js.readthedocs.io/en/1.0/index.html -->
 <chapter id="web3.js">
 	<title>web3.js - 1.0.0</title>
+	<!-- http://web3js.readthedocs.io/en/1.0/index.html -->
 	<para>注意本章采用 web3.js v1.0.0 版本，这个版本仍在beta阶段，还没有 release。</para>
 	<para>你看到网上很多实例，安照例子的步骤操作，发现无法成功，很可能跟版本有关。v1.0.0
 		与之前的版本还是有很大差异，所以选择版本很重要。因为 v1.0.0 很快就会 release 所以本章不会在用早起版本举例。
