@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="solidity">
-	<title>以太坊智能合约开发入门</title>		
+	<title>智能合约语言 Solidity</title>
 	<subtitle>本文作者最近在找工作，有意向致电 13113668890</subtitle>
 	<info>
 		<keywordset>
@@ -10,6 +10,7 @@
 			<keyword>solidity</keyword>
 		</keywordset>
 	</info>
+	<para>Solidity 是什么？Solidity是以太坊智能合约的编程语言。</para>
 
 	<section id="truffle">
 		<title>Truffle</title>
@@ -150,7 +151,8 @@ Compiling ./contracts/Netkiller.sol...
 Writing artifacts to ./build/contracts
 			]]>
 			</screen>
-			<para>truffle默认只会编译最后一次修改过的合约文件, 这是为了减少比重复编译。"--all"选项,可以强制编译所有文件。</para>
+			<para>truffle默认只会编译最后一次修改过的合约文件, 这是为了减少比重复编译。"--all"选项,可以强制编译所有文件。
+			</para>
 			<para>编译结果</para>
 			<screen>
 			<![CDATA[
@@ -300,7 +302,8 @@ npm start
 			<note>
 				<title>Web3 Provider</title>
 				<para>Remix 提供三种运行环境,常用的有 JavaScript VM 和 Web3 Provider (连接到 --rpc
-					--rpcaddr="0.0.0.0" --rpccorsdomain "*" --rpcport 8545)</para>
+					--rpcaddr="0.0.0.0" --rpccorsdomain "*" --rpcport 8545)
+				</para>
 				<para>Web3 Provider 方式需要解锁账号和启动挖矿</para>
 				<screen>
 					<![CDATA[
@@ -325,19 +328,16 @@ output/HelloWorld.abi
 			]]>
 		</screen>
 	</section>
-	<section id="solidity">
-		<title>智能合约语言 Solidity</title>
-		<para>Solidity 是什么？Solidity是以太坊智能合约的编程语言。</para>
+	<section id="solidity.Getting.Started">
+		<title>智能合约入门演示</title>
+		<para>这里我们先做一个 Helloword 演示，让你初步对智能合约有一个大概的认识。</para>
+		<tip>
+			<para>需要注意的是，你在网上会看到很多例子，对照这例子一步一步操作，始终无法成功，这根Solidity的版本有很大关系。
+			</para>
+		</tip>
 
-		<section id="solidity.Getting.Started">
-			<title>智能合约入门演示</title>
-			<para>这里我们先做一个 Helloword 演示，让你初步对智能合约有一个大概的认识。</para>
-			<tip>
-				<para>需要注意的是，你在网上会看到很多例子，对照这例子一步一步操作，始终无法成功，这根Solidity的版本有很大关系。</para>
-			</tip>
-
-			<para>将下面代码粘贴到 </para>
-			<programlisting>
+		<para>将下面代码粘贴到 </para>
+		<programlisting>
 			<![CDATA[
 pragma solidity ^0.4.19;
 
@@ -362,9 +362,9 @@ contract HelloWorld
 
 }
 			]]>
-			</programlisting>
-			<para>Compile - Details - WEB3DEPLOY</para>
-			<programlisting>
+		</programlisting>
+		<para>Compile - Details - WEB3DEPLOY</para>
+		<programlisting>
 			<![CDATA[
 var helloworldContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"_tmp","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]);
 var helloworld = helloworldContract.new(
@@ -379,17 +379,17 @@ var helloworld = helloworldContract.new(
     }
  })
 			]]>
-			</programlisting>
+		</programlisting>
 
-			<para>部署智能合约需要消耗 gas 所以你要先解锁账号。</para>
-			<screen>
+		<para>部署智能合约需要消耗 gas 所以你要先解锁账号。</para>
+		<screen>
 			<![CDATA[
 > personal.unlockAccount("0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6", "", 300)
 true			
 			]]>
-			</screen>
+		</screen>
 
-			<screen>
+		<screen>
 			<![CDATA[
 > var helloworldContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"_tmp","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]);
 undefined
@@ -407,9 +407,9 @@ undefined
 null [object Object]
 undefined
 			]]>
-			</screen>
-			<para>helloworld 智能合约已经创建完毕</para>
-			<screen>
+		</screen>
+		<para>helloworld 智能合约已经创建完毕</para>
+		<screen>
 			<![CDATA[
 > helloworld
 {
@@ -440,12 +440,11 @@ undefined
 }
 			
 			]]>
-			</screen>
-		</section>
-
-		<section id="solidity.type.public">
-			<title>修饰符</title>
-			<screen>
+		</screen>
+	</section>
+	<section id="solidity.type.public">
+		<title>修饰符</title>
+		<screen>
 			<![CDATA[
 public ： 函数可见性
 
@@ -455,30 +454,138 @@ msg.value ：执行合约时，转账的eth数量，以wei为单位。
 
 msg.sender : 执行合约的地址			
 			]]>
-			</screen>
-		</section>
-		<section id="solidity.type">
-			<title>数据类型</title>
-			<literallayout>
+		</screen>
+	</section>
+	<section id="solidity.type">
+		<title>数据类型</title>
+		<literallayout>
 			<![CDATA[
 uint 无符号整形（256bits 无符号整数）
 string 字符串类型	
 			]]>
-			</literallayout>
-			<section>
-				<title>数组</title>
-				<programlisting>
+		</literallayout>
+		<section>
+			<title>数组</title>
+			<programlisting>
 				<![CDATA[
 	//创建一个memory的数组
 	uint[] memory a = new uint[](7);
 	
 	uint[] x = [uint(1), 3, 4];
+	
+    bytes memory b = new bytes(10);
+				]]>
+			</programlisting>
+			<para>二维数组</para>
+			<programlisting>
+			<![CDATA[
+uint [2][3] T = [[1,2],[3,4],[5,6]];			
+			]]>
+			</programlisting>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract ArrayTest {
+    
+    uint [] array = [1,2,3,4,5];
+    
+    // 通过for循环计算数组内部的值的总和
+    function sum() constant public returns (uint) {
+        uint num = 0;
+        for(uint i = 0; i < array.length; i++) {
+            num = num + array[i];
+        }
+        return num;
+    }
+    
+    function sumNumbers(uint[] _numbers) public pure returns (uint) {
+        uint num = 0;
+        for(uint i = 0; i < _numbers.length; i++) {
+            num = num + _numbers[i];
+        }
+        return num;
+    }
+    
+}
+			]]>
+			</programlisting>
+			<section>
+				<title>length</title>
+				<para>.length 属性是活动数组的尺寸</para>
+				<programlisting>
+				<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract ArrayLength {
+    
+    uint [] array = [1,2,3,4,5];
+    
+    function getLength() public constant returns (uint) {
+        
+        return array.length;
+    }
+    
+}				
 				]]>
 				</programlisting>
 			</section>
-			<section id="solidity.enum">
-				<title>枚举类型</title>
+			<section>
+				<title>push() 方法</title>
+				<para>通过 push 可以向数组中添加数据</para>
 				<programlisting>
+				<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract ArrayLength {
+    
+    uint [] array = [1,2,3,4,5];
+    
+    function pushArray() public {
+        
+        array.push(6);
+    }
+    
+    function getLength() public constant returns (uint) {
+        
+        return array.length;
+    }
+    
+}				
+				]]>
+				</programlisting>
+			</section>
+		</section>
+		<section id="solidity.enum">
+			<title>枚举类型</title>
+			<para>State 就是一个自定义的整型，当枚举数不够多时，它默认的类型为uint8，当枚举数足够多时，它会自动变成uint16，枚举下标定义从左至右从零开始。</para>
+			<para>New=0, Pending=1, Done=2, Deleted=3</para>
+			<para>访问枚举方式 State.New 实际等于数字 0</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract EnumTest {
+    enum State { New, Pending, Done, Deleted }
+    State state = State.New;
+
+    function set(State _state) public {
+        state = _state;
+    }
+
+    function get() constant public returns (State) {
+        return state;
+    }
+
+}			
+			]]>
+			</programlisting>
+			<para>枚举用来定义状态</para>
+			<programlisting>
 				<![CDATA[
 pragma solidity ^0.4.0;
 
@@ -486,12 +593,13 @@ contract Purchase {
     enum State { Created, Locked, Inactive } // Enum
 }				
 				]]>
-				</programlisting>
-			</section>
-			<section id="solidity.struct">
-				<title>结构体</title>
-				<para>定义结构体</para>
-				<screen>
+			</programlisting>
+			
+		</section>
+		<section id="solidity.struct">
+			<title>结构体</title>
+			<para>定义结构体</para>
+			<screen>
 				<![CDATA[
 	struct Voter {
         uint weight; // weight is accumulated by delegation
@@ -506,32 +614,79 @@ contract Purchase {
         uint voteCount; // number of accumulated votes
     }			
 				]]>
-				</screen>
-			</section>
-			<section>
-				<title>address</title>
-				<screen>
+			</screen>
+			<para>演示例子</para>
+			<programlisting>
+				<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract Students {
+    
+    struct Person {
+        string name;
+        uint age;
+        uint class;
+        
+    }
+
+    Person person = Person("Neo",18,1);
+
+    function getPerson() public view returns(string){
+        return person.name;
+    }
+}				
+				]]>
+			</programlisting>
+
+		</section>
+		<section id="address">
+			<title>address</title>
+			<screen>
 				<![CDATA[
 address public minter;
 				]]>
-				</screen>
-				<section>
-					<title>payable</title>
-					
-				</section>
-				<section>
-					<title>.value()</title>
-					
-				</section>
-				<section>
-					<title>.gas()</title>
-					
-				</section>
+			</screen>
+			<section>
+				<title>payable</title>
+
+			</section>
+			<section>
+				<title>.value()</title>
+
+			</section>
+			<section>
+				<title>.gas()</title>
+
 			</section>
 		</section>
-		<section id="solidity.variable">
-			<title>变量</title>
+		<section id="solidity.type.mapping">
+			<title>mapping</title>
+			<para>mapping 就是图数据结构，由 key 和 value 组成。</para>
 			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract MappingExample {
+    
+    mapping(uint => string) map;
+
+    function put(uint key, string value) public {
+        map[key] = value;
+    }
+    
+    function get(uint key) constant public returns (string) {
+        return map[key];
+    }
+}			
+			]]>
+			</programlisting>
+		</section>
+	</section>
+	<section id="solidity.variable">
+		<title>变量</title>
+		<programlisting>
 			<![CDATA[
 address public minter;
 string name;
@@ -543,9 +698,9 @@ int num;
     
     uint256 ticket = 1 ether;
 			]]>
-			</programlisting>
-			<para>变量赋值</para>
-			<programlisting>
+		</programlisting>
+		<para>变量赋值</para>
+		<programlisting>
 			<![CDATA[
 pragma solidity ^0.4.19;
 
@@ -574,15 +729,14 @@ contract C {
     }
 }			
 			]]>
-			</programlisting>
-		</section>
-
-		<section id="solidity.function">
-			<title>函数</title>
-			<section>
-				<title>构造方法</title>
-				<para>构造方法的定义是 contract 与 function 相同</para>
-				<programlisting>
+		</programlisting>
+	</section>
+	<section id="solidity.function">
+		<title>函数</title>
+		<section>
+			<title>构造方法</title>
+			<para>构造方法的定义是 contract 与 function 相同</para>
+			<programlisting>
 				<![CDATA[
 pragma solidity ^0.4.18;
 
@@ -594,34 +748,35 @@ contract MyContractByNetkiller {
     }
 }
 				]]>
-				</programlisting>
-			</section>
-			<section>
-				<title>定义函数</title>
-				<para>没有返回值</para>
-				<programlisting>
+			</programlisting>
+		</section>
+		<section>
+			<title>定义函数</title>
+			<para>没有返回值</para>
+			<programlisting>
 				<![CDATA[
 	function setName(string _name) public{
         name = _name;
     }			
 				]]>
-				</programlisting>
-			</section>
-			<section>
-				<title>函数返回值</title>
-				<para>有返回值</para>
-				<programlisting>
+			</programlisting>
+		</section>
+		<section>
+			<title>函数返回值</title>
+			<para>有返回值</para>
+			<programlisting>
 				<![CDATA[
 	function getName() public view returns(string){
         return name;
     }
 				]]>
-				</programlisting>
-			</section>
-			<section id="solidity.func.param">
-				<title>参数传递</title>
-				<para>除了 f(2,3) 这样传递参数，还可以使用类似字典或Map的方式 f({value: 2, key: 3});</para>
-				<programlisting>
+			</programlisting>
+		</section>
+		<section id="solidity.func.param">
+			<title>参数传递</title>
+			<para>除了 f(2,3) 这样传递参数，还可以使用类似字典或Map的方式 f({value: 2, key: 3});
+			</para>
+			<programlisting>
 				<![CDATA[
 pragma solidity ^0.4.0;
 
@@ -636,12 +791,12 @@ contract C {
     }
 }				
 				]]>
-				</programlisting>
-			</section>
-			<section>
-				<title>函数的例子</title>
-				<para>完整的例子</para>
-				<programlisting>
+			</programlisting>
+		</section>
+		<section>
+			<title>函数的例子</title>
+			<para>完整的例子</para>
+			<programlisting>
 				<![CDATA[
 pragma solidity ^0.4.18;
 
@@ -667,21 +822,23 @@ contract MyContractByNetkiller {
     }
 }
 				]]>
-				</programlisting>
-			</section>
-			<section id="">
-				<title>Fallback function</title>
-				<programlisting>
+			</programlisting>
+		</section>
+		<section id="function.Fallback">
+			<title>Fallback function</title>
+			<programlisting>
 				<![CDATA[
 				
 				]]>
-				</programlisting>
-			</section>
-			<section id="solidity.modifier">
-				<title>modifier</title>
-				<para>modifier 可以理解为 function 的触发器，或者理解为 hook。执行 function的时候会首先运行 modifier</para>
-				<para>_; 表示执行 modifier 完成所有命令后，继续运行 function 内的逻辑。</para>
-				<screen>
+			</programlisting>
+		</section>
+		<section id="solidity.modifier">
+			<title>modifier</title>
+			<para>modifier 可以理解为 function 的触发器，或者理解为 hook。执行 function的时候会首先运行
+				modifier
+			</para>
+			<para>_; 表示执行 modifier 完成所有命令后，继续运行 function 内的逻辑。</para>
+			<screen>
 				<![CDATA[
 pragma solidity ^0.4.11;  
   
@@ -703,25 +860,25 @@ contract owned {
     }  
 }
 				]]>
-				</screen>
-			</section>
+			</screen>
 		</section>
-		<section id="solidity.event">
-			<title>事件</title>
+	</section>
+	<section id="solidity.event">
+		<title>事件</title>
 
-			<programlisting>
+		<programlisting>
 			<![CDATA[
 	event Sent(address from, address to, uint amount);			
 			]]>
-			</programlisting>
+		</programlisting>
 
-		</section>
-		<section id="solidity.oop">
-			<title>面向兑奖编程</title>
-			<section id="solidity.is">
-				<title>继承</title>
-				<para>例子 mortal 继承 owned</para>
-				<programlisting>
+	</section>
+	<section id="solidity.oop">
+		<title>面向兑奖编程</title>
+		<section id="solidity.is">
+			<title>继承</title>
+			<para>例子 mortal 继承 owned</para>
+			<programlisting>
 				<![CDATA[
 pragma solidity ^0.4.11;  
   
@@ -742,613 +899,65 @@ contract mortal is owned {
     }  
 }
 				]]>
-				</programlisting>
-			</section>
+			</programlisting>
 		</section>
 	</section>
-
-	<section id="web3j">
-		<title>Jave Client</title>
-		<para>
-			官方网站
-			<ulink url="https://web3j.io">https://web3j.io</ulink>
-		</para>
-		<para>Java 客户端与 Server 之间采用json-rpc协议连接。</para>
-		<section id="web3j.command.line.tools">
-			<title>安装命令行工具</title>
-			<para>web3j 命令用于将 sol 合约文件转换为 java 文件。</para>
-			<section>
-				<title>Mac OS</title>
-				<screen>
-				<![CDATA[
-brew tap web3j/web3j
-brew install web3j
-
-neo@MacBook-Pro ~ % web3j
-
-              _      _____ _     _        
-             | |    |____ (_)   (_)       
-__      _____| |__      / /_     _   ___  
-\ \ /\ / / _ \ '_ \     \ \ |   | | / _ \ 
- \ V  V /  __/ |_) |.___/ / | _ | || (_) |
-  \_/\_/ \___|_.__/ \____/| |(_)|_| \___/ 
-                         _/ |             
-                        |__/              
-
-Usage: web3j version|wallet|solidity ...	
-				]]>
-				</screen>
-			</section>
-			<section>
-				<title>二进制包安装</title>
-				<para>
-					下载二进制文件
-					<ulink url="https://github.com/web3j/web3j/releases">https://github.com/web3j/web3j/releases</ulink>
-				</para>
-				<screen>
-				<![CDATA[
-wget https://github.com/web3j/web3j/releases/download/v3.2.0/web3j-3.2.0.zip
-unzip web3j-3.2.0.zip
-
-$ ./web3j-3.2.0/bin/web3j
-
-              _      _____ _     _
-             | |    |____ (_)   (_)
-__      _____| |__      / /_     _   ___
-\ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
- \ V  V /  __/ |_) |.___/ / | _ | || (_) |
-  \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
-                         _/ |
-                        |__/
-
-Usage: web3j version|wallet|solidity ...
-				]]>
-				</screen>
-			</section>
-		</section>
-		<section id="web3j.geth">
-			<title>启动以太坊</title>
-
-			<para>首先启动服务</para>
-			<screen>
-		<![CDATA[
-neo@netkiller ~ % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover 
-INFO [02-01|23:35:12] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
-INFO [02-01|23:35:12] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
-INFO [02-01|23:35:12] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
-INFO [02-01|23:35:12] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
-INFO [02-01|23:35:12] Disk storage enabled for ethash DAGs     dir=/home/neo/.ethash               count=2
-INFO [02-01|23:35:12] Initialising Ethereum protocol           versions="[63 62]" network=123456
-INFO [02-01|23:35:12] Loaded most recent local header          number=719 hash=61330b…82786e td=108754979
-INFO [02-01|23:35:12] Loaded most recent local full block      number=719 hash=61330b…82786e td=108754979
-INFO [02-01|23:35:12] Loaded most recent local fast block      number=719 hash=61330b…82786e td=108754979
-INFO [02-01|23:35:12] Loaded local transaction journal         transactions=0 dropped=0
-INFO [02-01|23:35:12] Regenerated local transaction journal    transactions=0 accounts=0
-WARN [02-01|23:35:12] Blockchain not empty, fast sync disabled 
-INFO [02-01|23:35:12] Starting P2P networking 
-INFO [02-01|23:35:12] RLPx listener up                         self="enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@[::]:30303?discport=0"
-INFO [02-01|23:35:12] IPC endpoint opened: /home/neo/.ethereum/geth.ipc 
-INFO [02-01|23:35:12] HTTP endpoint opened: http://0.0.0.0:8545 
-INFO [02-01|23:35:15] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"		
-		]]>
-			</screen>
-			<para>Web3j 将使用这个地址连接 HTTP endpoint opened:
-				http://your_ip_address:8545</para>
-		</section>
-		<section id="web3j.pom.xml">
-			<title>Maven pom.xml 文件</title>
-			<screen>
-			<![CDATA[
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>cn.netkiller</groupId>
-	<artifactId>ethereum</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-
-	<name>ethereum</name>
-	<url>http://maven.apache.org</url>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.web3j</groupId>
-			<artifactId>core</artifactId>
-			<version>3.2.0</version>
-		</dependency>
-	</dependencies>
-</project>
-			
-			]]>
-			</screen>
-		</section>
-		<section id="web3j.type">
-			<title>Java 与 Solidity 数据类型映射关系</title>
-			<screen>
-			<![CDATA[
-boolean -> bool
-BigInteger -> uint/int
-byte[] -> bytes
-String -> string and address types
-List<> -> dynamic/static array			
-			]]>
-			</screen>
-		</section>
-		<section id="web3j.connect">
-			<title>连接到服务器获取版本号</title>
+	<section id="solidity.example">
+		<title>solidity example</title>
+		<section id="voting">
+			<title>Voting</title>
 			<programlisting>
 			<![CDATA[
-package cn.netkiller.ethereum;
+pragma solidity ^0.4.19;
+//author: netkiller <netkiller@msn.com>
+//homepage: http://www.netkiller.cn
+contract Voting {
 
-import java.io.IOException;
+  mapping (bytes32 => uint8) public votesReceived;
 
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.methods.response.Web3ClientVersion;
-import org.web3j.protocol.http.HttpService;
+  // 存储候选人名字的数组
+  bytes32[] public candidateList;
 
-public class Web3JClient {
-	// TODO Auto-generated method stub
 
-	public static void main(String[] args) {
-		String url = "http://172.16.0.1:8545/";
-		Web3j web3j = Web3j.build(new HttpService(url)); // defaults to http://localhost:8545/
+  // 构造函数 初始化候选人名单
+  function Voting(bytes32[] candidateNames) public {
 
-		try {
-			Web3ClientVersion web3ClientVersion = web3j.web3ClientVersion().send();
-			String clientVersion = web3ClientVersion.getWeb3ClientVersion();
-			System.out.println(clientVersion);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    candidateList = candidateNames;
+  }
 
-	}
+  // 查询某个候选人的总票数
+  function totalVotesFor(bytes32 candidate) public constant returns (uint8) {
+    require(validCandidate(candidate) == true);
+    // 或者
+    // assert(validCandidate(candidate) == true);
+    return votesReceived[candidate];
+  }
+
+  // 为某个候选人投票
+  function voteForCandidate(bytes32 candidate) public{
+    assert(validCandidate(candidate) == true);
+    votesReceived[candidate] += 1;
+  }
+
+  // 检索投票的姓名是不是候选人的名字
+  function validCandidate(bytes32 candidate) public constant returns (bool) {
+    for(uint i = 0; i < candidateList.length; i++) {
+      if (candidateList[i] == candidate) {
+        return true;
+      }
+    }
+    return false;
+  }
 
 }
 			]]>
 			</programlisting>
-			<para>运行结果</para>
-			<screen>
-			<![CDATA[
-Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1			
-			]]>
-			</screen>
-			<para>除了 TCP 方式连接，还支持 IPC 方式。这种方式比较少用，可以使用 localhost 替代。</para>
-			<programlisting>
-			<![CDATA[
-// OS X/Linux/Unix:
-Web3j web3 = Web3j.build(new UnixIpcService("/path/to/socketfile"));
-...
-
-// Windows
-Web3j web3 = Web3j.build(new WindowsIpcService("/path/to/namedpipefile"));
-...			
-			]]>
-			</programlisting>
 		</section>
-		<section id="web3j.account">
-			<title>账号管理</title>
-			<section>
-				<title>获得账号列表</title>
-				<programlisting>
-				<![CDATA[
-	public List<String> getAccountlist() {
 
-		try {
-			return web3j.ethAccounts().send().getAccounts();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}				
-				]]>
-				</programlisting>
-			</section>
-			<section>
-				<title>获得账号信息</title>
-				<programlisting>
-				<![CDATA[
-	public String getAccount(int index) {
-		String account = null;
-
-		try {
-			account = web3j.ethAccounts().send().getAccounts().get(index);
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return account;
-	}				
-				]]>
-
-				</programlisting>
-			</section>
-			
-			<section id="web3j.personalUnlockAccount">
-				<title>解锁账号</title>
-				<programlisting>
-				<![CDATA[
-Admin web3j = Admin.build(new HttpService());  // defaults to http://localhost:8545/
-PersonalUnlockAccount personalUnlockAccount = web3j.personalUnlockAccount("0x000...", "a password").sendAsync().get();
-if (personalUnlockAccount.accountUnlocked()) {
-    // send a transaction
-}				
-				]]>
-				</programlisting>
-			</section>
-			
-			<section id="web3j.account.example">
-				<title>例子</title>
-			</section>
+		<section id="s">
+			<title>智能合约语言 Solidity</title>
 		</section>
-		<section id="web3j.credentials">
-			<title>Credentials</title>
-			<programlisting>
-			<![CDATA[
-package cn.netkiller.ethereum.credentials;
-
-import java.io.IOException;
-import java.math.BigInteger;
-
-import org.web3j.crypto.Credentials;
-import org.web3j.crypto.ECKeyPair;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.http.HttpService;
-
-public class CredentialsTest {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		String url = "http://172.16.0.1:8545/";
-		Web3j web3j = Web3j.build(new HttpService(url)); // defaults to http://localhost:8545/
-
-		try {
-			String account = web3j.ethAccounts().send().getAccounts().get(0);
-			Credentials credentials = Credentials.create(account);
-			ECKeyPair keyPair = credentials.getEcKeyPair();
-			BigInteger privateKey = keyPair.getPrivateKey();
-			BigInteger publicKey = keyPair.getPublicKey();
-
-			System.out.println(privateKey);
-			System.out.println("---");
-			System.out.println(publicKey);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-}
-			
-			]]>
-			</programlisting>
-		</section>
-		<section id="web3j.transaction">
-			<title>交易</title><section>
-				<title>获取余额</title>
-				<programlisting>
-				<![CDATA[
-	public BigInteger getBalance(String account) throws IOException {
-
-		EthGetBalance ethGetBalance = web3j.ethGetBalance(account, DefaultBlockParameterName.LATEST).send();
-		BigInteger balance = ethGetBalance.getBalance();
-		return balance;
-
-	}				
-				]]>
-				</programlisting>
-			</section>
-			<section>
-				<title>转账</title>
-				<programlisting>
-				<![CDATA[
-	public void transfer(String account, float coin)
-			throws InterruptedException, IOException, TransactionException, Exception {
-		String password = "";
-		String walletfile = "/Users/neo/netkiller/UTC--2018-01-20T04-04-06.786586541Z--83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6";
-		Credentials credentials = WalletUtils.loadCredentials(password, walletfile);
-		TransactionReceipt transactionReceipt = Transfer
-				.sendFunds(web3j, credentials, account, BigDecimal.valueOf(coin), Unit.ETHER).send();
-		System.out.println(transactionReceipt.getStatus());
-	}
-				]]>
-				</programlisting>
-			</section>
-			<section >
-				<title>交易结果查询</title>
-				<programlisting>
-				<![CDATA[
-EthTransaction transaction = web3.ethGetTransactionByHash("TRANSACTION_HASH")
-                                   .sendAsync().get();
-System.out.println(transaction.getResult());				
-				]]>
-				</programlisting>
-			</section>
-		</section>
-		<section id="web3j.walletutils">
-			<title>钱包</title>
-			<section id="WalletUtils.generateFullNewWalletFile">
-				<title>创建钱包</title>
-				<programlisting>
-				<![CDATA[
-package cn.netkiller.ethereum.wallet;
-
-import java.io.File;
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-
-import org.web3j.crypto.CipherException;
-import org.web3j.crypto.WalletUtils;
-
-public class WalletMain {
-
-	public void createWallet() throws NoSuchAlgorithmException, NoSuchProviderException,
-			InvalidAlgorithmParameterException, CipherException, IOException {
-
-		File file = new File("/tmp/ethereum/keystore");
-		String password = "passw0rd";
-		String fileName = WalletUtils.generateFullNewWalletFile(password, file);
-		System.out.println(fileName);
-
-	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		WalletMain wallet = new WalletMain();
-		try {
-			wallet.createWallet();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-}
-				
-				]]>
-				</programlisting>
-				<para>运行结果</para>
-				<screen>
-				<![CDATA[
-neo@MacBook-Pro ~ % mkdir -p /tmp/ethereum/keystore
-neo@MacBook-Pro ~ % ll /tmp/ethereum/keystore
-total 8
--rw-r--r--  1 neo  wheel   491B Feb  4 18:30 UTC--2018-02-04T10-30-58.476000000Z--75d01e920d6e018445dae504058ce4d968fd2a58.json
-
-neo@MacBook-Pro ~ % cat /tmp/ethereum/keystore/UTC--2018-02-04T10-30-58.476000000Z--75d01e920d6e018445dae504058ce4d968fd2a58.json 
-{"address":"75d01e920d6e018445dae504058ce4d968fd2a58","id":"80700448-69bc-475a-aaf9-f2b836f17b13","version":3,"crypto":{"cipher":"aes-128-ctr","ciphertext":"fe86f5dbd61d15d092f9d6870e70bff7ed99a7925703ea71eef23669c8e3ec62","cipherparams":{"iv":"d058819ab660cd062080b405591ba143"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"f69c535137b08667dbac53b8001313f5b43f81fce67a5d0e94b518c97d212d14"},"mac":"c247e34760bc838c3a4c8b2da286ccc6acec244bbc13fc6cc9ce28e88a7319d5"}}
-				]]>
-				</screen>
-			</section>
-			<section id="WalletUtils.loadCredentials">
-				<title>从钱包取出账号</title>
-				<programlisting>
-				<![CDATA[
-package cn.netkiller.ethereum.wallet;
-
-import java.io.File;
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-
-import org.web3j.crypto.CipherException;
-import org.web3j.crypto.Credentials;
-import org.web3j.crypto.WalletUtils;
-
-public class WalletMain {
-
-	public void walletAddress() throws IOException, CipherException {
-
-		File file = new File(
-				"/tmp/ethereum/keystore/UTC--2018-02-04T10-43-27.339000000Z--7cab470df532710d13078c5cdc0812a27f70cf51.json");
-		String password = "passw0rd";
-		Credentials credentials = WalletUtils.loadCredentials(password, file);
-		System.out.println(credentials.getAddress());
-
-	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		WalletMain wallet = new WalletMain();
-		try {
-			wallet.walletAddress();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-}
-				]]>
-				</programlisting>
-				<para>运行结果</para>
-				<screen>
-				<![CDATA[
-0x7cab470df532710d13078c5cdc0812a27f70cf51				
-				]]>
-				</screen>
-				
-			</section>
-		</section>
-		<section id="web3j.contract">
-			<title>智能合约</title>
-			<programlisting>
-			<![CDATA[
-neo@netkiller ~/ethereum/solidity % cat netkiller.sol 
-pragma solidity ^0.4.18;
-
-contract Netkiller {
-    string name;
-    int num;
-    function Netkiller() public{
-        name = "default";
-        num = 1;
-    }
-    function setName(string _name) public{
-        name = _name;
-    }
-    function getName() public view returns(string){
-        return name;
-    }
-    function setNum(int n) public{
-        num = n;
-    }
-    function addNum(int m) public view returns(int res){
-        res = m + num;
-    }
-}
-
-			]]>
-			</programlisting>
-			<para>编译智能合约</para>
-			<screen>
-			<![CDATA[
-$ solc /path/to/<smart-contract>.sol --bin --abi --optimize -o output/
-$ web3j solidity generate /path/to/<smart-contract>.bin /path/to/<smart-contract>.abi -o /path/to/src/main/java -p com.your.organisation.name			
-			]]>
-			</screen>
-			<screen>
-			<![CDATA[
-$ solc netkiller.sol --bin --abi --optimize -o output/
-$ web3j solidity generate output/Netkiller.bin output/Netkiller.abi -p cn.netkiller.ethereum.contract -o java
-
-              _      _____ _     _        
-             | |    |____ (_)   (_)       
-__      _____| |__      / /_     _   ___  
-\ \ /\ / / _ \ '_ \     \ \ |   | | / _ \ 
- \ V  V /  __/ |_) |.___/ / | _ | || (_) |
-  \_/\_/ \___|_.__/ \____/| |(_)|_| \___/ 
-                         _/ |             
-                        |__/              
-
-Generating cn.netkiller.ethereum.contract.Netkiller ... File written to java	
-
-neo@netkiller ~/ethereum/solidity % ll java/cn/netkiller/ethereum/contract/Netkiller.java 
--rw-rw-r-- 1 neo neo 5.9K Feb  3 23:02 java/cn/netkiller/ethereum/contract/Netkiller.java
-			]]>
-			</screen>
-			<para>启动以太坊，并开始挖矿。注意参数 --mine --minerthreads 1	，你也可以启动后在JavaScript 控制台钟启动挖矿。</para>
-			<screen>
-			<![CDATA[
-neo@netkiller ~ % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --mine --minerthreads 1	
-			]]>
-			</screen>
-			<programlisting>
-			<![CDATA[
-package cn.netkiller.ethereum;
-
-import java.math.BigInteger;
-
-import org.web3j.crypto.Credentials;
-import org.web3j.crypto.WalletUtils;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.http.HttpService;
-import org.web3j.tx.Contract;
-import org.web3j.tx.ManagedTransaction;
-
-import cn.netkiller.ethereum.contract.Netkiller;
-
-public class ContractTest {
-
-	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-
-		String walletfile = "/Users/neo/Downloads/UTC--2018-01-20T04-04-06.786586541Z--83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6";
-
-		Web3j web3j = Web3j.build(new HttpService("http://172.16.0.1:8545"));
-		Credentials credentials = WalletUtils.loadCredentials("", walletfile);
-
-		Netkiller contract = Netkiller.deploy(web3j, credentials, ManagedTransaction.GAS_PRICE, Contract.GAS_LIMIT).send();
-
-		System.out.println(contract.isValid());
-		if (contract.isValid()) {
-			System.out.println("---");
-			String contractAddress = contract.getContractAddress();
-			System.out.println(contractAddress);
-			System.out.println("---");
-			String result = contract.getName().send();
-			System.out.println(result);
-
-			contract.setName("Netkiller").send();
-			System.out.println(contract.getName().send());
-			System.out.println("---");
-			contract.setNum(BigInteger.valueOf(8)).send();
-			System.out.println(contract.addNum(BigInteger.valueOf(8)).send());
-			System.out.println("---");
-		} else {
-			System.out.println("Deploy ERROR !!!");
-		}
-	}
-
-}
-		
-			]]>
-			</programlisting>
-			<para>运行结果</para>
-			<screen>
-			<![CDATA[
-true
----
-0xef872f1b344a4b7c765c7d765a3cc82b741777a9
----
-default
-Netkiller
----
-16
----
-			]]>
-			</screen>
-			<para>在程序运行是，去看 geth 打印的日志，有如下记录打印</para>
-			<screen>
-			<![CDATA[
-INFO [02-04|00:04:43] Submitted transaction                    fullhash=0x9f70ccb600294d2dd6dda08d090362131b107d42a692f27dd4a3b7548dbaf22c recipient=0xEF872F1b344a4B7C765c7D765a3cC82b741777a9			
-			]]>
-			</screen>
-			<section id="contract.load">
-				<title>载入合约</title>
-				<programlisting>
-				<![CDATA[
-HelloWorld contract = HelloWorld.load(contractAddress,web3j,credentials, ManagedTransaction.GAS_PRICE, Contract.GAS_LIMIT);				
-				]]>
-				</programlisting>
-				<screen>
-				<![CDATA[]]>
-				</screen>
-			</section>
-		</section>
-		
-	</section>
-	<section id="web3.py">
-		<title>web3.py - A python interface for interacting with the Ethereum
-			blockchain and ecosystem.</title>
-		<para>
-			文档地址
-			<ulink url="http://web3py.readthedocs.io/">http://web3py.readthedocs.io/</ulink>
-		</para>
 
 	</section>
-	<section id="testnet">
-		<title>测试网络</title>
-		<section id="rinkeby">
-			<title>rinkeby</title>
-			<ulink url="https://faucet.rinkeby.io">https://faucet.rinkeby.io</ulink>
-		</section>
-	</section>
-	<section id="summary">
-		<title>总结</title>
-	</section>
-	<section id="faq">
-		<title>FAQ</title>
-	</section>
+
 </chapter>

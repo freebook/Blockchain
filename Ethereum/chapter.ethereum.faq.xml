@@ -113,5 +113,29 @@ geth --bootnodes enode://pubkey1@ip1:port1,enode://pubkey2@ip2:port2,enode://pub
 		</screen>
 		<para>这个文件内容是一个数组，类似 ["","",""] 。</para>
 	</section>
-
+	<section id="faq.personal_unlockAccount">
+		<title>Unhandled rejection Error: Returned error: The method personal_unlockAccount does not exist/is not available</title>
+		<screen>
+		<![CDATA[
+> Unhandled rejection Error: Returned error: The method personal_unlockAccount does not exist/is not available
+    at Object.ErrorResponse (/Users/neo/ethereum/web3/node_modules/web3-core-helpers/src/errors.js:29:16)
+    at /Users/neo/ethereum/web3/node_modules/web3-core-requestmanager/src/index.js:137:36
+    at XMLHttpRequest.request.onreadystatechange (/Users/neo/ethereum/web3/node_modules/web3-providers-http/src/index.js:77:13)
+    at XMLHttpRequestEventTarget.dispatchEvent (/Users/neo/ethereum/web3/node_modules/xhr2/lib/xhr2.js:64:18)
+    at XMLHttpRequest._setReadyState (/Users/neo/ethereum/web3/node_modules/xhr2/lib/xhr2.js:354:12)
+    at XMLHttpRequest._onHttpResponseEnd (/Users/neo/ethereum/web3/node_modules/xhr2/lib/xhr2.js:509:12)
+    at IncomingMessage.<anonymous> (/Users/neo/ethereum/web3/node_modules/xhr2/lib/xhr2.js:469:24)
+    at IncomingMessage.emit (events.js:165:20)
+    at endReadableNT (_stream_readable.js:1101:12)
+    at process._tickCallback (internal/process/next_tick.js:152:19)
+		]]>
+		</screen>
+		<para>解决方法</para>
+		<screen>
+		<![CDATA[
+$ geth --rpc --rpcapi personal,db,eth,net,web3
+		]]>
+		</screen>
+		<para>在 --rpcapi 选项中增加 personal</para>
+	</section>
 </chapter>

@@ -303,7 +303,8 @@ Address: {39211a30bfe33d4b12fcbd786472c8a552b93389}
 			</screen>
 			<tip>
 				<para>密码可以直接回车，但是后面 Ethereum Wallet 遇到了麻烦， Ethereum Wallet
-					要求密码必须是8为数</para>
+					要求密码必须是8为数
+				</para>
 			</tip>
 		</section>
 		<section id="genesis.json.startup">
@@ -660,15 +661,16 @@ geth --networkid 100000 --rpc --rpcapi "db,eth,net,web3" --rpccorsdomain "*" --d
 geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover		
 			]]>
 			</screen>
+			<section id="rpcapi">
+				<title>rpcapi</title>
+				<para>--rpcapi 可以控制访问内容</para>
+				<screen>
+				<![CDATA[
+$ geth --rpc --rpcapi personal,db,eth,net,web3 --rinkeby	
+				]]>
+				</screen>
 
-			<para>--rpcapi 可以控制访问内容</para>
-			<screen>
-			<![CDATA[
-$ geth --rpcapi personal,db,eth,net,web3 --rpc --rinkeby	
-			]]>
-
-			</screen>
-
+			</section>
 			<section id="rpcaddr">
 				<title>rpcaddr</title>
 				<para>默认是 127.0.0.1 </para>
@@ -878,6 +880,13 @@ WARN [02-02|21:19:00] Already shutting down, interrupt more to panic. times=9
 		</section>
 	</section>
 
+	<section id="testnet">
+		<title>测试网络</title>
+		<section id="rinkeby">
+			<title>rinkeby</title>
+			<ulink url="https://faucet.rinkeby.io">https://faucet.rinkeby.io</ulink>
+		</section>
+	</section>
 
 	<section id="ethereum.jsonrpc">
 		<title>jsonrpc 原生交口调用</title>
@@ -889,21 +898,19 @@ neo@MacBook-Pro ~ % curl -XPOST -H "Accept: application/json" -H "Content-Type: 
 		</screen>
 	</section>
 
-	<section id="summary">
-		<title>总结</title>
-		<section id="example.single">
-			<title>单机多实例演示</title>
-			<para>在没有条件安装虚拟机也没有多台服务器的情况下我们可以使用一台服务器运行多个实例的方法也可以实现多个节点运行环境。</para>
-			<screen>
+	<section id="example.single">
+		<title>单机多实例演示</title>
+		<para>在没有条件安装虚拟机也没有多台服务器的情况下我们可以使用一台服务器运行多个实例的方法也可以实现多个节点运行环境。</para>
+		<screen>
 			<![CDATA[
 cd ~
 mkdir -p ethereum
 cd ethereum
 mkdir data{1,2}
 			]]>
-			</screen>
-			<para>创建文件 genesis.json</para>
-			<screen>
+		</screen>
+		<para>创建文件 genesis.json</para>
+		<screen>
 			<![CDATA[
 {
   "nonce": "0x0000000000000042",
@@ -923,17 +930,17 @@ mkdir data{1,2}
   "alloc": { }
 }			
 			]]>
-			</screen>
-			<section>
-				<title>实例一</title>
-				<screen>
+		</screen>
+		<section>
+			<title>实例一</title>
+			<screen>
 				<![CDATA[
 geth --datadir ~/ethereum/data1 init genesis.json
 geth --datadir="~/ethereum/data1" --networkid 123456 --port 30301 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --rpcport 8541		
 				]]>
-				</screen>
-				<para>启动后终端输出</para>
-				<screen>
+			</screen>
+			<para>启动后终端输出</para>
+			<screen>
 				<![CDATA[
 neo@netkiller ~/ethereum % geth --datadir ~/ethereum/data1 init genesis.json
 WARN [02-02|22:09:56] No etherbase set and no accounts found as default 
@@ -965,29 +972,29 @@ INFO [02-02|22:36:05] RLPx listener up                         self=enode://5343
 INFO [02-02|22:36:05] Mapped network port                      proto=udp extport=30301 intport=30301 interface="UPNP IGDv1-IP1"
 INFO [02-02|22:36:07] Mapped network port                      proto=tcp extport=30301 intport=30301 interface="UPNP IGDv1-IP1"
 				]]>
-				</screen>
-			</section>
-			<section>
-				<title>实例二</title>
-				<screen>
+			</screen>
+		</section>
+		<section>
+			<title>实例二</title>
+			<screen>
 				<![CDATA[
 geth --datadir ~/ethereum/data2 init genesis.json
 geth --datadir="~/ethereum/data2" --networkid 123456 --port 30302 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --rpcport 8542		
 				]]>
-				</screen>
-				<para>启动后控制台输出与实例一类似</para>
-			</section>
-			<section>
-				<title>添加节点</title>
-				<para>开启一个新终端窗口，运行下面命令查看节点一的 enode 字符串</para>
-				<screen>
+			</screen>
+			<para>启动后控制台输出与实例一类似</para>
+		</section>
+		<section>
+			<title>添加节点</title>
+			<para>开启一个新终端窗口，运行下面命令查看节点一的 enode 字符串</para>
+			<screen>
 				<![CDATA[
 geth --exec 'admin.nodeInfo.enode' attach ethereum/data1/geth.ipc
 "enode://53433417f11d1d9a17f155cbaad2c4ec375af7b141e2989f049b572fc3f856d78f254e58fa82ed6eab48a16b7d625527214522ec0fd3e3af030b5b8dfdadc062@[::]:30301?discport=0"				
 				]]>
-				</screen>
-				<para>进入节点二，并连接到节点一。</para>
-				<screen>
+			</screen>
+			<para>进入节点二，并连接到节点一。</para>
+			<screen>
 				<![CDATA[
 neo@netkiller ~ % geth attach ethereum/data2/geth.ipc
 Welcome to the Geth JavaScript console!
@@ -1003,9 +1010,9 @@ true
 
 
 				]]>
-				</screen>
-				<para>查看节点</para>
-				<screen>
+			</screen>
+			<para>查看节点</para>
+			<screen>
 				<![CDATA[
 > admin.peers
 [{
@@ -1025,29 +1032,29 @@ true
     }
 }]
 				]]>
-				</screen>
-				<para>至此，节点已经添加完毕。</para>
-				<screen>
+			</screen>
+			<para>至此，节点已经添加完毕。</para>
+			<screen>
 				<![CDATA[
 > exit				
 				]]>
-				</screen>
-				<para>退出</para>
-			</section>
-			<section>
-				<title>节点测试</title>
-				<para>这里我们实现两个节点间的以太币转账。</para>
-				<para>现在两个节点上都没有任何账号</para>
-				<screen>
+			</screen>
+			<para>退出</para>
+		</section>
+		<section>
+			<title>节点测试</title>
+			<para>这里我们实现两个节点间的以太币转账。</para>
+			<para>现在两个节点上都没有任何账号</para>
+			<screen>
 				<![CDATA[
 neo@netkiller ~ % geth --exec 'personal.listAccounts' attach ethereum/data1/geth.ipc                                        
 []
 neo@netkiller ~ % geth --exec 'personal.listAccounts' attach ethereum/data2/geth.ipc
 []
 				]]>
-				</screen>
-				<para>在两个节点上分别创建两个账号，一个是矿工账号，另一个是普通账号。</para>
-				<screen>
+			</screen>
+			<para>在两个节点上分别创建两个账号，一个是矿工账号，另一个是普通账号。</para>
+			<screen>
 				<![CDATA[
 neo@netkiller ~ % geth --exec 'personal.newAccount("abc123")' attach ethereum/data1/geth.ipc
 "0x5ad227e8d7e460713c78eebbe558473571edae72"
@@ -1069,16 +1076,16 @@ neo@netkiller ~ % geth --exec 'personal.newAccount("abc123")' attach ethereum/da
 neo@netkiller ~ % geth --exec 'personal.listAccounts' attach ethereum/data2/geth.ipc 
 ["0xa6df3e3c141e27726f4aeb21a5dab2e5c76c9565", "0xa66c7b8b1c26856d284a0b962385babe02caa51d"]
 				]]>
-				</screen>
-				<para>启动挖矿</para>
-				<screen>
+			</screen>
+			<para>启动挖矿</para>
+			<screen>
 				<![CDATA[
 geth --exec 'miner.start(1)' attach ethereum/data1/geth.ipc 
 geth --exec 'miner.start(1)' attach ethereum/data2/geth.ipc 
 				]]>
-				</screen>
-				<para>如果正常运行，两个节点上的矿工账号都会有一定的以太币。而普通账号额度应该为零。</para>
-				<screen>
+			</screen>
+			<para>如果正常运行，两个节点上的矿工账号都会有一定的以太币。而普通账号额度应该为零。</para>
+			<screen>
 				<![CDATA[
 neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[0])' attach ethereum/data1/geth.ipc
 299438256000000000000
@@ -1092,9 +1099,9 @@ neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/
 neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/data2/geth.ipc
 0				
 				]]>
-				</screen>
-				<para>我们尝试从节点一矿工账号向节点二上的普通用户转账。</para>
-				<screen>
+			</screen>
+			<para>我们尝试从节点一矿工账号向节点二上的普通用户转账。</para>
+			<screen>
 				<![CDATA[
 neo@netkiller ~ % geth attach ethereum/data1/geth.ipc                               
 Welcome to the Geth JavaScript console!
@@ -1132,26 +1139,26 @@ true
     value: 1000000000000000000
 }]
 				]]>
-				</screen>
-				<para>稍后一会，当使用 eth.pendingTransactions 查看挂起交易为空的时候，表示已经处理完毕。这时退出控制台。
-				</para>
-				<screen>
+			</screen>
+			<para>稍后一会，当使用 eth.pendingTransactions 查看挂起交易为空的时候，表示已经处理完毕。这时退出控制台。
+			</para>
+			<screen>
 				<![CDATA[
 > eth.pendingTransactions
 []
 > exit				
 				]]>
-				</screen>
-				<para>现在查看节点二上的第二个普通账号余额</para>
-				<screen>
+			</screen>
+			<para>现在查看节点二上的第二个普通账号余额</para>
+			<screen>
 				<![CDATA[
 neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/data2/geth.ipc
 1000000000000000000
 				]]>
-				</screen>
-				<para>转账成功</para>
-				<para>现在我们从节点二上的普通用户向节点一上的普通用户转账。</para>
-				<screen>
+			</screen>
+			<para>转账成功</para>
+			<para>现在我们从节点二上的普通用户向节点一上的普通用户转账。</para>
+			<screen>
 				<![CDATA[
 neo@netkiller ~ % geth attach ethereum/data2/geth.ipc                                        
 Welcome to the Geth JavaScript console!
@@ -1172,18 +1179,21 @@ true
 []
 > exit		
 				]]>
-				</screen>
-				<para>查看两个普通账号的余额</para>
-				<screen>
+			</screen>
+			<para>查看两个普通账号的余额</para>
+			<screen>
 				<![CDATA[
 neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/data1/geth.ipc
 100000000000000000
 neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/data2/geth.ipc
 899622000000000000
 				]]>
-				</screen>
-			</section>
+			</screen>
 		</section>
+	</section>
+	<section id="summary">
+		<title>总结</title>
+
 	</section>
 
 </chapter>
