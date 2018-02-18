@@ -2,6 +2,7 @@
 <!ENTITY chapter.ethereum.xml				SYSTEM "chapter.ethereum.xml">
 <!ENTITY chapter.ethereum.console.xml		SYSTEM "chapter.ethereum.console.xml">
 <!ENTITY chapter.ethereum.solidity.xml		SYSTEM "chapter.ethereum.solidity.xml">
+<!ENTITY chapter.ethereum.devel.xml			SYSTEM "chapter.ethereum.devel.xml">
 <!ENTITY chapter.ethereum.wallet.xml			SYSTEM "chapter.ethereum.wallet.xml">
 <!ENTITY chapter.ethereum.coin.xml			SYSTEM "chapter.ethereum.coin.xml">
 <!ENTITY chapter.ethereum.faq.xml			SYSTEM "chapter.ethereum.faq.xml">
