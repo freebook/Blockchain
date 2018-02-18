@@ -457,14 +457,235 @@ msg.sender : 执行合约的地址
 		</screen>
 	</section>
 	<section id="solidity.type">
-		<title>数据类型</title>
-		<literallayout>
+		<title>数据类型</title>		
+		<section id="solidity.type.integer">
+			<title>数值型</title>
+			<para>int/uint：变长的有符号或无符号整型。变量支持的步长以8递增，支持从uint8到uint256，以及int8到int256。需要注意的是，uint和int默认代表的是uint256和int256。</para>
+			<para>有符号整型能够表示负数的代价是其能够存储正数的范围的缩小，因为其约一半的数值范围要用来表示负数。如：uint8的存储范围为0 ~ 255，而int8的范围为-127 ~ 127</para>
+			<para>支持的运算符:</para>
+			<literallayout>
 			<![CDATA[
-uint 无符号整形（256bits 无符号整数）
-string 字符串类型	
+比较：<=，<，==，!=，>=，>，返回值为bool类型。
+
+位运算符：&，|，（^异或），（~非）。
+
+数学运算：+，-，一元运算+，*，/，（%求余），（**次方），（<<左移），（>>右移）。
 			]]>
-		</literallayout>
-		<section>
+			</literallayout>	
+			<para>小数由"."组成，在他的左边或右边至少要包含一个数字。如"1."，".1"，"1.3"均是有效的小数。</para>
+			<section id="">
+				<title>加 +，减 -，乘 *，除 ／ 运算演示</title>
+				<programlisting>
+				<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract Math {
+
+  function mul(int a, int b) public pure returns (int) {
+
+      int c = a * b;
+      return c;
+  }
+
+  function div(int a, int b) public pure  returns (int) {
+
+      int c = a / b;
+      return c;
+  }
+
+  function sub(int a, int b) public pure  returns (int) {
+      
+      return a - b;
+  }
+
+  function add(int a, int b) public pure  returns (int) {
+
+      int c = a + b;
+      return c;
+  }
+}				
+				]]>
+				</programlisting>
+			</section>
+			<section>
+				<title>求余 %</title>
+				<programlisting>
+				<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract Math {
+
+  function m(int a, int b) public pure returns (int) {
+
+      int c = a % b;
+      return c;
+  }
+}				
+				]]>
+				</programlisting>
+			</section>
+			<section id="">
+				<title>幂运算</title>
+				<programlisting>
+				<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract Math {
+
+  function m(uint a, uint b) public pure returns (uint) {
+
+      uint c = a**b;
+      return c;
+  }
+
+}				
+				]]>
+				</programlisting>
+			</section>
+			<section>
+				<title>与 &amp;，| 或，非 ～，^ 异或</title>
+				<programlisting>
+				<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract Math {
+
+  function yu() public pure returns (uint) {
+
+      uint a = 3; // 0b0011
+      uint b = 4; // 0b0100
+    
+      uint c = a & b; // 0b0000
+      return c; // 0
+  }
+
+  function huo() public pure returns (uint) {
+
+      uint a = 3; // 0b0011
+      uint b = 4; // 0b0100
+    
+      uint c = a | b; // 0b0111
+      return c; // 7
+  }
+
+  function fei() public pure returns (uint8) {
+
+      uint8 a = 3; // 0b00000011
+      uint8 c = ~a; // 0b11111100
+      return c; // 0
+  }
+  
+  function yihuo() public pure returns (uint) {
+
+      uint a = 3; // 0b0011
+      uint b = 4; // 0b0100
+    
+      uint c = a ^ b; // 0b0111
+      return c; // 252
+  }
+}
+				]]>
+				</programlisting>
+			</section>
+			<section>
+				<title>位移</title>
+				<programlisting>
+				<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+
+contract Math {
+
+  function leftShift() public pure returns (uint8) {
+
+      uint8 a = 8; // 0b00001000
+      uint8 c = a << 2; // 0b00100000
+      return c; // 32
+  }
+
+  function rightShift() public pure returns (uint8) {
+
+      uint8 a = 8; // 0b00001000
+      uint8 c = a >> 2; // 0b00000010
+      return c; // 2
+  }
+
+}
+				]]>
+				</programlisting>
+				<literallayout>
+				<![CDATA[
+a << n 表示a的二进制位向左移动n位，在保证位数没有溢出的情况下等价于 a乘以2的n次方。
+a >> n 表示a的二进制位向右移动n位，在保证位数没有溢出的情况下等价于 a除以2的n次方。				
+				]]>
+				</literallayout>
+			</section>
+		</section>
+		<section id="solidity.type.string">
+			<title>字符串</title>
+			<para>string 字符串类型</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.18;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract StringTest {
+
+    string name;
+    
+    function StringTest() public{
+        name = "default";
+    }
+    function setName(string _name) public{
+        name = _name;
+    }
+    function getName() public view returns(string){
+        return name;
+    }
+}			
+			]]>
+			</programlisting>
+			<section id="">
+				<title>获取字符串长度</title>
+				<para>在 Solidity 中想获得字符串长度必须转成 bytes 类型然后使用 length 属性获得。bytes(string).length</para>
+				<programlisting>
+				<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract StringTest {
+    
+    
+    string public name = "http://www.netkiller.cn";
+    
+
+    function nameBytes() public constant returns (bytes) {
+        
+        return bytes(name);
+    }
+    
+    function nameLength() public constant returns (uint) {
+        
+        return bytes(name).length;
+    }
+
+    function length(string _name) public pure returns (uint) {
+        
+        return bytes(_name).length;
+    }
+    
+}
+				]]>
+				</programlisting>
+				<tip><para>注意：汉字采用UTF8编码，一个汉字等于3个字节，当你使用 length("景峯") 测试时会返回长度 6。</para></tip>
+			</section>
+		</section>
+		<section id="solidity.type.array">
 			<title>数组</title>
 			<programlisting>
 				<![CDATA[
@@ -730,6 +951,12 @@ contract C {
 }			
 			]]>
 		</programlisting>
+		<section id="variable.storage">
+			<title>storage</title>
+		</section>
+		<section id="variable.memory">
+			<title>memory</title>
+		</section>
 	</section>
 	<section id="solidity.function">
 		<title>函数</title>
