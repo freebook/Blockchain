@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="web3.js">
-	<title>web3.js</title>
-
+	<title>web3.js - 1.0.0</title>
+	<para>注意本章采用 web3.js v1.0.0 版本，这个版本仍在beta阶段，还没有 release。</para>
+	<para>你看到网上很多实例，安照例子的步骤操作，发现无法成功，很可能跟版本有关。v1.0.0
+		与之前的版本还是有很大差异，所以选择版本很重要。因为 v1.0.0 很快就会 release 所以本章不会在用早起版本举例。
+	</para>
 	<section id="web3.js.setup">
 		<title>开发环境</title>
 		<screen>
-	<![CDATA[
+		<![CDATA[
 npm init
 npm install web3 --save
 npm install solc
-	]]>
+		]]>
 		</screen>
 	</section>
 
@@ -51,20 +54,163 @@ pm2 start geth.json
 	</section>
 	<section id="web3.js.connect">
 		<title>连接到以太坊客户端</title>
-		<programlisting>
-		<![CDATA[
+		<section>
+			<title>http 方式</title>
+			<programlisting>
+			<![CDATA[
 var Web3 = require('web3');
-var web3 = new Web3();
+var web3 = new Web3('http://localhost:8545');
+			]]>
+			</programlisting>
+			<para>查看连接状态</para>
+			<screen>
+			<![CDATA[
+> web3.currentProvider
+HttpProvider {
+  host: 'http://localhost:8545',
+  timeout: 0,
+  connected: true,
+  headers: undefined }			
+			]]>
+			</screen>
+			<para>connected: true 表示连接成功。</para>
+		</section>
+		<section id="">
+			<title>WebSocket 方式</title>
+			<screen>
+			<![CDATA[
+var Web3 = require('web3');
+var web3 = new Web3(Web3.givenProvider || 'ws://remotenode.com:8546');
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>IPC 方式</title>
+			<screen>
+			<![CDATA[
+// Using the IPC provider in node.js
+var net = require('net');
 
-//console.log(web3);
-web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+var web3 = new Web3('/Users/myuser/Library/Ethereum/geth.ipc', net); // mac os path
+			]]>
+			</screen>
+		</section>
+	</section>
+	<section id="web3.eth">
+		<title>web3.eth</title>
+		<section id="">
+			<title>查看账号列表</title>
+			<screen>
+			<![CDATA[
+var Web3 = require('web3');
+var web3 = new Web3('http://localhost:8545');
 
-var coinbase = web3.eth.coinbase;
-var balance = web3.eth.getBalance(coinbase);
+web3.eth.getAccounts().then(console.log);		
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title></title>
+			<screen>
+			<![CDATA[
+var Web3 = require('web3');
+var web3 = new Web3('http://localhost:8545');
+			
+web3.eth.getCoinbase().then(console.log);			
+			]]>
+			</screen>
+		</section>
+	</section>
+	<section id="web3.example">
+		<title>实用例子</title>
+		<section id="">
+			<title>数据写入到区块链中</title>
+			<para>做一笔交易，并写入数据到区块链中</para>
+			<screen>
+			<![CDATA[
+let Web3 = require("web3");
+let fs = require("fs");
+let web3 = new Web3("http://localhost:8545");
 
-console.log(coinbase);	
-		]]>
-		</programlisting>
+let log = {
+    time:(new Date).getTime(),
+    type:"info",
+    msg:"Web3 Test!!!"
+};
+let str = JSON.stringify(log);
+console.log(str);
+let data = Buffer.from(str).toString('hex');
+data = '0x'+data;
+console.log(data);
+
+//将数据写入到交易中
+let coinbase = "0x5c18a33df2cc41a1beddc91133b8422e89f041b7"
+console.log(coinbase)
+let user1 = "0xc2b9e316f246d35052118e51b55c75bfe99d247e";
+web3.eth.personal.unlockAccount(coinbase, "chen1980");
+let address = web3.eth.sendTransaction({
+    from:coinbase,
+    to:user1,
+    value:'0x00',
+    data:data
+},function(error, hash){
+    console.log(hash);
+});
+			]]>
+			</screen>
+			<para>运行上面程序，会产生一个交易，记下hash值，然后启动挖矿。</para>
+			<screen>
+			<![CDATA[
+> miner.start();
+null
+# 过一段时间后停止
+> miner.stop();
+true
+			]]>
+			</screen>
+			<para>然后查看这比交易</para>
+			<screen>
+			<![CDATA[
+let Web3 = require("web3");
+let fs = require("fs");
+let web3 = new Web3("http://localhost:8545");
+let address ="0xb15681eb4bdb6b9670d305fb341ebbc95d45c2ede0ea5034ef432b74f30b1b4f";
+//从交易地址获取数据
+web3.eth.getTransaction(address).then(console.log);
+
+web3.eth.getTransaction(address,function(error, result){
+    //console.log(result);
+    inputData = result.input;
+    res_str = Buffer.from(inputData.replace('0x',''),'hex').toString();
+    res_json = JSON.parse(res_str);
+    console.log(res_json);
+});			
+			]]>
+			</screen>
+			<para>结果输出</para>
+			<screen>
+			<![CDATA[
+{ blockHash: '0x78dacc2af60900d2e4cae90b71e27446e6e883df36c53f21cbc9e071f7a586f4',
+  blockNumber: 1258,
+  from: '0x5c18a33DF2cc41a1bedDC91133b8422e89f041B7',
+  gas: 90000,
+  gasPrice: '18000000000',
+  hash: '0xb15681eb4bdb6b9670d305fb341ebbc95d45c2ede0ea5034ef432b74f30b1b4f',
+  input: '0x7b2274696d65223a313531383933313435323537372c2274797065223a22696e666f222c226d7367223a22576562332054657374212121227d',
+  nonce: 4,
+  to: '0xc2b9e316F246d35052118E51B55C75BfE99d247e',
+  transactionIndex: 0,
+  value: '0',
+  v: '0x41',
+  r: '0x7fcd86c7fd975a0e98bd0e61a99da950b0155cd6c4581fefa4defbdcd404a930',
+  s: '0x16f14ce1fbfadb9d59f343f8ac235cdd73dcedec5db1025ef91206b8bb17a827' }
+{ time: 1518931452577, type: 'info', msg: 'Web3 Test!!!' }
+			]]>
+			</screen>
+			<para>{ time: 1518931452577, type: 'info', msg: 'Web3 Test!!!' }
+				就是保存在区块链中的数据。</para>
+		</section>
+
 	</section>
 </chapter>
 

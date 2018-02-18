@@ -2,6 +2,7 @@
 <part id="index"><?dbhtml dir="ethereum" ?>
 	<title>Ethereum</title>
 	&chapter.ethereum.xml;
+	&chapter.ethereum.console.xml;
 	&chapter.ethereum.solidity.xml;
 	&chapter.ethereum.wallet.xml;
 	&chapter.ethereum.faq.xml;
