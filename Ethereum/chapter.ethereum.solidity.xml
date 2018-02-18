@@ -905,6 +905,73 @@ contract MappingExample {
 			</programlisting>
 		</section>
 	</section>
+	<section id="solidity.unit">
+		<title>单位</title>
+		<section id="ether.units">
+			<title>货币单位（Ether Units）</title>
+			<literallayout>
+			<![CDATA[
+kwei (1000 Wei)
+mwei (1000 KWei)
+gwei (1000 mwei)
+szabo (1000 gwei)
+finney (1000 szabo)
+ether (1000 finney)
+
+以太币单位其实是密码学家的名字，是以太坊创始人为了纪念他们在数字货币的领域的贡献。他们分别是：
+wei: Wei Dai 戴伟 密码学家 ，发表 B-money
+finney: Hal Finney 芬尼 密码学家、工作量证明机制（POW）提出
+szabo: Nick Szabo 尼克萨博 密码学家、智能合约的提出者
+			]]>
+			</literallayout>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.19;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract UnitTest {
+    function tf() public pure returns (bool) {
+      if (1 ether == 1000 finney){
+          return true;
+      }
+      return false;
+    }
+    
+    function ts() public pure returns (bool) {
+      if (1 ether == 1000000 szabo){
+          return true;
+      }
+      return false;
+    }
+    
+    function tgw() public pure returns (bool) {
+      if (1 ether == 1000000000000000000 wei){
+          return true;
+      }
+      return false;
+    }
+}			
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>时间单位（Time Units）</title>
+			<para>时间单位: seconds, minutes, hours, days, weeks, years均可做为后缀，并进行相互转换，规则如下：</para>
+			<literallayout>
+			<![CDATA[
+1 == 1 seconds (默认是seconds为单位)
+1 minutes == 60 seconds
+1 hours == 60 minutes
+1 days == 24 hours
+1 weeks = 7 days
+1 years = 365 days
+
+由于无法预测闰秒，必须由外部的预言（oracle）来更新从而得到一个精确的日历库。
+所以使用这些单位进行日期计算需要特别小心，因为不是每年都是365天，且并不是每天都有24小时，因为还有闰秒。		
+			]]>
+			</literallayout>
+		</section>
+	</section>
 	<section id="solidity.variable">
 		<title>变量</title>
 		<programlisting>
