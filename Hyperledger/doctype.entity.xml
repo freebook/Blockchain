@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY part.hyperledger.xml				SYSTEM "part.hyperledger.xml">
 <!ENTITY chapter.hyperledger.xml				SYSTEM "chapter.hyperledger.xml">
 <!ENTITY chapter.hyperledger.chaincode.xml	SYSTEM "chapter.hyperledger.chaincode.xml">
 <!ENTITY chapter.hyperledger.cluster.xml		SYSTEM "chapter.hyperledger.cluster.xml">

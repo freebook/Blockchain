@@ -339,7 +339,7 @@ output/HelloWorld.abi
 		<para>将下面代码粘贴到 </para>
 		<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 
 contract HelloWorld
 {
@@ -442,20 +442,7 @@ undefined
 			]]>
 		</screen>
 	</section>
-	<section id="solidity.type.public">
-		<title>修饰符</title>
-		<screen>
-			<![CDATA[
-public ： 函数可见性
-
-payable ：可支付的函数修饰符，没有该修饰符无法接受转账操作。
-
-msg.value ：执行合约时，转账的eth数量，以wei为单位。
-
-msg.sender : 执行合约的地址			
-			]]>
-		</screen>
-	</section>
+	
 	<section id="solidity.type">
 		<title>数据类型</title>		
 		<section id="solidity.type.integer">
@@ -473,11 +460,11 @@ msg.sender : 执行合约的地址
 			]]>
 			</literallayout>	
 			<para>小数由"."组成，在他的左边或右边至少要包含一个数字。如"1."，".1"，"1.3"均是有效的小数。</para>
-			<section id="">
+			<section>
 				<title>加 +，减 -，乘 *，除 ／ 运算演示</title>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract Math {
@@ -512,7 +499,7 @@ contract Math {
 				<title>求余 %</title>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract Math {
@@ -526,11 +513,11 @@ contract Math {
 				]]>
 				</programlisting>
 			</section>
-			<section id="">
+			<section>
 				<title>幂运算</title>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract Math {
@@ -549,7 +536,7 @@ contract Math {
 				<title>与 &amp;，| 或，非 ～，^ 异或</title>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract Math {
@@ -595,7 +582,7 @@ contract Math {
 				<title>位移</title>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 
@@ -628,10 +615,10 @@ a >> n 表示a的二进制位向右移动n位，在保证位数没有溢出的�
 		</section>
 		<section id="solidity.type.string">
 			<title>字符串</title>
-			<para>string 字符串类型</para>
+			<para>string 字符串类型，字符串可以通过""或者''来定义字符串的值</para>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract StringTest {
@@ -650,12 +637,12 @@ contract StringTest {
 }			
 			]]>
 			</programlisting>
-			<section id="">
+			<section>
 				<title>获取字符串长度</title>
 				<para>在 Solidity 中想获得字符串长度必须转成 bytes 类型然后使用 length 属性获得。bytes(string).length</para>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract StringTest {
@@ -710,6 +697,96 @@ bool b = !a;
 			]]>
 			</screen>
 		</section>
+		<section id="solidity.type.bytes">
+			<title>字节类型</title>
+			<screen>
+			<![CDATA[
+
+bytes names = "netkiller"
+bytes9 _names = "netkiller";
+bytes(name)[0] = 0xFF;
+
+bytes memory _tmp = new bytes(3);
+_tmp[0] = 0x4e;
+_tmp[1] = 0x65;
+_tmp[2] = 0x6f;
+			]]>
+			</screen>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.20;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract BytesTest {
+    
+    bytes names = "netkiller";
+    
+    function get() public view returns (bytes) {
+        
+        return names;
+    }
+    function getBytes2() public pure returns (bytes2) {
+        bytes9 _names = "netkiller";
+        return bytes2(_names);
+    }
+    function bytesToString() public constant returns (string) {
+        
+        return string(names);
+    }
+   
+    function copyBytes(bytes b) public pure returns (bytes) {
+       
+       bytes memory tmp = new bytes(b.length);
+       
+       for(uint i = 0; i < b.length; i++) {
+           
+           tmp[i] = b[i];
+       }
+       
+       return tmp;
+    }
+    
+    function bytesToString2() public pure returns (string) {
+        bytes memory _tmp = new bytes(3);
+        _tmp[0] = 0x4e;
+        _tmp[1] = 0x65;
+        _tmp[2] = 0x6f;
+        return string(_tmp);
+    }
+   
+}			
+			]]>
+			</programlisting>
+			<para>.length可以动态修改字节数组的长度</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.20;
+//Author: netkiller <netkiller@msn.com>
+//Home: http://www.netkiller.cn
+contract BytesTest2 {
+    
+    // 初始化一个两个字节空间的字节数组
+    bytes public array = new bytes(2);
+    
+    // 设置修改字节数组的长度
+    function setLength(uint _len) public {
+        array.length = _len;
+    }
+    
+    // 返回字节数组的长度
+    function getLength() constant public returns (uint) {
+        return array.length;
+    }
+    
+    // 往字节数组中添加字节
+    function pushArray(byte _tmp) public{
+        array.push(_tmp);
+    }
+    
+}			
+			]]>
+			</programlisting>
+		</section>
 		<section id="solidity.type.array">
 			<title>数组</title>
 			<programlisting>
@@ -730,7 +807,7 @@ uint [2][3] T = [[1,2],[3,4],[5,6]];
 			</programlisting>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract ArrayTest {
@@ -762,7 +839,7 @@ contract ArrayTest {
 				<para>.length 属性是活动数组的尺寸</para>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract ArrayLength {
@@ -783,7 +860,7 @@ contract ArrayLength {
 				<para>通过 push 可以向数组中添加数据</para>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract ArrayLength {
@@ -812,7 +889,7 @@ contract ArrayLength {
 			<para>访问枚举方式 State.New 实际等于数字 0</para>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract EnumTest {
@@ -864,7 +941,7 @@ contract Purchase {
 			<para>演示例子</para>
 			<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract Students {
@@ -896,7 +973,7 @@ address public minter;
 			<para>下面是一个获得账号余额的例子。</para>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract AddressTest{
@@ -926,7 +1003,7 @@ contract AddressTest{
 			<para>mapping 就是图数据结构，由 key 和 value 组成。</para>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract MappingExample {
@@ -966,7 +1043,7 @@ szabo: Nick Szabo 尼克萨博 密码学家、智能合约的提出者
 			</literallayout>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract UnitTest {
@@ -1030,7 +1107,7 @@ int num;
 		<para>变量赋值</para>
 		<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 
 contract C {
     uint[] data;
@@ -1058,8 +1135,33 @@ contract C {
 }			
 			]]>
 		</programlisting>
+		<section>
+			<title>全局变量</title>
+			<literallayout>
+			<![CDATA[
+block.blockhash(uint blockNumber) returns (bytes32): 某个区块的区块链hash值
+block.coinbase (address): 当前区块的挖矿地址
+block.difficulty (uint): 当前区块的难度
+block.gaslimit (uint): 当前区块的gaslimit
+block.number (uint): 当前区块编号
+block.timestamp (uint): 当前区块时间戳
+msg.data (bytes): 参数数据
+msg.gas (uint): 剩余的gas
+msg.sender (address): 当前发送消息的地址，执行合约的地址。
+msg.sig (bytes4): 方法ID
+msg.value (uint): 执行合约时，转账的eth数量，以wei为单位。
+now (uint): 时间戳，等价于block.timestamp (uint)
+tx.gasprice (uint): 交易的gas单价
+tx.origin (address):交易发送地址		
+			]]>
+			</literallayout>
+			<programlisting>
+			<![CDATA[]]>
+			</programlisting>
+		</section>
 		<section id="variable.storage">
 			<title>storage</title>
+			<para>使用 storage 这个关键字时，当前的函数必须是internal或者private类型。</para>
 		</section>
 		<section id="variable.memory">
 			<title>memory</title>
@@ -1209,6 +1311,43 @@ contract owned {
 	</section>
 	<section id="solidity.oop">
 		<title>面向对象编程</title>
+		<section>
+			<title>修饰符</title>
+			<screen>
+			<![CDATA[
+internal： 状态变量默认为internal类型，变量可供外部和子合约调用，函数和private类型的函数一样，智能合约自己内部调用		
+			
+public ： 函数可见性，可供外部、子合约、合约内部访问
+
+private: 智能合约自己内部调用
+
+payable ：可支付的函数修饰符，没有该修饰符无法接受转账操作。
+
+		
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>错误处理</title>
+			<literallayout>
+			<![CDATA[
+
+
+assert(bool condition)：不满足条件，将抛出异常
+
+require(bool condition)：不满足条件，将抛出异常
+
+revert() 抛出异常			
+			]]>
+			</literallayout>
+			<programlisting>
+			<![CDATA[
+if(msg.sender != owner) { revert(); }
+assert(msg.sender == owner);
+require(msg.sender == owner);			
+			]]>
+			</programlisting>
+		</section>
 		<section id="solidity.is">
 			<title>继承</title>
 			<para>例子 mortal 继承 owned</para>
@@ -1242,7 +1381,7 @@ contract mortal is owned {
 			<title>Voting</title>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 //author: netkiller <netkiller@msn.com>
 //homepage: http://www.netkiller.cn
 contract Voting {
