@@ -536,7 +536,7 @@ truffle(development)>
 		</section>
 		<section id="truffle.create">
 			<title>create</title>
-			<section id="">
+			<section>
 				<title>contract 创建合约</title>
 				<screen>
 				<![CDATA[
@@ -552,7 +552,7 @@ contract MyContract {
 				]]>
 				</screen>
 			</section>
-			<section id="">
+			<section>
 				<title>test 创建单元测试</title>
 				<screen>
 				<![CDATA[
@@ -570,7 +570,7 @@ contract('MyTest', function(accounts) {
 				</screen>
 			</section>
 		</section>
-		<section id="">
+		<section>
 			<title>test</title>
 			<para>运行测试</para>
 			<screen>
@@ -608,6 +608,52 @@ neo@MacBook-Pro ~/ethereum/truffle % truffle test test/migrations.js
 truffle watch			
 			]]>
 			</screen>
+		</section>
+	</section>
+	<section id="truffle.contract">
+		<title>合约开发</title>
+		<section id="">
+			<title>构造方法</title>
+			<para>在 Truffer 中部署构造方法需要参数传递例子如下，MyContract 需要传递参数 _name：</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.19;
+
+contract MyContract {
+
+    string name;
+
+    function MyContract(string _name) public{
+        name = _name;
+    }
+
+    function getName() public view returns (string) {
+        return name;
+    }
+}
+			]]>
+			</programlisting>
+			<para>migrations/3_initial_migration.js</para>
+			<programlisting>
+			<![CDATA[
+var MyContract = artifacts.require("./MyContract.sol");
+
+module.exports = function(deployer) {
+  deployer.deploy(MyContract,"Netkiller");
+};			
+			]]>
+			</programlisting>
+			<para>给构造方法传递变量的方法是 deployer.deploy(MyContract,arg1, arg2, ...); arg1 是传递的参数。</para>
+			<para>多个合约传递方法是：</para>
+			<programlisting>
+			<![CDATA[
+deployer.deploy([
+  [ContractA, arg1, arg2, ...],
+  ContractB,
+  [ContractC, arg1]
+]);			
+			]]>
+			</programlisting>
 		</section>
 	</section>
 </chapter>	

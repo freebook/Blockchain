@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="web3.js">
+<chapter id="index"><?dbhtml dir="web3" ?>
 	<title>web3.js - 1.0.0</title>
 	<!-- http://web3js.readthedocs.io/en/1.0/index.html -->
 	<para>注意本章采用 web3.js v1.0.0 版本，这个版本仍在beta阶段，还没有 release。</para>

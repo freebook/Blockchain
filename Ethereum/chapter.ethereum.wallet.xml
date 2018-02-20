@@ -54,7 +54,7 @@ Options:
 	</screen>
 
 
-	<graphic format="png" fileref="../images/ethereum/wallet/EthereumWallet.png" width="1024"
+	<graphic format="png" fileref="../../images/ethereum/wallet/EthereumWallet.png" width="1024"
 		srccredit="netkiller" />
 	<section id="">
 		<title>连接到钱包</title>
@@ -82,7 +82,7 @@ IPC endpoint opened: /Users/neo/Library/Ethereum/geth.ipc
 "/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --rpc http://localhost:8545				
 				]]>
 			</screen>
-			<graphic format="png" fileref="../images/ethereum/wallet/EthereumWalletTcp.png" width="1024" 
+			<graphic format="png" fileref="../../images/ethereum/wallet/EthereumWalletTcp.png" width="1024" 
 		srccredit="netkiller" />
 		</section>
 	</section>
