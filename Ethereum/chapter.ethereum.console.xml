@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="javascript.console">
+<chapter id="index"><?dbhtml dir="console" ?>
 	<title>JavaScript Console</title>
 	<section id="console.personal">
 		<title>personal 管理</title>

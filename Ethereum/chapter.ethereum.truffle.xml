@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="truffle" ?>
 	<title>Truffle v4.0.6</title>
+	<para>Truffle 是 solidity 开发框架</para>
 	<section id="init">
 		<title>Truffle 快速入门</title>
-		<para>Truffle 是 solidity 开发框架</para>
-		<section id="truffle.setup">
-			<title>安装 Truffle</title>
-			<screen>
+		<section>
+			<title>Ubuntu 环境</title>
+
+			<section id="truffle.setup">
+				<title>安装 Truffle</title>
+				<screen>
 			<![CDATA[
 # 安装 Nodejs
 curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
@@ -15,19 +18,19 @@ sudo apt-get install -y nodejs
 # 安装truffle
 sudo npm install -g truffle
 			]]>
-			</screen>
-			<para>由于truffle自带开发环境，所以本章不在使用 testrpc，如果仍需要testrpc请参考下面安装方法：</para>
-			<screen>
+				</screen>
+				<para>由于truffle自带开发环境，所以本章不在使用 testrpc，如果仍需要testrpc请参考下面安装方法：</para>
+				<screen>
 			<![CDATA[
 # 安装testrpc
 sudo npm install -g ethereumjs-testrpc			
 			]]>
-			</screen>
-		</section>
-		<section id="truffle.develop">
-			<title>启动开发环境</title>
-			<para>truffle 自带一个开发环境</para>
-			<screen>
+				</screen>
+			</section>
+			<section id="truffle.develop">
+				<title>启动开发环境</title>
+				<para>truffle 自带一个开发环境</para>
+				<screen>
 			<![CDATA[
 neo@netkiller ~/ethereum/truffle-project %  truffle develop
 Truffle Develop started at http://localhost:9545/
@@ -61,9 +64,9 @@ Mnemonic: candy maple cake sugar pudding cream honey rich smooth crumble sweet t
 truffle(develop)> 
 			
 			]]>
-			</screen>
-			<para>truffle develop 的作用于 testrpc 类似。</para>
-			<screen>
+				</screen>
+				<para>truffle develop 的作用于 testrpc 类似。</para>
+				<screen>
 			<![CDATA[
 neo@netkiller ~/ethereum/truffle-project % testrpc 
 EthereumJS TestRPC v6.0.3 (ganache-core: 2.0.2)
@@ -101,20 +104,20 @@ Base HD Path:  m/44'/60'/0'/0/{account_index}
 
 Listening on localhost:8545			
 			]]>
-			</screen>
-		</section>
-		<section id="truffle.init">
-			<title>创建项目</title>
-			<screen>
+				</screen>
+			</section>
+			<section id="truffle.init">
+				<title>创建项目</title>
+				<screen>
 			<![CDATA[
 cd ~/ethereum
 mkdir truffle-project
 cd truffle-project 
 truffle init			
 			]]>
-			</screen>
-			<para>操作演示</para>
-			<screen>
+				</screen>
+				<para>操作演示</para>
+				<screen>
 			<![CDATA[
 neo@netkiller ~/ethereum/truffle-project % truffle init
 Downloading...
@@ -140,9 +143,9 @@ neo@netkiller ~/ethereum/truffle-project % tree
 
 3 directories, 4 files			
 			]]>
-			</screen>
-			<para>目录结构简单说明如下：</para>
-			<literallayout>
+				</screen>
+				<para>目录结构简单说明如下：</para>
+				<literallayout>
 			<![CDATA[
 contract/ - Truffle默认的合约文件存放地址。
 migrations/ - 存放发布脚本文件
@@ -151,11 +154,11 @@ truffle.js - Truffle的配置文件
 
 app/ - 需要用户创建，应用文件运行的默认目录。			
 			]]>
-			</literallayout>
-		</section>
-		<section id="mycontracts">
-			<title>创建合约</title>
-			<programlisting>
+				</literallayout>
+			</section>
+			<section id="mycontracts">
+				<title>创建合约</title>
+				<programlisting>
 			<![CDATA[
 pragma solidity ^0.4.18;
 
@@ -181,8 +184,8 @@ contract Netkiller {
 }
 
 			]]>
-			</programlisting>
-			<programlisting>
+				</programlisting>
+				<programlisting>
 			<![CDATA[
 neo@netkiller ~/ethereum/truffle-project % vim migrations/2_initial_migration.js
 
@@ -192,21 +195,21 @@ module.exports = function(deployer) {
   deployer.deploy(Netkiller);
 };
 			]]>
-			</programlisting>
-		</section>
-		<section id="truffle.js">
-			<title>配置 Truffle</title>
-			<para>打开文件 truffle.js </para>
-			<programlisting>
+				</programlisting>
+			</section>
+			<section id="truffle.js">
+				<title>配置 Truffle</title>
+				<para>打开文件 truffle.js </para>
+				<programlisting>
 			<![CDATA[
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
 };			
 			]]>
-			</programlisting>
-			<para>修改为</para>
-			<screen>
+				</programlisting>
+				<para>修改为</para>
+				<screen>
 			<![CDATA[
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -222,22 +225,22 @@ module.exports = {
   		
 };	
 			]]>
-			</screen>
-		</section>
-		<section id="truffle.compile">
-			<title>编译智能合约</title>
-			<screen>
+				</screen>
+			</section>
+			<section id="truffle.compile">
+				<title>编译智能合约</title>
+				<screen>
 			<![CDATA[
 neo@netkiller ~/ethereum/truffle-project % truffle compile
 Compiling ./contracts/Migrations.sol...
 Compiling ./contracts/Netkiller.sol...
 Writing artifacts to ./build/contracts
 			]]>
-			</screen>
-			<para>truffle默认只会编译最后一次修改过的合约文件, 这是为了减少比重复编译。"--all"选项,可以强制编译所有文件。
-			</para>
-			<para>编译结果</para>
-			<screen>
+				</screen>
+				<para>truffle默认只会编译最后一次修改过的合约文件, 这是为了减少比重复编译。"--all"选项,可以强制编译所有文件。
+				</para>
+				<para>编译结果</para>
+				<screen>
 			<![CDATA[
 neo@netkiller ~/ethereum/truffle-project % find build 
 build
@@ -245,24 +248,25 @@ build/contracts
 build/contracts/Migrations.json
 build/contracts/Netkiller.json
 			]]>
-			</screen>
-		</section>
-		<section id="truffle.migrate">
-			<title>migrate</title>
-			<screen>
+				</screen>
+			</section>
+			<section id="truffle.migrate">
+				<title>migrate</title>
+				<screen>
 			<![CDATA[
 neo@netkiller ~/ethereum/truffle-project % truffle migrate      
 Using network 'development'.
 
 Network up to date.			
 			]]>
-			</screen>
+				</screen>
+			</section>
 		</section>
-	</section>
-	<section id="truffle.mac">
-		<title>Mac 环境</title>
-		<para>Mac 环境</para>
-		<screen>
+
+		<section id="truffle.mac">
+			<title>Mac 环境</title>
+			<para>Mac 环境</para>
+			<screen>
 		<![CDATA[
 neo@MacBook-Pro ~/ethereum/truffle % node --version
 v9.5.0
@@ -288,18 +292,18 @@ neo@MacBook-Pro ~/ethereum/truffle % truffle version
 Truffle v4.0.6 (core: 4.0.6)
 Solidity v0.4.19 (solc-js)		
 		]]>
-		</screen>
-		<para>创建项目并初始化</para>
-		<screen>
+			</screen>
+			<para>创建项目并初始化</para>
+			<screen>
 		<![CDATA[
 mkdir -p ~/ethereum/truffle
 cd 	ethereum/truffle
 truffle init	
 		]]>
-		</screen>
+			</screen>
 
-		<para>truffle 自带一个开发环境</para>
-		<screen>
+			<para>truffle 自带一个开发环境</para>
+			<screen>
 		<![CDATA[
 neo@netkiller ~/ethereum/truffle-project %  truffle develop
 Truffle Develop started at http://localhost:9545/
@@ -333,10 +337,10 @@ Mnemonic: candy maple cake sugar pudding cream honey rich smooth crumble sweet t
 truffle(develop)> 
 			
 		]]>
-		</screen>
+			</screen>
 
-		<para>创建合约文件 contracts/Greeter.sol</para>
-		<screen>
+			<para>创建合约文件 contracts/Greeter.sol</para>
+			<screen>
 		<![CDATA[
 pragma solidity ^0.4.20;
 
@@ -370,9 +374,9 @@ contract Greeter
 
 }		
 		]]>
-		</screen>
-		<para> 创建部署文件 migrations/2_initial_migration.js</para>
-		<screen>
+			</screen>
+			<para> 创建部署文件 migrations/2_initial_migration.js</para>
+			<screen>
 		<![CDATA[
 var Greeter = artifacts.require("./Greeter.sol");
 
@@ -380,18 +384,18 @@ module.exports = function(deployer) {
   deployer.deploy(Greeter);
 };
 		]]>
-		</screen>
-		<para>打开文件 truffle.js </para>
-		<programlisting>
+			</screen>
+			<para>打开文件 truffle.js </para>
+			<programlisting>
 			<![CDATA[
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
 };			
 			]]>
-		</programlisting>
-		<para>修改为</para>
-		<screen>
+			</programlisting>
+			<para>修改为</para>
+			<screen>
 			<![CDATA[
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -407,9 +411,9 @@ module.exports = {
   		
 };	
 			]]>
-		</screen>
-		<para>编译并部署合约</para>
-		<screen>
+			</screen>
+			<para>编译并部署合约</para>
+			<screen>
 		<![CDATA[
 neo@MacBook-Pro ~/ethereum/truffle % truffle compile          
 Compiling ./contracts/Greeter.sol...
@@ -434,9 +438,9 @@ Saving successful migration to network...
 Saving artifacts...
 		
 		]]>
-		</screen>
-		<para>测试脚本</para>
-		<programlisting>
+			</screen>
+			<para>测试脚本</para>
+			<programlisting>
 		<![CDATA[
 var contract;
 Greeter.deployed().then(function(instance){contract= instance;});
@@ -444,9 +448,9 @@ contract.greet();
 contract.setGreeting("http://www.netkiller.cn")
 contract.greet();		
 		]]>
-		</programlisting>
-		<para>进入控制台，交互执行上面程序</para>
-		<screen>
+			</programlisting>
+			<para>进入控制台，交互执行上面程序</para>
+			<screen>
 		<![CDATA[
 neo@MacBook-Pro ~/ethereum/truffle % truffle console
 truffle(development)>		
@@ -473,16 +477,137 @@ truffle(development)> contract.setGreeting("http://www.netkiller.cn")
 truffle(development)> contract.greet();
 'http://www.netkiller.cn'
 		]]>
-		</screen>
+			</screen>
 
+		</section>
 	</section>
-	<section id="truffle.console">
-		<title>Truffle console 控制台</title>
-		<screen>
+	<section id="truffle.command">
+		<title>Truffle 命令详解</title>
+		<literallayout>
+		<![CDATA[
+neo@MacBook-Pro ~/ethereum/truffle % truffle help
+Truffle v4.0.6 - a development framework for Ethereum
+
+Usage: truffle <command> [options]
+
+Commands:
+  init      Initialize new and empty Ethereum project
+  compile   Compile contract source files
+  migrate   Run migrations to deploy contracts
+  deploy    (alias for migrate)
+  build     Execute build pipeline (if configuration present)
+  test      Run JavaScript and Solidity tests
+  debug     Interactively debug any transaction on the blockchain (experimental)
+  opcode    Print the compiled opcodes for a given contract
+  console   Run a console with contract abstractions and commands available
+  develop   Open a console with a local development blockchain
+  create    Helper to create new contracts, migrations and tests
+  install   Install a package from the Ethereum Package Registry
+  publish   Publish a package to the Ethereum Package Registry
+  networks  Show addresses for deployed contracts on each network
+  watch     Watch filesystem for changes and rebuild the project automatically
+  serve     Serve the build directory on localhost and watch for changes
+  exec      Execute a JS module within this Truffle environment
+  unbox     Download a Truffle Box, a pre-built Truffle project
+  version   Show version number and exit
+
+See more at http://truffleframework.com/docs		
+		]]>
+		</literallayout>
+		<section id="truffle.version">
+			<title>version</title>
+			<para>输出版本号然后退出。</para>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~/ethereum/truffle % truffle version
+Truffle v4.0.6 (core: 4.0.6)
+Solidity v0.4.19 (solc-js)
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>Truffle console 控制台</title>
+			<screen>
 			<![CDATA[
 neo@MacBook-Pro ~/ethereum/truffle % truffle console
 truffle(development)>		
 			]]>
-		</screen>
+			</screen>
+		</section>
+		<section id="truffle.create">
+			<title>create</title>
+			<section id="">
+				<title>contract 创建合约</title>
+				<screen>
+				<![CDATA[
+neo@MacBook-Pro ~/ethereum/truffle % truffle create contract MyContract
+neo@MacBook-Pro ~/ethereum/truffle % cat contracts/MyContract.sol 
+pragma solidity ^0.4.4;
+
+contract MyContract {
+  function MyContract() {
+    // constructor
+  }
+}				
+				]]>
+				</screen>
+			</section>
+			<section id="">
+				<title>test 创建单元测试</title>
+				<screen>
+				<![CDATA[
+neo@MacBook-Pro ~/ethereum/truffle % truffle create test MyTest
+neo@MacBook-Pro ~/ethereum/truffle % cat test/my_test.js
+contract('MyTest', function(accounts) {
+  it("should assert true", function(done) {
+    var my_test = MyTest.deployed();
+    assert.isTrue(true);
+    done();
+  });
+});
+		
+				]]>
+				</screen>
+			</section>
+		</section>
+		<section id="">
+			<title>test</title>
+			<para>运行测试</para>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~/ethereum/truffle % truffle test          
+Using network 'development'.
+
+
+
+  Contract: Migrations
+    1) should assert true
+    > No events were emitted
+
+
+  0 passing (31ms)
+  1 failing
+
+  1) Contract: Migrations should assert true:
+     ReferenceError: Migrations is not defined
+      at Context.<anonymous> (test/migrations.js:3:22)
+			]]>
+			</screen>
+			<para>运行单个测试文件</para>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~/ethereum/truffle % truffle test test/migrations.js			
+			]]>
+			</screen>
+		</section>
+		<section id="truffle.watch">
+			<title>watch</title>
+			<para>启动后监控文件系统的边龙并自动构建项目。</para>
+			<screen>
+			<![CDATA[
+truffle watch			
+			]]>
+			</screen>
+		</section>
 	</section>
 </chapter>	
