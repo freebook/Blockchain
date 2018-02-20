@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<chapter id="wallet">
+<chapter id="index"><?dbhtml dir="wallet" ?>
 	<title>Ethereum Wallet(Mist)</title>
 	<para>开始学习以太坊时阅读大量文章常常会提到 Mist 一头雾水，后来才知道 Mist 就是 Ethereum Wallet。
 		Ethereum Wallet 是软件名字， Mist 是项目名字。
