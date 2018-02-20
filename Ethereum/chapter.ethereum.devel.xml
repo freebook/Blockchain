@@ -16,7 +16,14 @@ npm install solc
 		]]>
 		</screen>
 	</section>
-
+	<section id="truffle-contract">
+		<title>truffle-contract</title>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~/ethereum/web3 % npm install truffle-contract		
+		]]>
+		</screen>
+	</section>
 	<section id="web3.js.pm2">
 		<title>使用 pm2 启动以太坊</title>
 		<screen>
@@ -296,7 +303,7 @@ console.log("Deploying the contract");
 	</section>
 </chapter>
 
-<chapter id="web3j">
+<chapter id="index"><?dbhtml dir="web3j" ?>
 	<title>Jave Client</title>
 	<para>
 		官方网站

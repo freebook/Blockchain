@@ -4,6 +4,7 @@
 	&chapter.ethereum.xml;
 	&chapter.ethereum.console.xml;
 	&chapter.ethereum.solidity.xml;
+	&chapter.ethereum.truffle.xml;
 	&chapter.ethereum.devel.xml;
 	&chapter.ethereum.wallet.xml;
 	&chapter.ethereum.faq.xml;

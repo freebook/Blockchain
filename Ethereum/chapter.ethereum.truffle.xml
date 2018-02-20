@@ -442,6 +442,8 @@ Saving artifacts...
 			<para>测试脚本</para>
 			<programlisting>
 		<![CDATA[
+Greeter.deployed().then(instance => console.log(instance.address))
+		
 var contract;
 Greeter.deployed().then(function(instance){contract= instance;});
 contract.greet();
@@ -453,8 +455,11 @@ contract.greet();
 			<screen>
 		<![CDATA[
 neo@MacBook-Pro ~/ethereum/truffle % truffle console
-truffle(development)>		
-		
+truffle(development)>
+
+truffle(development)> Greeter.deployed().then(instance => console.log(instance.address))
+0x82d50ad3c1091866e258fd0f1a7cc9674609d254
+undefined
 truffle(development)> var contract;
 undefined
 truffle(development)> Greeter.deployed().then(function(instance){contract= instance;});
