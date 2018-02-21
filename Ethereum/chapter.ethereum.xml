@@ -9,7 +9,7 @@
 			<keyword>solidity</keyword>
 		</keywordset>
 	</info>
-	<section id="overview">
+	<section id="ethereum.setup">
 		<title>软件安装与配置</title>
 		<section id="ubuntu">
 			<title>Ubuntu</title>
@@ -23,7 +23,7 @@ Ubuntu 17.10
 				</literallayout>
 				<screen>
 				<![CDATA[
-sudo apt upgrade -y				
+sudo apt upgrade -y
 sudo apt install software-properties-common
 sudo add-apt-repository -y ppa:ethereum/ethereum
 sudo apt update
@@ -145,16 +145,19 @@ make geth
 				]]>
 			</screen>
 		</section>
-		<section>
+		<section id="ethereum.oscm">
 			<title>Netkiller OSCM 一键安装</title>
+			<para>Netkiller OSCM 是由 Netkiller 制作的一套自动化安装脚本。</para>
 			<para>适用于 CentOS 7</para>
-			<screen>
+			<section id="">
+				<title>1.7.3</title>
+				<screen>
 			<![CDATA[
 curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/ethereum/centos/go-ethereum-1.7.3.sh | bash			
 			]]>
-			</screen>
-			<para>安装完成后使用下面命令进入控制台</para>
-			<screen>
+				</screen>
+				<para>安装完成后使用下面命令进入控制台</para>
+				<screen>
 			<![CDATA[
 [root@localhost ~]# su - ethereum
 Last login: Sat Feb  3 00:23:52 EST 2018 on pts/0
@@ -167,9 +170,19 @@ instance: Geth/v1.7.3-stable/linux-amd64/go1.8.3
 
 > 
 			]]>
-			</screen>
-			<para></para>
+				</screen>
+				<para></para>
+			</section>
+			<section>
+				<title>1.8.1</title>
+				<screen>
+				<![CDATA[
+curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/ethereum/centos/go-ethereum-1.8.1.sh | bash
+				]]>
+				</screen>
+			</section>
 		</section>
+
 	</section>
 	<section id="genesis.json">
 		<title>创世区块</title>
@@ -1058,7 +1071,7 @@ WARN [02-02|21:19:00] Already shutting down, interrupt more to panic. times=9
 			]]>
 			</screen>
 		</section>
-		
+
 	</section>
 
 
