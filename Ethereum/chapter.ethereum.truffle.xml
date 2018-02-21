@@ -1,32 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="truffle" ?>
 	<title>Truffle v4.0.6</title>
-	<para>Truffle 是 solidity 开发框架</para>
-	<section id="init">
-		<title>Truffle 快速入门</title>
-		<section>
-			<title>Ubuntu 环境</title>
+	<para>
+		Truffle 是 solidity 开发框架，
+		<ulink url="http://truffleframework.com">http://truffleframework.com</ulink>
+	</para>
 
-			<section id="truffle.setup">
-				<title>安装 Truffle</title>
-				<screen>
+	<section id="truffle.setup">
+		<title>安装 Truffle </title>
+		<para>安装truffle</para>
+		<screen>
 			<![CDATA[
-# 安装 Nodejs
-curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
-sudo apt-get install -y nodejs
-			
-# 安装truffle
 sudo npm install -g truffle
 			]]>
-				</screen>
-				<para>由于truffle自带开发环境，所以本章不在使用 testrpc，如果仍需要testrpc请参考下面安装方法：</para>
-				<screen>
+		</screen>
+	</section>
+
+	<section id="truffle.develop">
+		<title>开发环境</title>
+		<para>由于truffle 4.0 自带开发环境(truffle develop)，所以本章不在使用 testrpc(不建议使用)，如果仍需要testrpc请参考下面安装方法：</para>
+		<screen>
 			<![CDATA[
 # 安装testrpc
 sudo npm install -g ethereumjs-testrpc			
 			]]>
-				</screen>
-			</section>
+		</screen>
+		<para>另一个开发环境是 Ganache，Ganache有命令行版本和图形界面版本。下面是命令行版本安装方法：</para>
+		<screen>
+			<![CDATA[
+sudo npm install -g ganache-cli
+			]]>
+		</screen>
+		<para>
+			图形界面版本这里下载
+			<ulink url="http://truffleframework.com/ganache/" />
+		</para>
+		<para>图形界面交互性相比命令行比较好，推荐使用。你能在界面上直接查看账号，区块，交易，日志等等。</para>
+	</section>
+	<section id="truffle.boxes">
+		<title>TRUFFLE BOXES</title>
+		<para>Truffle Boxes <ulink url="http://truffleframework.com/boxes/" /> 是一些有用的实例，学习 truffle 开发是供开发者参考学习。</para>
+		<para>使用下面命令下载例子</para>
+		<screen>
+		<![CDATA[
+truffle unbox webpack
+		]]>		
+		</screen>
+	</section>
+	<section id="truffle.tutorial">
+		<title>Truffle 快速入门</title>
+		<section>
+			<title>Ubuntu 环境</title>
 			<section id="truffle.develop">
 				<title>启动开发环境</title>
 				<para>truffle 自带一个开发环境</para>
@@ -648,7 +672,9 @@ module.exports = function(deployer) {
 };			
 			]]>
 			</programlisting>
-			<para>给构造方法传递变量的方法是 deployer.deploy(MyContract,arg1, arg2, ...); arg1 是传递的参数。</para>
+			<para>给构造方法传递变量的方法是 deployer.deploy(MyContract,arg1, arg2, ...); arg1
+				是传递的参数。
+			</para>
 			<para>多个合约传递方法是：</para>
 			<programlisting>
 			<![CDATA[

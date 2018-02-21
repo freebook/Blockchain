@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="chaincode">
+<chapter id="index"><?dbhtml dir="chaincode" ?>
 	<title>Chaincode 开发</title>
 	<section id="chaincode.dev">
 		<title>开发环境</title>
