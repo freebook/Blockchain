@@ -110,6 +110,7 @@ neo@MacBook-Pro ~/ethereum/rinkeby % "/Applications/Ethereum Wallet.app/Contents
 			<para>生成账号 0x36ccB50B007D3D409E69841905DEf1D77D114Ddc</para>
 			<graphic format="png" fileref="../../images/ethereum/rinkeby/EthereumWalletAccount.png" width="1024" srccredit="netkiller" />
 			<para>这时你会看到右下角的数字不断地变化，表示正在同步区块信息。同步过程比较漫长，请耐心等待。</para>
+			<graphic format="png" fileref="../../images/ethereum/rinkeby/EthereumWallet.png" width="1024" srccredit="netkiller" />
 		</section>
 		<section id="faucet.rinkeby.io">
 			<title>获取测试网络上的以太币</title>
