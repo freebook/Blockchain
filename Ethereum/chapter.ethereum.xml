@@ -130,8 +130,7 @@ npm config set registry https://registry.npm.taobao.org
 			<section id="Ethereum Wallet">
 				<title>Ethereum Wallet</title>
 				<para>下载安装以太坊钱包（大陆网络可能下载有问题，需要翻墙）</para>
-				<ulink
-					url="https://github.com/ethereum/mist/releases/download/v0.9.3/Ethereum-Wallet-macosx-0-9-3.dmg" />
+				<ulink url="https://github.com/ethereum/mist/releases/download/v0.9.3/Ethereum-Wallet-macosx-0-9-3.dmg" />
 
 			</section>
 		</section>
@@ -1059,16 +1058,10 @@ WARN [02-02|21:19:00] Already shutting down, interrupt more to panic. times=9
 			]]>
 			</screen>
 		</section>
-		<section id="testnet">
-			<title>测试网络</title>
-			<section id="rinkeby">
-				<title>rinkeby</title>
-				<ulink url="https://faucet.rinkeby.io">https://faucet.rinkeby.io</ulink>
-			</section>
-		</section>
+		
 	</section>
 
-	
+
 
 	<section id="ethereum.jsonrpc">
 		<title>jsonrpc 原生交口调用</title>
@@ -1373,9 +1366,6 @@ neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/
 			</screen>
 		</section>
 	</section>
-	<section id="summary">
-		<title>总结</title>
 
-	</section>
 
 </chapter>
