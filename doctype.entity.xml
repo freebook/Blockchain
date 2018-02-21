@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
-<!ENTITY part.mac.xml						SYSTEM "part.mac.xml">
+<!ENTITY book.info.abstract.xml				SYSTEM "book.info.abstract.xml">
 <!ENTITY chapter.blockchain.xml				SYSTEM "chapter.blockchain.xml">
 <!ENTITY chapter.applications.xml			SYSTEM "chapter.applications.xml">
