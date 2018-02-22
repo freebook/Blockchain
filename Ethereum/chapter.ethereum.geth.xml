@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="geth" ?>
-	<title>geth 命令</title>
+	<title>geth v1.8.1 命令详解</title>
 	<para>版本号</para>
 	<screen>
 		<![CDATA[

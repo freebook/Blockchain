@@ -245,7 +245,7 @@ contract Math {
 				</programlisting>
 			</section>
 			<section>
-				<title>求余 %</title>
+				<title>求余 % 运算演示</title>
 				<programlisting>
 				<![CDATA[
 pragma solidity ^0.4.20;
@@ -263,7 +263,7 @@ contract Math {
 				</programlisting>
 			</section>
 			<section>
-				<title>幂运算</title>
+				<title>幂运算演示</title>
 				<programlisting>
 				<![CDATA[
 pragma solidity ^0.4.20;
@@ -282,7 +282,7 @@ contract Math {
 				</programlisting>
 			</section>
 			<section>
-				<title>与 &amp;，| 或，非 ～，^ 异或</title>
+				<title>与 &amp;，| 或，非 ～，异或 ^ 演示</title>
 				<programlisting>
 				<![CDATA[
 pragma solidity ^0.4.20;
@@ -328,7 +328,7 @@ contract Math {
 				</programlisting>
 			</section>
 			<section>
-				<title>位移</title>
+				<title>位移演示</title>
 				<programlisting>
 				<![CDATA[
 pragma solidity ^0.4.20;

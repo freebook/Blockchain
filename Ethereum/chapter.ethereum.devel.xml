@@ -24,42 +24,7 @@ neo@MacBook-Pro ~/ethereum/web3 % npm install truffle-contract
 		]]>
 		</screen>
 	</section>
-	<section id="web3.js.pm2">
-		<title>使用 pm2 启动以太坊</title>
-		<screen>
-		<![CDATA[
-npm install -g pm2
-		]]>
-		</screen>
-		<para>创建 ~/geth.json 文件</para>
-		<programlisting>
-		<![CDATA[
-[
-  {
-    "name"              : "geth",
-    "cwd"               : "/usr/bin/",
-    "script"            : "geth",
-    "args"              : "--rpcapi eth,web3 --rpc --dev --datadir /home/neo/ethereum",
-    "log_date_format"   : "YYYY-MM-DD HH:mm Z",
-    "out_file"      : "/home/neo/ethereum/log/geth_out.log",
-    "error_file"    : "/home/neo/ethereum/log/geth_err.log",
-    "log_file"      : "/home/neo/ethereum/log/geth_log.log",
-    "merge_logs"        : false,
-    "watch"             : false,
-    "max_restarts"      : 10,
-    "exec_interpreter"  : "none",
-    "exec_mode"         : "fork_mode"
-  }
-]
-		]]>
-		</programlisting>
-		<para>启动以太坊</para>
-		<screen>
-		<![CDATA[
-pm2 start geth.json
-		]]>
-		</screen>
-	</section>
+
 	<section id="web3.js.connect">
 		<title>连接到以太坊客户端</title>
 		<section>
@@ -524,7 +489,7 @@ tokenContract.deploy({
 </chapter>
 
 <chapter id="index"><?dbhtml dir="web3j" ?>
-	<title>Jave Client</title>
+	<title>web3j v3.2.0 - Jave Client</title>
 	<para>
 		官方网站
 		<ulink url="https://web3j.io">https://web3j.io</ulink>
