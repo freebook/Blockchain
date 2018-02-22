@@ -344,7 +344,24 @@ getBalance 2 387
 			]]>
 			</screen>
 			<para>第二次运行会打印出账号2的余额</para>
-		</section><section>
+			<para>代码优化，由于开发阶段 abi 接口经常变化，从 solc 编译的abi 文件中直接读取最为方便。</para>
+			<programlisting>
+			<![CDATA[
+const fs = require ('fs');
+var Web3 = require("web3");
+var web3 = new Web3("http://localhost:9545");
+var abi = JSON.parse(fs.readFileSync('MetaCoin.abi'));
+var address = "0xfb88de099e13c3ed21f80a7a1e49f8caecf10df6";
+var tokenContract = new web3.eth.Contract(abi, address);
+tokenContract.methods.getBalance("0x627306090abab3a6e1400e9345bc60c78a8bef57").call(null,function(error,result){
+        console.log("getBalance "+result);
+});	
+			]]>
+			</programlisting>
+			
+		</section>
+		
+		<section>
 			<title>event</title>
 			<screen>
 			<![CDATA[
