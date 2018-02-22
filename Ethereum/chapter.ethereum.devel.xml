@@ -69,10 +69,10 @@ var web3 = new Web3('/Users/myuser/Library/Ethereum/geth.ipc', net); // mac os p
 			</screen>
 		</section>
 	</section>
-	
+
 	<section id="web3.eth">
 		<title>web3.eth</title>
-		<section id="">
+		<section id="web3.eth.getAccounts()">
 			<title>查看账号列表</title>
 			<screen>
 			<![CDATA[
@@ -83,7 +83,7 @@ web3.eth.getAccounts().then(console.log);
 			]]>
 			</screen>
 		</section>
-		<section id="">
+		<section id="web3.eth.getCoinbase()">
 			<title>查询矿工账号</title>
 			<screen>
 			<![CDATA[
@@ -94,198 +94,96 @@ web3.eth.getCoinbase().then(console.log);
 			]]>
 			</screen>
 		</section>
+		<section id="web3.eth.sendTransaction()">
+			<title>web3.eth.sendTransaction()</title>
+			<programlisting>
+			<![CDATA[
+web3.eth.sendTransaction({
+    from: coinbase,
+    to: '0x2C687bfF93677D69bd20808a36E4BC2999B4767C',
+    value: web3.utils.toWei('2','ether')
+},
+function(error, result){
+    if(!error) {
+        console.log("#" + result + "#")
+    } else {
+        console.error(error);
+    }
+});
+
+var code = "0x603d80600c6000396000f3007c01000000000000000000000000000000000000000000000000000000006000350463c6888fa18114602d57005b6007600435028060005260206000f3";
+
+web3.eth.sendTransaction({from: coinbase, data: code}, function(err, transactionHash) {
+  if (!err)
+    console.log(transactionHash); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+});
+
+web3.eth.sendTransaction({from: coinbase, data: code}).then(function(receipt){
+        console.log(receipt);
+});			
+			]]>
+			</programlisting>
+		</section>
+		
+	</section>
+	<section id="web3.eth.personal">
+		<title></title>
+		<section id="web3.eth.personal.unlockAccount()">
+			<title>web3.eth.personal.unlockAccount()</title>
+			<programlisting>
+				<![CDATA[
+var coinbase = "0x5c18a33DF2cc41a1bedDC91133b8422e89f041B7";
+//console.log(coinbase)
+web3.eth.personal.unlockAccount(coinbase, "your password").then(console.log);
+				]]>
+			</programlisting>
+		</section>
 	</section>
 	<section id="web3.js.contracts">
 		<title>智能合约</title>
 		<section>
-			<title>event</title>
+			<title>部署合约</title>
+			<para>解锁账号</para>
 			<screen>
 			<![CDATA[
-tokenContract.events.Transfer({
-    fromBlock: 0,
-    toBlock:'latest'
-}, function(error, event){ /*console.log(JSON.stringify(event)); */})
-.on('data', function(event){
-    console.log(event); // same results as the optional callback above
-})
-.on('changed', function(event){
-    // remove event from local database
-})
-.on('error', console.error);
+> personal.unlockAccount(eth.accounts[0], "netkiller",5000)
+true
+> miner.stop()
+true
+> miner.start(2)			
 			]]>
 			</screen>
-		</section>
-	</section>
-	<section id="solc">
-		<title></title>
-		<section id="solc.compile">
-			<title>solc.compile</title>
-		
+			<para>编译只能合约</para>
 			<screen>
 			<![CDATA[
-pragma solidity ^0.4.0;
-contract HelloWorldContract {
-  function sayHi() constant returns (string){
-    return 'Hello World';
-  }
-}			
+solc --bin --abi --optimize -o ./output helloworld.sol		
 			]]>
 			</screen>
 			<programlisting>
 			<![CDATA[
-const fs = require ('fs');
-const solc = require ('solc');
-const input = fs.readFileSync('HelloWorldContract.sol');
-const output = solc.compile(input.toString(), 1);
-for (var contractName in output.contracts){
- console.log(contractName + ': ' + output.contracts[contractName].bytecode)
-}
-			]]>
-			</programlisting>
-			<screen>
-			<![CDATA[
-> const fs = require ('fs');
-undefined
-> const solc = require ('solc');
+var Web3 = require("web3");
+var fs = require ('fs');
 
-undefined
-> const input = fs.readFileSync('HelloWorldContract.sol');
-undefined
-> const output = solc.compile(input.toString(), 1);
+var web3 = new Web3("http://localhost:8545");
 
-undefined
-> for (var contractName in output.contracts){
-...  console.log(contractName + ': ' + output.contracts[contractName].bytecode)
-... }
-:HelloWorldContract: 6060604052341561000f57600080fd5b61014e8061001e6000396000f3006060604052600436106100405763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630c49c36c8114610045575b600080fd5b341561005057600080fd5b6100586100cf565b60405160208082528190810183818151815260200191508051906020019080838360005b8381101561009457808201518382015260200161007c565b50505050905090810190601f1680156100c15780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6100d7610110565b60408051908101604052600b81527f48656c6c6f20576f726c640000000000000000000000000000000000000000006020820152905090565b602060405190810160405260008152905600a165627a7a723058206dc75b1be2caa91f056c3682d24390fcb090a96bbf1b2b4c11cdd807518dc03c0029
-undefined
-			]]>
-			</screen>
-		</section>
-	</section><section id="web3.example">
-		<title>实用例子</title>
-		<section>
-			<title>数据写入到区块链中</title>
-			<para>做一笔交易，并写入数据到区块链中</para>
-			<screen>
-			<![CDATA[
-let Web3 = require("web3");
-let fs = require("fs");
-let web3 = new Web3("http://localhost:8545");
+var abi = JSON.parse(fs.readFileSync('output/Netkiller.abi'));
+var bin = '0x'+fs.readFileSync('output/Netkiller.bin').toString();
 
-let log = {
-    time:(new Date).getTime(),
-    type:"info",
-    msg:"Web3 Test!!!"
-};
-let str = JSON.stringify(log);
-console.log(str);
-let data = Buffer.from(str).toString('hex');
-data = '0x'+data;
-console.log(data);
-
-//将数据写入到交易中
-let coinbase = "0x5c18a33df2cc41a1beddc91133b8422e89f041b7"
-console.log(coinbase)
-let user1 = "0xc2b9e316f246d35052118e51b55c75bfe99d247e";
-web3.eth.personal.unlockAccount(coinbase, "coinbase");
-let address = web3.eth.sendTransaction({
-    from:coinbase,
-    to:user1,
-    value:'0x00',
-    data:data
-},function(error, hash){
-    console.log(hash);
+var myContract = new web3.eth.Contract(abi, null, {
+    from: '0x5c18a33DF2cc41a1bedDC91133b8422e89f041B7'
 });
-			]]>
-			</screen>
-			<para>运行上面程序，会产生一个交易，记下hash值，然后启动挖矿。</para>
-			<screen>
-			<![CDATA[
-> miner.start();
-null
-# 过一段时间后停止
-> miner.stop();
-true
-			]]>
-			</screen>
-			<para>然后查看这比交易</para>
-			<screen>
-			<![CDATA[
-let Web3 = require("web3");
-let fs = require("fs");
-let web3 = new Web3("http://localhost:8545");
-let address ="0xb15681eb4bdb6b9670d305fb341ebbc95d45c2ede0ea5034ef432b74f30b1b4f";
-//从交易地址获取数据
-web3.eth.getTransaction(address).then(console.log);
 
-web3.eth.getTransaction(address,function(error, result){
-    //console.log(result);
-    inputData = result.input;
-    res_str = Buffer.from(inputData.replace('0x',''),'hex').toString();
-    res_json = JSON.parse(res_str);
-    console.log(res_json);
+myContract.deploy({ data: bin }).send({
+    from: '0x5c18a33DF2cc41a1bedDC91133b8422e89f041B7',
+    gas: 1500000,
+    gasPrice: '30000000000000'
+}).then(function(newContractInstance){
+    console.log(newContractInstance.options.address) 
 });			
 			]]>
-			</screen>
-			<para>结果输出</para>
-			<screen>
-			<![CDATA[
-{ blockHash: '0x78dacc2af60900d2e4cae90b71e27446e6e883df36c53f21cbc9e071f7a586f4',
-  blockNumber: 1258,
-  from: '0x5c18a33DF2cc41a1bedDC91133b8422e89f041B7',
-  gas: 90000,
-  gasPrice: '18000000000',
-  hash: '0xb15681eb4bdb6b9670d305fb341ebbc95d45c2ede0ea5034ef432b74f30b1b4f',
-  input: '0x7b2274696d65223a313531383933313435323537372c2274797065223a22696e666f222c226d7367223a22576562332054657374212121227d',
-  nonce: 4,
-  to: '0xc2b9e316F246d35052118E51B55C75BfE99d247e',
-  transactionIndex: 0,
-  value: '0',
-  v: '0x41',
-  r: '0x7fcd86c7fd975a0e98bd0e61a99da950b0155cd6c4581fefa4defbdcd404a930',
-  s: '0x16f14ce1fbfadb9d59f343f8ac235cdd73dcedec5db1025ef91206b8bb17a827' }
-{ time: 1518931452577, type: 'info', msg: 'Web3 Test!!!' }
-			]]>
-			</screen>
-			<para>{ time: 1518931452577, type: 'info', msg: 'Web3 Test!!!' }
-				就是保存在区块链中的数据。</para>
+			</programlisting>
 		</section>
 		<section>
-			<title>编译部署智能合约</title>
-			<screen>
-			<![CDATA[
-console.log('Setting up...');
-const fs = require ('fs');
-const solc = require ('solc');
-const Web3 = require ('web3');
-const web3 = new Web3("http://localhost:8545");
-console.log('Reading Contract...');
-const input = fs.readFileSync('Netkiller.sol');
-console.log('Compiling Contract...');
-const output = solc.compile(input.toString(), 1);
-//console.log(output);
-const bytecode = output.contracts[':Netkiller'].bytecode;
-//console.log(bytecode);
-const abi = output.contracts[':Netkiller'].interface;
-//console.log(abi);
-//Contract Object
-//const helloWorldContract = web3.eth.contract(JSON.parse(abi));
-
-var myContract = new web3.eth.Contract(JSON.parse(abi), '0x5c18a33df2cc41a1beddc91133b8422e89f041b7', {
-    from: '0x5c18a33df2cc41a1beddc91133b8422e89f041b7', // default from address
-    gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
-});
-
-console.log('unlocking Coinbase account');
-const password = "chen1980";
-web3.eth.personal.unlockAccount("0x5c18a33df2cc41a1beddc91133b8422e89f041b7", password,100);
-
-console.log("Deploying the contract");
-			]]>
-			</screen>
-		</section>
-		<section >
 			<title>调用合约</title>
 			<para>部署智能合约，你可以使用钱包部署，也可以使用Truffer部署，不管你采用什么方式，最终我们需要合约地址。</para>
 			<programlisting>
@@ -446,7 +344,218 @@ getBalance 2 387
 			]]>
 			</screen>
 			<para>第二次运行会打印出账号2的余额</para>
+		</section><section>
+			<title>event</title>
+			<screen>
+			<![CDATA[
+tokenContract.events.Transfer({
+    fromBlock: 0,
+    toBlock:'latest'
+}, function(error, event){ /*console.log(JSON.stringify(event)); */})
+.on('data', function(event){
+    console.log(event); // same results as the optional callback above
+})
+.on('changed', function(event){
+    // remove event from local database
+})
+.on('error', console.error);
+			]]>
+			</screen>
 		</section>
+	</section>
+	<section id="web3.utils">
+		<title>utils</title>
+		<section id="web3.utils.toWei()">
+			<title>web3.utils.toWei()</title>
+			<screen>
+			<![CDATA[
+web3.utils.toWei('1', 'ether');
+> "1000000000000000000"
+
+web3.utils.toWei('1', 'finney');
+> "1000000000000000"
+
+web3.utils.toWei('1', 'szabo');
+> "1000000000000"
+
+web3.utils.toWei('1', 'shannon');
+> "1000000000"			
+			]]>
+			</screen>
+		</section>
+	</section>
+	<section id="compile.solidity">
+		<title></title>
+		<section id="solc.compile">
+			<title>solc.compile</title>
+
+			<screen>
+			<![CDATA[
+pragma solidity ^0.4.0;
+contract HelloWorldContract {
+  function sayHi() constant returns (string){
+    return 'Hello World';
+  }
+}			
+			]]>
+			</screen>
+			<programlisting>
+			<![CDATA[
+const fs = require ('fs');
+const solc = require ('solc');
+const input = fs.readFileSync('HelloWorldContract.sol');
+const output = solc.compile(input.toString(), 1);
+for (var contractName in output.contracts){
+ console.log(contractName + ': ' + output.contracts[contractName].bytecode)
+}
+			]]>
+			</programlisting>
+			<screen>
+			<![CDATA[
+> const fs = require ('fs');
+undefined
+> const solc = require ('solc');
+
+undefined
+> const input = fs.readFileSync('HelloWorldContract.sol');
+undefined
+> const output = solc.compile(input.toString(), 1);
+
+undefined
+> for (var contractName in output.contracts){
+...  console.log(contractName + ': ' + output.contracts[contractName].bytecode)
+... }
+:HelloWorldContract: 6060604052341561000f57600080fd5b61014e8061001e6000396000f3006060604052600436106100405763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630c49c36c8114610045575b600080fd5b341561005057600080fd5b6100586100cf565b60405160208082528190810183818151815260200191508051906020019080838360005b8381101561009457808201518382015260200161007c565b50505050905090810190601f1680156100c15780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6100d7610110565b60408051908101604052600b81527f48656c6c6f20576f726c640000000000000000000000000000000000000000006020820152905090565b602060405190810160405260008152905600a165627a7a723058206dc75b1be2caa91f056c3682d24390fcb090a96bbf1b2b4c11cdd807518dc03c0029
+undefined
+			]]>
+			</screen>
+		</section>
+	</section>
+	<section id="web3.example">
+		<title>实用例子</title>
+		<section>
+			<title>数据写入到区块链中</title>
+			<para>做一笔交易，并写入数据到区块链中</para>
+			<screen>
+			<![CDATA[
+let Web3 = require("web3");
+let fs = require("fs");
+let web3 = new Web3("http://localhost:8545");
+
+let log = {
+    time:(new Date).getTime(),
+    type:"info",
+    msg:"Web3 Test!!!"
+};
+let str = JSON.stringify(log);
+console.log(str);
+let data = Buffer.from(str).toString('hex');
+data = '0x'+data;
+console.log(data);
+
+//将数据写入到交易中
+let coinbase = "0x5c18a33df2cc41a1beddc91133b8422e89f041b7"
+console.log(coinbase)
+let user1 = "0xc2b9e316f246d35052118e51b55c75bfe99d247e";
+web3.eth.personal.unlockAccount(coinbase, "coinbase");
+let address = web3.eth.sendTransaction({
+    from:coinbase,
+    to:user1,
+    value:'0x00',
+    data:data
+},function(error, hash){
+    console.log(hash);
+});
+			]]>
+			</screen>
+			<para>运行上面程序，会产生一个交易，记下hash值，然后启动挖矿。</para>
+			<screen>
+			<![CDATA[
+> miner.start();
+null
+# 过一段时间后停止
+> miner.stop();
+true
+			]]>
+			</screen>
+			<para>然后查看这比交易</para>
+			<screen>
+			<![CDATA[
+let Web3 = require("web3");
+let fs = require("fs");
+let web3 = new Web3("http://localhost:8545");
+let address ="0xb15681eb4bdb6b9670d305fb341ebbc95d45c2ede0ea5034ef432b74f30b1b4f";
+//从交易地址获取数据
+web3.eth.getTransaction(address).then(console.log);
+
+web3.eth.getTransaction(address,function(error, result){
+    //console.log(result);
+    inputData = result.input;
+    res_str = Buffer.from(inputData.replace('0x',''),'hex').toString();
+    res_json = JSON.parse(res_str);
+    console.log(res_json);
+});			
+			]]>
+			</screen>
+			<para>结果输出</para>
+			<screen>
+			<![CDATA[
+{ blockHash: '0x78dacc2af60900d2e4cae90b71e27446e6e883df36c53f21cbc9e071f7a586f4',
+  blockNumber: 1258,
+  from: '0x5c18a33DF2cc41a1bedDC91133b8422e89f041B7',
+  gas: 90000,
+  gasPrice: '18000000000',
+  hash: '0xb15681eb4bdb6b9670d305fb341ebbc95d45c2ede0ea5034ef432b74f30b1b4f',
+  input: '0x7b2274696d65223a313531383933313435323537372c2274797065223a22696e666f222c226d7367223a22576562332054657374212121227d',
+  nonce: 4,
+  to: '0xc2b9e316F246d35052118E51B55C75BfE99d247e',
+  transactionIndex: 0,
+  value: '0',
+  v: '0x41',
+  r: '0x7fcd86c7fd975a0e98bd0e61a99da950b0155cd6c4581fefa4defbdcd404a930',
+  s: '0x16f14ce1fbfadb9d59f343f8ac235cdd73dcedec5db1025ef91206b8bb17a827' }
+{ time: 1518931452577, type: 'info', msg: 'Web3 Test!!!' }
+			]]>
+			</screen>
+			<para>{ time: 1518931452577, type: 'info', msg: 'Web3 Test!!!' }
+				就是保存在区块链中的数据。
+			</para>
+		</section>
+		<section>
+			<title>编译部署智能合约</title>
+			<screen>
+			<![CDATA[
+console.log('Setting up...');
+const fs = require ('fs');
+const solc = require ('solc');
+const Web3 = require ('web3');
+const web3 = new Web3("http://localhost:8545");
+console.log('Reading Contract...');
+const input = fs.readFileSync('Netkiller.sol');
+console.log('Compiling Contract...');
+const output = solc.compile(input.toString(), 1);
+//console.log(output);
+const bytecode = output.contracts[':Netkiller'].bytecode;
+//console.log(bytecode);
+const abi = output.contracts[':Netkiller'].interface;
+//console.log(abi);
+//Contract Object
+//const helloWorldContract = web3.eth.contract(JSON.parse(abi));
+
+var myContract = new web3.eth.Contract(JSON.parse(abi), '0x5c18a33df2cc41a1beddc91133b8422e89f041b7', {
+    from: '0x5c18a33df2cc41a1beddc91133b8422e89f041b7', // default from address
+    gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
+});
+
+console.log('unlocking Coinbase account');
+const password = "chen1980";
+web3.eth.personal.unlockAccount("0x5c18a33df2cc41a1beddc91133b8422e89f041b7", password,100);
+
+console.log("Deploying the contract");
+			]]>
+			</screen>
+		</section>
+		
 		<section>
 			<title>部署合约</title>
 			<screen>
@@ -454,7 +563,6 @@ getBalance 2 387
 var Web3 = require('web3');
 var net = require('net');
 var web3 = new Web3(new Web3.providers.IpcProvider("~/netkiller/ethereum/geth.ipc",net));
-var eth=web3.eth;
 
 var abi = [...];
 var bin = "";
@@ -465,7 +573,7 @@ var tokenContract = new web3.eth.Contract(abi, null, {
 
 tokenContract.deploy({
     data: bin,
-    arguments: ['netkiller'] // 这里是构造函数传值
+    arguments: ['netkiller'] // 这里是构造函数传值，如果构造函数没有参数，请删除这行。
 }).send({
     from: '0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6',
     gas: 1500000,
@@ -982,7 +1090,8 @@ neo@netkiller ~/ethereum/solidity % ll java/cn/netkiller/ethereum/contract/Netki
 		]]>
 		</screen>
 		<para>启动以太坊，并开始挖矿。注意参数 --mine --minerthreads 1 ，你也可以启动后在JavaScript
-			控制台钟启动挖矿。</para>
+			控制台钟启动挖矿。
+		</para>
 		<screen>
 		<![CDATA[
 neo@netkiller ~ % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --mine --minerthreads 1	
@@ -1078,8 +1187,8 @@ HelloWorld contract = HelloWorld.load(contractAddress,web3j,credentials, Managed
 		blockchain and ecosystem.
 	</title>
 	<para>
-			文档地址
-			<ulink url="http://web3py.readthedocs.io/">http://web3py.readthedocs.io/</ulink>
+		文档地址
+		<ulink url="http://web3py.readthedocs.io/">http://web3py.readthedocs.io/</ulink>
 	</para>
 
 </chapter>

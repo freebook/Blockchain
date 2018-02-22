@@ -15,7 +15,7 @@ sudo npm install -g truffle
 			]]>
 		</screen>
 	</section>
-
+	
 	<section id="truffle.develop">
 		<title>开发环境</title>
 		<para>由于truffle 4.0 自带开发环境(truffle develop)，所以本章不在使用 testrpc(不建议使用)，如果仍需要testrpc请参考下面安装方法：</para>
@@ -686,5 +686,11 @@ deployer.deploy([
 			]]>
 			</programlisting>
 		</section>
+	</section>
+	<section id="zeppelin.solidity">
+		<title>Zeppelin Solidity - OpenZeppelin is a library for writing secure Smart Contracts on Ethereum.</title>
+		<para>OpenZeppelin is an open framework of reusable and secure smart contracts in the Solidity language.</para>
+		<para>网站：<ulink url="https://openzeppelin.org">https://openzeppelin.org</ulink></para>
+		<para>Github: <ulink url="https://github.com/OpenZeppelin/zeppelin-solidity">https://github.com/OpenZeppelin/zeppelin-solidity</ulink></para>
 	</section>
 </chapter>	
