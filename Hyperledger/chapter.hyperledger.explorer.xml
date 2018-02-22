@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="explorer">
+	<title>Hyperledger Explorer</title>
+	<para>克隆代码</para>
+	<screen>
+	<![CDATA[
+git clone https://github.com/hyperledger/blockchain-explorer.git
+cd blockchain-explorer
+	
+	]]>
+	</screen>
+	<para>将 fabricexplorer.sql 导入到数据中</para>
+	<screen>
+	<![CDATA[
+mysql -u<username> -p < db/fabricexplorer.sql	
+	]]>
+	</screen>
+	<para>设置 channel 和 数据库连接</para>
+	<screen>
+	<![CDATA[
+ "channel": "mychannel",
+ "mysql":{
+      "host":"127.0.0.1",
+      "database":"fabricexplorer",
+      "username":"root",
+      "passwd":"123456"
+   }	
+	]]>
+	</screen>
+	<para>启动</para>
+	<screen>
+	<![CDATA[
+npm install
+./start.sh
+	]]>
+	</screen>
+</chapter>
