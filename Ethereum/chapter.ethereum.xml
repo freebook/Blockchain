@@ -1,6 +1,5 @@
 	&chapter.ethereum.setup.xml;
 	&chapter.ethereum.geth.xml;
-	&chapter.ethereum.console.xml;
 	&chapter.ethereum.solidity.xml;
 	&chapter.ethereum.truffle.xml;
 	&chapter.ethereum.devel.xml;

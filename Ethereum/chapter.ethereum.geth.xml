@@ -579,6 +579,7 @@ WARN [02-02|21:19:00] Already shutting down, interrupt more to panic. times=9
 			]]>
 		</screen>
 	</section>
+	&chapter.ethereum.console.xml;
 	<section id="ethereum.jsonrpc">
 		<title>jsonrpc 原生交口调用</title>
 		<screen>
