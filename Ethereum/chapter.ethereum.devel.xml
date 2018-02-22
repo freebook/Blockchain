@@ -482,11 +482,12 @@ getBalance 2 387
 			</screen>
 			<para>第二次运行会打印出账号2的余额</para>
 		</section>
-		<section id="">
+		<section>
 			<title>部署合约</title>
 			<screen>
 			<![CDATA[
 var Web3 = require('web3');
+var net = require('net');
 var web3 = new Web3(new Web3.providers.IpcProvider("~/netkiller/ethereum/geth.ipc",net));
 var eth=web3.eth;
 

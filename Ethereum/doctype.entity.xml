@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ENTITY part.ethereum.xml					SYSTEM "part.ethereum.xml">
 <!ENTITY chapter.ethereum.xml				SYSTEM "chapter.ethereum.xml">
+<!ENTITY chapter.ethereum.setup.xml			SYSTEM "chapter.ethereum.setup.xml">
 <!ENTITY chapter.ethereum.console.xml		SYSTEM "chapter.ethereum.console.xml">
 <!ENTITY chapter.ethereum.solidity.xml		SYSTEM "chapter.ethereum.solidity.xml">
 <!ENTITY chapter.ethereum.truffle.xml		SYSTEM "chapter.ethereum.truffle.xml">

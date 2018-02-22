@@ -1,0 +1,1401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="ethereum">
+	<title>以太坊私链入门</title>
+	<info>
+		<keywordset>
+			<keyword>ethereum</keyword>
+			<keyword>geth</keyword>
+			<keyword>browser-solidity</keyword>
+			<keyword>solidity</keyword>
+		</keywordset>
+	</info>
+	
+	<itemizedlist>
+		<title>本文所用软件版本</title>
+		<listitem>
+			<para>geth v.1.8.1</para>
+		</listitem>
+		<listitem>
+			<para>truffle v4.0.6</para>
+		</listitem>
+		<listitem>
+			<para>web3.js v1.0.0</para>
+		</listitem>
+		<listitem>
+			<para>Solidity Version: 0.4.20</para>
+		</listitem>
+	</itemizedlist>
+	
+	<section id="ethereum.setup">
+		<title>软件安装与配置</title>
+		<section id="ubuntu">
+			<title>Ubuntu</title>
+			<section id="ubuntu.geth">
+				<title>安装 geth</title>
+				<para>安装环境</para>
+				<literallayout>
+				<![CDATA[
+Ubuntu 17.10	
+				]]>
+				</literallayout>
+				<screen>
+				<![CDATA[
+sudo apt upgrade -y
+sudo apt install software-properties-common
+sudo add-apt-repository -y ppa:ethereum/ethereum
+sudo apt update
+sudo apt install ethereum			
+				]]>
+				</screen>
+				<screen>
+				<![CDATA[
+neo@netkiller ~ % geth version
+Geth
+Version: 1.7.3-stable
+Git Commit: 4bb3c89d44e372e6a9ab85a8be0c9345265c763a
+Architecture: amd64
+Protocol Versions: [63 62]
+Network Id: 1
+Go Version: go1.9.1
+Operating System: linux
+GOPATH=
+GOROOT=/usr/lib/go-1.9
+				]]>
+				</screen>
+
+			</section>
+			<section id="ubuntu.solc">
+				<title>安装 solc</title>
+				<screen>
+				<![CDATA[
+sudo apt install solc -y
+				]]>
+				</screen>
+				<screen>
+				<![CDATA[
+neo@netkiller ~ % solc --version
+solc, the solidity compiler commandline interface
+Version: 0.4.19+commit.c4cbbb05.Linux.g++				
+				]]>
+				</screen>
+			</section>
+		</section>
+		<section id="centos">
+			<title>CentOS 7</title>
+			<screen>
+			<![CDATA[
+yum update -y
+yum install git wget bzip2 -y	
+yum install golang -y
+
+cd /usr/local/src
+git clone https://github.com/ethereum/go-ethereum.git
+cd go-ethereum/
+gmake all
+mv build /srv/go-ethereum
+
+echo "export PATH=$PATH:$PWD/build/bin" >> /etc/profile
+source /etc/profile		
+			]]>
+			</screen>
+			<para>
+				上面安装版本是 unstable 版本，如果是生产环境请使用 Release 版本
+				<ulink url="https://github.com/ethereum/go-ethereum/tags">https://github.com/ethereum/go-ethereum/tags
+				</ulink>
+			</para>
+			<screen>
+			<![CDATA[
+wget https://github.com/ethereum/go-ethereum/archive/v1.7.3.tar.gz
+tar zxvf v1.7.3.tar.gz
+cd go-ethereum-1.7.3/
+gmake all
+
+mv build /srv/go-ethereum-1.7.3
+			]]>
+			</screen>
+		</section>
+		<section id="windows">
+			<title>Windows</title>
+			<screen>
+				<![CDATA[
+访问 https://geth.ethereum.org/downloads/
+下载并安装 Geth for Windows				
+				]]>
+			</screen>
+		</section>
+		<section id="mac">
+			<title>Mac OS</title>
+			<screen>
+				<![CDATA[
+brew update
+brew upgrade				
+brew tap ethereum/ethereum
+brew install ethereum
+brew install solidity
+				]]>
+			</screen>
+			<section id="">
+				<title>安装 Node</title>
+				<screen>
+				<![CDATA[
+brew install node
+brew install npm
+npm config set registry https://registry.npm.taobao.org
+				]]>
+				</screen>
+			</section>
+			<section id="Ethereum Wallet">
+				<title>Ethereum Wallet</title>
+				<para>下载安装以太坊钱包（大陆网络可能下载有问题，需要翻墙）</para>
+				<ulink url="https://github.com/ethereum/mist/releases/download/v0.9.3/Ethereum-Wallet-macosx-0-9-3.dmg" />
+
+			</section>
+		</section>
+		<section id="make">
+			<title>编译安装</title>
+			<screen>
+				<![CDATA[
+git clone https://github.com/ethereum/go-ethereum
+sudo apt-get install -y build-essential golang
+cd go-ethereum
+make geth
+				]]>
+			</screen>
+		</section>
+		<section id="ethereum.oscm">
+			<title>Netkiller OSCM 一键安装</title>
+			<para>Netkiller OSCM 是由 Netkiller 制作的一套自动化安装脚本。</para>
+			<para>适用于 CentOS 7</para>
+			<section id="">
+				<title>1.7.3</title>
+				<screen>
+			<![CDATA[
+curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/ethereum/centos/go-ethereum-1.7.3.sh | bash			
+			]]>
+				</screen>
+				<para>安装完成后使用下面命令进入控制台</para>
+				<screen>
+			<![CDATA[
+[root@localhost ~]# su - ethereum
+Last login: Sat Feb  3 00:23:52 EST 2018 on pts/0
+			
+[ethereum@localhost ~]$ geth attach
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable/linux-amd64/go1.8.3
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> 
+			]]>
+				</screen>
+				<para></para>
+			</section>
+			<section>
+				<title>1.8.1</title>
+				<screen>
+				<![CDATA[
+curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/ethereum/centos/go-ethereum-1.8.1.sh | bash
+				]]>
+				</screen>
+			</section>
+		</section>
+
+	</section>
+	<section id="genesis.json">
+		<title>创世区块</title>
+		<screen>
+		<![CDATA[
+cd ~
+mkdir -p ethereum
+cd ethereum		
+		]]>
+		</screen>
+		<section id="genesis.json.init">
+			<title>初始化创世区块</title>
+			<para>创建文件 genesis.json</para>
+			<screen>
+			<![CDATA[
+{
+  "nonce": "0x0000000000000042",
+  "difficulty": "0x020000",
+  "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "coinbase": "0x0000000000000000000000000000000000000000",
+  "timestamp": "0x00",
+  "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "extraData": "0x11bbe8db4e347b4e8c937c1c8370e4b5ed33adb3db69cbdb7a38e1e50b1b82fa",
+  "gasLimit": "0x4c4b40",
+  "config": {
+      "chainId": 15,
+      "homesteadBlock": 0,
+      "eip155Block": 0,
+      "eip158Block": 0
+  },
+  "alloc": { }
+}
+			]]>
+			</screen>
+			<literallayout>
+			<![CDATA[
+mixhash: 与nonce配合用于挖矿，由上一个区块的一部分生成的hash。注意他和nonce的设置需要满足以太坊的Yellow paper, 4.3.4. Block Header Validity, (44)章节所描述的条件。.
+
+nonce: nonce就是一个64位随机数，用于挖矿，注意他和mixhash的设置需要满足以太坊的Yellow paper, 4.3.4. Block Header Validity, (44)章节所描述的条件。
+
+difficulty: 设置当前区块的难度，如果难度过大，cpu挖矿就很难，这里设置较小难度
+
+alloc: 用来预置账号以及账号的以太币数量，因为私有链挖矿比较容易，所以我们不需要预置有币的账号，需要的时候自己创建即可以。
+
+coinbase: 矿工的账号，随便填
+
+timestamp: 设置创世块的时间戳
+
+parentHash: 上一个区块的hash值，因为是创世块，所以这个值是0
+
+extraData: 附加信息，随便填，可以填你的个性信息
+
+gasLimit: 该值设置对GAS的消耗总量限制，用来限制区块能包含的交易信息总和，因为我们是私有链，所以填最大。		
+			]]>
+			</literallayout>
+			<para>初始化创世区块</para>
+			<screen>
+			<![CDATA[
+neo@netkiller ~/ethereum % geth init genesis.json 
+WARN [01-19|17:35:17] No etherbase set and no accounts found as default 
+INFO [01-19|17:35:17] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=16 handles=16
+INFO [01-19|17:35:17] Writing custom genesis block 
+INFO [01-19|17:35:17] Successfully wrote genesis state         database=chaindata                          hash=611596…424d04
+INFO [01-19|17:35:17] Allocated cache and file handles         database=/home/neo/.ethereum/geth/lightchaindata cache=16 handles=16
+INFO [01-19|17:35:18] Writing custom genesis block 
+INFO [01-19|17:35:18] Successfully wrote genesis state         database=lightchaindata                          hash=611596…424d04		
+			]]>
+			</screen>
+			<para>默认目录是 /home/neo/.ethereum/ 你可以通过 --datadir 参数指定目录</para>
+			<screen>
+			<![CDATA[
+neo@netkiller ~/ethereum % geth --datadir data init genesis.json
+WARN [01-19|17:38:16] No etherbase set and no accounts found as default 
+INFO [01-19|17:38:16] Allocated cache and file handles         database=/home/neo/ethereum/data/geth/chaindata cache=16 handles=16
+INFO [01-19|17:38:17] Writing custom genesis block 
+INFO [01-19|17:38:17] Successfully wrote genesis state         database=chaindata                              hash=611596…424d04
+INFO [01-19|17:38:17] Allocated cache and file handles         database=/home/neo/ethereum/data/geth/lightchaindata cache=16 handles=16
+INFO [01-19|17:38:17] Writing custom genesis block 
+INFO [01-19|17:38:17] Successfully wrote genesis state         database=lightchaindata                              hash=611596…424d04		
+
+neo@netkiller ~/ethereum % find data 
+data
+data/keystore
+data/geth
+data/geth/chaindata
+data/geth/chaindata/LOCK
+data/geth/chaindata/LOG
+data/geth/chaindata/MANIFEST-000000
+data/geth/chaindata/CURRENT
+data/geth/chaindata/000001.log
+data/geth/lightchaindata
+data/geth/lightchaindata/LOCK
+data/geth/lightchaindata/LOG
+data/geth/lightchaindata/MANIFEST-000000
+data/geth/lightchaindata/CURRENT
+data/geth/lightchaindata/000001.log		
+			]]>
+			</screen>
+			<para>目录结构</para>
+			<screen>
+			<![CDATA[
+data
+├── geth
+│  ├── chaindata
+│  │  ├── 000001.log
+│  │  ├── CURRENT
+│  │  ├── LOCK
+│  │  ├── LOG
+│  │  └── MANIFEST-000000
+│  └── lightchaindata
+│      ├── 000001.log
+│      ├── CURRENT
+│      ├── LOCK
+│      ├── LOG
+│      └── MANIFEST-000000
+└── keystore		
+		]]>
+			</screen>
+		</section>
+		<section id="genesis.json.account">
+			<title>创建主账号</title>
+			<screen>
+			<![CDATA[
+neo@netkiller ~/ethereum % geth account new
+Your new account is locked with a password. Please give a password. Do not forget this password.
+Passphrase: 
+Repeat passphrase: 
+Address: {39211a30bfe33d4b12fcbd786472c8a552b93389}			
+			]]>
+			</screen>
+			<tip>
+				<para>密码可以直接回车，但是后面 Ethereum Wallet 遇到了麻烦， Ethereum Wallet
+					要求密码必须是8为数
+				</para>
+			</tip>
+		</section>
+		<section id="genesis.json.startup">
+			<title>启动节点</title>
+			<screen>
+			<![CDATA[
+neo@netkiller ~/ethereum % geth --networkid 123456 --rpc --rpccorsdomain "*" --nodiscover console 
+WARN [01-19|17:47:06] No etherbase set and no accounts found as default 
+INFO [01-19|17:47:06] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+INFO [01-19|17:47:06] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
+INFO [01-19|17:47:06] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
+INFO [01-19|17:47:06] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
+INFO [01-19|17:47:06] Disk storage enabled for ethash DAGs     dir=/home/neo/.ethash               count=2
+INFO [01-19|17:47:06] Initialising Ethereum protocol           versions="[63 62]" network=123456
+INFO [01-19|17:47:06] Loaded most recent local header          number=0 hash=611596…424d04 td=131072
+INFO [01-19|17:47:06] Loaded most recent local full block      number=0 hash=611596…424d04 td=131072
+INFO [01-19|17:47:06] Loaded most recent local fast block      number=0 hash=611596…424d04 td=131072
+INFO [01-19|17:47:06] Loaded local transaction journal         transactions=0 dropped=0
+INFO [01-19|17:47:06] Regenerated local transaction journal    transactions=0 accounts=0
+INFO [01-19|17:47:06] Starting P2P networking 
+INFO [01-19|17:47:06] RLPx listener up                         self="enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@[::]:30303?discport=0"
+INFO [01-19|17:47:06] IPC endpoint opened: /home/neo/.ethereum/geth.ipc 
+INFO [01-19|17:47:06] HTTP endpoint opened: http://127.0.0.1:8545 
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> INFO [01-19|17:47:09] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"			
+			]]>
+			</screen>
+			<literallayout>
+			<![CDATA[
+identity: 区块链的标示，随便填写，用于标示目前网络的名字
+
+init: 指定创世块文件的位置，并创建初始块
+
+datadir: 设置当前区块链网络数据存放的位置
+
+port: 网络监听端口
+
+rpc: 启动rpc通信，可以进行智能合约的部署和调试
+
+rpcapi: 设置允许连接的rpc的客户端，一般为db,eth,net,web3
+
+networkid: 设置当前区块链的网络ID，用于区分不同的网络，是一个数字
+
+console: 启动命令行模式，可以在Geth中执行命令			
+			]]>
+			</literallayout>
+
+		</section>
+		<section id="genesis.json.miner">
+			<title>使用节点进行挖矿</title>
+			<section id="genesis.json.miner.start">
+				<title>启动矿工开始挖矿</title>
+				<screen>
+				<![CDATA[
+> miner.start(1)		
+				]]>
+				</screen>
+				<para>这里的1表示只使用一个线程运行,第一次运行时将开始创建DAG文件，只需等待进度条到100，则将开始挖矿。
+					实际你看到的挖矿速度很快，这是因为我们已经在初始化创世区块时配置为:"nonce": "0x0000000000000042"。
+					“0x42”难度能让你在私有测试网链上快速挖以太币。
+				</para>
+				<tip>
+					<para>挖矿时必然有矿工账户，而系统默认使用创建的第一个账号。</para>
+				</tip>
+				<screen>
+				<![CDATA[
+> miner.start(1)
+INFO [01-19|21:06:43] Updated mining threads                   threads=1
+INFO [01-19|21:06:43] Transaction pool price threshold updated price=18000000000
+INFO [01-19|21:06:43] Starting mining operation 
+null
+> INFO [01-19|21:06:43] Commit new mining work                   number=1 txs=0 uncles=0 elapsed=717.552µs
+INFO [01-19|21:06:46] Generating ethash verification cache     epoch=0 percentage=91 elapsed=3.000s
+INFO [01-19|21:06:46] Generated ethash verification cache      epoch=0 elapsed=3.273s
+INFO [01-19|21:06:51] Generating DAG in progress               epoch=0 percentage=0  elapsed=5.056s
+INFO [01-19|21:06:56] Generating DAG in progress               epoch=0 percentage=1  elapsed=10.140s
+INFO [01-19|21:07:01] Generating DAG in progress               epoch=0 percentage=2  elapsed=15.119s
+INFO [01-19|21:07:06] Generating DAG in progress               epoch=0 percentage=3  elapsed=19.924s
+INFO [01-19|21:07:11] Generating DAG in progress               epoch=0 percentage=4  elapsed=24.739s
+INFO [01-19|21:07:16] Generating DAG in progress               epoch=0 percentage=5  elapsed=29.473s
+INFO [01-19|21:07:22] Generating DAG in progress               epoch=0 percentage=6  elapsed=35.641s
+INFO [01-19|21:07:26] Generating DAG in progress               epoch=0 percentage=7  elapsed=40.374s
+INFO [01-19|21:07:31] Generating DAG in progress               epoch=0 percentage=8  elapsed=45.134s
+INFO [01-19|21:07:36] Generating DAG in progress               epoch=0 percentage=9  elapsed=49.908s
+INFO [01-19|21:07:41] Generating DAG in progress               epoch=0 percentage=10 elapsed=54.633s	
+......
+......
+......
+INFO [01-19|21:22:43] Generated ethash verification cache      epoch=0 elapsed=15m57.328s
+INFO [01-19|21:22:47] Generating ethash verification cache     epoch=1 percentage=17 elapsed=3.031s
+INFO [01-19|21:22:50] Generating ethash verification cache     epoch=1 percentage=34 elapsed=6.056s
+INFO [01-19|21:22:53] Generating ethash verification cache     epoch=1 percentage=49 elapsed=9.562s
+INFO [01-19|21:22:57] Generating ethash verification cache     epoch=1 percentage=70 elapsed=13.115s
+INFO [01-19|21:23:00] Generating ethash verification cache     epoch=1 percentage=90 elapsed=16.123s
+INFO [01-19|21:23:01] Generated ethash verification cache      epoch=1 elapsed=17.576s
+INFO [01-19|21:23:19] Generating DAG in progress               epoch=1 percentage=0  elapsed=18.198s
+INFO [01-19|21:23:32] Successfully sealed new block            number=1 hash=e2b5b9…9b1bfe
+INFO [01-19|21:23:32] 🔨 mined potential block                  number=1 hash=e2b5b9…9b1bfe
+INFO [01-19|21:23:32] Commit new mining work                   number=2 txs=0 uncles=0 elapsed=1.188ms
+INFO [01-19|21:23:37] Generating DAG in progress               epoch=1 percentage=1  elapsed=35.913s
+INFO [01-19|21:23:41] Successfully sealed new block            number=2 hash=62db3f…e27b50
+INFO [01-19|21:23:41] 🔨 mined potential block                  number=2 hash=62db3f…e27b50
+INFO [01-19|21:23:41] Commit new mining work                   number=3 txs=0 uncles=0 elapsed=772.239µs
+INFO [01-19|21:23:43] Successfully sealed new block            number=3 hash=34384b…c387f2
+INFO [01-19|21:23:43] 🔨 mined potential block                  number=3 hash=34384b…c387f2
+INFO [01-19|21:23:43] Commit new mining work                   number=4 txs=0 uncles=0 elapsed=1.002ms
+INFO [01-19|21:23:55] Generating DAG in progress               epoch=1 percentage=2  elapsed=53.757s
+INFO [01-19|21:24:13] Generating DAG in progress               epoch=1 percentage=3  elapsed=1m11.561s
+INFO [01-19|21:24:30] Generating DAG in progress               epoch=1 percentage=4  elapsed=1m28.986s
+INFO [01-19|21:24:30] Successfully sealed new block            number=4 hash=681970…462135
+INFO [01-19|21:24:30] 🔨 mined potential block                  number=4 hash=681970…462135
+INFO [01-19|21:24:30] Commit new mining work                   number=5 txs=0 uncles=0 elapsed=833.629µs
+INFO [01-19|21:24:36] Successfully sealed new block            number=5 hash=7b058b…d2f07a
+INFO [01-19|21:24:36] 🔨 mined potential block                  number=5 hash=7b058b…d2f07a
+INFO [01-19|21:24:36] Commit new mining work                   number=6 txs=0 uncles=0 elapsed=897.815µs
+INFO [01-19|21:24:43] Successfully sealed new block            number=6 hash=a5fc3d…b1221e
+INFO [01-19|21:24:43] 🔗 block reached canonical chain          number=1 hash=e2b5b9…9b1bfe
+INFO [01-19|21:24:43] 🔨 mined potential block                  number=6 hash=a5fc3d…b1221e
+INFO [01-19|21:24:43] Commit new mining work                   number=7 txs=0 uncles=0 elapsed=758.061µs
+INFO [01-19|21:24:47] Successfully sealed new block            number=7 hash=003b02…e886fd
+INFO [01-19|21:24:47] 🔗 block reached canonical chain          number=2 hash=62db3f…e27b50
+INFO [01-19|21:24:47] 🔨 mined potential block                  number=7 hash=003b02…e886fd
+INFO [01-19|21:24:47] Commit new mining work                   number=8 txs=0 uncles=0 elapsed=920.862µs
+INFO [01-19|21:24:48] Generating DAG in progress               epoch=1 percentage=5  elapsed=1m46.827s
+INFO [01-19|21:25:06] Generating DAG in progress               epoch=1 percentage=6  elapsed=2m4.338s
+INFO [01-19|21:25:23] Successfully sealed new block            number=8 hash=fd23c9…361c65
+INFO [01-19|21:25:23] 🔗 block reached canonical chain          number=3 hash=34384b…c387f2
+INFO [01-19|21:25:23] 🔨 mined potential block                  number=8 hash=fd23c9…361c65
+INFO [01-19|21:25:23] Commit new mining work                   number=9 txs=0 uncles=0 elapsed=825.737µs
+INFO [01-19|21:25:23] Generating DAG in progress               epoch=1 percentage=7  elapsed=2m22.061s
+				]]>
+				</screen>
+			</section>
+			<section id="genesis.json.miner.stop">
+				<title>停止挖矿</title>
+				<screen>
+				<![CDATA[
+> miner.stop()
+true
+>
+				]]>
+				</screen>
+			</section>
+			<section id="genesis.json.eth.getBalance">
+				<title>查看所挖金额</title>
+				<screen>
+				<![CDATA[
+> eth.getBalance(eth.accounts[0])
+70000000000000000000				
+				]]>
+				</screen>
+			</section>
+		</section>
+		<section id="genesis.json.alloc">
+			<title>在创世链中制定矿工账号并为它充值</title>
+			<screen>
+			<![CDATA[
+  "alloc": {
+    "0xe8abf98484325fd6afc59b804ac15804b978e607": {
+      "balance": "300000"
+    },
+    "0x013b5e735e1b48421dd3de3b931d6f03e769e22b": {
+      "balance": "400000"
+    }
+  }		
+			]]>
+			</screen>
+		</section>
+	</section>
+
+	<section id="geth">
+		<title>geth 命令</title>
+		<para>版本号</para>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~/ethereum/web3 % geth version
+Geth
+Version: 1.8.1-stable
+Architecture: amd64
+Protocol Versions: [63 62]
+Network Id: 1
+Go Version: go1.10
+Operating System: darwin
+GOPATH=
+GOROOT=/usr/local/opt/go/libexec		
+		]]>
+		</screen>
+		<para>帮助信息</para>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~/ethereum/web3 % geth --help
+NAME:
+   geth - the go-ethereum command line interface
+
+   Copyright 2013-2017 The go-ethereum Authors
+
+USAGE:
+   geth [options] command [command options] [arguments...]
+   
+VERSION:
+   1.8.1-stable
+   
+COMMANDS:
+   account     Manage accounts
+   attach      Start an interactive JavaScript environment (connect to node)
+   bug         opens a window to report a bug on the geth repo
+   console     Start an interactive JavaScript environment
+   copydb      Create a local chain from a target chaindata folder
+   dump        Dump a specific block from storage
+   dumpconfig  Show configuration values
+   export      Export blockchain into file
+   import      Import a blockchain file
+   init        Bootstrap and initialize a new genesis block
+   js          Execute the specified JavaScript files
+   license     Display license information
+   makecache   Generate ethash verification cache (for testing)
+   makedag     Generate ethash mining DAG (for testing)
+   monitor     Monitor and visualize node metrics
+   removedb    Remove blockchain and state databases
+   version     Print version numbers
+   wallet      Manage Ethereum presale wallets
+   help, h     Shows a list of commands or help for one command
+   
+ETHEREUM OPTIONS:
+  --config value                           TOML configuration file
+  --datadir "/Users/neo/Library/Ethereum"  Data directory for the databases and keystore
+  --keystore                               Directory for the keystore (default = inside the datadir)
+  --nousb                                  Disables monitoring for and managing USB hardware wallets
+  --networkid value                        Network identifier (integer, 1=Frontier, 2=Morden (disused), 3=Ropsten, 4=Rinkeby) (default: 1)
+  --testnet                                Ropsten network: pre-configured proof-of-work test network
+  --rinkeby                                Rinkeby network: pre-configured proof-of-authority test network
+  --syncmode "fast"                        Blockchain sync mode ("fast", "full", or "light")
+  --gcmode value                           Blockchain garbage collection mode ("full", "archive") (default: "full")
+  --ethstats value                         Reporting URL of a ethstats service (nodename:secret@host:port)
+  --identity value                         Custom node name
+  --lightserv value                        Maximum percentage of time allowed for serving LES requests (0-90) (default: 0)
+  --lightpeers value                       Maximum number of LES client peers (default: 100)
+  --lightkdf                               Reduce key-derivation RAM & CPU usage at some expense of KDF strength
+  
+DEVELOPER CHAIN OPTIONS:
+  --dev               Ephemeral proof-of-authority network with a pre-funded developer account, mining enabled
+  --dev.period value  Block period to use in developer mode (0 = mine only if transaction pending) (default: 0)
+  
+ETHASH OPTIONS:
+  --ethash.cachedir                     Directory to store the ethash verification caches (default = inside the datadir)
+  --ethash.cachesinmem value            Number of recent ethash caches to keep in memory (16MB each) (default: 2)
+  --ethash.cachesondisk value           Number of recent ethash caches to keep on disk (16MB each) (default: 3)
+  --ethash.dagdir "/Users/neo/.ethash"  Directory to store the ethash mining DAGs (default = inside home folder)
+  --ethash.dagsinmem value              Number of recent ethash mining DAGs to keep in memory (1+GB each) (default: 1)
+  --ethash.dagsondisk value             Number of recent ethash mining DAGs to keep on disk (1+GB each) (default: 2)
+  
+TRANSACTION POOL OPTIONS:
+  --txpool.nolocals            Disables price exemptions for locally submitted transactions
+  --txpool.journal value       Disk journal for local transaction to survive node restarts (default: "transactions.rlp")
+  --txpool.rejournal value     Time interval to regenerate the local transaction journal (default: 1h0m0s)
+  --txpool.pricelimit value    Minimum gas price limit to enforce for acceptance into the pool (default: 1)
+  --txpool.pricebump value     Price bump percentage to replace an already existing transaction (default: 10)
+  --txpool.accountslots value  Minimum number of executable transaction slots guaranteed per account (default: 16)
+  --txpool.globalslots value   Maximum number of executable transaction slots for all accounts (default: 4096)
+  --txpool.accountqueue value  Maximum number of non-executable transaction slots permitted per account (default: 64)
+  --txpool.globalqueue value   Maximum number of non-executable transaction slots for all accounts (default: 1024)
+  --txpool.lifetime value      Maximum amount of time non-executable transaction are queued (default: 3h0m0s)
+  
+PERFORMANCE TUNING OPTIONS:
+  --cache value            Megabytes of memory allocated to internal caching (default: 1024)
+  --cache.database value   Percentage of cache memory allowance to use for database io (default: 75)
+  --cache.gc value         Percentage of cache memory allowance to use for trie pruning (default: 25)
+  --trie-cache-gens value  Number of trie node generations to keep in memory (default: 120)
+  
+ACCOUNT OPTIONS:
+  --unlock value    Comma separated list of accounts to unlock
+  --password value  Password file to use for non-interactive password input
+  
+API AND CONSOLE OPTIONS:
+  --rpc                  Enable the HTTP-RPC server
+  --rpcaddr value        HTTP-RPC server listening interface (default: "localhost")
+  --rpcport value        HTTP-RPC server listening port (default: 8545)
+  --rpcapi value         API's offered over the HTTP-RPC interface
+  --ws                   Enable the WS-RPC server
+  --wsaddr value         WS-RPC server listening interface (default: "localhost")
+  --wsport value         WS-RPC server listening port (default: 8546)
+  --wsapi value          API's offered over the WS-RPC interface
+  --wsorigins value      Origins from which to accept websockets requests
+  --ipcdisable           Disable the IPC-RPC server
+  --ipcpath              Filename for IPC socket/pipe within the datadir (explicit paths escape it)
+  --rpccorsdomain value  Comma separated list of domains from which to accept cross origin requests (browser enforced)
+  --rpcvhosts value      Comma separated list of virtual hostnames from which to accept requests (server enforced). Accepts '*' wildcard. (default: "localhost")
+  --jspath loadScript    JavaScript root path for loadScript (default: ".")
+  --exec value           Execute JavaScript statement
+  --preload value        Comma separated list of JavaScript files to preload into the console
+  
+NETWORKING OPTIONS:
+  --bootnodes value     Comma separated enode URLs for P2P discovery bootstrap (set v4+v5 instead for light servers)
+  --bootnodesv4 value   Comma separated enode URLs for P2P v4 discovery bootstrap (light server, full nodes)
+  --bootnodesv5 value   Comma separated enode URLs for P2P v5 discovery bootstrap (light server, light nodes)
+  --port value          Network listening port (default: 30303)
+  --maxpeers value      Maximum number of network peers (network disabled if set to 0) (default: 25)
+  --maxpendpeers value  Maximum number of pending connection attempts (defaults used if set to 0) (default: 0)
+  --nat value           NAT port mapping mechanism (any|none|upnp|pmp|extip:<IP>) (default: "any")
+  --nodiscover          Disables the peer discovery mechanism (manual peer addition)
+  --v5disc              Enables the experimental RLPx V5 (Topic Discovery) mechanism
+  --netrestrict value   Restricts network communication to the given IP networks (CIDR masks)
+  --nodekey value       P2P node key file
+  --nodekeyhex value    P2P node key as hex (for testing)
+  
+MINER OPTIONS:
+  --mine                    Enable mining
+  --minerthreads value      Number of CPU threads to use for mining (default: 8)
+  --etherbase value         Public address for block mining rewards (default = first account created) (default: "0")
+  --targetgaslimit value    Target gas limit sets the artificial target gas floor for the blocks to mine (default: 4712388)
+  --gasprice "18000000000"  Minimal gas price to accept for mining a transactions
+  --extradata value         Block extra data set by the miner (default = client version)
+  
+GAS PRICE ORACLE OPTIONS:
+  --gpoblocks value      Number of recent blocks to check for gas prices (default: 20)
+  --gpopercentile value  Suggested gas price is the given percentile of a set of recent transaction gas prices (default: 60)
+  
+VIRTUAL MACHINE OPTIONS:
+  --vmdebug  Record information useful for VM and contract debugging
+  
+LOGGING AND DEBUGGING OPTIONS:
+  --metrics                 Enable metrics collection and reporting
+  --fakepow                 Disables proof-of-work verification
+  --nocompaction            Disables db compaction after import
+  --verbosity value         Logging verbosity: 0=silent, 1=error, 2=warn, 3=info, 4=debug, 5=detail (default: 3)
+  --vmodule value           Per-module verbosity: comma-separated list of <pattern>=<level> (e.g. eth/*=5,p2p=4)
+  --backtrace value         Request a stack trace at a specific logging statement (e.g. "block.go:271")
+  --debug                   Prepends log messages with call-site location (file and line number)
+  --pprof                   Enable the pprof HTTP server
+  --pprofaddr value         pprof HTTP server listening interface (default: "127.0.0.1")
+  --pprofport value         pprof HTTP server listening port (default: 6060)
+  --memprofilerate value    Turn on memory profiling with the given rate (default: 524288)
+  --blockprofilerate value  Turn on block profiling with the given rate (default: 0)
+  --cpuprofile value        Write CPU profile to the given file
+  --trace value             Write execution trace to the given file
+  
+WHISPER (EXPERIMENTAL) OPTIONS:
+  --shh                       Enable Whisper
+  --shh.maxmessagesize value  Max message size accepted (default: 1048576)
+  --shh.pow value             Minimum POW accepted (default: 0.2)
+  
+DEPRECATED OPTIONS:
+  --fast   Enable fast syncing through state downloads
+  --light  Enable light client mode
+  
+MISC OPTIONS:
+  --help, -h  show help
+  
+
+COPYRIGHT:
+   Copyright 2013-2017 The go-ethereum Authors		
+		]]>
+		</screen>
+		<section id="geth.console">
+			<title>控制台</title>
+			<subtitle>Geth JavaScript console</subtitle>
+			<screen>
+			<![CDATA[
+neo@netkiller ~/ethereum % geth  --networkid 123456 console
+INFO [01-19|22:14:52] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+INFO [01-19|22:14:52] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
+INFO [01-19|22:14:52] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
+INFO [01-19|22:14:52] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
+INFO [01-19|22:14:52] Disk storage enabled for ethash DAGs     dir=/home/neo/.ethash               count=2
+INFO [01-19|22:14:52] Initialising Ethereum protocol           versions="[63 62]" network=123456
+INFO [01-19|22:14:52] Loaded most recent local header          number=14 hash=70d7f1…45850a td=1966848
+INFO [01-19|22:14:52] Loaded most recent local full block      number=14 hash=70d7f1…45850a td=1966848
+INFO [01-19|22:14:52] Loaded most recent local fast block      number=14 hash=70d7f1…45850a td=1966848
+INFO [01-19|22:14:52] Loaded local transaction journal         transactions=0 dropped=0
+INFO [01-19|22:14:52] Regenerated local transaction journal    transactions=0 accounts=0
+WARN [01-19|22:14:52] Blockchain not empty, fast sync disabled 
+INFO [01-19|22:14:52] Starting P2P networking 
+
+INFO [01-19|22:14:56] UDP listener up                          self=enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@101.232.64.12:30303
+INFO [01-19|22:14:56] RLPx listener up                         self=enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@101.232.64.12:30303
+INFO [01-19|22:14:56] IPC endpoint opened: /home/neo/.ethereum/geth.ipc 
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+coinbase: 0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6
+at block: 14 (Fri, 19 Jan 2018 21:27:16 HST)
+ datadir: /home/neo/.ethereum
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> 
+> INFO [01-19|22:14:56] Mapped network port                      proto=udp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"			
+			]]>
+			</screen>
+		</section>
+		<section id="geth.attach">
+			<title>连接控制台</title>
+			<para>一般测试启动我们使用 console，如果是正式启动无需使用 console。同事我们使用&amp;符号使其进入后台运行。
+			</para>
+			<screen>
+			<![CDATA[
+neo@netkiller ~/ethereum % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover &			
+			]]>
+			</screen>
+			<para>进入控制台</para>
+			<screen>
+			<![CDATA[
+neo@netkiller ~/ethereum % geth attach
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+coinbase: 0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6
+at block: 531 (Tue, 14 Nov 2017 17:36:05 HST)
+ datadir: /home/neo/.ethereum
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+			]]>
+			</screen>
+			<para>退出控制台</para>
+			<screen>
+			<![CDATA[
+> exit
+			]]>
+			</screen>
+
+			<section id="geth.ipcpath">
+				<title>指定 geth.ipc 文件位置</title>
+				<screen>
+				<![CDATA[
+geth --ipcpath ~/.ethereum/geth.ipc attach				
+				]]>
+				</screen>
+			</section>
+			<section id="geth.attach.ipc">
+				<title>IPC 方式连接</title>
+				<screen>
+				<![CDATA[
+neo@netkiller ~ % geth attach ethereum/data1/geth.ipc 
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+>				
+				]]>
+				</screen>
+			</section>
+			<section id="geth.tcp.remote">
+				<title>TCP 连接控制台</title>
+				<para>连接远程控制台</para>
+				<screen>
+				<![CDATA[
+neo@netkiller ~/ethereum % geth --exec 'eth.coinbase' attach http://172.16.0.10:8545
+"0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6"
+				]]>
+				</screen>
+			</section>
+			<section id="geth.ws">
+				<title>WebSocket 方式</title>
+				<screen>
+				<![CDATA[
+$ geth attach ws://191.168.1.1:8546
+				]]>
+				</screen>
+			</section>
+		</section>
+		<section id="geth.account">
+			<title>账号管理</title>
+			<section id="new">
+				<title>新建账号</title>
+
+				<para>查看账号</para>
+				<screen>
+				<![CDATA[
+neo@netkiller ~/ethereum % geth account list 
+Account #0: {83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6} keystore:///home/neo/.ethereum/keystore/UTC--2018-01-20T04-04-06.786586541Z--83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6				
+				]]>
+				</screen>
+
+				<para>创建账号</para>
+				<screen>
+				<![CDATA[
+neo@netkiller ~/ethereum % geth account new
+Your new account is locked with a password. Please give a password. Do not forget this password.
+Passphrase: 
+Repeat passphrase: 
+Address: {e8abf98484325fd6afc59b804ac15804b978e607}				
+				]]>
+				</screen>
+				<para>指定密码</para>
+				<screen>
+				<![CDATA[
+$ echo "abc123" > password 
+$ geth --password /path/to/password account new
+				]]>
+				</screen>
+				<para>账号创建在 ~/.ethereum/keystore 目录下</para>
+				<screen>
+				<![CDATA[
+Mac: ~/Library/Ethereum/keystore
+Linux: ~/.ethereum/keystore
+Windows: %APPDATA%/Ethereum/keystore				
+				]]>
+				</screen>
+				<programlisting>
+				<![CDATA[
+neo@netkiller ~/.ethereum/keystore % ll
+total 8.0K
+-rw------- 1 neo neo 491 Jan 19 18:04 UTC--2018-01-20T04-04-06.786586541Z--83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6
+-rw------- 1 neo neo 491 Jan 19 20:11 UTC--2018-01-20T06-11-23.608902164Z--e8abf98484325fd6afc59b804ac15804b978e607				
+				]]>
+				</programlisting>
+			</section>
+			<section id="list">
+				<title>查看账号</title>
+				<screen>
+				<![CDATA[
+neo@netkiller ~/ethereum % geth account list 
+Account #0: {83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6} keystore:///home/neo/.ethereum/keystore/UTC--2018-01-20T04-04-06.786586541Z--83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6
+Account #1: {e8abf98484325fd6afc59b804ac15804b978e607} keystore:///home/neo/.ethereum/keystore/UTC--2018-01-20T06-11-23.608902164Z--e8abf98484325fd6afc59b804ac15804b978e607				
+				]]>
+				</screen>
+			</section>
+
+		</section>
+		<section id="geth.rpc">
+			<title>api 相关参数</title>
+			<para>rpcapi 启动后允许连接到系统的API协议</para>
+			<screen>
+			<![CDATA[
+geth --networkid 100000 --rpc --rpcapi "db,eth,net,web3" --rpccorsdomain "*" --datadir "/app/chain" --port "30303" console	
+			]]>
+			</screen>
+
+			<para>系统默认监听 127.0.0.1 如果希望外部访问本机，需要通过--rpcaddr指定监听地址。</para>
+			<screen>
+			<![CDATA[
+geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover		
+			]]>
+			</screen>
+			<section id="rpcapi">
+				<title>rpcapi</title>
+				<para>--rpcapi 可以控制访问内容</para>
+				<screen>
+				<![CDATA[
+$ geth --rpc --rpcapi personal,db,eth,net,web3 --rinkeby	
+				]]>
+				</screen>
+
+			</section>
+			<section id="rpcaddr">
+				<title>rpcaddr</title>
+				<para>默认是 127.0.0.1 </para>
+				<para>HTTP endpoint closed: http://127.0.0.1:8545</para>
+				<para>通过 --rpcaddr="0.0.0.0" 指定监听地址</para>
+				<para>HTTP endpoint opened: http://0.0.0.0:8545</para>
+				<screen>
+				<![CDATA[
+neo@netkiller ~/ethereum % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover console  
+INFO [01-20|01:41:33] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+INFO [01-20|01:41:33] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
+INFO [01-20|01:41:34] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
+INFO [01-20|01:41:34] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
+INFO [01-20|01:41:34] Disk storage enabled for ethash DAGs     dir=/home/neo/.ethash               count=2
+INFO [01-20|01:41:34] Initialising Ethereum protocol           versions="[63 62]" network=123456
+INFO [01-20|01:41:34] Loaded most recent local header          number=531 hash=1a2707…3a27bc td=79083846
+INFO [01-20|01:41:34] Loaded most recent local full block      number=531 hash=1a2707…3a27bc td=79083846
+INFO [01-20|01:41:34] Loaded most recent local fast block      number=531 hash=1a2707…3a27bc td=79083846
+INFO [01-20|01:41:34] Loaded local transaction journal         transactions=0 dropped=0
+INFO [01-20|01:41:34] Regenerated local transaction journal    transactions=0 accounts=0
+WARN [01-20|01:41:34] Blockchain not empty, fast sync disabled 
+INFO [01-20|01:41:34] Starting P2P networking 
+INFO [01-20|01:41:34] RLPx listener up                         self="enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@[::]:30303?discport=0"
+INFO [01-20|01:41:34] IPC endpoint opened: /home/neo/.ethereum/geth.ipc 
+INFO [01-20|01:41:34] HTTP endpoint opened: http://0.0.0.0:8545 
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+coinbase: 0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6
+at block: 531 (Tue, 14 Nov 2017 17:36:05 HST)
+ datadir: /home/neo/.ethereum
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> INFO [01-20|01:41:40] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"
+				]]>
+				</screen>
+			</section>
+
+		</section>
+		<section id="geth.password">
+			<title>配置自动解锁账号</title>
+			<para>创建password文件，在里面输入密码，每个账号一行密码如：</para>
+			<screen>
+			<![CDATA[
+123456
+123456
+123456			
+			]]>
+			</screen>
+			<para>启动参数</para>
+			<screen>
+			<![CDATA[
+geth --rpc --rpcaddr="0.0.0.0" --rpccorsdomain="*" --unlock '0,1,2' --password ~/.ethereum/password   --nodiscover --maxpeers '5' --networkid '12345' --datadir '~/.ethereum'  console			
+			]]>
+			</screen>
+		</section>
+		<section id="geth.exec">
+			<title>运行JS</title>
+			<screen>
+			<![CDATA[
+neo@netkiller ~/ethereum % geth --exec "eth.blockNumber" attach
+531
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[
+$ geth --exec 'loadScript("/tmp/checkbalances.js")' attach http://123.123.123.123:8545
+$ geth --jspath "/tmp" --exec 'loadScript("checkbalances.js")' attach http://123.123.123.123:8545			
+			]]>
+			</screen>
+		</section>
+		<section id="geth.bootnodes">
+			<title>节点管理</title>
+			<screen>
+			<![CDATA[
+geth --bootnodes enode://pubkey1@ip1:port1,enode://pubkey2@ip2:port2,enode://pubkey3@ip3:port3
+			]]>
+			</screen>
+		</section>
+		<section id="geth.mine">
+			<title>启动挖矿</title>
+			<screen>
+			<![CDATA[
+geth --mine
+			]]>
+			</screen>
+			<section id="geth.minerthreads">
+				<title>挖矿线程数</title>
+				<para>默认为 2</para>
+				<screen>
+				<![CDATA[
+geth --mine --minerthreads=16
+				]]>
+				</screen>
+			</section>
+			<section id="geth.etherbase">
+				<title>指定旷工账号</title>
+				<para>默认是第一个账号</para>
+				<screen>
+				<![CDATA[
+geth --mine --minerthreads=16 --etherbase=0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6			
+				]]>
+				</screen>
+			</section>
+		</section>
+		<section id="geth.contract">
+			<title>运行智能合约</title>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.18;
+
+contract Netkiller {
+    string name;
+    int num;
+    function Netkiller() public{
+        name = "default";
+        num = 1;
+    }
+    function setName(string _name) public{
+        name = _name;
+    }
+    function getName() public view returns(string){
+        return name;
+    }
+    function setNum(int n) public{
+        num = n;
+    }
+    function addNum(int m) public view returns(int res){
+        res = m + num;
+    }
+}
+
+			]]>
+			</programlisting>
+			<screen>
+			<![CDATA[
+solc --bin --abi --optimize -o output Netkiller.sol
+			]]>
+			</screen>
+			<para>var abi = JSON.parse('内容来自 Netkiller.abi')</para>
+			<para>var bytecode = "0x"+"内容来自 Netkiller.bin"</para>
+			<screen>
+			<![CDATA[
+var abi = JSON.parse('[{"constant":true,"inputs":[],"name":"getName","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"n","type":"int256"}],"name":"setNum","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_name","type":"string"}],"name":"setName","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"m","type":"int256"}],"name":"addNum","outputs":[{"name":"res","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]');
+var bytecode = "0x6060604052341561000f57600080fd5b6040805190810160405280600781526020017f64656661756c74000000000000000000000000000000000000000000000000008152506000908051906020019061005a929190610067565b506001808190555061010c565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106100a857805160ff19168380011785556100d6565b828001600101855582156100d6579182015b828111156100d55782518255916020019190600101906100ba565b5b5090506100e391906100e7565b5090565b61010991905b808211156101055760008160009055506001016100ed565b5090565b90565b61036b8061011b6000396000f300606060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806317d7de7c146100675780636a5aa5ec146100f5578063c47f002714610118578063cc13962a14610175575b600080fd5b341561007257600080fd5b61007a6101ac565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100ba57808201518184015260208101905061009f565b50505050905090810190601f1680156100e75780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561010057600080fd5b6101166004808035906020019091905050610254565b005b341561012357600080fd5b610173600480803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190505061025e565b005b341561018057600080fd5b6101966004808035906020019091905050610278565b6040518082815260200191505060405180910390f35b6101b4610286565b60008054600181600116156101000203166002900480601f01602080910402602001604051908101604052809291908181526020018280546001816001161561010002031660029004801561024a5780601f1061021f5761010080835404028352916020019161024a565b820191906000526020600020905b81548152906001019060200180831161022d57829003601f168201915b5050505050905090565b8060018190555050565b806000908051906020019061027492919061029a565b5050565b600060015482019050919050565b602060405190810160405280600081525090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106102db57805160ff1916838001178555610309565b82800160010185558215610309579182015b828111156103085782518255916020019190600101906102ed565b5b509050610316919061031a565b5090565b61033c91905b80821115610338576000816000905550600101610320565b5090565b905600a165627a7a7230582002b42864089a104d4d80ba0190924e09e15f3c0d0aa107463f49e2689e159b480029";
+var gas = web3.eth.estimateGas({data: bytecode})
+var deploy = {from:eth.coinbase, data: bytecode, gas: gas};
+var address  = eth.coinbase;
+
+personal.unlockAccount(eth.accounts[0],"chen1980")
+
+var mycontract = web3.eth.contract(abi)
+ 
+var instance = mycontract.new({from:eth.coinbase, data:bytecode, gas:300000}, function(e, contract){
+    if(!e) {
+
+      if(!contract.address) {
+        console.log("Contract transaction send: TransactionHash: " + contract.transactionHash + " waiting to be mined...");
+
+      } else {
+        console.log("Contract mined! Address: " + contract.address);
+        console.log(contract);
+      }
+
+    }
+}); 
+
+var test = mycontract.at(eth.coinbase)
+
+test.addNum(567);
+			]]>
+			</screen>
+		</section>
+		<section id="geth.log">
+			<title>日志</title>
+			<para>--verbosity 日志输出级别控制</para>
+			<screen>
+			<![CDATA[
+geth --verbosity 0 console
+			]]>
+			</screen>
+			<para>日志输出到文件中。</para>
+			<screen>
+			<![CDATA[
+geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*"  2>> /tmp/geth.log			
+			]]>
+			</screen>
+			<para>后台运行</para>
+			<screen>
+			<![CDATA[
+neo@netkiller ~ % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" 2>> /tmp/geth.log &     
+[1] 30075
+ 
+neo@netkiller ~ % tail -f /tmp/geth.log        
+INFO [02-02|21:18:59] Got interrupt, shutting down... 
+INFO [02-02|21:18:59] HTTP endpoint closed: http://0.0.0.0:8545 
+INFO [02-02|21:18:59] IPC endpoint closed: /home/neo/.ethereum/geth.ipc 
+INFO [02-02|21:18:59] Blockchain manager stopped 
+INFO [02-02|21:18:59] Stopping Ethereum protocol 
+INFO [02-02|21:18:59] Ethereum protocol stopped 
+INFO [02-02|21:18:59] Transaction pool stopped 
+INFO [02-02|21:18:59] Database closed                          database=/home/neo/.ethereum/geth/chaindata
+INFO [02-02|21:18:59] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"
+WARN [02-02|21:19:00] Already shutting down, interrupt more to panic. times=9			
+			]]>
+			</screen>
+		</section>
+
+	</section>
+
+
+
+	<section id="ethereum.jsonrpc">
+		<title>jsonrpc 原生交口调用</title>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~ % curl -XPOST -H "Accept: application/json" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x5c18a33df2cc41a1beddc91133b8422e89f041b7", "latest"],"id":1}' http://localhost:8545 
+{"jsonrpc":"2.0","id":1,"result":"0x153e5f3aeb667075800"}		
+		]]>
+		</screen>
+	</section>
+
+	<section id="example.single">
+		<title>单机多实例演示</title>
+		<para>在没有条件安装虚拟机也没有多台服务器的情况下我们可以使用一台服务器运行多个实例的方法也可以实现多个节点运行环境。</para>
+		<screen>
+			<![CDATA[
+cd ~
+mkdir -p ethereum
+cd ethereum
+mkdir data{1,2}
+			]]>
+		</screen>
+		<para>创建文件 genesis.json</para>
+		<screen>
+			<![CDATA[
+{
+  "nonce": "0x0000000000000042",
+  "difficulty": "0x020000",
+  "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "coinbase": "0x0000000000000000000000000000000000000000",
+  "timestamp": "0x00",
+  "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "extraData": "0x11bbe8db4e347b4e8c937c1c8370e4b5ed33adb3db69cbdb7a38e1e50b1b82fa",
+  "gasLimit": "0x4c4b40",
+  "config": {
+      "chainId": 15,
+      "homesteadBlock": 0,
+      "eip155Block": 0,
+      "eip158Block": 0
+  },
+  "alloc": { }
+}			
+			]]>
+		</screen>
+		<section>
+			<title>实例一</title>
+			<screen>
+				<![CDATA[
+geth --datadir ~/ethereum/data1 init genesis.json
+geth --datadir="~/ethereum/data1" --networkid 123456 --port 30301 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --rpcport 8541		
+				]]>
+			</screen>
+			<para>启动后终端输出</para>
+			<screen>
+				<![CDATA[
+neo@netkiller ~/ethereum % geth --datadir ~/ethereum/data1 init genesis.json
+WARN [02-02|22:09:56] No etherbase set and no accounts found as default 
+INFO [02-02|22:09:56] Allocated cache and file handles         database=/home/neo/ethereum/data1/geth/chaindata cache=16 handles=16
+INFO [02-02|22:09:56] Writing custom genesis block 
+INFO [02-02|22:09:56] Successfully wrote genesis state         database=chaindata                               hash=611596…424d04
+INFO [02-02|22:09:56] Allocated cache and file handles         database=/home/neo/ethereum/data1/geth/lightchaindata cache=16 handles=16
+INFO [02-02|22:09:57] Writing custom genesis block 
+INFO [02-02|22:09:57] Successfully wrote genesis state         database=lightchaindata                               hash=611596…424d04
+
+neo@netkiller ~ % geth --datadir="~/ethereum/data1" --networkid 123456 --port 30301 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" -rpcport 8541             
+WARN [02-02|22:36:02] No etherbase set and no accounts found as default 
+INFO [02-02|22:36:02] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+INFO [02-02|22:36:02] Allocated cache and file handles         database=/home/neo/ethereum/data1/geth/chaindata cache=128 handles=1024
+INFO [02-02|22:36:02] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
+INFO [02-02|22:36:02] Disk storage enabled for ethash caches   dir=/home/neo/ethereum/data1/geth/ethash count=3
+INFO [02-02|22:36:02] Disk storage enabled for ethash DAGs     dir=/home/neo/.ethash                    count=2
+INFO [02-02|22:36:02] Initialising Ethereum protocol           versions="[63 62]" network=123456
+INFO [02-02|22:36:02] Loaded most recent local header          number=0 hash=611596…424d04 td=131072
+INFO [02-02|22:36:02] Loaded most recent local full block      number=0 hash=611596…424d04 td=131072
+INFO [02-02|22:36:02] Loaded most recent local fast block      number=0 hash=611596…424d04 td=131072
+INFO [02-02|22:36:02] Loaded local transaction journal         transactions=0 dropped=0
+INFO [02-02|22:36:02] Regenerated local transaction journal    transactions=0 accounts=0
+INFO [02-02|22:36:02] Starting P2P networking 
+INFO [02-02|22:36:05] UDP listener up                          self=enode://53433417f11d1d9a17f155cbaad2c4ec375af7b141e2989f049b572fc3f856d78f254e58fa82ed6eab48a16b7d625527214522ec0fd3e3af030b5b8dfdadc062@14.103.209.119:30301
+INFO [02-02|22:36:05] HTTP endpoint opened: http://0.0.0.0:8541 
+INFO [02-02|22:36:05] IPC endpoint opened: /home/neo/ethereum/data1/geth.ipc 
+INFO [02-02|22:36:05] RLPx listener up                         self=enode://53433417f11d1d9a17f155cbaad2c4ec375af7b141e2989f049b572fc3f856d78f254e58fa82ed6eab48a16b7d625527214522ec0fd3e3af030b5b8dfdadc062@14.103.209.119:30301
+INFO [02-02|22:36:05] Mapped network port                      proto=udp extport=30301 intport=30301 interface="UPNP IGDv1-IP1"
+INFO [02-02|22:36:07] Mapped network port                      proto=tcp extport=30301 intport=30301 interface="UPNP IGDv1-IP1"
+				]]>
+			</screen>
+		</section>
+		<section>
+			<title>实例二</title>
+			<screen>
+				<![CDATA[
+geth --datadir ~/ethereum/data2 init genesis.json
+geth --datadir="~/ethereum/data2" --networkid 123456 --port 30302 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --rpcport 8542		
+				]]>
+			</screen>
+			<para>启动后控制台输出与实例一类似</para>
+		</section>
+		<section>
+			<title>添加节点</title>
+			<para>开启一个新终端窗口，运行下面命令查看节点一的 enode 字符串</para>
+			<screen>
+				<![CDATA[
+geth --exec 'admin.nodeInfo.enode' attach ethereum/data1/geth.ipc
+"enode://53433417f11d1d9a17f155cbaad2c4ec375af7b141e2989f049b572fc3f856d78f254e58fa82ed6eab48a16b7d625527214522ec0fd3e3af030b5b8dfdadc062@[::]:30301?discport=0"				
+				]]>
+			</screen>
+			<para>进入节点二，并连接到节点一。</para>
+			<screen>
+				<![CDATA[
+neo@netkiller ~ % geth attach ethereum/data2/geth.ipc
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> admin.addPeer("enode://53433417f11d1d9a17f155cbaad2c4ec375af7b141e2989f049b572fc3f856d78f254e58fa82ed6eab48a16b7d625527214522ec0fd3e3af030b5b8dfdadc062@[::]:30302")
+true
+> admin.addPeer("enode://53433417f11d1d9a17f155cbaad2c4ec375af7b141e2989f049b572fc3f856d78f254e58fa82ed6eab48a16b7d625527214522ec0fd3e3af030b5b8dfdadc062@[::]:30301")
+true
+
+
+
+				]]>
+			</screen>
+			<para>查看节点</para>
+			<screen>
+				<![CDATA[
+> admin.peers
+[{
+    caps: ["eth/63"],
+    id: "53433417f11d1d9a17f155cbaad2c4ec375af7b141e2989f049b572fc3f856d78f254e58fa82ed6eab48a16b7d625527214522ec0fd3e3af030b5b8dfdadc062",
+    name: "Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1",
+    network: {
+      localAddress: "[::1]:51250",
+      remoteAddress: "[::1]:30301"
+    },
+    protocols: {
+      eth: {
+        difficulty: 131072,
+        head: "0x611596e7979cd4e7ca1531260fa706093a5492ecbdf58f20a39545397e424d04",
+        version: 63
+      }
+    }
+}]
+				]]>
+			</screen>
+			<para>至此，节点已经添加完毕。</para>
+			<screen>
+				<![CDATA[
+> exit				
+				]]>
+			</screen>
+			<para>退出</para>
+		</section>
+		<section>
+			<title>节点测试</title>
+			<para>这里我们实现两个节点间的以太币转账。</para>
+			<para>现在两个节点上都没有任何账号</para>
+			<screen>
+				<![CDATA[
+neo@netkiller ~ % geth --exec 'personal.listAccounts' attach ethereum/data1/geth.ipc                                        
+[]
+neo@netkiller ~ % geth --exec 'personal.listAccounts' attach ethereum/data2/geth.ipc
+[]
+				]]>
+			</screen>
+			<para>在两个节点上分别创建两个账号，一个是矿工账号，另一个是普通账号。</para>
+			<screen>
+				<![CDATA[
+neo@netkiller ~ % geth --exec 'personal.newAccount("abc123")' attach ethereum/data1/geth.ipc
+"0x5ad227e8d7e460713c78eebbe558473571edae72"
+
+neo@netkiller ~ % geth --exec 'personal.newAccount("abc123")' attach ethereum/data1/geth.ipc
+"0x3e822e05ee975e02be3f15f32b0fddced8d5bdd0"
+
+neo@netkiller ~ % geth --exec 'personal.listAccounts' attach ethereum/data1/geth.ipc 
+["0x5ad227e8d7e460713c78eebbe558473571edae72", "0x3e822e05ee975e02be3f15f32b0fddced8d5bdd0"]
+
+
+
+neo@netkiller ~ % geth --exec 'personal.newAccount("abc123")' attach ethereum/data2/geth.ipc
+"0xa6df3e3c141e27726f4aeb21a5dab2e5c76c9565"
+
+neo@netkiller ~ % geth --exec 'personal.newAccount("abc123")' attach ethereum/data2/geth.ipc
+"0xa66c7b8b1c26856d284a0b962385babe02caa51d"
+
+neo@netkiller ~ % geth --exec 'personal.listAccounts' attach ethereum/data2/geth.ipc 
+["0xa6df3e3c141e27726f4aeb21a5dab2e5c76c9565", "0xa66c7b8b1c26856d284a0b962385babe02caa51d"]
+				]]>
+			</screen>
+			<para>启动挖矿</para>
+			<screen>
+				<![CDATA[
+geth --exec 'miner.start(1)' attach ethereum/data1/geth.ipc 
+geth --exec 'miner.start(1)' attach ethereum/data2/geth.ipc 
+				]]>
+			</screen>
+			<para>如果正常运行，两个节点上的矿工账号都会有一定的以太币。而普通账号额度应该为零。</para>
+			<screen>
+				<![CDATA[
+neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[0])' attach ethereum/data1/geth.ipc
+299438256000000000000
+
+neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/data1/geth.ipc
+0
+
+neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/data1/geth.ipc
+298000056000000000000
+
+neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/data2/geth.ipc
+0				
+				]]>
+			</screen>
+			<para>我们尝试从节点一矿工账号向节点二上的普通用户转账。</para>
+			<screen>
+				<![CDATA[
+neo@netkiller ~ % geth attach ethereum/data1/geth.ipc                               
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+coinbase: 0x5ad227e8d7e460713c78eebbe558473571edae72
+at block: 144 (Fri, 02 Feb 2018 23:24:35 HST)
+ datadir: /home/neo/ethereum/data1
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> personal.listAccounts
+["0x5ad227e8d7e460713c78eebbe558473571edae72"]
+
+> personal.unlockAccount(eth.accounts[0], "abc123")
+true
+
+> eth.sendTransaction({from: "0x5ad227e8d7e460713c78eebbe558473571edae72", to: "0xa66c7b8b1c26856d284a0b962385babe02caa51d", value: web3.toWei(1, "ether")})
+"0x87c059d0769c8a74499ddd08c04a10f23b7681651615a28098d73ec63a943684"
+
+> eth.pendingTransactions
+[{
+    blockHash: null,
+    blockNumber: null,
+    from: "0x5ad227e8d7e460713c78eebbe558473571edae72",
+    gas: 90000,
+    gasPrice: 18000000000,
+    hash: "0x87c059d0769c8a74499ddd08c04a10f23b7681651615a28098d73ec63a943684",
+    input: "0x",
+    nonce: 2,
+    r: "0xce004f964f268a00e90cadd4e8a685131aa34f37144f7e2e47dc7fe4ec784e55",
+    s: "0x412209c18513a28422e62c4bdb85a223f190e133cf71990a87c570a3a53ae093",
+    to: "0xa66c7b8b1c26856d284a0b962385babe02caa51d",
+    transactionIndex: 0,
+    v: "0x41",
+    value: 1000000000000000000
+}]
+				]]>
+			</screen>
+			<para>稍后一会，当使用 eth.pendingTransactions 查看挂起交易为空的时候，表示已经处理完毕。这时退出控制台。
+			</para>
+			<screen>
+				<![CDATA[
+> eth.pendingTransactions
+[]
+> exit				
+				]]>
+			</screen>
+			<para>现在查看节点二上的第二个普通账号余额</para>
+			<screen>
+				<![CDATA[
+neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/data2/geth.ipc
+1000000000000000000
+				]]>
+			</screen>
+			<para>转账成功</para>
+			<para>现在我们从节点二上的普通用户向节点一上的普通用户转账。</para>
+			<screen>
+				<![CDATA[
+neo@netkiller ~ % geth attach ethereum/data2/geth.ipc                                        
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+coinbase: 0xa6df3e3c141e27726f4aeb21a5dab2e5c76c9565
+at block: 319 (Fri, 02 Feb 2018 23:50:07 HST)
+ datadir: /home/neo/ethereum/data2
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> personal.unlockAccount(eth.accounts[1], "abc123")
+true
+
+> eth.sendTransaction({from: "0xa66c7b8b1c26856d284a0b962385babe02caa51d", to: "0x3e822e05ee975e02be3f15f32b0fddced8d5bdd0", value: web3.toWei(0.1, "ether")})
+"0x951bd161dfd000ff825379cb0644c4acd4afd4d3e1ac4f4c1c6009b3c2a1d366"
+
+> eth.pendingTransactions
+[]
+> exit		
+				]]>
+			</screen>
+			<para>查看两个普通账号的余额</para>
+			<screen>
+				<![CDATA[
+neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/data1/geth.ipc
+100000000000000000
+neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/data2/geth.ipc
+899622000000000000
+				]]>
+			</screen>
+		</section>
+	</section>
+
+
+</chapter>
