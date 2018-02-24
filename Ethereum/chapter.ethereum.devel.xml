@@ -69,7 +69,18 @@ var web3 = new Web3('/Users/myuser/Library/Ethereum/geth.ipc', net); // mac os p
 			</screen>
 		</section>
 	</section>
-
+	<section id="web3">
+		<title></title>
+		<section id="web3.version">
+			<title>version 显示web3版本号</title>
+			<screen>
+			<![CDATA[
+> web3.version
+'1.0.0-beta.30'			
+			]]>
+			</screen>
+		</section>
+	</section>
 	<section id="web3.eth">
 		<title>web3.eth</title>
 		<section id="web3.eth.getAccounts()">
@@ -93,6 +104,20 @@ var web3 = new Web3('http://localhost:8545');
 web3.eth.getCoinbase().then(console.log);			
 			]]>
 			</screen>
+			<para>Callback 方式 </para>		
+			<screen>
+			<![CDATA[
+web3.eth.getCoinbase(
+    function(error, result){ 
+    if (error) {
+        console.error(error);
+    } else {
+        console.log(result); 
+    }
+ })			
+			]]>
+			</screen>
+			
 		</section>
 		<section id="web3.eth.sendTransaction()">
 			<title>web3.eth.sendTransaction()</title>
@@ -124,7 +149,23 @@ web3.eth.sendTransaction({from: coinbase, data: code}).then(function(receipt){
 			]]>
 			</programlisting>
 		</section>
-		
+		<section id="web3.eth.getBlock">
+			<title>web3.eth.getBlock() 获取区块</title>
+			<para>获取 pending 状态的区块</para>
+			<screen>
+			<![CDATA[
+web3.eth.getBlock(
+    "pending",
+function (error, block) {
+    if (error) {
+        console.error(error);
+    } else {
+        console.log(block.transactions.length); 
+    }
+})			
+			]]>
+			</screen>
+		</section>
 	</section>
 	<section id="web3.eth.personal">
 		<title></title>
@@ -607,6 +648,40 @@ tokenContract.deploy({
 .then(function(newContractInstance){
     console.log(newContractInstance.options.address) // instance with the new contract address
 });			
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>ERC20 Example</title>
+			<para>通过Web3操作代币转账</para>
+			<screen>
+			<![CDATA[
+fs = require('fs');
+const Web3 = require('web3');
+const web3 = new Web3('http://localhost:8545');
+web3.version
+const abi = fs.readFileSync('output/TokenERC20.abi', 'utf-8');
+
+const contractAddress = "0x05A97632C197a0496bc939C4e666c2E03Cb95DD4";
+const toAddress = "0x2C687bfF93677D69bd20808a36E4BC2999B4767C";
+
+var coinbase;
+
+web3.eth.getCoinbase().then(function (address){
+  coinbase = address;
+  console.log(address);
+});
+
+const contract = new web3.eth.Contract(JSON.parse(abi), contractAddress, { from: coinbase , gas: 100000});
+
+contract.methods.balanceOf('0x5c18a33DF2cc41a1bedDC91133b8422e89f041B7').call().then(console.log).catch(console.error);
+contract.methods.balanceOf('0x2C687bfF93677D69bd20808a36E4BC2999B4767C').call().then(console.log).catch(console.error);
+
+web3.eth.personal.unlockAccount(coinbase, "chen1980").then(console.log);
+contract.methods.transfer('0x2C687bfF93677D69bd20808a36E4BC2999B4767C', 100).send().then(console.log).catch(console.error);
+
+contract.methods.balanceOf('0x2C687bfF93677D69bd20808a36E4BC2999B4767C').call().then(console.log).catch(console.error);
+			
 			]]>
 			</screen>
 		</section>

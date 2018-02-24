@@ -1242,7 +1242,14 @@ contract MetaCoin {
 			]]>
 			</programlisting>
 		</section>
-
+		<section id="EtherDelta">
+			<title>EtherDelta</title>
+			<para><ulink url="https://github.com/etherdelta/smart_contract">https://github.com/etherdelta/smart_contract</ulink></para>
+		</section>
+		<section>
+			<title>Anonymous voting on Ethereum without a tally authority. Protocol from this paper</title>
+			<para><ulink url="https://github.com/stonecoldpat/anonymousvoting">https://github.com/stonecoldpat/anonymousvoting</ulink></para>
+		</section>
 	</section>
 
 </chapter>
