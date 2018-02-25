@@ -9,4 +9,6 @@
 <!ENTITY chapter.ethereum.devel.xml			SYSTEM "chapter.ethereum.devel.xml">
 <!ENTITY chapter.ethereum.wallet.xml			SYSTEM "chapter.ethereum.wallet.xml">
 <!ENTITY chapter.ethereum.coin.xml			SYSTEM "chapter.ethereum.coin.xml">
+<!ENTITY chapter.ethereum.erc.xml			SYSTEM "chapter.ethereum.erc.xml">
+<!ENTITY chapter.ethereum.case.xml			SYSTEM "chapter.ethereum.case.xml">
 <!ENTITY chapter.ethereum.faq.xml			SYSTEM "chapter.ethereum.faq.xml">

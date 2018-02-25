@@ -4,4 +4,6 @@
 	&chapter.ethereum.truffle.xml;
 	&chapter.ethereum.devel.xml;
 	&chapter.ethereum.wallet.xml;
+	&chapter.ethereum.erc.xml;
+	&chapter.ethereum.case.xml;
 	&chapter.ethereum.faq.xml;
