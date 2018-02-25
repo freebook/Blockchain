@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="token" ?>
 	<title>ERC 代币标准</title>
+	<section id="">
+		<title></title>
+		<para>https://github.com/ethereum/EIPs/issues/20</para>
+		<para>https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md</para>
+		<para>合约源码：https://github.com/ConsenSys/Tokens/tree/master/contracts/eip20</para>
+		<para>ERC20 “描述了实现代币合约的标准功能”，ERC20 是各个代币的标准接口。ERC20 代币仅仅是以太坊代币的子集。为了充分兼容 ERC20，开发者需要将一组特定的函数集成到他们的智能合约中，以便在高层面能够执行以下操作：</para>
+		<itemizedlist>
+			<title>ERC20 提供的方法</title>
+			<listitem>
+				<para>获得代币总供应量</para>
+			</listitem>
+			<listitem>
+				<para>获得账户余额</para>
+			</listitem>
+			<listitem>
+				<para>转让代币</para>
+			</listitem>
+			<listitem>
+				<para>批准花费代币</para>
+			</listitem>
+		</itemizedlist>
+		
+	</section>
 	<section id="ERC223">
 		<title>ERC223 token standard reference implementation.</title>
 		<para><ulink url="https://github.com/Dexaran/ERC223-token-standard" /></para>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="exchange">
+	<title>交易所</title>
+	<section id="gate">
+		<title>gate</title>
+		<para><ulink url="https://gate.io">https://gate.io</ulink></para>
+	</section>
+	<section id="binance">
+		<title>币安</title>
+		<para><ulink url="https://www.binance.com">https://www.binance.com</ulink></para>
+	</section>
+	<section id="coinw">
+		<title>币赢网</title>
+		<para><ulink url="https://www.coinw.com">https://www.coinw.com</ulink></para>
+	</section>
+	<section id="huobi">
+		<title>火币</title>
+		<para><ulink url="https://www.huobi.com">https://www.huobi.com</ulink></para>
+	</section>
+</chapter>
