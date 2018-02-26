@@ -1269,7 +1269,7 @@ contract MetaCoin {
 			<title>Anonymous voting on Ethereum without a tally authority. Protocol from this paper</title>
 			<para><ulink url="https://github.com/stonecoldpat/anonymousvoting">https://github.com/stonecoldpat/anonymousvoting</ulink></para>
 		</section>
-		<section id="">
+		<section id="Logistics">
 			<title>以太坊物流场景解决方案</title>
 			<para>网上谈关于物流行业区块链的文章很多，但是你会发现找遍互联网也找不到具体怎样将物流落地到区块链的文章，于是我只能自己捣鼓。</para>
 			<para>背景，使用区块链记录物流信息，实现信息朔源。</para>
@@ -1559,6 +1559,7 @@ truffle(development)>
 			]]>
 			</screen>
 		</section>
+		<para>这个合约还不是很完善，仅仅是作者的想法，是否在实际项目中可行，尚未知，区块链应用场景实例的文章还比较少，只能摸索前进。</para>
 	</section>
 
 </chapter>
