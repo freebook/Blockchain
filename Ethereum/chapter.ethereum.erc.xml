@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="token" ?>
 	<title>ERC 代币标准</title>
-	<section id="">
-		<title></title>
+	<section id="ERC20">
+		<title>ERC20</title>
 		<para>https://github.com/ethereum/EIPs/issues/20</para>
 		<para>https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md</para>
 		<para>合约源码：https://github.com/ConsenSys/Tokens/tree/master/contracts/eip20</para>

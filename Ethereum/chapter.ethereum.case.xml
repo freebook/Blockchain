@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="case" ?>
 	<title>以太坊案例</title>
+	<section id="EtherDelta">
+		<title>EtherDelta</title>
+		<para>
+			<ulink url="https://github.com/etherdelta/smart_contract">https://github.com/etherdelta/smart_contract</ulink>
+		</para>
+	</section>
 	<section id="CryptoKitties">
 		<title>以太猫（CryptoKitties）</title>
 		<para>首先你要拥有以太币，可以去交易所购买，然后使用谷歌浏览器进入下面网站，点击“Start meow” 按钮，再点击 “I Installed MetaMask” 安装浏览器插件，</para>

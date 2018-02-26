@@ -48,7 +48,7 @@ HttpProvider {
 			</screen>
 			<para>connected: true 表示连接成功。</para>
 		</section>
-		<section id="">
+		<section id="websocket">
 			<title>WebSocket 方式</title>
 			<screen>
 			<![CDATA[
@@ -57,7 +57,7 @@ var web3 = new Web3(Web3.givenProvider || 'ws://remotenode.com:8546');
 			]]>
 			</screen>
 		</section>
-		<section id="">
+		<section id="ipc">
 			<title>IPC 方式</title>
 			<screen>
 			<![CDATA[
@@ -70,7 +70,7 @@ var web3 = new Web3('/Users/myuser/Library/Ethereum/geth.ipc', net); // mac os p
 		</section>
 	</section>
 	<section id="web3">
-		<title></title>
+		<title>web3</title>
 		<section id="web3.version">
 			<title>version 显示web3版本号</title>
 			<screen>
@@ -168,7 +168,7 @@ function (error, block) {
 		</section>
 	</section>
 	<section id="web3.eth.personal">
-		<title></title>
+		<title>账号管理</title>
 		<section id="web3.eth.personal.unlockAccount()">
 			<title>web3.eth.personal.unlockAccount()</title>
 			<programlisting>
@@ -443,7 +443,7 @@ web3.utils.toWei('1', 'shannon');
 		</section>
 	</section>
 	<section id="compile.solidity">
-		<title></title>
+		<title>web3 编译合约</title>
 		<section id="solc.compile">
 			<title>solc.compile</title>
 

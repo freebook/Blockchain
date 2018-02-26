@@ -17,4 +17,8 @@
 		<title>火币</title>
 		<para><ulink url="https://www.huobi.com">https://www.huobi.com</ulink></para>
 	</section>
+	<section id="OTCBTC">
+		<title>OTCBTC</title>
+		<para><ulink url="https://otcbtc.com">https://otcbtc.com</ulink></para>
+	</section>
 </chapter>
