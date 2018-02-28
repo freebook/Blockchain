@@ -53,6 +53,20 @@
 		</screen>
 	</section>
 	<section>
+		<title>区块链不能解决的问题</title>
+		<para>你能保证上链的数据绝对不会被篡改；但你不能保证，上传的数据是真的。</para>
+		<itemizedlist>
+			<title>区块链不能解决的问题:</title>
+			<listitem>
+				<para>用户上传假数据</para>
+			</listitem>
+			<listitem>
+				<para>物品被调包</para>
+			</listitem>
+		</itemizedlist>
+		<para>我们举一个现实中的例子“身份证”，例如身份证是可能证明你是你，但是别人可以拿着你的身份证冒充你。另外你不能保证户籍人员在录入身份信息的时候不出错。现实中我们常有身份证重号或信息有误的情况。</para>
+	</section>
+	<section>
 		<title>都有哪些区块链解决方案</title>
 		<section>
 			<title>量子链（QTUM）</title>
