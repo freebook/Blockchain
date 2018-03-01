@@ -55,6 +55,7 @@
 	&chapter.blockchain.xml;
 	&part.ethereum.xml;
 	&part.hyperledger.xml;
+	&chapter.ipfs.xml;
 <!-- =========================================================================== -->
 
 </book>
