@@ -687,6 +687,39 @@ deployer.deploy([
 			</programlisting>
 		</section>
 	</section>
+	<section id="truffle.console">
+		<title>truffle console</title>
+		<section id="">
+			<title>实例化合约</title>
+			<screen>
+			<![CDATA[
+var contract;
+Conference.deployed().then(function(instance){contract=instance;});
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>访问 public 变量</title>
+			<screen>
+			<![CDATA[
+truffle(development)> contract.quota.call().then(console.log);
+BigNumber { s: 1, e: 1, c: [ 50 ] }
+undefined			
+			]]>
+			</screen>
+		</section>				
+		<section id="">
+			<title>调用 public 函数</title>
+			<screen>
+			<![CDATA[
+var contract;
+Conference.deployed().then(function(instance){contract=instance;});
+contract.buyTicket();
+			]]>
+			</screen>
+		</section>		
+				
+	</section>
 	<section id="zeppelin.solidity">
 		<title>Zeppelin Solidity - OpenZeppelin is a library for writing secure Smart Contracts on Ethereum.</title>
 		<para>OpenZeppelin is an open framework of reusable and secure smart contracts in the Solidity language.</para>

@@ -138,4 +138,68 @@ $ geth --rpc --rpcapi personal,db,eth,net,web3
 		</screen>
 		<para>在 --rpcapi 选项中增加 personal</para>
 	</section>
+	<section id="Error: exceeds block gas limit">
+		<title>Error: exceeds block gas limit</title>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~/ethereum/truffle/Conference % truffle migrate --reset
+\Using network 'development'.
+
+Running migration: 1_initial_conference.js
+  Deploying Conference...
+  ... undefined
+Error encountered, bailing. Network state unknown. Review successful transactions manually.
+Error: exceeds block gas limit
+    at Object.InvalidResponse (/usr/local/lib/node_modules/truffle/build/webpack:/~/web3/lib/web3/errors.js:38:1)
+    at /usr/local/lib/node_modules/truffle/build/webpack:/~/web3/lib/web3/requestmanager.js:86:1
+    at /usr/local/lib/node_modules/truffle/build/webpack:/~/truffle-migrate/index.js:225:1
+    at /usr/local/lib/node_modules/truffle/build/webpack:/~/truffle-provider/wrapper.js:134:1
+    at XMLHttpRequest.request.onreadystatechange (/usr/local/lib/node_modules/truffle/build/webpack:/~/web3/lib/web3/httpprovider.js:128:1)
+    at XMLHttpRequestEventTarget.dispatchEvent (/usr/local/lib/node_modules/truffle/build/webpack:/~/xhr2/lib/xhr2.js:64:1)
+    at XMLHttpRequest._setReadyState (/usr/local/lib/node_modules/truffle/build/webpack:/~/xhr2/lib/xhr2.js:354:1)
+    at XMLHttpRequest._onHttpResponseEnd (/usr/local/lib/node_modules/truffle/build/webpack:/~/xhr2/lib/xhr2.js:509:1)
+    at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/truffle/build/webpack:/~/xhr2/lib/xhr2.js:469:1)
+    at IncomingMessage.emit (events.js:165:20)
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~/ethereum/truffle/contracts % geth attach            
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.8.1-stable/darwin-amd64/go1.10
+coinbase: 0x5c18a33df2cc41a1beddc91133b8422e89f041b7
+at block: 5381 (Wed, 28 Feb 2018 23:20:05 CST)
+ datadir: /Users/neo/Library/Ethereum
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> web3.eth.getBlock("pending").gasLimit
+4712388		
+		]]>
+		</screen>
+		<para>或者</para>
+		<screen>
+		<![CDATA[
+$ truffle console
+truffle(development)> web3.eth.getBlock("pending").gasLimit
+6712390
+		]]>
+		</screen>
+		<para>修改 truffle.js 文件，加入 gas 值为上面所查询的值:</para>
+		<screen>
+		<![CDATA[
+module.exports = {
+  networks: {
+    development: {
+      host: "localhost",
+      port: 8545,
+      gas: 6712390,
+      network_id: "*" // Match any network id
+    }
+  }
+};			
+		]]>
+		</screen>
+		
+	</section>
 </chapter>
