@@ -15,36 +15,52 @@ sudo npm install -g truffle
 			]]>
 		</screen>
 	</section>
-	
+
 	<section id="truffle.develop">
 		<title>开发环境</title>
-		<para>由于truffle 4.0 自带开发环境(truffle develop)，所以本章不在使用 testrpc(不建议使用)，如果仍需要testrpc请参考下面安装方法：</para>
-		<screen>
-			<![CDATA[
-# 安装testrpc
-sudo npm install -g ethereumjs-testrpc			
-			]]>
-		</screen>
-		<para>另一个开发环境是 Ganache，Ganache有命令行版本和图形界面版本。下面是命令行版本安装方法：</para>
-		<screen>
+		<section>
+			<title>truffle develop</title>
+			<para>truffle develop 是 truffle 自带的开发环境。</para>
+		</section>
+		<section>
+			<title>Ganache</title>
+			<para>truffle develop 使用起来并不直观，还有另一个开发环境是 Ganache，Ganache有命令行版本和图形界面版本。下面是命令行版本安装方法：</para>
+			<screen>
 			<![CDATA[
 sudo npm install -g ganache-cli
 			]]>
-		</screen>
-		<para>
-			图形界面版本这里下载
-			<ulink url="http://truffleframework.com/ganache/" />
-		</para>
-		<para>图形界面交互性相比命令行比较好，推荐使用。你能在界面上直接查看账号，区块，交易，日志等等。</para>
+			</screen>
+			<para>
+				图形界面版本这里下载
+				<ulink url="http://truffleframework.com/ganache/" />
+			</para>
+			<para>图形界面交互性相比命令行比较好，推荐使用。你能在界面上直接查看账号，区块，交易，日志等等。</para>
+
+		</section>
+		<section>
+			<title>testrpc</title>
+			<para>由于truffle 4.0 自带开发环境(truffle develop)，所以本章不在使用 testrpc(不建议使用)，如果仍需要testrpc请参考下面安装方法：</para>
+			<screen>
+			<![CDATA[
+# 安装testrpc
+sudo npm install -g ethereumjs-testrpc
+			]]>
+			</screen>
+		</section>
+		
 	</section>
 	<section id="truffle.boxes">
 		<title>TRUFFLE BOXES</title>
-		<para>Truffle Boxes <ulink url="http://truffleframework.com/boxes/" /> 是一些有用的实例，学习 truffle 开发是供开发者参考学习。</para>
+		<para>
+			Truffle Boxes
+			<ulink url="http://truffleframework.com/boxes/" />
+			是一些有用的实例，学习 truffle 开发是供开发者参考学习。
+		</para>
 		<para>使用下面命令下载例子</para>
 		<screen>
 		<![CDATA[
 truffle unbox webpack
-		]]>		
+		]]>
 		</screen>
 	</section>
 	<section id="truffle.tutorial">
@@ -641,7 +657,7 @@ truffle watch
 	</section>
 	<section id="truffle.contract">
 		<title>合约开发</title>
-		<section id="">
+		<section>
 			<title>构造方法</title>
 			<para>在 Truffer 中部署构造方法需要参数传递例子如下，MyContract 需要传递参数 _name：</para>
 			<programlisting>
@@ -689,7 +705,7 @@ deployer.deploy([
 	</section>
 	<section id="truffle.console">
 		<title>truffle console</title>
-		<section id="">
+		<section>
 			<title>实例化合约</title>
 			<screen>
 			<![CDATA[
@@ -698,7 +714,7 @@ Conference.deployed().then(function(instance){contract=instance;});
 			]]>
 			</screen>
 		</section>
-		<section id="">
+		<section>
 			<title>访问 public 变量</title>
 			<screen>
 			<![CDATA[
@@ -707,8 +723,8 @@ BigNumber { s: 1, e: 1, c: [ 50 ] }
 undefined			
 			]]>
 			</screen>
-		</section>				
-		<section id="">
+		</section>
+		<section>
 			<title>调用 public 函数</title>
 			<screen>
 			<![CDATA[
@@ -717,13 +733,19 @@ Conference.deployed().then(function(instance){contract=instance;});
 contract.buyTicket();
 			]]>
 			</screen>
-		</section>		
-				
+		</section>
+
 	</section>
 	<section id="zeppelin.solidity">
 		<title>Zeppelin Solidity - OpenZeppelin is a library for writing secure Smart Contracts on Ethereum.</title>
 		<para>OpenZeppelin is an open framework of reusable and secure smart contracts in the Solidity language.</para>
-		<para>网站：<ulink url="https://openzeppelin.org">https://openzeppelin.org</ulink></para>
-		<para>Github: <ulink url="https://github.com/OpenZeppelin/zeppelin-solidity">https://github.com/OpenZeppelin/zeppelin-solidity</ulink></para>
+		<para>
+			网站：
+			<ulink url="https://openzeppelin.org">https://openzeppelin.org</ulink>
+		</para>
+		<para>
+			Github:
+			<ulink url="https://github.com/OpenZeppelin/zeppelin-solidity">https://github.com/OpenZeppelin/zeppelin-solidity</ulink>
+		</para>
 	</section>
 </chapter>	

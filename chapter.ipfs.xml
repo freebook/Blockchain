@@ -1,1 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<chapter id="index"><?dbhtml dir="ipfs" ?>
+	<title>IPFS（InterPlanetary File System，星际文件系统）</title>
+	<para>IPFS “星际文件系统” 是去中心化保存和共享文件的分布式文件系统，它是一种内容可寻址、版本化、点对点超媒体的分布式协议，IPFS旨在替代HTTP。它希望将所有的计算设备都连接到同一个文件系统中。</para>
+	<para>由于 IPFS 去中心化特点，使得很多区块链项目做文件存储的时候首选IPFS。</para>
+	<section id="">
+		<title>安装 IPFS</title>
+		<section id="">
+			<title>go get 方式</title>
+			<screen>
+			<![CDATA[
+$ go get -u -d github.com/ipfs/go-ipfs
+
+$ cd $GOPATH/src/github.com/ipfs/go-ipfs
+$ make install	
+			]]>
+			</screen>
+		</section>
+		<section id="ipfs-update">
+			<title>安装 ipfs-update</title>
+			<para>ipfs-update 是一个 ipfs 版本管理工具，可以通过这个工具安装ipfs 和升级 ipfs.</para>
+			<screen>
+			<![CDATA[
+# go get -u github.com/ipfs/ipfs-update
+
+# ipfs-update install latest
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>Ubuntu</title>
+			<screen>
+			<![CDATA[
+neo@netkiller ~ % sudo apt install golang1.9			
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>Docker</title>
+			<screen>
+			<![CDATA[
+
+			]]>
+			</screen>
+		</section>
+	</section>
+	<section id="ipfs-api">
+		<title>ipfs-api</title>
+		<screen>
+		<![CDATA[
+npm install --save ipfs-api		
+		]]>
+		</screen>
+		<programlisting>
+		<![CDATA[
+const ipfsAPI = require('ipfs-api');
+const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});		
+		]]>
+		</programlisting>
+	</section>
+</chapter>

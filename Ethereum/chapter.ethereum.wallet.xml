@@ -74,13 +74,28 @@ Options:
 			</section>
 
 		</section>
-
+		<section id="ropsten">
+			<title>Ropsten 测试网络</title>
+			<!-- <para><ulink url="https://ropsten.etherscan.io">https://ropsten.etherscan.io</ulink></para> -->
+			<section id="">
+				<title>获得测试币</title>
+				<para><ulink url="http://faucet.ropsten.be:3001" /></para>
+				<graphic format="png" fileref="../../images/ethereum/ropsten/faucet.png" width="1024" srccredit="netkiller" />
+				<para>输入账号然后点击 “Send me 1 test ether” 按钮</para>
+				<graphic format="png" fileref="../../images/ethereum/ropsten/send.png" width="1024" srccredit="netkiller" />
+				<para>当现实 “Your request was accepted” 时，表示你的请求已经接受，接下来耐心等待。</para>
+			</section>
+			<section id="">
+				<title>Etherscan</title>
+				<para><ulink url="https://ropsten.etherscan.io" /></para>
+			</section>
+		</section>
 		<section id="rinkeby">
 			<title>Rinkeby 测试网络</title>
 			<para>
 				<ulink url="https://www.rinkeby.io/">https://www.rinkeby.io/</ulink>
 			</para>
-			<section id="testnet">
+			<section>
 				<title>测试网络</title>
 				<para>连接测试网络，启动 "Ethereum Wallet"，主菜单-Develop-Network，选择 "Rinkeby - Test network"。</para>
 				<para>如果这个菜单是灰色的，可以你在本地运行过 geth，解决方法如下：</para>
