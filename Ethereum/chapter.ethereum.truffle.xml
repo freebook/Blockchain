@@ -748,4 +748,116 @@ contract.buyTicket();
 			<ulink url="https://github.com/OpenZeppelin/zeppelin-solidity">https://github.com/OpenZeppelin/zeppelin-solidity</ulink>
 		</para>
 	</section>
+	<section id="infura">
+		<title>infura</title>
+		<para><ulink url="https://infura.io/" /></para>
+		<para>SCALABLE BLOCKCHAIN INFRASTRUCTURE</para>
+		<para>We provide secure, reliable, and scalable access to Ethereum and IPFS.</para>
+		<section id="">
+			<title>注册账号</title>
+			<para><para><ulink url="https://infura.io/signup" /></para></para>
+			<para>输入用户名和邮箱即可注册</para>
+			<graphic format="png" fileref="../../images/ethereum/infura/signup.png" width="1024" srccredit="netkiller" />
+			<para>这些地址你需要牢记</para>
+			<graphic format="png" fileref="../../images/ethereum/infura/network.png" width="1024" srccredit="netkiller" />
+			
+			<literallayout>
+			<![CDATA[
+NETWORK		DESCRIPTION			URL
+Mainnet		production network	https://mainnet.infura.io/CsS9shwaAab0z7B4LP2d
+Ropsten		test network			https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d
+INFURAnet	test network			https://infuranet.infura.io/CsS9shwaAab0z7B4LP2d
+Kovan		test network			https://kovan.infura.io/CsS9shwaAab0z7B4LP2d
+Rinkeby		test network			https://rinkeby.infura.io/CsS9shwaAab0z7B4LP2d
+IPFS			gateway				https://ipfs.infura.io			
+			]]>
+			</literallayout>
+			<para>这是你的 api key CsS9shwaAab0z7B4LP2d 请保存好</para>
+			<para>Mainnet 是以太坊主网</para>
+			<para>IPFS 是一个分布式区中心化的文件系统。</para>
+		</section>
+		<section id="infura.api">
+			<title>infura 接口</title>
+			<section id="">
+				<title></title>
+				<screen>
+				<![CDATA[
+$ curl -X POST -H "Content-Type: application/json" \
+  --data '{"jsonrpc": "2.0", "id": 1, "method": "eth_blockNumber", "params": []}' \
+  "https://mainnet.infura.io/CsS9shwaAab0z7B4LP2d"
+				]]>
+				</screen>
+			</section>
+			<section id="">
+				<title>INFURA API</title>
+				<screen>
+				<![CDATA[
+https://api.infura.io/v1/jsonrpc/mainnet/eth_blockNumber?token=CsS9shwaAab0z7B4LP2d				
+				]]>
+				</screen>
+			</section>
+		</section>
+		<section id="infura.truffle">
+			<title>配置 Truffle</title>
+			<para>安装 truffle-hdwallet-provider</para>
+			<screen>
+			<![CDATA[
+$ npm install truffle-hdwallet-provider			
+			]]>
+			</screen>
+			<para>修改 truffle.js 文件</para>
+			<programlisting>
+			<![CDATA[
+var HDWalletProvider = require("truffle-hdwallet-provider"); 
+
+// infura 为你提供的 apikey 请与你申请到的 key 保持一致
+var infura_apikey = "CsS9shwaAab0z7B4LP2d";
+ 
+// 你以太坊钱包地址
+var mnemonic = "0xB94054c174995AE2A9E7fcf6c7924635FBa8ECF7"; 
+
+module.exports = {
+  networks: {
+    development: {
+      host: "127.0.0.1",
+      port: 7545,
+      network_id: "*"
+    },
+    private: {
+      host: "localhost",
+      port: 8545,
+      network_id: "*" // Match any network id
+    },
+    ropsten: {
+      provider: new HDWalletProvider(mnemonic, "https://ropsten.infura.io/"+infura_apikey),
+      network_id: 3,
+      gas: 3012388,
+      gasPrice: 30000000000
+    },
+    main: {
+      provider: new HDWalletProvider(mnemonic, "https://mainnet.infura.io/"+infura_apikey),
+      network_id: 3,
+      gas: 3012388,
+      gasPrice: 1000000000
+    }
+  }
+};
+
+			]]>
+			</programlisting>
+			<para>部署合约到 ropsten 测试网， 在命令行输入如下命令，通过 --network 设置发布的目标网络：</para>
+			<screen>
+			<![CDATA[
+truffle migrate --network ropsten			
+			]]>
+			</screen>
+			<para>主网络发布</para>
+			<screen>
+			<![CDATA[
+truffle migrate --network main
+			]]>
+			</screen>
+		</section>
+	</section>
+	
 </chapter>	
