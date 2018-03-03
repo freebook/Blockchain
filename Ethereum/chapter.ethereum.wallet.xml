@@ -232,5 +232,18 @@ IPC endpoint opened: /Users/neo/Library/Ethereum/geth.ipc
 		<title>MetaMask</title>
 		<para>MetaMask 是 Chrome 浏览器插件 <ulink url="https://metamask.io">https://metamask.io</ulink></para>
 		<!-- http://8btc.com/thread-76137-1-5.html -->
+		<graphic format="png" fileref="../../images/ethereum/metamask/metamask.png" width="1024" srccredit="netkiller" />
+		<section id="">
+			<title>测试网络</title>
+			<para></para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/network.png" width="1024" srccredit="netkiller" />
+			<section id="">
+				<title>获取测试网络上的以太币</title>
+				<para>点击 Buy 按钮，然后再点击 ROPSTEN TEST FAUCET 按钮。</para>
+				<graphic format="png" fileref="../../images/ethereum/metamask/ropsten-test-faucet.png" width="1024" srccredit="netkiller" />
+				<para>点击 request 1 ether from faucet</para>
+				<graphic format="png" fileref="../../images/ethereum/metamask/faucet.png" width="1024" srccredit="netkiller" />
+			</section>
+		</section>
 	</section>
 </chapter>

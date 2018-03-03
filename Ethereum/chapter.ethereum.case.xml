@@ -2033,6 +2033,11 @@ contract KittyCore is KittyMinting {
 		]]>
 		</programlisting>
 	</section>
+	<section id="CryptoZombies">
+		<title>CryptoZombies</title>
+		<para><ulink url="http://www.cryptozombies.io" /></para>
+		<para>一款游戏</para>
+	</section>
 	<section id="AugurProject">
 		<title>Augur Project</title>
 		<para>Augur 是建立在以太坊平台上的去中心化预测市场平台，也是以太坊平台上第一个众筹的应用，利用 Augur任何人都可以为任何自己感兴趣的主题创建一个预测市场，并提供初始流动性。Augur 项目于2015年8月开启代币众筹，一共众筹到500万美元，代币名称为REP。</para>
