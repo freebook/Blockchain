@@ -7,7 +7,9 @@
 		<para>https://github.com/ethereum/EIPs/issues/20</para>
 		<para>https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md</para>
 		<para>合约源码：https://github.com/ConsenSys/Tokens/tree/master/contracts/eip20</para>
-		<para><ulink url="https://theethereum.wiki/w/index.php/ERC20_Token_Standard" /></para>
+		<para>
+			<ulink url="https://theethereum.wiki/w/index.php/ERC20_Token_Standard" />
+		</para>
 		<para>ERC20 “描述了实现代币合约的标准功能”，ERC20 是各个代币的标准接口。ERC20 代币仅仅是以太坊代币的子集。为了充分兼容 ERC20，开发者需要将一组特定的函数集成到他们的智能合约中，以便在高层面能够执行以下操作：</para>
 		<itemizedlist>
 			<title>ERC20 提供的方法</title>
@@ -24,10 +26,13 @@
 				<para>批准花费代币</para>
 			</listitem>
 		</itemizedlist>
-		<section id="">
+		<section>
 			<title>基本Token 官方提供的例子</title>
 			<para>这个例子仅仅用来初学使用，请不用使用在生产环境。</para>
-			<para>提供例子的地址：<ulink url="https://ethereum.org/token" /></para>
+			<para>
+				提供例子的地址：
+				<ulink url="https://ethereum.org/token" />
+			</para>
 			<para>这个例子中没有涉及合约管理者，所以任何人都可以操作这个合约。例如这个减持的函数burn() 人人都可以调用。所以这个例子只能用来学习ERC20合约开发，相当于Helloword 程序。</para>
 			<programlisting>
 			<![CDATA[
@@ -188,11 +193,15 @@ contract TokenERC20 {
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title>官方提供的例子 ADVANCED TOKEN</title>
-			<para>提供例子的地址：<ulink url="https://ethereum.org/token" /> 网页的下方</para>
-			<para>这个例子已经比较完善，但仍不能够用在生产环境，因为 function burn(uint256 _value) public returns (bool success)  仍然没有控制访问权限。 </para>
-			
+			<para>
+				提供例子的地址：
+				<ulink url="https://ethereum.org/token" />
+				网页的下方
+			</para>
+			<para>这个例子已经比较完善，但仍不能够用在生产环境，因为 function burn(uint256 _value) public returns (bool success) 仍然没有控制访问权限。 </para>
+
 			<para>如果在生产环境使用这个合约你需要修改两处</para>
 			<programlisting>
 			<![CDATA[
@@ -205,9 +214,9 @@ function burnFrom(address _from, uint256 _value) public returns (bool success)
 改为
 function burnFrom(address _from, uint256 _value) onlyOwner public returns (bool success)
 			]]>
-			</programlisting> 
+			</programlisting>
 			<para>这样合约就很安全了。只能创建者可以减持代币。</para>
-			
+
 			<programlisting>
 			<![CDATA[
 pragma solidity ^0.4.16;
@@ -582,12 +591,15 @@ function transfer(address _to, uint256 _value) {
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title>Netkiller 的例子</title>
 			<para>下面是我一个合约例子仅供参考，为了部署方便我将所有内容都写入在一个文件中。</para>
-			<para>合约下载地址：<ulink url="https://github.com/ibook/TokenERC20/blob/master/contracts/TokenERC20.sol" /></para>
+			<para>
+				合约下载地址：
+				<ulink url="https://github.com/ibook/TokenERC20/blob/master/contracts/TokenERC20.sol" />
+			</para>
 			<para>有些场景我们需要记录一些数据在区块链上，这个合约增加了 data 数据支持 </para>
-			
+
 			<programlisting>
 			<![CDATA[
   function transfer(address _to, uint256 _value, bytes _data) public returns (bool) {
@@ -768,10 +780,35 @@ contract TokenERC20 {
 			]]>
 			</programlisting>
 		</section>
+		<section id="airdrop">
+			<title>空投代币</title>
+			<programlisting>
+			<![CDATA[
+uint totalSupply = 100000000 ether; 	// 总发行量
+uint currentTotalAirdrop = 0;    		// 已经空投数量
+uint airdrop = 1 ether;        		// 单个账户空投数量
+
+// 存储是否空投过
+mapping(address => bool) touched;
+
+// 修改后的balanceOf方法
+function balanceOf(address _owner) public view returns (uint256 balance) {    
+    if (!touched[_owner] && currentTotalAirdrop < totalSupply) {
+        touched[_owner] = true;
+        currentTotalAirdrop += airdrop;
+        balances[_owner] += airdrop;
+    }    
+    return balances[_owner];
+}
+			]]>
+			</programlisting>
+		</section>
 	</section>
 	<section id="ERC223">
 		<title>ERC223 token standard reference implementation.</title>
-		<para><ulink url="https://github.com/Dexaran/ERC223-token-standard" /></para>
+		<para>
+			<ulink url="https://github.com/Dexaran/ERC223-token-standard" />
+		</para>
 		<para>ERC223是以太坊上最新的代币(token)接口标准,主要是为了解决ERC220代币转账丢失问题</para>
 		<para>ERC220接口以transfer为例:</para>
 		<programlisting>
@@ -787,7 +824,7 @@ function transfer(address _to, uint256 _value) public returns (bool success);
 		</programlisting>
 		<para>transfer的功能非常简单，给一个指定地址转多少代币。</para>
 		<para>但是当初设计的时候没有考虑到的一个问题就是如果接收者是一个智能合约,那么合约是没法感知自己收到了多少token的.</para>
-		<para>ERC223 中的方法定义</para> 
+		<para>ERC223 中的方法定义</para>
 		<screen>
 		<![CDATA[
 function transfer(address _to, uint _value) public returns (bool ok);
@@ -976,12 +1013,18 @@ contract ERC223Token is ERC223Interface {
 	</section>
 	<section id="ERC721">
 		<title>ERC721 - Non-fungible Token Standard</title>
-		<para><ulink url="https://github.com/OpenZeppelin/zeppelin-solidity/tree/master/contracts/token/ERC721" /></para>
+		<para>
+			<ulink url="https://github.com/OpenZeppelin/zeppelin-solidity/tree/master/contracts/token/ERC721" />
+		</para>
 		<para>ERC721 是以太猫项目采用的合约标准。</para>
 	</section>
 	<section id="ERC827">
 		<title>ERC827 Token Standard (ERC20 Extension)</title>
-		<para><ulink url="https://github.com/ethereum/EIPs/issues/827" /></para>
-		<para><ulink url="https://github.com/OpenZeppelin/zeppelin-solidity/tree/master/contracts/token/ERC827" /></para>
+		<para>
+			<ulink url="https://github.com/ethereum/EIPs/issues/827" />
+		</para>
+		<para>
+			<ulink url="https://github.com/OpenZeppelin/zeppelin-solidity/tree/master/contracts/token/ERC827" />
+		</para>
 	</section>
 </chapter>
