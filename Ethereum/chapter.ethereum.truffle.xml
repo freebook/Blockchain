@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="truffle" ?>
-	<title>Truffle v4.0.6</title>
+	<title>Truffle 开发框架 v4.0.6</title>
 	<para>
 		Truffle 是 solidity 开发框架，
 		<ulink url="http://truffleframework.com">http://truffleframework.com</ulink>

@@ -57,7 +57,74 @@ Options:
 
 
 		<graphic format="png" fileref="../../images/ethereum/wallet/EthereumWallet.png" width="1024" srccredit="netkiller" />
+		<section id="EthereumWallet.principle">
+			<title>Ethereum Wallet 工作原理</title>
+			<para>Ethereum Wallet 工作原理非常简单，启动 Ethereum Wallet 是，Ethereum Wallet 会首先启动 geth，然后在启动 Ethereum Wallet 应用程序。</para>
+			<para>geth 负责与以太坊网络连接，包括主网，Ropsten和Rinkeby两个测试网，Solo 本地开发模式。geth </para>
+			<para>例如主网的启动目录是 /Users/neo/Library/Ethereum/geth.ipc 参数是：</para>
+			<screen>
+			<![CDATA[
+/Users/neo/Library/Application Support/Ethereum Wallet/binaries/Geth/unpacked/geth --syncmode light --cache 1024
+			]]>
+			</screen>
+			<para></para>
 
+			<section>
+				<title>geth 启动 ropsten 测试网</title>
+				<screen>
+				<![CDATA[
+/Users/neo/Library/Application Support/Ethereum Wallet/binaries/Geth/unpacked/geth --testnet --syncmode light --cache 1024 --ipcpath /Users/neo/Library/Ethereum/geth.ipc
+				]]>
+				</screen>
+			</section>
+			<section id="wallet.connect">
+				<title>连接到本地测试网络</title>
+				<para>首先启动 geth</para>
+				<section>
+					<title>IPC</title>
+					<para>钱包默认是连接到下面地址。</para>
+					<screen>
+				<![CDATA[
+IPC endpoint opened: /Users/neo/Library/Ethereum/geth.ipc
+				]]>
+					</screen>
+					<para>连接到其他ipc地址</para>
+					<screen>
+				<![CDATA[
+"/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --rpc /Users/other/Library/Ethereum/geth.ipc
+				]]>
+					</screen>
+				</section>
+				<section>
+					<title>TCP</title>
+					<para>如果需要连接到远程节点上，需要使用命令行，方法如下。启动钱包并连接到远程开发环境，localhost 改为你的IP地址即可。
+					</para>
+					<screen>
+				<![CDATA[
+"/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --rpc http://localhost:8545				
+				]]>
+					</screen>
+					<graphic format="png" fileref="../../images/ethereum/wallet/EthereumWalletTcp.png" width="1024" srccredit="netkiller" />
+				</section>
+			</section>
+			<section id="EthereumWallet.console">
+				<title>控制台</title>
+				<para>在 Ethereum Wallet 启动期间，随时可以进入Javascript控制台。</para>
+				<screen>
+				<![CDATA[
+neo@MacBook-Pro ~/Library/Ethereum/geth % geth attach      
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.8.1-stable-1e67410e/darwin-amd64/go1.9.4
+ modules: admin:1.0 debug:1.0 eth:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> eth.accounts
+["0xb94054c174995ae2a9e7fcf6c7924635fba8ecf7", "0xf56b81a2bcb964d2806071e9be4289a5559bb0fa", "0x997e5ca600e19447d0b82afbf9c7f00de2b39b16"]
+> 				
+				]]>
+				</screen>
+			</section>
+		</section>
 		<section id="main.network">
 			<title>主网络</title>
 			<para></para>
@@ -72,23 +139,27 @@ Options:
 					<ulink url="https://etherscan.io">https://etherscan.io</ulink>
 				</para>
 			</section>
-
 		</section>
 		<section id="ropsten">
 			<title>Ropsten 测试网络</title>
 			<!-- <para><ulink url="https://ropsten.etherscan.io">https://ropsten.etherscan.io</ulink></para> -->
 			<section id="">
 				<title>获得测试币</title>
-				<para><ulink url="http://faucet.ropsten.be:3001" /></para>
+				<para>
+					<ulink url="http://faucet.ropsten.be:3001" />
+				</para>
 				<graphic format="png" fileref="../../images/ethereum/ropsten/faucet.png" width="1024" srccredit="netkiller" />
 				<para>输入账号然后点击 “Send me 1 test ether” 按钮</para>
 				<graphic format="png" fileref="../../images/ethereum/ropsten/send.png" width="1024" srccredit="netkiller" />
 				<para>当现实 “Your request was accepted” 时，表示你的请求已经接受，接下来耐心等待。</para>
 			</section>
-			<section id="">
+			<section>
 				<title>Etherscan</title>
-				<para><ulink url="https://ropsten.etherscan.io" /></para>
+				<para>
+					<ulink url="https://ropsten.etherscan.io" />
+				</para>
 			</section>
+
 		</section>
 		<section id="rinkeby">
 			<title>Rinkeby 测试网络</title>
@@ -121,7 +192,7 @@ neo@MacBook-Pro ~/ethereum/rinkeby % "/Applications/Ethereum Wallet.app/Contents
 				<para>如果你没有安装 geth，可以使用下面的方法</para>
 
 				<screen>
-			<![CDATA[
+				<![CDATA[
 neo@MacBook-Pro ~/ethereum/truffle % "/Users/neo/Library/Application Support/Ethereum Wallet/binaries/Geth/unpacked/geth" --rinkeby --syncmode light --cache 1024 --ipcpath /Users/neo/Library/Ethereum/geth.ipc
 INFO [02-22|11:43:23] Maximum peer count                       ETH=0 LES=100 total=25
 INFO [02-22|11:43:23] Starting peer-to-peer node               instance=Geth/v1.8.1-stable-1e67410e/darwin-amd64/go1.9.4
@@ -140,7 +211,7 @@ INFO [02-22|11:43:32] Block synchronisation started
 INFO [02-22|11:43:33] Imported new block headers               count=13 elapsed=245.507ms number=1813402 hash=08317c…fd1806 ignored=0
 INFO [02-22|11:43:48] Imported new block headers               count=1  elapsed=898.705µs number=1813403 hash=8a7c1b…5e1652 ignored=0
 INFO [02-22|11:44:03] Imported new block headers               count=1  elapsed=892.924µs number=1813404 hash=511a30…561d32 ignored=0			
-			]]>
+				]]>
 				</screen>
 				<para>然后正常启动钱包程序 Launchpad - Ethereum Wallet</para>
 				<para>启动过程比较缓慢，启动后会同步区块信息</para>
@@ -194,43 +265,26 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 				</para>
 			</section>
 		</section>
-
-		<section id="wallet.connect">
-			<title>连接到本地测试网络</title>
-			<para>首先启动 geth</para>
-			<section>
-				<title>IPC</title>
-				<para>钱包默认是连接到下面地址。</para>
-				<screen>
-				<![CDATA[
-IPC endpoint opened: /Users/neo/Library/Ethereum/geth.ipc
-				]]>
-				</screen>
-				<para>连接到其他ipc地址</para>
-				<screen>
-				<![CDATA[
-"/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --rpc /Users/other/Library/Ethereum/geth.ipc
-				]]>
-				</screen>
-			</section>
-			<section>
-				<title>TCP</title>
-				<para>如果需要连接到远程节点上，需要使用命令行，方法如下。启动钱包并连接到远程开发环境，localhost 改为你的IP地址即可。
-				</para>
-				<screen>
-				<![CDATA[
-"/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --rpc http://localhost:8545				
-				]]>
-				</screen>
-				<graphic format="png" fileref="../../images/ethereum/wallet/EthereumWalletTcp.png" width="1024" srccredit="netkiller" />
-			</section>
-		</section>	
+		<section id="solo.network">
+			<title>Solo Network</title>
+			<para>solo 实际上就是geth 的 --dev 参数</para>
+			<para>开发模式会创建一个账号，同时启动挖矿，ETH多的你用不完。</para>
+			<screen>
+			<![CDATA[
+/Users/neo/Library/Application Support/Ethereum Wallet/binaries/Geth/unpacked/geth --dev --minerthreads 1 --ipcpath /Users/neo/Library/Ethereum/geth.ipc			
+			]]>
+			</screen>
+		</section>
+			
 	
 		&chapter.ethereum.coin.xml;
 	</section>
 	<section id="MetaMask">
 		<title>MetaMask</title>
-		<para>MetaMask 是 Chrome 浏览器插件 <ulink url="https://metamask.io">https://metamask.io</ulink></para>
+		<para>
+			MetaMask 是 Chrome 浏览器插件
+			<ulink url="https://metamask.io">https://metamask.io</ulink>
+		</para>
 		<!-- http://8btc.com/thread-76137-1-5.html -->
 		<graphic format="png" fileref="../../images/ethereum/metamask/metamask.png" width="800" srccredit="netkiller" />
 		<section id="">

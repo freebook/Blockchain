@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: book.xml 559 2013-04-10 07:03:49Z netkiller $ -->
+<!DOCTYPE subject SYSTEM "/usr/share/xml/docbook/schema/dtd/5.0/docbook.dtd"
+	[
+	<!ENTITY homepage "http://netkiller.sf.net/">
+	<!ENTITY mirror "http://netkiller.github.com/">
+
+	<!ENTITY Neo "http://netkiller.sf.net/">
+	<!ENTITY BG7NYT "&Neo;">
+	<!ENTITY Netkiller "<emphasis><trademark>Netkiller</trademark></emphasis>">
+
+	<!ENTITY % common.doctype.entity.xml 	SYSTEM "../../common/doctype.entity.xml">
+	%common.doctype.entity.xml;
+
+	<!ENTITY % doctype.entity.xml 			SYSTEM "doctype.entity.xml">
+	%doctype.entity.xml;
+
+]>
+<book xml:base="http://netkiller.sourceforge.net/linux/www"
+	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
+	<info>
+		<title>Netkiller Ethereum 手札</title>
+		<subtitle>本文作者最近在找工作，有意向致电 13113668890</subtitle>
+		<!-- <subtitle></subtitle> -->
+
+		&book.info.author.xml;
+
+		<copyright>
+			<year>2018</year>
+			<holder>Netkiller(Neo Chan). All rights reserved.</holder>
+		</copyright>
+		<publisher>
+			<publishername>Neo</publishername>
+		</publisher>
+		<isbn>ISBN#</isbn>
+		<edition>User's Guide version 1.0 for Linux</edition>
+		<pubdate>$Data$</pubdate>
+		<releaseinfo>文档始创于<date>2018-02-10</date></releaseinfo>
+
+		&book.info.legalnotice.xml;
+		&book.info.abstract.xml;
+
+	</info>
+
+	&book.preface.xml;
+	&book.dedication.xml;
+
+<!-- =========================================================================== -->
+	&chapter.ethereum.xml;
+<!-- =========================================================================== -->
+
+</book>
