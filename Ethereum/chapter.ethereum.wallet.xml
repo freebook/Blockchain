@@ -245,5 +245,16 @@ IPC endpoint opened: /Users/neo/Library/Ethereum/geth.ipc
 				<graphic format="png" fileref="../../images/ethereum/metamask/faucet.png" width="1024" srccredit="netkiller" />
 			</section>
 		</section>
+		<section id="metamask.mnemonic">
+			<title>mnemonic - Reveal seed words</title>
+			<para>点击头像进入 Settings 菜单</para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/settings.png" width="800" srccredit="netkiller" />
+			<para>单机 Reveal seed words 按钮</para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/reveal-seed-words.png" width="800" srccredit="netkiller" />
+			<para>输入账号密码解锁</para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/seed-words-password.png" width="800" srccredit="netkiller" />
+			<para>查看 mnemonic 字符串</para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/save-seed-words.png" width="800" srccredit="netkiller" />
+		</section>
 	</section>
 </chapter>
