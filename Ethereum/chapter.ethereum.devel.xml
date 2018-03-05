@@ -450,12 +450,32 @@ tokenContract.methods.getBalance("0x627306090abab3a6e1400e9345bc60c78a8bef57").c
 
 		<section>
 			<title>event</title>
-			<screen>
+			<para>下面以ERC20代币为例演示事件如何工作</para>
+			<programlisting>
 			<![CDATA[
-tokenContract.events.Transfer({
+neo@MacBook-Pro ~/ethereum/web3 % cat event.js 
+
+fs = require('fs');
+var net = require('net');
+var Web3 = require('web3');
+var web3 = new Web3('/Users/neo/Library/Ethereum/geth.ipc', net);
+
+console.log(web3.version)
+const abi = fs.readFileSync('output/TokenERC20.abi', 'utf-8');
+
+const contractAddress = "0x70682386d0dE84B1e549DC3c4305CCB2D261b2a8";
+const coinbase = "0xB94054c174995AE2A9E7fcf6c7924635FBa8ECF7";
+const toAddress = "0xf56b81a2bcb964D2806071e9Be4289A5559BB0fA";
+
+balanceWei = web3.eth.getBalance(coinbase);
+console.log(balanceWei);
+
+const contract = new web3.eth.Contract(JSON.parse(abi), contractAddress, { from: coinbase , gas: 100000});
+
+contract.events.Transfer({
     fromBlock: 0,
     toBlock:'latest'
-}, function(error, event){ /*console.log(JSON.stringify(event)); */})
+}, function(error, event){ console.log(event); })
 .on('data', function(event){
     console.log(event); // same results as the optional callback above
 })
@@ -463,6 +483,37 @@ tokenContract.events.Transfer({
     // remove event from local database
 })
 .on('error', console.error);
+			]]>
+			</programlisting>
+			<para>运行后程序不会退出，会源源不断的打印出每笔交易</para>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~/ethereum/web3 % node event.js 
+
+{ address: '0x70682386d0dE84B1e549DC3c4305CCB2D261b2a8',
+  blockNumber: 0,
+  transactionHash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  transactionIndex: 0,
+  blockHash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  logIndex: 0,
+  removed: false,
+  id: 'log_247b1779',
+  returnValues: 
+   Result {
+     '0': '0xB94054c174995AE2A9E7fcf6c7924635FBa8ECF7',
+     '1': '0xf56b81a2bcb964D2806071e9Be4289A5559BB0fA',
+     '2': '10000000',
+     from: '0xB94054c174995AE2A9E7fcf6c7924635FBa8ECF7',
+     to: '0xf56b81a2bcb964D2806071e9Be4289A5559BB0fA',
+     value: '10000000' },
+  event: 'Transfer',
+  signature: '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+  raw: 
+   { data: '0x0000000000000000000000000000000000000000000000000000000000989680',
+     topics: 
+      [ '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+        '0x000000000000000000000000b94054c174995ae2a9e7fcf6c7924635fba8ecf7',
+        '0x000000000000000000000000f56b81a2bcb964d2806071e9be4289a5559bb0fa' ] } }
 			]]>
 			</screen>
 		</section>

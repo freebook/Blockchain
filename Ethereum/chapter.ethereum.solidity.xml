@@ -1111,13 +1111,21 @@ contract owned {
 	</section>
 	<section id="solidity.event">
 		<title>事件</title>
-
+		<para>什么是 event 呢？ 在 Solidity 中 event 类似触发器，是合约与外部程序连接接口。</para>
+		<para>外部程序监听事件，智能合约中的事件一旦触发，就将数据交给监听程序处理。</para>
+		<para>换个角度，如果你懂得消息队列，那么只能合约中的 event 是消息发布者，外部的event 监听程序是消息的消费者。</para>
+		<para>使用 event 来创建,下面是 ERC20 的标准 event.</para>
 		<programlisting>
 			<![CDATA[
-	event Sent(address from, address to, uint amount);			
+event Transfer(address indexed from, address indexed to, uint256 value);
 			]]>
 		</programlisting>
-
+		<para>事件名称你可以随意定义，开头字母大写即可，参数传递根据你的实际需要增加。</para>
+		<programlisting>
+		<![CDATA[
+event Sent(address from, address to, uint amount);		
+		]]>
+		</programlisting>
 	</section>
 	
 	
