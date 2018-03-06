@@ -861,7 +861,7 @@ contract.methods.balanceOf(toAddress).call().then(console.log).catch(console.log
 </chapter>
 
 <chapter id="index"><?dbhtml dir="web3j" ?>
-	<title>web3j v3.2.0 - Jave Client</title>
+	<title>web3j v3.3.1 - Jave Client</title>
 	<para>
 		官方网站
 		<ulink url="https://web3j.io">https://web3j.io</ulink>
@@ -973,7 +973,7 @@ INFO [02-01|23:35:15] Mapped network port                      proto=tcp extport
 		<dependency>
 			<groupId>org.web3j</groupId>
 			<artifactId>core</artifactId>
-			<version>3.2.0</version>
+			<version>3.3.1</version>
 		</dependency>
 	</dependencies>
 </project>
@@ -1444,7 +1444,33 @@ HelloWorld contract = HelloWorld.load(contractAddress,web3j,credentials, Managed
 			</screen>
 		</section>
 	</section>
-	
+	<section id="web3j.infura">
+		<title>Infura</title>
+		<programlisting>
+		<![CDATA[
+package cn.netkiller.ethereum.infura;
+
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.Web3ClientVersion;
+import org.web3j.protocol.http.HttpService;
+
+public class Infura {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			Web3j web3 = Web3j.build(new HttpService("https://rinkeby.infura.io/CsS9shwaAab0z7B4LP2d"));
+			Web3ClientVersion web3ClientVersion = web3.web3ClientVersion().send();
+			System.out.println(web3ClientVersion.getWeb3ClientVersion());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
+		
+		]]>
+		</programlisting>
+	</section>
 </chapter>
 <chapter id="web3.py">
 	<title>web3.py - A python interface for interacting with the Ethereum

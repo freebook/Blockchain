@@ -2,6 +2,7 @@
 	&chapter.ethereum.geth.xml;
 	&chapter.ethereum.wallet.xml;
 	&chapter.ethereum.solidity.xml;
+	&chapter.ethereum.infura.xml;
 	&chapter.ethereum.truffle.xml;
 	&chapter.ethereum.devel.xml;
 	&chapter.ethereum.erc.xml;

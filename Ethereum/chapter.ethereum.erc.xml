@@ -592,7 +592,7 @@ function transfer(address _to, uint256 _value) {
 			</programlisting>
 		</section>
 		<section>
-			<title>Netkiller 的例子</title>
+			<title>Netkiller Basic Token 的例子</title>
 			<para>下面是我一个合约例子仅供参考，为了部署方便我将所有内容都写入在一个文件中。</para>
 			<para>
 				合约下载地址：

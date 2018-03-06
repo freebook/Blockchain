@@ -5,6 +5,7 @@
 <!ENTITY chapter.ethereum.geth.xml			SYSTEM "chapter.ethereum.geth.xml">
 <!ENTITY chapter.ethereum.console.xml		SYSTEM "chapter.ethereum.console.xml">
 <!ENTITY chapter.ethereum.solidity.xml		SYSTEM "chapter.ethereum.solidity.xml">
+<!ENTITY chapter.ethereum.infura.xml			SYSTEM "chapter.ethereum.infura.xml">
 <!ENTITY chapter.ethereum.truffle.xml		SYSTEM "chapter.ethereum.truffle.xml">
 <!ENTITY chapter.ethereum.devel.xml			SYSTEM "chapter.ethereum.devel.xml">
 <!ENTITY chapter.ethereum.wallet.xml			SYSTEM "chapter.ethereum.wallet.xml">
