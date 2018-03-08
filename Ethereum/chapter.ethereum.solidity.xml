@@ -61,8 +61,11 @@ npm start
 		</section>
 	</section>
 	<section id="solc">
-		<title>使用 solc 编译 *.sol 代码</title>
-		<screen>
+		<title>solc 命令</title>
+
+		<section>
+			<title>使用 solc 编译 *.sol 代码</title>
+			<screen>
 			<![CDATA[
 neo@netkiller ~/ethereum/solidity % solc --bin --abi --optimize -o ./output helloworld.sol
 neo@netkiller ~/ethereum/solidity % find output         
@@ -70,7 +73,8 @@ output
 output/HelloWorld.bin
 output/HelloWorld.abi			
 			]]>
-		</screen>
+			</screen>
+		</section>
 	</section>
 	<section id="solidity.Getting.Started">
 		<title>智能合约入门演示</title>
@@ -1127,8 +1131,8 @@ event Sent(address from, address to, uint amount);
 		]]>
 		</programlisting>
 	</section>
-	
-	
+
+
 	<section id="solidity.oop">
 		<title>面向对象编程</title>
 		<section>
@@ -1169,28 +1173,28 @@ require(msg.sender == owner);
 			</programlisting>
 		</section>
 		<section id="solidity.interface">
-		<title>interface 接口</title>
-		<para>接口是抽象的合约，接口中不能实现方法。</para>
-		<itemizedlist>
-			<title>接口：</title>
-			<listitem>
-				<para>不能继承其他合约或接口</para>
-			</listitem>
-			<listitem>
-				<para>不能定义构造方法</para>
-			</listitem>
-			<listitem>
-				<para>不能定义变量</para>
-			</listitem>
-			<listitem>
-				<para>不能定义结构体</para>
-			</listitem>
-			<listitem>
-				<para>不能定义枚举</para>
-			</listitem>
-		</itemizedlist>
-		<para></para>	
-		<programlisting>
+			<title>interface 接口</title>
+			<para>接口是抽象的合约，接口中不能实现方法。</para>
+			<itemizedlist>
+				<title>接口：</title>
+				<listitem>
+					<para>不能继承其他合约或接口</para>
+				</listitem>
+				<listitem>
+					<para>不能定义构造方法</para>
+				</listitem>
+				<listitem>
+					<para>不能定义变量</para>
+				</listitem>
+				<listitem>
+					<para>不能定义结构体</para>
+				</listitem>
+				<listitem>
+					<para>不能定义枚举</para>
+				</listitem>
+			</itemizedlist>
+			<para></para>
+			<programlisting>
 		<![CDATA[
 pragma solidity ^0.4.11;
 
@@ -1198,11 +1202,12 @@ interface Token {
     function transfer(address recipient, uint amount) public;
 }
 		]]>
-		</programlisting>
-	</section><section id="solidity.library">
-		<title>library 库</title>
-		<para>定义 library</para>
-		<programlisting>
+			</programlisting>
+		</section>
+		<section id="solidity.library">
+			<title>library 库</title>
+			<para>定义 library</para>
+			<programlisting>
 		<![CDATA[
 pragma solidity ^0.4.20;
 
@@ -1241,9 +1246,9 @@ library Set {
 
 
 		]]>
-		</programlisting>
-		<para>调用库中的函数</para>
-		<programlisting>
+			</programlisting>
+			<para>调用库中的函数</para>
+			<programlisting>
 		<![CDATA[
 contract C {
     using Set for Set.Data; // this is the crucial change
@@ -1258,10 +1263,10 @@ contract C {
     }
 }
 		]]>
-		</programlisting>
-		<section>
-			<title>使用库来扩展数据类型</title>
-			<programlisting>
+			</programlisting>
+			<section>
+				<title>使用库来扩展数据类型</title>
+				<programlisting>
 			<![CDATA[
 pragma solidity ^0.4.20;
 
@@ -1295,9 +1300,9 @@ contract C {
     }
 }			
 			]]>
-			</programlisting>
+				</programlisting>
+			</section>
 		</section>
-	</section>
 		<section id="solidity.is">
 			<title>继承</title>
 			<para>例子 mortal 继承 owned</para>
@@ -1402,12 +1407,14 @@ contract MetaCoin {
 			]]>
 			</programlisting>
 		</section>
-		
+
 		<section>
 			<title>Anonymous voting on Ethereum without a tally authority. Protocol from this paper</title>
-			<para><ulink url="https://github.com/stonecoldpat/anonymousvoting">https://github.com/stonecoldpat/anonymousvoting</ulink></para>
+			<para>
+				<ulink url="https://github.com/stonecoldpat/anonymousvoting">https://github.com/stonecoldpat/anonymousvoting</ulink>
+			</para>
 		</section>
-		
+
 		<section id="Ballot">
 			<title>Ballot</title>
 			<programlisting>
@@ -1479,9 +1486,9 @@ contract Ballot {
 }			
 			]]>
 			</programlisting>
-			
+
 		</section>
-		
+
 		<section>
 			<title>Conference</title>
 			<programlisting>
