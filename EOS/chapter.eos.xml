@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section id="other">
+	<title>其他区块链区块链解决方案</title>
+	<section id="eos">
+		<title>EOS</title>
+		<para>
+			<ulink url="https://eos.io">https://eos.io</ulink>
+		</para>
+		<para>EOS是一种全新的区块链架构，旨在实现分布式应用的性能拓展。EOS 项目的目标是实现一个类似操作系统一样的支撑应用程序的区块链架构。该架构可以提供账户，身份认证，数据库，异步通信以及可在数以百计的 CPU 或群集上的程序调度。该技术的最终形式是一个区块链体系架构，该区块链每秒可以支持数百万个交易，同时普通用户无需支付使用费用。</para>
+	</section>
+	<section>
+		<title>量子链（QTUM）</title>
+		<para><ulink url="https://qtum.org/" /></para>
+		<para>量子链致力于开发比特币和以太坊之外的第三种区块链生态系统，通过价值传输协议（“Value Transfer Protocol”）来实现点对点的价值转移，并根据此协议，构建一个支持多个行业（包括金融、物联网、供应链、社交、游戏等）的去中心化的应用开发平台（DApp Platform）</para>
+		<section>
+			<title>BeeChat</title>
+			<para>
+				<ulink url="https://beechat.io" />
+			</para>
+			<para>BeeChat是基于区块链的手机通讯应用。以独有的去中心化分布式技术，高度安全的加密服务确保免费环球畅聊，群人数最高可达10000人。它还基于量子链区块链技术，支持BTC,ETH,Qtum的移动钱包，发红包转账和聊天一样简单快捷。</para>
+		</section>
+	</section>
+
+</section>
+

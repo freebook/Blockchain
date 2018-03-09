@@ -109,8 +109,8 @@ curl -s https://raw.githubusercontent.com/oscm/shell/master/virtualization/docke
 			<title>安装 Docker 镜像</title>
 			<screen>
 			<![CDATA[
-docker pull hyperledger/fabric-tools:x86_64-1.0.5
-docker tag hyperledger/fabric-tools:x86_64-1.0.5 hyperledger/fabric-tools			
+docker pull hyperledger/fabric-tools:x86_64-1.0.6
+docker tag hyperledger/fabric-tools:x86_64-1.0.6 hyperledger/fabric-tools			
 			]]>
 			</screen>
 		</section>
@@ -174,7 +174,7 @@ services:
 			<para>这里我们需要几个命令（configtxgen configtxlator cryptogen），官方的安装方式：</para>
 			<screen>
 		<![CDATA[
-curl -sSL https://goo.gl/byy2Qj | bash -s 1.0.5
+curl -sSL https://goo.gl/byy2Qj | bash -s 1.0.6
 		]]>
 			</screen>
 			<para>无论如何我都安装不成功，可能是（https://goo.gl/byy2Qj）被天朝给墙了。不过我发现 fabric-tools
@@ -184,7 +184,7 @@ curl -sSL https://goo.gl/byy2Qj | bash -s 1.0.5
 				<para>经过翻墙发现 https://goo.gl/byy2Qj 地址是 301 到下面地址：</para>
 				<para>
 					<ulink
-						url="https://raw.githubusercontent.com/hyperledger/fabric/v1.0.5/scripts/bootstrap.sh" />
+						url="https://raw.githubusercontent.com/hyperledger/fabric/v1.0.6/scripts/bootstrap.sh" />
 				</para>
 			</tip>
 			<screen>
@@ -437,8 +437,8 @@ docker rm -f $(docker ps -qa)
 			<title>安装 Docker 镜像</title>
 			<screen>
 			<![CDATA[
-docker pull hyperledger/fabric-ca:x86_64-1.0.5
-docker tag hyperledger/fabric-ca:x86_64-1.0.5 hyperledger/fabric-ca			
+docker pull hyperledger/fabric-ca:x86_64-1.0.6
+docker tag hyperledger/fabric-ca:x86_64-1.0.6 hyperledger/fabric-ca			
 			]]>
 			</screen>
 		</section>
@@ -504,8 +504,8 @@ docker-compose -f docker-compose-ca.yaml up -d
 			<title>安装 Docker 镜像</title>
 			<screen>
 			<![CDATA[
-docker pull hyperledger/fabric-couchdb:x86_64-1.0.5
-docker tag hyperledger/fabric-couchdb:x86_64-1.0.5 hyperledger/fabric-couchdb
+docker pull hyperledger/fabric-couchdb:x86_64-1.0.6
+docker tag hyperledger/fabric-couchdb:x86_64-1.0.6 hyperledger/fabric-couchdb
 			]]>
 			</screen>
 		</section>
@@ -594,8 +594,8 @@ fs.createReadStream('./db-backup.tar.gz').pipe(cbr.restore(config, done));
 			<title>安装 Docker 镜像</title>
 			<screen>
 			<![CDATA[
-docker pull hyperledger/fabric-orderer:x86_64-1.0.5
-docker tag hyperledger/fabric-orderer:x86_64-1.0.5 hyperledger/fabric-orderer			
+docker pull hyperledger/fabric-orderer:x86_64-1.0.6
+docker tag hyperledger/fabric-orderer:x86_64-1.0.6 hyperledger/fabric-orderer			
 			]]>
 			</screen>
 		</section>
@@ -649,8 +649,8 @@ docker-compose -f docker-compose-orderer.yaml up -d
 			<title>安装 Docker 镜像</title>
 			<screen>
 			<![CDATA[
-docker pull hyperledger/fabric-peer:x86_64-1.0.5
-docker tag hyperledger/fabric-peer:x86_64-1.0.5 hyperledger/fabric-peer
+docker pull hyperledger/fabric-peer:x86_64-1.0.6
+docker tag hyperledger/fabric-peer:x86_64-1.0.6 hyperledger/fabric-peer
 			]]>
 			</screen>
 		</section>

@@ -102,18 +102,18 @@ npm install
 		</section>
 
 		<section id="bootstrap">
-			<title>安装 hyperledger 1.0.4</title>
+			<title>安装 hyperledger 1.0.6</title>
 			<para>运行后 hyperledger 相关镜像被安装到 Docker 中</para>
 			<screen>
 			<![CDATA[
 cd /usr/local/src
-curl -s https://raw.githubusercontent.com/hyperledger/fabric/release/scripts/bootstrap-1.0.4.sh | bash			
+curl -s https://raw.githubusercontent.com/hyperledger/fabric/release/scripts/bootstrap-1.0.6.sh | bash			
 			]]>
 			</screen>
 			<para>由于上面脚本会安装所有节点，速度较慢，作者建议你参考下一章节，手工安装所需最低配置节点。</para>
 		</section>
 		<section id="hyperledger">
-			<title>手工安装 hyperledger v 1.0.5 开发环境</title>
+			<title>手工安装 hyperledger v 1.0.6 开发环境</title>
 			<para>对于开发环境，最小化的环境，包括 1 个 peer 节点、1 个 Orderer 节点、1 个 CA 节点。</para>
 			<para>准备一个服务器或者虚拟机，安装 CentOS 操作系统。</para>
 			<para>如果你是在已有的Docker上安装，建议你删除所有容器后在安装。以免出现冲突等情况。</para>
@@ -161,17 +161,17 @@ Error response from daemon: manifest for hyperledger/fabric-peer:latest not foun
 				</para>
 				<screen>
 				<![CDATA[
-docker pull hyperledger/fabric-ca:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-peer:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-orderer:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-couchdb:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-tools:x86_64-1.0.5
+docker pull hyperledger/fabric-ca:x86_64-1.0.6 \
+&& docker pull hyperledger/fabric-peer:x86_64-1.0.6 \
+&& docker pull hyperledger/fabric-orderer:x86_64-1.0.6 \
+&& docker pull hyperledger/fabric-couchdb:x86_64-1.0.6 \
+&& docker pull hyperledger/fabric-tools:x86_64-1.0.6
 
-docker tag hyperledger/fabric-ca:x86_64-1.0.5 hyperledger/fabric-ca \
-&& docker tag hyperledger/fabric-peer:x86_64-1.0.5 hyperledger/fabric-peer \
-&& docker tag hyperledger/fabric-orderer:x86_64-1.0.5 hyperledger/fabric-orderer \
-&& docker tag hyperledger/fabric-couchdb:x86_64-1.0.5 hyperledger/fabric-couchdb \
-&& docker tag hyperledger/fabric-tools:x86_64-1.0.5 hyperledger/fabric-tools
+docker tag hyperledger/fabric-ca:x86_64-1.0.6 hyperledger/fabric-ca \
+&& docker tag hyperledger/fabric-peer:x86_64-1.0.6 hyperledger/fabric-peer \
+&& docker tag hyperledger/fabric-orderer:x86_64-1.0.6 hyperledger/fabric-orderer \
+&& docker tag hyperledger/fabric-couchdb:x86_64-1.0.6 hyperledger/fabric-couchdb \
+&& docker tag hyperledger/fabric-tools:x86_64-1.0.6 hyperledger/fabric-tools
 				]]>
 				</screen>
 				<para>查看镜像</para>
@@ -180,9 +180,9 @@ docker tag hyperledger/fabric-ca:x86_64-1.0.5 hyperledger/fabric-ca \
 [root@localhost src]# docker images
 REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
 hyperledger/fabric-orderer      latest              368c78b6f03b        2 months ago        151MB
-hyperledger/fabric-orderer      x86_64-1.0.5        368c78b6f03b        2 months ago        151MB
+hyperledger/fabric-orderer      x86_64-1.0.6        368c78b6f03b        2 months ago        151MB
 hyperledger/fabric-peer         latest              c2ab022f0bdb        2 months ago        154MB
-hyperledger/fabric-peer         x86_64-1.0.5        c2ab022f0bdb        2 months ago        154MB
+hyperledger/fabric-peer         x86_64-1.0.6        c2ab022f0bdb        2 months ago        154MB
 hyperledger/fabric-membersrvc   latest              b3654d32e4f9        15 months ago       1.42GB				
 				]]>
 				</screen>
@@ -1294,7 +1294,7 @@ GET query Channels
 Total execution time : 364 secs ...			
 			]]>
 			</screen>
-			<para>上面 ERROR 可能是因为 hyperledger v1.0.5 版本的缘故。此时的 fabric-samples 仅仅支持
+			<para>上面 ERROR 可能是因为 hyperledger v1.0.6 版本的缘故。此时的 fabric-samples 仅仅支持
 				v1.0.0。
 			</para>
 		</section>
