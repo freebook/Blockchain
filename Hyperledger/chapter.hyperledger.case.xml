@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="">
+	<title>已知 Hyperledger 落地案例</title>
+	<section id="laicigou">
+		<title>莱茨狗</title>
+		<para>莱茨狗是山寨版以太猫，底层采用 Hyperledger</para>
+		<para><ulink url="http://pet-chain.baidu.com" /></para>
+	</section>
+	
+</chapter>
