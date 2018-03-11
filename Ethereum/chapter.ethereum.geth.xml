@@ -714,6 +714,19 @@ test.addNum(567);
 			]]>
 		</screen>
 	</section>
+	<section id="testnet">
+		<title>Ropsten测试网络</title>
+		<screen>
+		<![CDATA[
+$ nohup geth --datadir $DATADIR \
+             --unlock 0 \
+             --password <(echo -n "SECRETPASSWORD") \
+             --testnet \
+             --fast \
+             2>> $HOME/Desktop/ethereum/testnet/geth.log &		
+		]]>
+		</screen>
+	</section>
 	<section id="geth.log">
 		<title>日志</title>
 		<para>--verbosity 日志输出级别控制</para>

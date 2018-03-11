@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="truffle" ?>
-	<title>Truffle 开发框架 v4.0.6</title>
+	<title>Truffle 开发框架 v4.1.3</title>
 	<para>
 		Truffle 是 solidity 开发框架，
 		<ulink url="http://truffleframework.com">http://truffleframework.com</ulink>
@@ -13,6 +13,12 @@
 			<![CDATA[
 sudo npm install -g truffle
 			]]>
+		</screen>
+		<para>升级</para>
+		<screen>
+		<![CDATA[
+npm update -g truffle		
+		]]>
 		</screen>
 	</section>
 

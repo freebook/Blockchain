@@ -707,4 +707,7 @@ chaincode_example02  chaincode_example02.go  chaincode_example02_test.go
 		</screen>
 		<tip><para>由于 docker 容器中没有 vim/nano 命令，无法编译 .go 文件，所以在宿主主机编译更为方便。</para></tip>
 	</section>
+	
+	&section.chaincode.shim.xml;
+	
 </chapter>

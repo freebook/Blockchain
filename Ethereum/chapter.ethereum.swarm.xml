@@ -4,6 +4,15 @@
 	<para><ulink url="https://swarm-guide.readthedocs.io/en/latest/" /></para>
 	<section id="setup">
 		<title></title>
+		<screen>
+		<![CDATA[
+$ cd $GOPATH/src/github.com/ethereum/go-ethereum
+$ git checkout master
+$ git pull
+$ go install -v ./cmd/geth
+$ go install -v ./cmd/swarm		
+		]]>
+		</screen>
 	</section>
 	<section id="init">
 		<title></title>
