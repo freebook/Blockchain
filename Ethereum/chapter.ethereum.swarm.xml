@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="index"><?dbhtml dir="swarm" ?>
+	<title>Swarm</title>
+	<para><ulink url="https://swarm-guide.readthedocs.io/en/latest/" /></para>
+	<section id="setup">
+		<title></title>
+	</section>
+	<section id="init">
+		<title></title>
+	</section>
+</chapter>
