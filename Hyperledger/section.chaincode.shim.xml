@@ -52,6 +52,43 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 }		
 		]]>
 		</programlisting>
+		<para>参考例子</para>
+		<programlisting>
+		<![CDATA[
+func (s *SmartContract) Invoke(stub shim.ChaincodeStubInterface) sc.Response {
+
+	// Retrieve the requested Smart Contract function and arguments
+	function, args := stub.GetFunctionAndParameters()
+	// Route to the appropriate handler function to interact with the ledger appropriately
+	if function == "balanceToken" {
+		return s.balanceToken(stub, args)
+	} else if function == "initLedger" {
+		return s.initLedger(stub)
+	} else if function == "transferToken" {
+		return s.transferToken(stub, args)
+	}
+
+	return shim.Error("Invalid Smart Contract function name.")
+}		
+		]]>
+		</programlisting>
+		<literallayout>
+		<![CDATA[
+在 Invoke 函数中，首先使用 stub.GetFunctionAndParameters() 获取合约函数
+function, args := stub.GetFunctionAndParameters()		
+
+然后判断函数名称，实现对应的逻辑关系。
+
+if function == "balanceToken" {
+		return s.balanceToken(stub, args)
+	} else if function == "initLedger" {
+		return s.initLedger(stub)
+	} else if function == "transferToken" {
+		return s.transferToken(stub, args)
+	}
+
+		]]>
+		</literallayout>
 	</section>
 	<section>
 		<title>func main() </title>
@@ -70,17 +107,106 @@ func main() {
 <section>
 	<title>shim.ChaincodeStubInterface 接口</title>
 	<para>Hyperledger提供基于key/value的数据存储，其中key是字符串，value则是二进制字节数组，Hyperledger的Go API提供了三个方法用于数据存取：PutState（key, value）用于向Hyperledger中存储数据， GetState(key)用于从Hyperledger中提取数据，而DelState(key)则从Hyperledger中删除数据。</para>
+	<para>写入数据如果是 struct 结构体，需要序列化，通常使用 json,其他形式的序列化也可以，只要能反序列化即可。</para>
 	<section>
-		<title>PutState（key, value）</title>
-		<para></para>
+		<title>曾，删，查 操作</title>
+
+		<section>
+			<title>PutState（key, value）</title>
+			<para>写入区块联系</para>
+			<programlisting>
+		<![CDATA[
+func (s *SmartContract) initLedger(stub shim.ChaincodeStubInterface) sc.Response {
+	
+	token := &Token{
+		Owner: "netkiller",
+		TotalSupply: 10000,
+		TokenName: "代币通正",
+		TokenSymbol: "COIN",
+		BalanceOf: map[string]uint{}}
+	
+	token.initialSupply()
+
+	tokenAsBytes, _ := json.Marshal(token)
+	stub.PutState("Token", tokenAsBytes)
+	fmt.Println("Added", tokenAsBytes)
+	
+	return shim.Success(nil)
+}		
+		]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>GetState(key)</title>
+			<para>通过key获取区块信息</para>
+			<programlisting>
+		<![CDATA[
+func (s *SmartContract) balanceToken(stub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	tokenAsBytes, _ := stub.GetState(args[0])
+	token := Token{}
+
+	json.Unmarshal(tokenAsBytes, &token)
+	amount := token.balance(args[1])
+
+	return shim.Success(amount)
+}
+		]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>DelState(key)</title>
+			<para>删除区块信息</para>
+			<programlisting>
+		<![CDATA[
+func (s *SmartContract) deleteData(stub shim.ChaincodeStubInterface, args []string) sc.Response {
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+	err= stub.DelState(args[0])
+	if err != nil {
+	   return shim.Error("Failed to delete Student from DB, key is: "+key)
+	}
+	return shim.Success(nil)
+}
+		]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>修改数据</title>
+			<para>State 数据库并没有提供修改功能，修改数据可以先读取，再修改，最后写入</para>
+			<programlisting>
+		<![CDATA[
+func (s *SmartContract) transferToken(stub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 3 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	tokenAsBytes, _ := stub.GetState(args[0])
+	token := Token{}
+
+	json.Unmarshal(tokenAsBytes, &token)
+	token.transfer(args[1],args[2],args[3])
+
+	tokenAsBytes, _ = json.Marshal(token)
+	stub.PutState(args[0], tokenAsBytes)
+
+	return shim.Success(nil)
+}
+		]]>
+			</programlisting>
+		</section>
 	</section>
 	<section>
-		<title>GetState(key)</title>
-	</section>
-	<section>
-		<title>DelState(key)</title>
+		<title>索引操作</title>
 	</section>
 	<section>
 		<title>stub.SetEvent(key, value)</title>
+		<para>区块事件</para>
 	</section>
 </section>
