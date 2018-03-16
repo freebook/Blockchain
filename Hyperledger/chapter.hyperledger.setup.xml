@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="hyperledger">
-	<title>Hyperledger Fabric 入门</title>
+	<title>Hyperledger Fabric v1.1.0 入门</title>
 	<info>
 		<keywordset>
 			<keyword>https://cn.hyperledger.org</keyword>
@@ -77,18 +77,18 @@ npm install
 		</section>
 
 		<section id="bootstrap">
-			<title>安装 hyperledger 1.0.6</title>
+			<title>安装 hyperledger 1.1.0</title>
 			<para>运行后 hyperledger 相关镜像被安装到 Docker 中</para>
 			<screen>
 			<![CDATA[
 cd /usr/local/src
-curl -s https://raw.githubusercontent.com/hyperledger/fabric/release/scripts/bootstrap-1.0.6.sh | bash			
+curl -s https://raw.githubusercontent.com/hyperledger/fabric/release/scripts/bootstrap-1.1.0.sh | bash			
 			]]>
 			</screen>
 			<para>由于上面脚本会安装所有节点，速度较慢，作者建议你参考下一章节，手工安装所需最低配置节点。</para>
 		</section>
 		<section id="hyperledger">
-			<title>手工安装 hyperledger v 1.0.6 开发环境</title>
+			<title>手工安装 hyperledger v 1.1.0 开发环境</title>
 			<para>对于开发环境，最小化的环境，包括 1 个 peer 节点、1 个 Orderer 节点、1 个 CA 节点。</para>
 			<para>准备一个服务器或者虚拟机，安装 CentOS 操作系统。</para>
 			<para>如果你是在已有的Docker上安装，建议你删除所有容器后在安装。以免出现冲突等情况。</para>
@@ -136,17 +136,17 @@ Error response from daemon: manifest for hyperledger/fabric-peer:latest not foun
 				</para>
 				<screen>
 				<![CDATA[
-docker pull hyperledger/fabric-ca:x86_64-1.0.6 \
-&& docker pull hyperledger/fabric-peer:x86_64-1.0.6 \
-&& docker pull hyperledger/fabric-orderer:x86_64-1.0.6 \
-&& docker pull hyperledger/fabric-couchdb:x86_64-1.0.6 \
-&& docker pull hyperledger/fabric-tools:x86_64-1.0.6
+docker pull hyperledger/fabric-ca:x86_64-1.1.0 \
+&& docker pull hyperledger/fabric-peer:x86_64-1.1.0 \
+&& docker pull hyperledger/fabric-orderer:x86_64-1.1.0 \
+&& docker pull hyperledger/fabric-couchdb:x86_64-1.1.0 \
+&& docker pull hyperledger/fabric-tools:x86_64-1.1.0
 
-docker tag hyperledger/fabric-ca:x86_64-1.0.6 hyperledger/fabric-ca \
-&& docker tag hyperledger/fabric-peer:x86_64-1.0.6 hyperledger/fabric-peer \
-&& docker tag hyperledger/fabric-orderer:x86_64-1.0.6 hyperledger/fabric-orderer \
-&& docker tag hyperledger/fabric-couchdb:x86_64-1.0.6 hyperledger/fabric-couchdb \
-&& docker tag hyperledger/fabric-tools:x86_64-1.0.6 hyperledger/fabric-tools
+docker tag hyperledger/fabric-ca:x86_64-1.1.0 hyperledger/fabric-ca \
+&& docker tag hyperledger/fabric-peer:x86_64-1.1.0 hyperledger/fabric-peer \
+&& docker tag hyperledger/fabric-orderer:x86_64-1.1.0 hyperledger/fabric-orderer \
+&& docker tag hyperledger/fabric-couchdb:x86_64-1.1.0 hyperledger/fabric-couchdb \
+&& docker tag hyperledger/fabric-tools:x86_64-1.1.0 hyperledger/fabric-tools
 				]]>
 				</screen>
 				<para>查看镜像</para>
@@ -155,9 +155,9 @@ docker tag hyperledger/fabric-ca:x86_64-1.0.6 hyperledger/fabric-ca \
 [root@localhost src]# docker images
 REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
 hyperledger/fabric-orderer      latest              368c78b6f03b        2 months ago        151MB
-hyperledger/fabric-orderer      x86_64-1.0.6        368c78b6f03b        2 months ago        151MB
+hyperledger/fabric-orderer      x86_64-1.1.0        368c78b6f03b        2 months ago        151MB
 hyperledger/fabric-peer         latest              c2ab022f0bdb        2 months ago        154MB
-hyperledger/fabric-peer         x86_64-1.0.6        c2ab022f0bdb        2 months ago        154MB
+hyperledger/fabric-peer         x86_64-1.1.0        c2ab022f0bdb        2 months ago        154MB
 hyperledger/fabric-membersrvc   latest              b3654d32e4f9        15 months ago       1.42GB				
 				]]>
 				</screen>
@@ -515,7 +515,7 @@ Query Result: {"colour":"White","make":"Toyota","model":"Rezi","owner":"Neo"}
 		</section>
 	</section>
 	<section id="setup.ubuntu">
-		<title>Ubuntu 环境安装 Hyperledger Fabric v1.0.6</title>
+		<title>Ubuntu 环境安装 Hyperledger Fabric v1.1.0</title>
 		<section>
 			<title>安装 Docker</title>
 			<para>Ubuntu apt 库中携带的 docker.io 版本过低，我们从官网安装Docker CE（社区版）取代他。</para>
@@ -571,20 +571,20 @@ Mar 10 04:56:01 netkiller systemd[1]: Started Docker Application Container Engin
 			</screen>
 		</section>
 		<section>
-			<title>安装 Hyperledger Fabric v1.0.6 Docker 镜像</title>
+			<title>安装 Hyperledger Fabric v1.1.0 Docker 镜像</title>
 			<screen>
 			<![CDATA[
-sudo docker pull hyperledger/fabric-ca:x86_64-1.0.6
-sudo docker pull hyperledger/fabric-peer:x86_64-1.0.6 
-sudo docker pull hyperledger/fabric-orderer:x86_64-1.0.6 
-sudo docker pull hyperledger/fabric-couchdb:x86_64-1.0.6 
-sudo docker pull hyperledger/fabric-tools:x86_64-1.0.6
+sudo docker pull hyperledger/fabric-ca:x86_64-1.1.0
+sudo docker pull hyperledger/fabric-peer:x86_64-1.1.0 
+sudo docker pull hyperledger/fabric-orderer:x86_64-1.1.0 
+sudo docker pull hyperledger/fabric-couchdb:x86_64-1.1.0 
+sudo docker pull hyperledger/fabric-tools:x86_64-1.1.0
 
-sudo docker tag hyperledger/fabric-ca:x86_64-1.0.6 hyperledger/fabric-ca 
-sudo docker tag hyperledger/fabric-peer:x86_64-1.0.6 hyperledger/fabric-peer 
-sudo docker tag hyperledger/fabric-orderer:x86_64-1.0.6 hyperledger/fabric-orderer 
-sudo docker tag hyperledger/fabric-couchdb:x86_64-1.0.6 hyperledger/fabric-couchdb 
-sudo docker tag hyperledger/fabric-tools:x86_64-1.0.6 hyperledger/fabric-tools
+sudo docker tag hyperledger/fabric-ca:x86_64-1.1.0 hyperledger/fabric-ca 
+sudo docker tag hyperledger/fabric-peer:x86_64-1.1.0 hyperledger/fabric-peer 
+sudo docker tag hyperledger/fabric-orderer:x86_64-1.1.0 hyperledger/fabric-orderer 
+sudo docker tag hyperledger/fabric-couchdb:x86_64-1.1.0 hyperledger/fabric-couchdb 
+sudo docker tag hyperledger/fabric-tools:x86_64-1.1.0 hyperledger/fabric-tools
 			]]>
 			</screen>
 			<para></para>
@@ -593,15 +593,15 @@ sudo docker tag hyperledger/fabric-tools:x86_64-1.0.6 hyperledger/fabric-tools
 neo@netkiller ~ % sudo docker images
 REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE
 hyperledger/fabric-couchdb   latest              380446aa57b6        2 weeks ago         1.5GB
-hyperledger/fabric-couchdb   x86_64-1.0.6        380446aa57b6        2 weeks ago         1.5GB
+hyperledger/fabric-couchdb   x86_64-1.1.0        380446aa57b6        2 weeks ago         1.5GB
 hyperledger/fabric-tools     latest              322eaa2b8786        3 weeks ago         1.33GB
-hyperledger/fabric-tools     x86_64-1.0.6        322eaa2b8786        3 weeks ago         1.33GB
+hyperledger/fabric-tools     x86_64-1.1.0        322eaa2b8786        3 weeks ago         1.33GB
 hyperledger/fabric-orderer   latest              659d92c1be85        3 weeks ago         151MB
-hyperledger/fabric-orderer   x86_64-1.0.6        659d92c1be85        3 weeks ago         151MB
+hyperledger/fabric-orderer   x86_64-1.1.0        659d92c1be85        3 weeks ago         151MB
 hyperledger/fabric-peer      latest              28c7c07db540        3 weeks ago         154MB
-hyperledger/fabric-peer      x86_64-1.0.6        28c7c07db540        3 weeks ago         154MB
+hyperledger/fabric-peer      x86_64-1.1.0        28c7c07db540        3 weeks ago         154MB
 hyperledger/fabric-ca        latest              fe3c9b6542cf        3 weeks ago         238MB
-hyperledger/fabric-ca        x86_64-1.0.6        fe3c9b6542cf        3 weeks ago         238MB
+hyperledger/fabric-ca        x86_64-1.1.0        fe3c9b6542cf        3 weeks ago         238MB
 			
 			]]>
 			</screen>
@@ -1379,9 +1379,7 @@ GET query Channels
 Total execution time : 364 secs ...			
 			]]>
 			</screen>
-			<para>上面 ERROR 可能是因为 hyperledger v1.0.6 版本的缘故。此时的 fabric-samples 仅仅支持
-				v1.0.0。
-			</para>
+			<para>上面 ERROR 可能是因为 hyperledger v1.1.0 版本的缘故。此时的 fabric-samples 仅仅支持 v1.0.0。</para>
 		</section>
 		<section id="first-network">
 			<title>first-network</title>
