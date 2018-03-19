@@ -9,4 +9,4 @@
 <!ENTITY chapter.hyperledger.sdk.xml			SYSTEM "chapter.hyperledger.sdk.xml">
 <!ENTITY chapter.hyperledger.explorer.xml	SYSTEM "chapter.hyperledger.explorer.xml">
 <!ENTITY chapter.hyperledger.case.xml		SYSTEM "chapter.hyperledger.case.xml">
-<!ENTITY chapter.hyperledger.faq.xml			SYSTEM "chapter.hyperledger.faq.xml">
+<!ENTITY chapter.fabric.faq.xml				SYSTEM "chapter.fabric.faq.xml">

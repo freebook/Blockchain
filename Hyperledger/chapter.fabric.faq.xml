@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="fabric.faq">
+	<title>Fabric FAQ</title>
+	<section id="latest_not_found">
+		<title>ERROR: manifest for hyperledger/fabric-ca:latest not found</title>
+		<screen>
+			<![CDATA[
+ERROR: manifest for hyperledger/fabric-orderer:latest not found
+ERROR: manifest for hyperledger/fabric-couchdb:latest not found
+ERROR: manifest for hyperledger/fabric-ca:latest not found	
+ERROR: manifest for hyperledger/fabric-tools:latest not found		
+			]]>
+		</screen>
+		<para>解决方案</para>
+		<screen>
+			<![CDATA[
+docker pull hyperledger/fabric-membersrvc:latest \
+&& docker pull hyperledger/fabric-peer:x86_64-1.0.5 \
+&& docker pull hyperledger/fabric-orderer:x86_64-1.0.5 \
+&& docker pull hyperledger/fabric-couchdb:x86_64-1.0.5 \
+&& docker pull hyperledger/fabric-ca:x86_64-1.0.5 \
+&& docker pull hyperledger/fabric-tools:x86_64-1.0.5
+
+docker tag hyperledger/fabric-peer:x86_64-1.0.5 hyperledger/fabric-peer \
+&& docker tag hyperledger/fabric-orderer:x86_64-1.0.5 hyperledger/fabric-orderer \
+&& docker tag hyperledger/fabric-couchdb:x86_64-1.0.5 hyperledger/fabric-couchdb \
+&& docker tag hyperledger/fabric-ca:x86_64-1.0.5 hyperledger/fabric-ca \
+&& docker tag hyperledger/fabric-tools:x86_64-1.0.5 hyperledger/fabric-tools
+			]]>
+		</screen>
+	</section>
+	<section id="hyperledger.uninstall">
+		<title>卸载 hyperledger 环境</title>
+		<screen>
+			<![CDATA[
+docker rmi -f $(docker images -q)			
+			]]>
+		</screen>
+	</section>
+	<section id="dseasb33srnrn.cloudfront.net">
+		<title>dseasb33srnrn.cloudfront.net 无法连接</title>
+		<screen>
+		<![CDATA[
+error pulling image configuration: Get https://dseasb33srnrn.cloudfront.net/registry-v2/docker/registry/v2/blobs/sha256/72/72617b4fa9b4be7a5946275048f9468320220cf7bd316f0ab77946d68d24e970/data?Expires=1521480730&Signature=GKdv-Qc-hU1QLjsw5h7DrHCp11oWGZ3paa17L4CvMHx0893u-hk-klBKn7DWHnoEf4d3k9zp~OszcbVjsJsq87KlVFqWam17l7V3YvmXTPIpXEG5j4wheS5CxKRKIw8vChnm6vRwCQ3FoTEkiugXfTfLpxLOUIpB7yca3VRDbbw_&Key-Pair-Id=APKAJECH5M7VWIS5YZ6Q: dial tcp: lookup dseasb33srnrn.cloudfront.net on 211.162.77.77:53: read udp 172.16.0.17:61941->211.162.77.77:53: i/o timeout
+Error response from daemon: No such image: hyperledger/fabric-ca:x86_64-1.1.0		
+		]]>
+		</screen>
+		<para>解决方案，设置docker mirror 站点</para>
+		<screen>
+		<![CDATA[
+curl -s https://raw.githubusercontent.com/oscm/shell/master/virtualization/docker/registry-mirror.sh | bash
+		]]>
+		</screen>
+	</section>
+</chapter>

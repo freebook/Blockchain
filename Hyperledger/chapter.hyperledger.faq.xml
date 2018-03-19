@@ -1,40 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="FAQ">
 	<title>FAQ</title>
-	<section id="">
-		<title>ERROR: manifest for hyperledger/fabric-ca:latest not found</title>
-		<screen>
-			<![CDATA[
-ERROR: manifest for hyperledger/fabric-orderer:latest not found
-ERROR: manifest for hyperledger/fabric-couchdb:latest not found
-ERROR: manifest for hyperledger/fabric-ca:latest not found	
-ERROR: manifest for hyperledger/fabric-tools:latest not found		
-			]]>
-		</screen>
-		<para>解决方案</para>
-		<screen>
-			<![CDATA[
-docker pull hyperledger/fabric-membersrvc:latest \
-&& docker pull hyperledger/fabric-peer:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-orderer:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-couchdb:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-ca:x86_64-1.0.5 \
-&& docker pull hyperledger/fabric-tools:x86_64-1.0.5
-
-docker tag hyperledger/fabric-peer:x86_64-1.0.5 hyperledger/fabric-peer \
-&& docker tag hyperledger/fabric-orderer:x86_64-1.0.5 hyperledger/fabric-orderer \
-&& docker tag hyperledger/fabric-couchdb:x86_64-1.0.5 hyperledger/fabric-couchdb \
-&& docker tag hyperledger/fabric-ca:x86_64-1.0.5 hyperledger/fabric-ca \
-&& docker tag hyperledger/fabric-tools:x86_64-1.0.5 hyperledger/fabric-tools
-			]]>
-		</screen>
-	</section>
-	<section id="hyperledger.uninstall">
-		<title>卸载 hyperledger 环境</title>
-		<screen>
-			<![CDATA[
-docker rmi -f $(docker images -q)			
-			]]>
-		</screen>
-	</section>
+	
 </chapter>

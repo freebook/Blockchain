@@ -97,7 +97,7 @@ curl -s https://raw.githubusercontent.com/hyperledger/fabric/release/scripts/boo
 docker stop $(docker ps -q) && docker rm $(docker ps -aq)			
 			]]>
 			</screen>
-			<section id="">
+			<section>
 				<title>登录 docker</title>
 				<screen>
 				<![CDATA[
@@ -361,7 +361,7 @@ peer0.org1.example.com   peer node start                  Up      0.0.0.0:7051->
 		</section>
 		<section id="resource">
 			<title>管理 hyperledger</title>
-			<section id="">
+			<section>
 				<title>CouchDB 管理界面</title>
 				<screen>
 					<![CDATA[
@@ -410,7 +410,7 @@ peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger
 					]]>
 					</screen>
 				</section>
-				<section id="">
+				<section>
 					<title>加入 Channel</title>
 					<screen>
 					<![CDATA[
@@ -625,6 +625,42 @@ docker-compose version 1.19.0, build 9e633ef
 			</screen>
 		</section>
 	</section>
+	<section>
+		<title>Netkiller OSCM 一键安装</title>
+
+		<section id="docker">
+			<title>安装Docker</title>
+			<screen>
+			<![CDATA[
+curl -s https://raw.githubusercontent.com/oscm/shell/master/virtualization/docker/docker.centos7.ce.sh	 | bash
+curl -s https://raw.githubusercontent.com/oscm/shell/master/virtualization/docker/registry-mirror.sh	 | bash
+			]]>
+			</screen>
+			<para>安装 docker-compose</para>
+			<screen>
+			<![CDATA[
+curl -s https://raw.githubusercontent.com/oscm/shell/master/virtualization/docker/docker-compose.sh	 | bash			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>清理 Docker 容器和镜像</title>
+			<screen>
+			<![CDATA[
+curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/hyperledger/fabric/uninstall.sh | bash			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>1.0.6</title>
+			<screen>
+			<![CDATA[
+curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/hyperledger/fabric/1.0.6/all-in-one.sh | bash
+			]]>
+			</screen>
+		</section>
+
+	</section>
 	<section id="fabric-samples">
 		<title>fabric-samples</title>
 		<para>安装 fabric-samples</para>
@@ -813,7 +849,7 @@ Failed to invoke successfully :: Error: Failed to send Proposal or receive valid
 			]]>
 			</screen>
 			<para>这里出错，是因为没有提供相关的调用方法和参数，暂时不去纠结，继续做实验。</para>
-			<section id="">
+			<section>
 				<title>智能合约</title>
 				<programlisting>
 				<![CDATA[
@@ -1076,7 +1112,7 @@ Successfully committed the change to the ledger by the peer
 				</screen>
 			</section>
 
-			<section id="">
+			<section>
 				<title>查询单条记录</title>
 				<para>查找 CAR5 这条记录的数据。</para>
 				<programlisting>
@@ -1526,7 +1562,7 @@ curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X POS
 			]]>
 			</screen>
 		</section>
-		<section id="">
+		<section>
 			<title></title>
 			<screen>
 			<![CDATA[

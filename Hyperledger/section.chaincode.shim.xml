@@ -375,6 +375,7 @@ func getHistoryListResult(resultsIterator shim.HistoryQueryIteratorInterface) ([
 	</section>
 	<section>
 		<title>stub.SetEvent(key, value) 事件</title>
+		<!-- https://fabric-sdk-node.github.io/tutorial-channel-events.html -->
 		<para>Hyperledger Fabic 事件实现了发布/订阅消息队列。您可以自由地在链码中创建和发出自定义事件。例如，区块链的状态发生改变，就会生成一个事件。通过向区块链上的事件中心注册一个事件适配器，客户端应用程序可以订阅和使用这些事件。</para>
 		<programlisting>
 		<![CDATA[
