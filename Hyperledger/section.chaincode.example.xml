@@ -148,5 +148,39 @@ func main() {
 		]]>
 		
 		</programlisting>
+		<screen>
+		<![CDATA[
+
+
+CORE_PEER_LOCALMSPID=Org1MSP
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+
+peer chaincode install -n token -v 1.0 -p github.com/chaincode/token
+peer chaincode instantiate -o orderer.example.com:7050 -C mychannel -n token -v 1.0 -c '{"Args":[""]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
+sleep 10
+peer chaincode invoke -o orderer.example.com:7050 -C mychannel -n token -c '{"function":"initLedger","Args":["Token","Netkiller Coin","1000000"]}'
+
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+[root@localhost fabric-samples]# cd chaincode-docker-devmode/
+[root@localhost chaincode-docker-devmode]# docker-compose up -d
+[root@localhost chaincode-docker-devmode]# docker exec -it cli bash
+root@765cbcd51fd7:/opt/gopath/src/chaincode#		
+		
+CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=token:1.0 ./chaincode/token/token 
+
+peer chaincode install -n token -v 1.0 -p chaincodedev/chaincode/chaincode/token
+peer chaincode instantiate -C myc -n token -v 1.0 -c '{"Args":[""]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
+peer chaincode instantiate -C myc -n token -v 1.0 -c '{"Args":["init"]}' 
+sleep 10
+peer chaincode invoke -C myc -n token -c '{"function":"initLedger","Args":["Token","Netkiller Coin","1000000"]}'
+
+peer chaincode invoke -C myc -n token -c '{"function":"transferToken","Args":["Token","coinbase","netkiller","100"]}'		
+peer chaincode invoke -C myc -n token -c '{"function":"balanceToken","Args":["Token","netkiller"]}'
+peer chaincode query -C myc -n token -c '{"function":"balanceToken","Args":["Token","netkiller"]}'
+		]]>
+		</screen>
 	</section>
 </section>

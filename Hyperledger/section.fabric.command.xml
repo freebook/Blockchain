@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="fabric.command">
+	<title>Fabric Command </title>
+	<section id="">
+		<title>peer</title>
+		<section id="">
+			<title>channel</title>
+			<section id="">
+				<title>list</title>
+				<para>列出当前 Channel</para>
+				<screen>
+				<![CDATA[
+root@61814b46e7ee:/opt/gopath/src/github.com/chaincode/token# peer channel list
+2018-03-19 08:41:25.289 UTC [msp] GetLocalMSP -> DEBU 001 Returning existing local MSP
+2018-03-19 08:41:25.290 UTC [msp] GetDefaultSigningIdentity -> DEBU 002 Obtaining default signing identity
+2018-03-19 08:41:25.293 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2018-03-19 08:41:25.294 UTC [msp/identity] Sign -> DEBU 004 Sign: plaintext: 0A86070A5C08031A0C08B5EFBDD50510...631A0D0A0B4765744368616E6E656C73 
+2018-03-19 08:41:25.294 UTC [msp/identity] Sign -> DEBU 005 Sign: digest: E4E3AB1CFD295AA881EA2AB08781EF8989CA4271FC3E2A0E6DFDDB991ECEE7F6 
+2018-03-19 08:41:25.305 UTC [channelCmd] list -> INFO 006 Channels peers has joined to: 
+2018-03-19 08:41:25.305 UTC [channelCmd] list -> INFO 007 mychannel 
+2018-03-19 08:41:25.305 UTC [main] main -> INFO 008 Exiting.....				
+				]]>
+				</screen>
+			</section>
+		</section>
+	</section>
+</chapter>
