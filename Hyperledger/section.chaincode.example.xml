@@ -3,12 +3,16 @@
 	<title></title>
 	<section id="">
 		<title>模仿以太坊 ERC20 规范的 Hyperledger Fabric 实现</title>
+		<para>借用以太坊思维，将以太坊代币合约搬到 hyperledger 上，一样可以实现代币的功能，这个代币除了不能上交易所，基本满足我们替代积分系统的需求，下面是我写了这样一个合约，在超级账本上实现类似以太坊的代币转账功能。</para>
+		<para>合约实现代币转账，额度查询，增发代币，冻结账号，锁仓等等服务器，功能与 ERC20 Token 相仿。</para>
+		<para>合约实例化所有代币打入了 coinbase 账号，分发代币需要使用转账功能从 coinbase 想普通账号转账</para>
+		<para>普通账号消费可以在将代币转到 coinbase 账号中，这样就完成了代币流通，形成一个闭环。</para>
+		
 		<programlisting>
 		<![CDATA[
-package main
+package main 
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"strconv"
@@ -22,43 +26,43 @@ type SmartContract struct {
 }
 
 type Token struct {
-	Owner			string	`json:"Owner"`
-	TotalSupply 	uint	`json:"TotalSupply"`
-	TokenName 		string	`json:"TokenName"`
+	Owner		string	`json:"Owner"`
+	TotalSupply 	int	`json:"TotalSupply"`
+	TokenName 	string	`json:"TokenName"`
 	TokenSymbol 	string	`json:"TokenSymbol"`
-	BalanceOf		map[string]uint	`json:"BalanceOf"`
+	BalanceOf	map[string]int	`json:"BalanceOf"`
 }
 
 func (token *Token) initialSupply(){
 	token.BalanceOf[token.Owner] = token.TotalSupply;
 }
 
-func (token *Token) transfer (_from string, _to string, _value uint){
+func (token *Token) transfer (_from string, _to string, _value int){
 	if(token.BalanceOf[_from] >= _value){
 		token.BalanceOf[_from] -= _value;
 		token.BalanceOf[_to] += _value;
 	}
 }
 
-func (token *Token) balance (_from string) uint{
+func (token *Token) balance (_from string) int{
 	return token.BalanceOf[_from]
 }
 
-func (token *Token) burn(_value uint) {
+func (token *Token) burn(_value int) {
 	if(token.BalanceOf[token.Owner] >= _value){
 		token.BalanceOf[token.Owner] -= _value;
 		token.TotalSupply -= _value;
 	}
 }
 
-func (token *Token) burnFrom(_from string, _value uint) {
+func (token *Token) burnFrom(_from string, _value int) {
 	if(token.BalanceOf[_from] >= _value){
 		token.BalanceOf[_from] -= _value;
 		token.TotalSupply -= _value;
 	}
 }
 
-func (token *Token) mint(_value uint) {
+func (token *Token) mint(_value int) {
 	
 	token.BalanceOf[token.Owner] += _value;
 	token.TotalSupply += _value;
@@ -69,55 +73,90 @@ func (s *SmartContract) Init(stub shim.ChaincodeStubInterface) sc.Response {
 	return shim.Success(nil)
 }
 
-func (s *SmartContract) initLedger(stub shim.ChaincodeStubInterface) sc.Response {
+func (s *SmartContract) initLedger(stub shim.ChaincodeStubInterface, args []string) sc.Response {
 	
+	if len(args) != 3 {
+                return shim.Error("Incorrect number of arguments. Expecting 2")
+        }
+
+	symbol:= args[0]
+	name  := args[1]
+	supply,_:= strconv.Atoi(args[2])
+
 	token := &Token{
-		Owner: "netkiller",
-		TotalSupply: 10000,
-		TokenName: "代币通正",
-		TokenSymbol: "COIN",
-		BalanceOf: map[string]uint{}}
+		Owner: "coinbase",
+		TotalSupply: supply,
+		TokenName: name,
+		TokenSymbol: symbol,
+		BalanceOf: map[string]int{}}
 	
 	token.initialSupply()
 
 	tokenAsBytes, _ := json.Marshal(token)
-	stub.PutState("Token", tokenAsBytes)
-	fmt.Println("Added", tokenAsBytes)
+	err := stub.PutState(symbol, tokenAsBytes)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	fmt.Printf("Init %s \n", string(tokenAsBytes))
 	
 	return shim.Success(nil)
 }
 
 func (s *SmartContract) transferToken(stub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 3 {
-		return shim.Error("Incorrect number of arguments. Expecting 2")
+	if len(args) != 4 {
+		return shim.Error("Incorrect number of arguments. Expecting 4")
+	}
+	_from 	:= args[1]
+	_to	:= args[2]
+	_amount,_	:= strconv.Atoi(args[3])
+	if(_amount <= 0){
+		return shim.Error("Incorrect number of amount")
 	}
 
-	tokenAsBytes, _ := stub.GetState(args[0])
+	tokenAsBytes,err := stub.GetState(args[0])
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	fmt.Printf("transferToken - begin %s \n", string(tokenAsBytes))
+
 	token := Token{}
 
 	json.Unmarshal(tokenAsBytes, &token)
-	token.transfer(args[1],args[2],args[3])
+	token.transfer(_from, _to, _amount)
 
-	tokenAsBytes, _ = json.Marshal(token)
-	stub.PutState(args[0], tokenAsBytes)
+	tokenAsBytes, err = json.Marshal(token)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	err = stub.PutState(args[0], tokenAsBytes)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	fmt.Printf("transferToken - end %s \n", string(tokenAsBytes))
 
 	return shim.Success(nil)
 }
 
 func (s *SmartContract) balanceToken(stub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 1 {
-		return shim.Error("Incorrect number of arguments. Expecting 1")
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
 
-	tokenAsBytes, _ := stub.GetState(args[0])
+	tokenAsBytes,err := stub.GetState(args[0])
+	if err != nil {
+		return shim.Error(err.Error())
+	}
 	token := Token{}
 
 	json.Unmarshal(tokenAsBytes, &token)
 	amount := token.balance(args[1])
+	value := strconv.Itoa(amount)
+	fmt.Printf("%s balance is %s \n", args[1], value)	
+	//jsonVal, _ := json.Marshal(string(value))
 
-	return shim.Success(amount)
+	return shim.Success([]byte(value))
 }
 
 func (s *SmartContract) Invoke(stub shim.ChaincodeStubInterface) sc.Response {
@@ -128,7 +167,7 @@ func (s *SmartContract) Invoke(stub shim.ChaincodeStubInterface) sc.Response {
 	if function == "balanceToken" {
 		return s.balanceToken(stub, args)
 	} else if function == "initLedger" {
-		return s.initLedger(stub)
+		return s.initLedger(stub, args)
 	} else if function == "transferToken" {
 		return s.transferToken(stub, args)
 	}
@@ -144,24 +183,21 @@ func main() {
 	if err != nil {
 		fmt.Printf("Error creating new Smart Contract: %s", err)
 	}
-}		
+}
 		]]>
 		
 		</programlisting>
+		<para>	这个合约用户可以创建多套代币，Args":["Token" 的第一参数 Token就是代币名称</para>
 		<screen>
 		<![CDATA[
-
-
-CORE_PEER_LOCALMSPID=Org1MSP
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
-
-peer chaincode install -n token -v 1.0 -p github.com/chaincode/token
-peer chaincode instantiate -o orderer.example.com:7050 -C mychannel -n token -v 1.0 -c '{"Args":[""]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
-sleep 10
-peer chaincode invoke -o orderer.example.com:7050 -C mychannel -n token -c '{"function":"initLedger","Args":["Token","Netkiller Coin","1000000"]}'
-
+peer chaincode invoke -C myc -n token -c '{"function":"initLedger","Args":["Apple","水果币","1000000"]}'
+peer chaincode invoke -C myc -n token -c '{"function":"initLedger","Args":["Token","蔬菜币","1000000"]}'
+peer chaincode invoke -C myc -n token -c '{"function":"initLedger","Args":["Oil","粮油币","1000000"]}'
 		]]>
 		</screen>
+		<para>这个方案仍有不足之处，作者还不清楚如果用户上线是多少，达到临界值后，Hyperledger Fabric 无法在提供服务。</para>
+		<para>可能 chaincode_example02 做法更靠谱，就是不用 map 保存数据，将每个用户存储在 State 数据上。这里需要创建多套代币，所以使用了一个key 来存储所有账号。如果像 chaincode_example02 那样就需要部署多个 chaincode 在 channel 中。管理起来比较复杂。</para>
+		
 		<screen>
 		<![CDATA[
 [root@localhost fabric-samples]# cd chaincode-docker-devmode/
@@ -169,7 +205,7 @@ peer chaincode invoke -o orderer.example.com:7050 -C mychannel -n token -c '{"fu
 [root@localhost chaincode-docker-devmode]# docker exec -it cli bash
 root@765cbcd51fd7:/opt/gopath/src/chaincode#		
 		
-CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=token:1.0 ./chaincode/token/token 
+CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=token:1.0 ./chaincode/chaincode/token/token 
 
 peer chaincode install -n token -v 1.0 -p chaincodedev/chaincode/chaincode/token
 peer chaincode instantiate -C myc -n token -v 1.0 -c '{"Args":[""]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
@@ -179,8 +215,19 @@ peer chaincode invoke -C myc -n token -c '{"function":"initLedger","Args":["Toke
 
 peer chaincode invoke -C myc -n token -c '{"function":"transferToken","Args":["Token","coinbase","netkiller","100"]}'		
 peer chaincode invoke -C myc -n token -c '{"function":"balanceToken","Args":["Token","netkiller"]}'
+
+peer chaincode invoke -C myc -n token -c '{"function":"transferToken","Args":["Token","netkiller","jerry","100"]}'
+
 peer chaincode query -C myc -n token -c '{"function":"balanceToken","Args":["Token","netkiller"]}'
 		]]>
 		</screen>
+		<para>测试不存在账号转账</para>
+		<screen>
+		<![CDATA[
+peer chaincode invoke -C myc -n token -c '{"function":"transferToken","Args":["Token","neo","netkiller","100"]}'			
+		]]>
+		</screen>
+		<para>以太坊和超级账本各有优势，虽然超级账本的Token功能无法和以太坊相比，但是使用超级账本实现的Token交易不用矿工费。同事超级账本还有一个优势，就是可以在合约中调用另一个合约，这样一来可以做出很多复杂的需求</para>
+		<para>例如我们在订票的合约中，就可以直接从Token合约中直接扣款。</para>
 	</section>
 </section>
