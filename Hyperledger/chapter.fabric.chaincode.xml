@@ -635,6 +635,9 @@ Query Response:{"Name":"a","Amount":"50"}
 		</screen>
 	</section>
 	
+	&section.chaincode.shim.xml;
+	&section.chaincode.example.xml;
+
 	<section id="chaincode.build">
 		<title>在宿主主机上编译合约</title>
 		<para>编译 chaincode 可以在 docker 容器中进行，也可以在 docker 外面进行。方法如下：</para>
@@ -657,9 +660,37 @@ go get github.com/hyperledger/fabric
 chaincode_example02  chaincode_example02.go  chaincode_example02_test.go 
 			]]>
 		</screen>
-		<tip><para>由于 docker 容器中没有 vim/nano 命令，无法编译 .go 文件，所以在宿主主机编译更为方便。</para></tip>
+		<tip>
+			<para>由于 docker 容器中没有 vim/nano 命令，无法编译 .go 文件，所以在宿主主机编译更为方便。</para>
+		</tip>
 	</section>
-	
-	&section.chaincode.shim.xml;
-	&section.chaincode.example.xml;
+
+	<section id="chaincode.upgrade">
+		<title>链码升级</title>
+		<para>已经实例化的链码如果需要更新，可以通过 upgrade 升级。</para>
+		<screen>
+		<![CDATA[
+peer chaincode upgrade -o orderer.example.com:7050 -C mychannel -n token4 -v 1.1 -c '{"Args":[""]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
+		]]>
+		</screen>
+		<para>操作演示</para>
+		<screen>
+		<![CDATA[
+[root@localhost token]# docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode upgrade -o orderer.example.com:7050 -C mychannel -n token4 -v 1.1 -c '{"Args":[""]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
+2018-03-21 05:45:57.825 UTC [msp] GetLocalMSP -> DEBU 001 Returning existing local MSP
+2018-03-21 05:45:57.825 UTC [msp] GetDefaultSigningIdentity -> DEBU 002 Obtaining default signing identity
+2018-03-21 05:45:57.827 UTC [chaincodeCmd] checkChaincodeCmdParams -> INFO 003 Using default escc
+2018-03-21 05:45:57.828 UTC [chaincodeCmd] checkChaincodeCmdParams -> INFO 004 Using default vscc
+2018-03-21 05:45:57.829 UTC [chaincodeCmd] upgrade -> DEBU 005 Get upgrade proposal for chaincode <name:"token4" version:"1.1" >
+2018-03-21 05:45:57.829 UTC [msp/identity] Sign -> DEBU 006 Sign: plaintext: 0A91070A6708031A0C0895E3C7D50510...324D53500A04657363630A0476736363 
+2018-03-21 05:45:57.830 UTC [msp/identity] Sign -> DEBU 007 Sign: digest: D74025895DC08535F47FACF5AB3BE1ECFBCC30BA569E60C3DD45655BF5B89F89 
+2018-03-21 05:46:43.134 UTC [chaincodeCmd] upgrade -> DEBU 008 endorse upgrade proposal, get response <status:200 message:"OK" payload:"\n\006token4\022\0031.1\032\004escc\"\004vscc*(\022\014\022\n\010\001\022\002\010\000\022\002\010\001\032\013\022\t\n\007Org1MSP\032\013\022\t\n\007Org2MSP2D\n \260\010<\325\376\335\274W\266N\236N\221\241NP\257&\330\220\232\355\022OB\334cE\021\374\343\222\022 r\2150\010R\nQ=\3135\314\312\334\312f\373\363\2646*hUT\362\227<Q\356*\007\204f: \362\366k\2363\033\314\177\226v\020\\KT\216\376\032\347\252\034L\274\224G+\003GE\2673G\222B\031\022\010\022\006\010\001\022\002\010\000\032\r\022\013\n\007Org1MSP\020\001" >
+2018-03-21 05:46:43.166 UTC [msp/identity] Sign -> DEBU 009 Sign: plaintext: 0A91070A6708031A0C0895E3C7D50510...B547273E6CEACD8482A8F632F2681093 
+2018-03-21 05:46:43.167 UTC [msp/identity] Sign -> DEBU 00a Sign: digest: D2F66B1F91AE4A6C138672975FBFC3D5D2A551419F74950B4129F5D4CA8B244D 
+2018-03-21 05:46:43.167 UTC [chaincodeCmd] upgrade -> DEBU 00b Get Signed envelope
+2018-03-21 05:46:43.167 UTC [chaincodeCmd] chaincodeUpgrade -> DEBU 00c Send signed envelope to orderer
+2018-03-21 05:46:43.179 UTC [main] main -> INFO 00d Exiting.....
+		]]>	
+		</screen>
+	</section>
 </chapter>
