@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section>
 	<title>Chaincode 结构</title>
-	<para>shim.ChaincodeStubInterface 接口有三个方法，分别是：Init、Query 和 Invoke</para>
+	<para>Chaincode 实现 shim.ChaincodeStubInterface 接口，有三个方法，分别是：Init、Query 和 Invoke</para>
 	<section>
 		<title>包</title>
+		<para>由于需要编译为可执行文件，所以需要 main 包</para>
 		<programlisting>
 		<![CDATA[
 package main		
@@ -12,6 +13,7 @@ package main
 	</section>
 	<section>
 		<title>导入库</title>
+		<para>这里需要导入两个包 "github.com/hyperledger/fabric/core/chaincode/shim" 和 "github.com/hyperledger/fabric/protos/peer" 其他包，根据实际需要而定。</para>
 		<programlisting>
 		<![CDATA[
 import (

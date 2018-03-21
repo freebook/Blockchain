@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section id="chaincode.example">
 	<title></title>
-	<section id="">
+	<section id="chaincode.token">
 		<title>模仿以太坊 ERC20 规范的 Hyperledger Fabric 实现</title>
 		<para>借用以太坊思维，将以太坊代币合约搬到 hyperledger 上，一样可以实现代币的功能，这个代币除了不能上交易所，基本满足我们替代积分系统的需求，下面是我写了这样一个合约，在超级账本上实现类似以太坊的代币转账功能。</para>
 		<para>合约实现代币转账，额度查询，增发代币，冻结账号，锁仓等等服务器，功能与 ERC20 Token 相仿。</para>
