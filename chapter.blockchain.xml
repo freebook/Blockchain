@@ -14,6 +14,7 @@
 	</section>
 	<section id="what.contracts">
 		<title>什么是智能合约？</title>
+		<para>智能合约是区块数据业务逻辑的封装.</para>
 		<para>你可以理解为存储过程+数据库结构，这样应该很好理解了把？</para>
 		<para>访问只能合约就如同访问存储过程。在合约中定义的变量是不能直接访问的，只能通过函数操作他。</para>
 		<para>所以非常类似数据库定义了表结构，但是不能直接 select, insert, delete, update 数据，只能通过存储过程操作数据库一样。</para>
