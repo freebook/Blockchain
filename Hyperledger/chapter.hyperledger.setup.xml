@@ -60,7 +60,7 @@ docker network create fabric_pbft
 			<para>安装 docker-compose</para>
 			<screen>
 			<![CDATA[
-curl -s https://raw.githubusercontent.com/oscm/shell/master/virtualization/docker/docker-compose.sh	 | bash			
+curl -s https://raw.githubusercontent.com/oscm/shell/master/virtualization/docker/docker-compose/docker-compose.sh	 | bash			
 			]]>
 			</screen>
 		</section>
@@ -625,7 +625,7 @@ docker-compose version 1.19.0, build 9e633ef
 			</screen>
 		</section>
 	</section>
-	<section>
+	<section id="setup.oscm">
 		<title>Netkiller OSCM 一键安装</title>
 
 		<section id="docker">
@@ -639,7 +639,7 @@ curl -s https://raw.githubusercontent.com/oscm/shell/master/virtualization/docke
 			<para>安装 docker-compose</para>
 			<screen>
 			<![CDATA[
-curl -s https://raw.githubusercontent.com/oscm/shell/master/virtualization/docker/docker-compose.sh	 | bash			
+curl -s https://raw.githubusercontent.com/oscm/shell/master/virtualization/docker/docker-compose/docker-compose.sh | bash			
 			]]>
 			</screen>
 		</section>

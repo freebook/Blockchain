@@ -198,6 +198,14 @@ curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/ethereum/
 				]]>
 				</screen>
 			</section>
+			<section>
+				<title>1.8.2</title>
+				<screen>
+				<![CDATA[
+curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/ethereum/centos/go-ethereum-1.8.2.sh | bash
+				]]>
+				</screen>
+			</section>
 		</section>
 
 	</section>
