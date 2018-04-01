@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="other">
+<section id="fisco-bcos">
+	<title>FISCO BCOS</title>
+	<para>早在2016年，微众银行、上海万向区块链、矩阵元三家公司达成战略合作，致力于共同进行区块链技术的探索，且在2017年7月，三方将顺利完成的区块链底层平台BCOS（取BlockChain OpenSource涵义命名）完全开源，以便更多的开发者加入，共同完善技术，构建真正根植中国的区块链生态。</para>
+</section>
+
+<section id="asch">
+	<title>asch</title>
+	<para>https://www.asch.io</para>
+</section>
+</chapter>

@@ -538,6 +538,24 @@ web3.utils.toWei('1', 'shannon');
 			]]>
 			</screen>
 		</section>
+		<section id="web3.utils.fromWei()">
+			<title>将 Wei 转换到指定单位</title>
+			<programlisting>
+			<![CDATA[
+web3.utils.fromWei('1', 'ether');
+> "0.000000000000000001"
+
+web3.utils.fromWei('1', 'finney');
+> "0.000000000000001"
+
+web3.utils.fromWei('1', 'szabo');
+> "0.000000000001"
+
+web3.utils.fromWei('1', 'shannon');
+> "0.000000001"
+			]]>
+			</programlisting>
+		</section>
 	</section>
 	<section id="compile.solidity">
 		<title>web3 编译合约</title>
@@ -856,6 +874,19 @@ contract.methods.balanceOf(coinbase).call().then(console.log).catch(console.log)
 contract.methods.balanceOf(toAddress).call().then(console.log).catch(console.log);
 			]]>
 			</programlisting>
+		</section>
+	</section>
+	<section id="web3.js.example">
+		<title>Express + web3.js 实例</title>
+		<section>
+			<title>创建项目</title>
+			<para></para>
+			<screen>
+			<![CDATA[
+ npm install express
+ npm install web3
+			]]>
+			</screen>
 		</section>
 	</section>
 </chapter>
