@@ -423,6 +423,67 @@ func (t *SimpleChaincode) testInvokeChainCode(stub shim.ChaincodeStubInterface, 
 }		
 		]]>
 		</programlisting>
+		
+		<programlisting>
+		<![CDATA[
+parms1 := []string{"query","a"}
+queryArgs := make([][]byte, len(parms1))
+for i, arg := range parms1 {
+   queryArgs[i] = []byte(arg)
+}
+
+
+response := stub.InvokeChaincode("cc_endfinlshed",queryArgs,"roberttestchannel12")
+
+if response.Status != shim.OK {
+   errStr := fmt.Sprintf("Failed to query chaincode. Got error: %s", response.Payload)
+   fmt.Printf(errStr)
+return shim.Error(errStr)
+}
+
+result := string(response.Payload)
+
+
+
+fmt.Printf(" invoke chaincode  %s " ,result)
+
+return shim.Success([]byte("success InvokeChaincode  and Not opter !!!!!!!! " + result))
+		]]>
+		</programlisting>
+		
+		<programlisting>
+		<![CDATA[
+import (
+
+	"encoding/json"
+	"fmt"
+	"strconv"
+
+	"github.com/hyperledger/fabric/common/util"
+	"github.com/hyperledger/fabric/core/chaincode/shim"
+	pb "github.com/hyperledger/fabric/protos/peer"
+
+)
+
+// Invoke
+func (am *accountManagement) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
+    actionName, params := stub.GetFunctionAndParameters()
+
+    if actionName == "callAnotherCC" {
+        chainCodeArgs := util.ToChaincodeArgs("anotherCCFunc", "paramA")
+        response := stub.InvokeChaincode("anotherCCName", chainCodeArgs, "channelName")
+
+        if response.Status != shim.OK {
+           return shim.Error(response.Message)
+        }
+        return shim.Success(nil)
+    }
+
+    // NOTE: This is an example, hence assuming only valid call is to call another chaincode
+    return shim.Error(fmt.Sprintf("[ERROR] No <%s> action defined", actionName))
+}
+		]]>
+		</programlisting>
 	</section>
 
 </section>
