@@ -2,6 +2,7 @@
 <section>
 	<title>Chaincode 结构</title>
 	<para>Chaincode 实现 shim.ChaincodeStubInterface 接口，有三个方法，分别是：Init、Query 和 Invoke</para>
+	<para><ulink url="https://github.com/hyperledger-archives/fabric/blob/master/core/chaincode/shim/chaincode.go" /></para>
 	<section>
 		<title>包</title>
 		<para>由于需要编译为可执行文件，所以需要 main 包</para>
