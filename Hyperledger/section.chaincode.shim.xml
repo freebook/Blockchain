@@ -120,7 +120,7 @@ func main() {
 	<para>Hyperledger提供基于key/value的数据存储，其中key是字符串，value则是二进制字节数组，Hyperledger的Go API提供了三个方法用于数据存取：PutState（key, value）用于向Hyperledger中存储数据， GetState(key)用于从Hyperledger中提取数据，而DelState(key)则从Hyperledger中删除数据。</para>
 	<para>写入数据如果是 struct 结构体，需要序列化，通常使用 json,其他形式的序列化也可以，只要能反序列化即可。</para>
 	<section>
-		<title>曾，删，查 操作</title>
+		<title>State 数据库曾，删，查 操作</title>
 
 		<section>
 			<title>PutState（key, value）写入区块</title>
@@ -486,5 +486,31 @@ func (am *accountManagement) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 		]]>
 		</programlisting>
 	</section>
+	<section>
+		<title>stub.GetCreator() 获得证书资料</title>
+		<programlisting>
+		<![CDATA[
+func (t *SimpleChaincode) certificate(stub shim.ChaincodeStubInterface, args []string) pb.Response{
+   creatorByte,_:= stub.GetCreator()
+   certStart := bytes.IndexAny(creatorByte, "-----BEGIN")
+   if certStart == -1 {
+      fmt.Errorf("No certificate found")
+   }
+   certText := creatorByte[certStart:]
+   bl, _ := pem.Decode(certText)
+   if bl == nil {
+      fmt.Errorf("Could not decode the PEM structure")
+   }
 
+   cert, err := x509.ParseCertificate(bl.Bytes)
+   if err != nil {
+      fmt.Errorf("ParseCertificate failed")
+   }
+   uname:=cert.Subject.CommonName
+   fmt.Println("Name:"+uname)
+   return shim.Success([]byte("Called testCertificate "+uname))
+}
+		]]>
+		</programlisting>
+	</section>
 </section>

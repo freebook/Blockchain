@@ -772,8 +772,39 @@ Response is  {"BalanceOf":{},"Frozen":false,"Name":"coinbase"}
 		</screen>
 	</section>
 
-	<section id="">
-		<title></title>
+	<section id="node.event">
+		<title>Event</title>
+		<programlisting>
+		<![CDATA[
+chain.eventHubConnect(peerEventHosts[0],{pem:pem});
+setupEvents();
+ 
+/**
+ * Sample method to showcase how to subscribe and consume events emitted from blockchain
+ */
+function setupEvents(){
+    try{
+	    var eh = chain.getEventHub();
+	    var cid = config['chaincode']['id'];
+	    var regid = eh.registerChaincodeEvent(cid, "^eventSender$", function(event) {
+	        console.log(event);
+	        var buffer = new Buffer(event.payload);
+	        console.log(buffer.toString());
+	    });
+	    console.log("EVENT SETUP DONE");
+	}
+	catch(err){
+	    console.log(err);
+	    console.log("Could not setup events");
+	}
+}
+ 
+process.on('exit', function (){
+    console.log('exit called');
+    chain.eventHubDisconnect();
+});
+		]]>
+		</programlisting>
 	</section>
 	<section id="">
 		<title></title>
