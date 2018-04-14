@@ -13,7 +13,7 @@
 	<itemizedlist>
 		<title>本文所用软件版本</title>
 		<listitem>
-			<para>geth v.1.8.1</para>
+			<para>geth v.1.8.2</para>
 		</listitem>
 		<listitem>
 			<para>truffle v4.0.6</para>
@@ -22,7 +22,7 @@
 			<para>web3.js v1.0.0</para>
 		</listitem>
 		<listitem>
-			<para>Solidity Version: 0.4.20</para>
+			<para>Solidity Version: 0.4.21</para>
 		</listitem>
 	</itemizedlist>
 	
@@ -51,7 +51,7 @@ sudo apt install ethereum
 				<![CDATA[
 neo@netkiller ~ % geth version
 Geth
-Version: 1.7.3-stable
+Version: 1.8.2-stable
 Git Commit: 4bb3c89d44e372e6a9ab85a8be0c9345265c763a
 Architecture: amd64
 Protocol Versions: [63 62]
@@ -105,12 +105,12 @@ source /etc/profile
 			</para>
 			<screen>
 			<![CDATA[
-wget https://github.com/ethereum/go-ethereum/archive/v1.7.3.tar.gz
-tar zxvf v1.7.3.tar.gz
-cd go-ethereum-1.7.3/
+wget https://github.com/ethereum/go-ethereum/archive/v1.8.2.tar.gz
+tar zxvf v1.8.2.tar.gz
+cd go-ethereum-1.8.2/
 gmake all
 
-mv build /srv/go-ethereum-1.7.3
+mv build /srv/go-ethereum-1.8.2
 			]]>
 			</screen>
 		</section>
@@ -167,10 +167,10 @@ make geth
 			<para>Netkiller OSCM 是由 Netkiller 制作的一套自动化安装脚本。</para>
 			<para>适用于 CentOS 7</para>
 			<section id="">
-				<title>1.7.3</title>
+				<title>1.8.2</title>
 				<screen>
 			<![CDATA[
-curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/ethereum/centos/go-ethereum-1.7.3.sh | bash			
+curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/ethereum/centos/go-ethereum-1.8.2.sh | bash			
 			]]>
 				</screen>
 				<para>安装完成后使用下面命令进入控制台</para>
@@ -182,7 +182,7 @@ Last login: Sat Feb  3 00:23:52 EST 2018 on pts/0
 [ethereum@localhost ~]$ geth attach
 Welcome to the Geth JavaScript console!
 
-instance: Geth/v1.7.3-stable/linux-amd64/go1.8.3
+instance: Geth/v1.8.2-stable/linux-amd64/go1.8.3
  modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
 
 > 
@@ -350,7 +350,7 @@ Address: {39211a30bfe33d4b12fcbd786472c8a552b93389}
 			<![CDATA[
 neo@netkiller ~/ethereum % geth --networkid 123456 --rpc --rpccorsdomain "*" --nodiscover console 
 WARN [01-19|17:47:06] No etherbase set and no accounts found as default 
-INFO [01-19|17:47:06] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+INFO [01-19|17:47:06] Starting peer-to-peer node               instance=Geth/v1.8.2-stable-4bb3c89d/linux-amd64/go1.9.1
 INFO [01-19|17:47:06] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
 INFO [01-19|17:47:06] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
 INFO [01-19|17:47:06] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
@@ -367,7 +367,7 @@ INFO [01-19|17:47:06] IPC endpoint opened: /home/neo/.ethereum/geth.ipc
 INFO [01-19|17:47:06] HTTP endpoint opened: http://127.0.0.1:8545 
 Welcome to the Geth JavaScript console!
 
-instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+instance: Geth/v1.8.2-stable-4bb3c89d/linux-amd64/go1.9.1
  modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
 
 > INFO [01-19|17:47:09] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"			
@@ -570,7 +570,7 @@ INFO [02-02|22:09:57] Successfully wrote genesis state         database=lightcha
 
 neo@netkiller ~ % geth --datadir="~/ethereum/data1" --networkid 123456 --port 30301 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" -rpcport 8541             
 WARN [02-02|22:36:02] No etherbase set and no accounts found as default 
-INFO [02-02|22:36:02] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+INFO [02-02|22:36:02] Starting peer-to-peer node               instance=Geth/v1.8.2-stable-4bb3c89d/linux-amd64/go1.9.1
 INFO [02-02|22:36:02] Allocated cache and file handles         database=/home/neo/ethereum/data1/geth/chaindata cache=128 handles=1024
 INFO [02-02|22:36:02] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
 INFO [02-02|22:36:02] Disk storage enabled for ethash caches   dir=/home/neo/ethereum/data1/geth/ethash count=3
@@ -616,7 +616,7 @@ geth --exec 'admin.nodeInfo.enode' attach ethereum/data1/geth.ipc
 neo@netkiller ~ % geth attach ethereum/data2/geth.ipc
 Welcome to the Geth JavaScript console!
 
-instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+instance: Geth/v1.8.2-stable-4bb3c89d/linux-amd64/go1.9.1
  modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
 
 > admin.addPeer("enode://53433417f11d1d9a17f155cbaad2c4ec375af7b141e2989f049b572fc3f856d78f254e58fa82ed6eab48a16b7d625527214522ec0fd3e3af030b5b8dfdadc062@[::]:30302")
@@ -635,7 +635,7 @@ true
 [{
     caps: ["eth/63"],
     id: "53433417f11d1d9a17f155cbaad2c4ec375af7b141e2989f049b572fc3f856d78f254e58fa82ed6eab48a16b7d625527214522ec0fd3e3af030b5b8dfdadc062",
-    name: "Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1",
+    name: "Geth/v1.8.2-stable-4bb3c89d/linux-amd64/go1.9.1",
     network: {
       localAddress: "[::1]:51250",
       remoteAddress: "[::1]:30301"
@@ -723,7 +723,7 @@ neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/
 neo@netkiller ~ % geth attach ethereum/data1/geth.ipc                               
 Welcome to the Geth JavaScript console!
 
-instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+instance: Geth/v1.8.2-stable-4bb3c89d/linux-amd64/go1.9.1
 coinbase: 0x5ad227e8d7e460713c78eebbe558473571edae72
 at block: 144 (Fri, 02 Feb 2018 23:24:35 HST)
  datadir: /home/neo/ethereum/data1
@@ -780,7 +780,7 @@ neo@netkiller ~ % geth --exec 'eth.getBalance(eth.accounts[1])' attach ethereum/
 neo@netkiller ~ % geth attach ethereum/data2/geth.ipc                                        
 Welcome to the Geth JavaScript console!
 
-instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+instance: Geth/v1.8.2-stable-4bb3c89d/linux-amd64/go1.9.1
 coinbase: 0xa6df3e3c141e27726f4aeb21a5dab2e5c76c9565
 at block: 319 (Fri, 02 Feb 2018 23:50:07 HST)
  datadir: /home/neo/ethereum/data2

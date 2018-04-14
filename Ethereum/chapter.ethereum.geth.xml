@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="geth" ?>
 	<title>geth v1.8.2 命令详解</title>
-	<para><ulink url="https://geth.ethereum.org" /></para>
+	<para>
+		<ulink url="https://geth.ethereum.org" />
+	</para>
 	<para>版本号</para>
 	<screen>
 		<![CDATA[
@@ -312,7 +314,7 @@ WHISPER实验选项:
 –help, -h    显示帮助	
 	]]>
 	</literallayout>
-	
+
 	<section id="geth.console">
 		<title>控制台</title>
 		<subtitle>Geth JavaScript console</subtitle>
@@ -595,7 +597,7 @@ INFO [02-28|22:51:38] Successfully sealed new block            number=5373 hash=
 INFO [02-28|22:51:38] 🔨 mined potential block                  number=5373 hash=f70a5d…fe9b7b
 		]]>
 		</screen>
-		
+
 	</section>
 	<section id="geth.exec">
 		<title>运行JS</title>
@@ -646,6 +648,8 @@ geth --mine --minerthreads=16 --etherbase=0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bc
 			</screen>
 		</section>
 	</section>
+
+
 	<section id="geth.contract">
 		<title>运行智能合约</title>
 		<programlisting>

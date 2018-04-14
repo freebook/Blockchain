@@ -128,6 +128,14 @@ instance: Geth/v1.8.1-stable-1e67410e/darwin-amd64/go1.9.4
 		<section id="main.network">
 			<title>主网络</title>
 			<para></para>
+			<section >
+				<title>主网启动参数</title>
+				<screen>
+				<![CDATA[
+/Users/neo/Library/Application Support/Ethereum Wallet/binaries/Geth/unpacked/geth --syncmode light --cache 1024				
+				]]>
+				</screen>
+			</section>
 			<section>
 				<title>进入主网</title>
 				<para>点击按钮 "USE THE MAIN NETWORK" 进入以太坊主网。</para>
@@ -143,7 +151,15 @@ instance: Geth/v1.8.1-stable-1e67410e/darwin-amd64/go1.9.4
 		<section id="ropsten">
 			<title>Ropsten 测试网络</title>
 			<!-- <para><ulink url="https://ropsten.etherscan.io">https://ropsten.etherscan.io</ulink></para> -->
-			<section id="">
+			<section >
+				<title>启动参数</title>
+				<screen>
+				<![CDATA[
+/Users/neo/Library/Application Support/Ethereum Wallet/binaries/Geth/unpacked/geth --testnet --syncmode light --cache 1024 --ipcpath /Users/neo/Library/Ethereum/geth.ipc				
+				]]>
+				</screen>
+			</section>
+			<section >
 				<title>获得测试币</title>
 				<para>
 					<ulink url="http://faucet.ropsten.be:3001" />
@@ -275,7 +291,15 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 			]]>
 			</screen>
 		</section>
-			
+		<section id="wallet.private">
+			<title>私网</title>
+			<screen>
+			<![CDATA[
+"/Users/neo/Library/Application Support/Ethereum Wallet/binaries/Geth/unpacked/geth" --datadir=$HOME/ethereum/private init $HOME/ethereum/genesis.json			
+"/Users/neo/Library/Application Support/Ethereum Wallet/binaries/Geth/unpacked/geth" --networkid=4444 --datadir=$HOME/ethereum/private --ipcpath /Users/neo/Library/Ethereum/geth.ipc
+			]]>
+			</screen>
+		</section>
 	
 		&chapter.ethereum.coin.xml;
 	</section>
@@ -287,11 +311,11 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 		</para>
 		<!-- http://8btc.com/thread-76137-1-5.html -->
 		<graphic format="png" fileref="../../images/ethereum/metamask/metamask.png" width="800" srccredit="netkiller" />
-		<section id="">
+		<section >
 			<title>测试网络</title>
 			<para></para>
 			<graphic format="png" fileref="../../images/ethereum/metamask/network.png" width="800" srccredit="netkiller" />
-			<section id="">
+			<section >
 				<title>获取测试网络上的以太币</title>
 				<para>点击 Buy 按钮，然后再点击 ROPSTEN TEST FAUCET 按钮。</para>
 				<graphic format="png" fileref="../../images/ethereum/metamask/ropsten-test-faucet.png" width="800" srccredit="netkiller" />
