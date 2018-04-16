@@ -602,49 +602,49 @@ INFO [02-28|22:51:38] 🔨 mined potential block                  number=5373 ha
 	<section id="geth.exec">
 		<title>运行JS</title>
 		<screen>
-			<![CDATA[
+		<![CDATA[
 neo@netkiller ~/ethereum % geth --exec "eth.blockNumber" attach
 531
-			]]>
+		]]>
 		</screen>
 		<screen>
-			<![CDATA[
+		<![CDATA[
 $ geth --exec 'loadScript("/tmp/checkbalances.js")' attach http://123.123.123.123:8545
 $ geth --jspath "/tmp" --exec 'loadScript("checkbalances.js")' attach http://123.123.123.123:8545			
-			]]>
+		]]>
 		</screen>
 	</section>
 	<section id="geth.bootnodes">
 		<title>节点管理</title>
 		<screen>
-			<![CDATA[
+		<![CDATA[
 geth --bootnodes enode://pubkey1@ip1:port1,enode://pubkey2@ip2:port2,enode://pubkey3@ip3:port3
-			]]>
+		]]>
 		</screen>
 	</section>
 	<section id="geth.mine">
 		<title>启动挖矿</title>
 		<screen>
-			<![CDATA[
+		<![CDATA[
 geth --mine
-			]]>
+		]]>
 		</screen>
 		<section id="geth.minerthreads">
 			<title>挖矿线程数</title>
 			<para>默认为 2</para>
 			<screen>
-				<![CDATA[
+			<![CDATA[
 geth --mine --minerthreads=16
-				]]>
+			]]>
 			</screen>
 		</section>
 		<section id="geth.etherbase">
 			<title>指定旷工账号</title>
 			<para>默认是第一个账号</para>
 			<screen>
-				<![CDATA[
+			<![CDATA[
 geth --mine --minerthreads=16 --etherbase=0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6			
-				]]>
+			]]>
 			</screen>
 		</section>
 	</section>

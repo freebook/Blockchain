@@ -563,9 +563,25 @@ true
 				</screen>
 				<para>列出节点IP地址</para>
 				<screen>
-					<![CDATA[
+				<![CDATA[
 admin.peers.forEach(function(p) {console.log(p.network.remoteAddress);})	
-					]]>
+				]]>
+				</screen>
+				<screen>
+				<![CDATA[
+> admin.peers.forEach(function(p) {console.log(p.network.remoteAddress);})
+52.90.40.206:30303
+120.79.161.22:30303
+13.229.198.234:30303
+169.0.182.34:30303
+23.111.151.158:30304
+120.27.196.141:30303
+118.193.93.174:30303
+35.229.242.1:30303
+159.203.32.64:30303
+undefined
+>				
+				]]>
 				</screen>
 			</section>
 
