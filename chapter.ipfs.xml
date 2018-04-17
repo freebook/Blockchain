@@ -84,10 +84,22 @@ blocks  config  datastore  datastore_spec  keystore  version
 				<title>添加文件</title>
 				<screen>
 				<![CDATA[
-[ipfs@iZj6c7cj14ulhfndlmeicbZ ~]$ echo Helloworld > helloworld.txt
-[ipfs@iZj6c7cj14ulhfndlmeicbZ ~]$ ipfs add helloworld.txt
+[ipfs@netkiller ~]$ echo Helloworld > helloworld.txt
+[ipfs@netkiller ~]$ ipfs add helloworld.txt
 added QmS8R3nSbDHjQ7WRTjtX1pkiQ6BUpti9qTjweZkBgGPKiN helloworld.txt
 
+[ipfs@netkiller ~]$ ipfs cat QmS8R3nSbDHjQ7WRTjtX1pkiQ6BUpti9qTjweZkBgGPKiN
+Helloworld
+				]]>
+				</screen>
+				<para>添加文本</para>
+				<screen>
+				<![CDATA[
+[ipfs@netkiller ~]$ echo 'Look! Things have changed!' | ipfs add
+added QmSb8DSVmu4Qip56jcqPVz1Cx9RJ3vTf3d1Gf9ixaG2tWg QmSb8DSVmu4Qip56jcqPVz1Cx9RJ3vTf3d1Gf9ixaG2tWg
+
+[ipfs@netkiller ~]$ ipfs cat QmSb8DSVmu4Qip56jcqPVz1Cx9RJ3vTf3d1Gf9ixaG2tWg
+Look! Things have changed!
 
 				]]>
 				</screen>
@@ -130,7 +142,24 @@ Check out some of the other files in this directory:
 			</section>
 		</section>
 		<section>
-			<title>基本命令</title>
+			<title>数据结构命令</title>
+			<section>
+				<title>块</title>
+				<screen>
+					<![CDATA[
+					
+					]]>
+				</screen>
+			</section>
+			<section>
+				<title>对象</title>
+				<screen>
+				<![CDATA[
+[ipfs@netkiller ~]$ ipfs object get QmS8R3nSbDHjQ7WRTjtX1pkiQ6BUpti9qTjweZkBgGPKiN
+{"Links":[],"Data":"\u0008\u0002\u0012\u000bHelloworld\n\u0018\u000b"}
+				]]>
+				</screen>
+			</section>
 		</section>
 
 		<section>
@@ -152,7 +181,7 @@ $ ipfs daemon
 				<title>显示 IPFS 信息</title>
 				<screen>
 				<![CDATA[
-[ipfs@iZj6c7cj14ulhfndlmeicbZ ~]$ ipfs id
+[ipfs@netkiller ~]$ ipfs id
 {
 	"ID": "QmZakCF5czhP53KPvMi8XQcYtVrQohw5N71Xce4eC1rWz3",
 	"PublicKey": "CAASpgIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDYWmvcJrJsIjgP+n/EwZyLify7KgZ3SnIrsN9k2z9iF1X9uq9tebH1Dx6tPFIoBndYCvZlrdafHkbL5XRjJ0j0W2ISVKC75I+u9bS4WHSD7gPI82AdlWEp6elL5Muw7DnyN8flOQyxtJqhjkMY5pSnCcLXuOmXZJ2YY+4jZSQ58QmsA17wLcn01so4impSOxjDkjuOuday9SxK5vmstq9Qp/h2neyUsDtx1+q0M0kjlkInRtfXCmtd14EHqcv4VgG+aCcF8UuWgNXBTLc/R5xqtxFx8KacWjf5xUOe7Sjat7tgaY5eBOphupy5zzXfP2YigTY0cz5jIKkPoFK+lppjAgMBAAE=",
@@ -163,13 +192,35 @@ $ ipfs daemon
 				]]>
 				</screen>
 			</section>
+			<section>
+				<title>节点</title>
+				<screen>
+				<![CDATA[
+[ipfs@netkiller ~]$ ipfs bootstrap list
+/dnsaddr/bootstrap.libp2p.io/ipfs/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN
+/dnsaddr/bootstrap.libp2p.io/ipfs/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa
+/dnsaddr/bootstrap.libp2p.io/ipfs/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb
+/dnsaddr/bootstrap.libp2p.io/ipfs/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt
+/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ
+/ip4/104.236.179.241/tcp/4001/ipfs/QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM
+/ip4/104.236.76.40/tcp/4001/ipfs/QmSoLV4Bbm51jM9C4gDYZQ9Cy3U6aXMJDAbzgu2fzaDs64
+/ip4/128.199.219.111/tcp/4001/ipfs/QmSoLSafTMBsPKadTEgaXctDQVcqN88CNLHXMkTNwMKPnu
+/ip4/178.62.158.247/tcp/4001/ipfs/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd
+/ip6/2400:6180:0:d0::151:6001/tcp/4001/ipfs/QmSoLSafTMBsPKadTEgaXctDQVcqN88CNLHXMkTNwMKPnu
+/ip6/2604:a880:1:20::203:d001/tcp/4001/ipfs/QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM
+/ip6/2604:a880:800:10::4a:5001/tcp/4001/ipfs/QmSoLV4Bbm51jM9C4gDYZQ9Cy3U6aXMJDAbzgu2fzaDs64
+/ip6/2a03:b0c0:0:1010::23:1001/tcp/4001/ipfs/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd
+				]]>
+				</screen>
+			</section>
+
 		</section>
 		<section>
 			<title>工具命令</title>
 
 			<section>
 				<title>配置</title>
-				
+
 				<screen>
 				<![CDATA[
 "StorageMax": "10GB"	存储空间配额，默认为 10G
@@ -179,7 +230,7 @@ $ ipfs daemon
 					<title>显示配置</title>
 					<screen>
 					<![CDATA[
-[ipfs@iZj6c7cj14ulhfndlmeicbZ ~]$ ipfs config show
+[ipfs@netkiller ~]$ ipfs config show
 {
   "API": {
     "HTTPHeaders": {
@@ -312,8 +363,8 @@ $ ipfs daemon
 					<title>修改配置</title>
 					<screen>
 				<![CDATA[
-[ipfs@iZj6c7cj14ulhfndlmeicbZ ~]$ export EDITOR=/usr/bin/vim
-[ipfs@iZj6c7cj14ulhfndlmeicbZ ~]$ ipfs config edit
+[ipfs@netkiller ~]$ export EDITOR=/usr/bin/vim
+[ipfs@netkiller ~]$ ipfs config edit
 
 {
   "Identity": {
@@ -346,12 +397,8 @@ $ ipfs daemon
           "mountpoint": "/",
 			
 				]]>
-				</screen>
-					<screen>
-					<![CDATA[
-					
-					]]>
 					</screen>
+
 				</section>
 			</section>
 		</section>
