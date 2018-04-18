@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="ipfs" ?>
 	<title>IPFS（InterPlanetary File System，星际文件系统）</title>
+	<!-- https://flyingzumwalt.gitbooks.io/decentralized-web-primer/ -->
 	<para>IPFS “星际文件系统”
 		是去中心化保存和共享文件的分布式文件系统，它是一种内容可寻址、版本化、点对点超媒体的分布式协议，IPFS旨在替代HTTP。它希望将所有的计算设备都连接到同一个文件系统中。
 	</para>
 	<para>由于 IPFS 去中心化特点，使得很多区块链项目做文件存储的时候首选IPFS。</para>
-	<section id="">
+	<section id="ipfs.setup">
 		<title>安装 IPFS</title>
 		<section id="">
 			<title>go get 方式</title>
@@ -47,7 +48,7 @@ curl -s https://raw.githubusercontent.com/oscm/shell/master/distributed/ipfs/ipf
 			</screen>
 		</section>
 	</section>
-	<section>
+	<section id="ipfs.command">
 		<title>ipfs 命令</title>
 		<para>创建 ipfs 用户</para>
 		<screen>
@@ -57,12 +58,12 @@ curl -s https://raw.githubusercontent.com/oscm/shell/master/distributed/ipfs/ipf
 [ipfs@netkiller ~]$
 		]]>
 		</screen>
-		<section>
+		<section id="ipfs.basic">
 			<title>基本命令</title>
-			<section>
+			<section id="ipfs.init">
 				<title>初始化节点</title>
 				<screen>
-			<![CDATA[
+				<![CDATA[
 [ipfs@netkiller ~]$ ipfs init
 initializing IPFS node at /home/ipfs/.ipfs
 generating 2048-bit RSA keypair...done
@@ -70,7 +71,7 @@ peer identity: QmZakCF5czhP53KPvMi8XQcYtVrQohw5N71Xce4eC1rWz3
 to get started, enter:
 
 	ipfs cat /ipfs/QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv/readme
-			]]>
+				]]>
 				</screen>
 				<para>目录结构</para>
 				<screen>
@@ -80,7 +81,7 @@ blocks  config  datastore  datastore_spec  keystore  version
 			]]>
 				</screen>
 			</section>
-			<section>
+			<section id="ipfs.add">
 				<title>添加文件</title>
 				<screen>
 				<![CDATA[
@@ -90,6 +91,10 @@ added QmS8R3nSbDHjQ7WRTjtX1pkiQ6BUpti9qTjweZkBgGPKiN helloworld.txt
 
 [ipfs@netkiller ~]$ ipfs cat QmS8R3nSbDHjQ7WRTjtX1pkiQ6BUpti9qTjweZkBgGPKiN
 Helloworld
+
+[ipfs@netkiller ~]$ ipfs cat /ipfs/QmS8R3nSbDHjQ7WRTjtX1pkiQ6BUpti9qTjweZkBgGPKiN
+Helloworld
+
 				]]>
 				</screen>
 				<para>添加文本</para>
@@ -104,10 +109,10 @@ Look! Things have changed!
 				]]>
 				</screen>
 			</section>
-			<section>
+			<section id="ipfs.cat">
 				<title>查看文件</title>
 				<screen>
-			<![CDATA[
+				<![CDATA[
 [ipfs@netkiller ~]$ ipfs cat /ipfs/QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv/readme
 Hello and Welcome to IPFS!
 
@@ -136,12 +141,135 @@ Check out some of the other files in this directory:
   ./readme          <-- this file
   ./security-notes
 
-			]]>
+				]]>
 				</screen>
+			</section>
+			<section id="ipfs.get">
+				<title>下载文件</title>
+				<screen>
+				<![CDATA[
+[root@netkiller ~]# ipfs get /ipfs/QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv/readme
+Saving file(s) to readme
+ 1.08 KB / 1.08 KB [======================================================================] 100.00% 0s
+[root@netkiller ~]# ls
+readme
+				]]>
+				</screen>
+				<screen>
+				<![CDATA[
+[root@netkiller ~]# ipfs add readme.txt
+added QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn readme.txt
 
+[root@netkiller ~]# ipfs cat QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn
+Helloworld
+
+[root@netkiller ~]# ipfs get QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn
+Saving file(s) to QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn
+ 880 B / 880 B [=========================================================================] 100.00% 0s
+
+[root@netkiller ~]# ls
+QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn  readme.txt
+
+				]]>
+				</screen>
+			</section>
+			<section id="ipfs.ls">
+				<title>列出文件或目录</title>
+				<screen>
+				<![CDATA[
+[root@netkiller ~]# ipfs ls /ipfs/QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv/
+QmZTR5bcpQD7cFgTorqxZDYaew1Wqgfbd2ud9QqGPAkK2V 1688 about
+QmYCvbfNbCwFR45HiNP45rwJgvatpiW38D961L5qAhUM5Y 200  contact
+QmY5heUM5qgRubMDD1og9fhCPA6QdkMp3QCwd4s7gJsyE7 322  help
+QmejvEPop4D7YUadeGqYWmZxHhLc4JBUCzJJHWMzdcMe2y 12   ping
+QmXgqKTbzdh83pQtKFb19SpMCpDDcKR2ujqk3pKph9aCNF 1692 quick-start
+QmPZ9gcCEpqKTo6aq61g2nXGUhM4iCL3ewB6LDXZCtioEB 1102 readme
+QmQ5vhrL7uv6tuoN9KeVBwd4PwfQkXdVVmDLUZuTNxqgvm 1173 security-notes
+				]]>
+				</screen>
+				<screen>
+				<![CDATA[
+[root@netkiller ~]# ipfs add -r /etc/rc.d
+added QmP4m7YRN25kcRgoJgn95yFR4GsVgbQppnpMGh3AxPzUbc rc.d/init.d/README
+added QmemkmPhud9hBWhTDgnYfascZcXjX4H6j4oyqhKdSvFq8G rc.d/init.d/aegis
+added QmR2zvwDZYQPw4arpaJQwGESPhmz6qBt8MqyrV5UR72JUy rc.d/init.d/agentwatch
+added QmevSkKJVSF4amfHux7bMZCvaQQjuFsDxU1j7j7uvvJzBh rc.d/init.d/functions
+added QmXCmPYb1wWcmAWk8tm1jgYsFgF16mTe2PsnNebw1gzWDw rc.d/init.d/jexec
+added QmeQZxv7Fui5Ah9w9E9QuiyTrbm4XMKyJMthGLvbbtd5q4 rc.d/init.d/netconsole
+added QmeDfRGHoLuSTZqk4zcwGKJQ1NUk9VhEYxFy1HC5d9hKxH rc.d/init.d/network
+added QmYWStNUPtn9TgUT39D7vXMjXc5y917W7SsjPTZvCMK136 rc.d/rc.local
+added QmS92vH7JY9CnP3DVZiQcHxqyi9FQXc1RTcyQvhCJnTCon rc.d/rc0.d/K01agentwatch
+added QmabzShX1WxbdMfLmNK16M1edR5TP95iM5FBURSFwfdj4t rc.d/rc0.d/K05jexec
+added QmcuWaJdg5JCckgdh5BomTwYjrn3ChrC2xa3yY61jQ1pGV rc.d/rc0.d/K50aegis
+added QmYnJ5yxouhrbu81Nod3o1ZWKuwdHYYsbr7z4BgLCxxR2P rc.d/rc0.d/K50netconsole
+added QmPNCeB2yS9EZ3cG3ousMtPkLNemkQaDfKt63S4NTBJg3z rc.d/rc0.d/K90network
+added QmS92vH7JY9CnP3DVZiQcHxqyi9FQXc1RTcyQvhCJnTCon rc.d/rc1.d/K01agentwatch
+added QmcuWaJdg5JCckgdh5BomTwYjrn3ChrC2xa3yY61jQ1pGV rc.d/rc1.d/K50aegis
+added QmYnJ5yxouhrbu81Nod3o1ZWKuwdHYYsbr7z4BgLCxxR2P rc.d/rc1.d/K50netconsole
+added QmPNCeB2yS9EZ3cG3ousMtPkLNemkQaDfKt63S4NTBJg3z rc.d/rc1.d/K90network
+added QmabzShX1WxbdMfLmNK16M1edR5TP95iM5FBURSFwfdj4t rc.d/rc1.d/S95jexec
+added QmYnJ5yxouhrbu81Nod3o1ZWKuwdHYYsbr7z4BgLCxxR2P rc.d/rc2.d/K50netconsole
+added QmPNCeB2yS9EZ3cG3ousMtPkLNemkQaDfKt63S4NTBJg3z rc.d/rc2.d/S10network
+added QmcuWaJdg5JCckgdh5BomTwYjrn3ChrC2xa3yY61jQ1pGV rc.d/rc2.d/S50aegis
+added QmabzShX1WxbdMfLmNK16M1edR5TP95iM5FBURSFwfdj4t rc.d/rc2.d/S95jexec
+added QmS92vH7JY9CnP3DVZiQcHxqyi9FQXc1RTcyQvhCJnTCon rc.d/rc2.d/S98agentwatch
+added QmYnJ5yxouhrbu81Nod3o1ZWKuwdHYYsbr7z4BgLCxxR2P rc.d/rc3.d/K50netconsole
+added QmPNCeB2yS9EZ3cG3ousMtPkLNemkQaDfKt63S4NTBJg3z rc.d/rc3.d/S10network
+added QmcuWaJdg5JCckgdh5BomTwYjrn3ChrC2xa3yY61jQ1pGV rc.d/rc3.d/S50aegis
+added QmabzShX1WxbdMfLmNK16M1edR5TP95iM5FBURSFwfdj4t rc.d/rc3.d/S95jexec
+added QmS92vH7JY9CnP3DVZiQcHxqyi9FQXc1RTcyQvhCJnTCon rc.d/rc3.d/S98agentwatch
+added QmYnJ5yxouhrbu81Nod3o1ZWKuwdHYYsbr7z4BgLCxxR2P rc.d/rc4.d/K50netconsole
+added QmPNCeB2yS9EZ3cG3ousMtPkLNemkQaDfKt63S4NTBJg3z rc.d/rc4.d/S10network
+added QmcuWaJdg5JCckgdh5BomTwYjrn3ChrC2xa3yY61jQ1pGV rc.d/rc4.d/S50aegis
+added QmabzShX1WxbdMfLmNK16M1edR5TP95iM5FBURSFwfdj4t rc.d/rc4.d/S95jexec
+added QmS92vH7JY9CnP3DVZiQcHxqyi9FQXc1RTcyQvhCJnTCon rc.d/rc4.d/S98agentwatch
+added QmYnJ5yxouhrbu81Nod3o1ZWKuwdHYYsbr7z4BgLCxxR2P rc.d/rc5.d/K50netconsole
+added QmPNCeB2yS9EZ3cG3ousMtPkLNemkQaDfKt63S4NTBJg3z rc.d/rc5.d/S10network
+added QmcuWaJdg5JCckgdh5BomTwYjrn3ChrC2xa3yY61jQ1pGV rc.d/rc5.d/S50aegis
+added QmabzShX1WxbdMfLmNK16M1edR5TP95iM5FBURSFwfdj4t rc.d/rc5.d/S95jexec
+added QmS92vH7JY9CnP3DVZiQcHxqyi9FQXc1RTcyQvhCJnTCon rc.d/rc5.d/S98agentwatch
+added QmS92vH7JY9CnP3DVZiQcHxqyi9FQXc1RTcyQvhCJnTCon rc.d/rc6.d/K01agentwatch
+added QmabzShX1WxbdMfLmNK16M1edR5TP95iM5FBURSFwfdj4t rc.d/rc6.d/K05jexec
+added QmcuWaJdg5JCckgdh5BomTwYjrn3ChrC2xa3yY61jQ1pGV rc.d/rc6.d/K50aegis
+added QmYnJ5yxouhrbu81Nod3o1ZWKuwdHYYsbr7z4BgLCxxR2P rc.d/rc6.d/K50netconsole
+added QmPNCeB2yS9EZ3cG3ousMtPkLNemkQaDfKt63S4NTBJg3z rc.d/rc6.d/K90network
+added QmUy33heBFE59gc6PB2sevQ88gB7Lv3NDASFJF3S8f1qHK rc.d/init.d
+added QmaDZHSDdtNyryWNwtxuMtJ8NduQdfhMMHk7JuTpNW5sTs rc.d/rc0.d
+added QmX6D9eP1oHMg92rrVYarGAe4w3HQ9vURcncBRvPqtXSyG rc.d/rc1.d
+added QmTEuKk4acWJcsCDYJViMNoKZ2BQDY8NSHraV9gB9nAWm8 rc.d/rc2.d
+added QmTEuKk4acWJcsCDYJViMNoKZ2BQDY8NSHraV9gB9nAWm8 rc.d/rc3.d
+added QmTEuKk4acWJcsCDYJViMNoKZ2BQDY8NSHraV9gB9nAWm8 rc.d/rc4.d
+added QmTEuKk4acWJcsCDYJViMNoKZ2BQDY8NSHraV9gB9nAWm8 rc.d/rc5.d
+added QmaDZHSDdtNyryWNwtxuMtJ8NduQdfhMMHk7JuTpNW5sTs rc.d/rc6.d
+added QmRYPNdKdyCr6R7fE63g2u3sMD8SQh8TW6yQNAk9mT9Pay rc.d
+
+[root@netkiller ~]# ipfs ls -v QmRYPNdKdyCr6R7fE63g2u3sMD8SQh8TW6yQNAk9mT9Pay
+Hash                                           Size  Name
+QmUy33heBFE59gc6PB2sevQ88gB7Lv3NDASFJF3S8f1qHK 36013 init.d/
+QmYWStNUPtn9TgUT39D7vXMjXc5y917W7SsjPTZvCMK136 484   rc.local
+QmaDZHSDdtNyryWNwtxuMtJ8NduQdfhMMHk7JuTpNW5sTs 383   rc0.d/
+QmX6D9eP1oHMg92rrVYarGAe4w3HQ9vURcncBRvPqtXSyG 383   rc1.d/
+QmTEuKk4acWJcsCDYJViMNoKZ2BQDY8NSHraV9gB9nAWm8 383   rc2.d/
+QmTEuKk4acWJcsCDYJViMNoKZ2BQDY8NSHraV9gB9nAWm8 383   rc3.d/
+QmTEuKk4acWJcsCDYJViMNoKZ2BQDY8NSHraV9gB9nAWm8 383   rc4.d/
+QmTEuKk4acWJcsCDYJViMNoKZ2BQDY8NSHraV9gB9nAWm8 383   rc5.d/
+QmaDZHSDdtNyryWNwtxuMtJ8NduQdfhMMHk7JuTpNW5sTs 383   rc6.d/
+
+[root@netkiller ~]# ipfs ls -v QmUy33heBFE59gc6PB2sevQ88gB7Lv3NDASFJF3S8f1qHK
+Hash                                           Size  Name
+QmP4m7YRN25kcRgoJgn95yFR4GsVgbQppnpMGh3AxPzUbc 1171  README
+QmemkmPhud9hBWhTDgnYfascZcXjX4H6j4oyqhKdSvFq8G 2266  aegis
+QmR2zvwDZYQPw4arpaJQwGESPhmz6qBt8MqyrV5UR72JUy 3015  agentwatch
+QmevSkKJVSF4amfHux7bMZCvaQQjuFsDxU1j7j7uvvJzBh 17514 functions
+QmXCmPYb1wWcmAWk8tm1jgYsFgF16mTe2PsnNebw1gzWDw 41    jexec
+QmeQZxv7Fui5Ah9w9E9QuiyTrbm4XMKyJMthGLvbbtd5q4 4345  netconsole
+QmeDfRGHoLuSTZqk4zcwGKJQ1NUk9VhEYxFy1HC5d9hKxH 7304  network
+
+				]]>
+				</screen>
 			</section>
 		</section>
-		<section>
+		<section id="ipfs.block">
 			<title>数据结构命令</title>
 			<section>
 				<title>块</title>
@@ -162,9 +290,9 @@ Check out some of the other files in this directory:
 			</section>
 		</section>
 
-		<section>
+		<section id="ipfs.advanced">
 			<title>高级命令</title>
-			<section>
+			<section id="ipfs.daemon">
 				<title>守护进程</title>
 				<screen>
 				<![CDATA[
@@ -173,11 +301,42 @@ $ ipfs daemon
 				</screen>
 				<para>http://localhost:5001/webui</para>
 			</section>
+			<section id="ipfs.stats">
+				<title>查看状态</title>
+				<section>
+					<title>仓库状态</title>
+					<screen>
+					<![CDATA[
+[root@netkiller ~]# ipfs stats repo
+NumObjects: 46
+RepoSize:   3004401
+StorageMax: 10000000000
+RepoPath:   /root/.ipfs
+Version:    fs-repo@6
+					]]>
+					</screen>
+				</section>
+				<section>
+					<title>带宽状态</title>
+					<screen>
+					<![CDATA[
+[root@netkiller ~]# ipfs stats bw
+Total Up    Total Down  Rate Up     Rate Down
+Bandwidth
+TotalIn: 20 MB
+TotalOut: 4.9 MB
+RateIn: 4.4 kB/s
+RateOut: 3.4 kB/s
+					]]>
+					</screen>
+				</section>
+
+			</section>
 		</section>
-		<section>
+		<section id="ipfs.network">
 			<title>网络命令</title>
 
-			<section>
+			<section id="ipfs.id">
 				<title>显示 IPFS 信息</title>
 				<screen>
 				<![CDATA[
@@ -192,7 +351,7 @@ $ ipfs daemon
 				]]>
 				</screen>
 			</section>
-			<section>
+			<section id="ipfs.bootstrap">
 				<title>节点</title>
 				<screen>
 				<![CDATA[
@@ -215,7 +374,7 @@ $ ipfs daemon
 			</section>
 
 		</section>
-		<section>
+		<section id="ipfs.tool">
 			<title>工具命令</title>
 
 			<section>
@@ -401,6 +560,160 @@ $ ipfs daemon
 
 				</section>
 			</section>
+			<section id="ipfs.commands">
+				<title>命令列表</title>
+				<screen>
+				<![CDATA[
+[root@netkiller ~]# ipfs commands
+ipfs
+ipfs add
+ipfs bitswap
+ipfs bitswap ledger
+ipfs bitswap reprovide
+ipfs bitswap stat
+ipfs bitswap unwant
+ipfs bitswap wantlist
+ipfs block
+ipfs block get
+ipfs block put
+ipfs block rm
+ipfs block stat
+ipfs bootstrap
+ipfs bootstrap add
+ipfs bootstrap add default
+ipfs bootstrap list
+ipfs bootstrap rm
+ipfs bootstrap rm all
+ipfs cat
+ipfs commands
+ipfs config
+ipfs config edit
+ipfs config profile
+ipfs config profile apply
+ipfs config replace
+ipfs config show
+ipfs daemon
+ipfs dag
+ipfs dag get
+ipfs dag put
+ipfs dag resolve
+ipfs dht
+ipfs dht findpeer
+ipfs dht findprovs
+ipfs dht get
+ipfs dht provide
+ipfs dht put
+ipfs dht query
+ipfs diag
+ipfs diag cmds
+ipfs diag cmds clear
+ipfs diag cmds set-time
+ipfs diag sys
+ipfs dns
+ipfs file
+ipfs file ls
+ipfs files
+ipfs files chcid
+ipfs files cp
+ipfs files flush
+ipfs files ls
+ipfs files mkdir
+ipfs files mv
+ipfs files read
+ipfs files rm
+ipfs files stat
+ipfs files write
+ipfs filestore
+ipfs filestore dups
+ipfs filestore ls
+ipfs filestore verify
+ipfs get
+ipfs id
+ipfs init
+ipfs key
+ipfs key gen
+ipfs key list
+ipfs key rename
+ipfs key rm
+ipfs log
+ipfs log level
+ipfs log ls
+ipfs log tail
+ipfs ls
+ipfs mount
+ipfs name
+ipfs name publish
+ipfs name pubsub
+ipfs name pubsub cancel
+ipfs name pubsub state
+ipfs name pubsub subs
+ipfs name resolve
+ipfs object
+ipfs object data
+ipfs object diff
+ipfs object get
+ipfs object links
+ipfs object new
+ipfs object patch
+ipfs object patch add-link
+ipfs object patch append-data
+ipfs object patch rm-link
+ipfs object patch set-data
+ipfs object put
+ipfs object stat
+ipfs p2p
+ipfs p2p listener
+ipfs p2p listener close
+ipfs p2p listener ls
+ipfs p2p listener open
+ipfs p2p stream
+ipfs p2p stream close
+ipfs p2p stream dial
+ipfs p2p stream ls
+ipfs pin
+ipfs pin add
+ipfs pin ls
+ipfs pin rm
+ipfs pin update
+ipfs pin verify
+ipfs ping
+ipfs pubsub
+ipfs pubsub ls
+ipfs pubsub peers
+ipfs pubsub pub
+ipfs pubsub sub
+ipfs refs
+ipfs refs local
+ipfs repo
+ipfs repo fsck
+ipfs repo gc
+ipfs repo stat
+ipfs repo verify
+ipfs repo version
+ipfs resolve
+ipfs shutdown
+ipfs stats
+ipfs stats bitswap
+ipfs stats bw
+ipfs stats repo
+ipfs swarm
+ipfs swarm addrs
+ipfs swarm addrs listen
+ipfs swarm addrs local
+ipfs swarm connect
+ipfs swarm disconnect
+ipfs swarm filters
+ipfs swarm filters add
+ipfs swarm filters rm
+ipfs swarm peers
+ipfs tar
+ipfs tar add
+ipfs tar cat
+ipfs update
+ipfs version
+				]]>
+				</screen>
+			</section>
 		</section>
 		<section>
 			<title></title>
@@ -409,6 +722,80 @@ $ ipfs daemon
 			</screen>
 		</section>
 
+	</section>
+	<section id="ipfs.http">
+		<title>HTTP 网关</title>
+		<para>默认 IPFS 监听 127.0.0.1 使用下面命令启动IPFS守护进程，然后使用 nginx 代理 127.0.0.1
+		</para>
+		<screen>
+		<![CDATA[
+[ipfs@netkiller ~]$ ipfs daemon
+Initializing daemon...
+Swarm listening on /ip4/127.0.0.1/tcp/4001
+Swarm listening on /ip4/172.31.180.30/tcp/4001
+Swarm listening on /p2p-circuit/ipfs/QmZakCF5czhP53KPvMi8XQcYtVrQohw5N71Xce4eC1rWz3
+Swarm announcing /ip4/127.0.0.1/tcp/4001
+Swarm announcing /ip4/172.31.180.30/tcp/4001
+API server listening on /ip4/127.0.0.1/tcp/5001
+Gateway (readonly) server listening on /ip4/127.0.0.1/tcp/8080
+Daemon is ready
+		]]>
+		</screen>
+		<para>或者修改配置文件直接暴漏地址出去</para>
+		<screen>
+		<![CDATA[
+[ipfs@netkiller ~]$ export EDITOR=/usr/bin/vim
+[ipfs@netkiller ~]$ ipfs config edit
+
+"API": "/ip4/127.0.0.1/tcp/5001",
+"Gateway": "/ip4/127.0.0.1/tcp/8080"
+
+"API": "/ip4/你的IP地址/tcp/5001",
+"Gateway": "/ip4/你的IP地址/tcp/8080"
+		]]>
+		</screen>
+	</section>
+	<section id="ipfs-update">
+		<title>ipfs-update</title>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# ipfs-update versions
+v0.3.2
+v0.3.4
+v0.3.5
+v0.3.6
+v0.3.7
+v0.3.8
+v0.3.9
+v0.3.10
+v0.3.11
+v0.4.0
+v0.4.1
+v0.4.2
+v0.4.3
+v0.4.4
+v0.4.5
+v0.4.6
+v0.4.7
+v0.4.8
+v0.4.9
+v0.4.10
+v0.4.11
+v0.4.12
+v0.4.13
+v0.4.14-rc1
+v0.4.14-rc2
+v0.4.14-rc3
+v0.4.14
+
+		]]>
+		</screen>
+		<para>安装指定版本</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# ipfs-update install v0.4.14
+		]]>
+		</screen>
 	</section>
 	<section id="ipfs-api">
 		<title>ipfs-api</title>
