@@ -2,20 +2,42 @@
 <chapter id="index"><?dbhtml dir="ipfs" ?>
 	<title>IPFS（InterPlanetary File System，星际文件系统）</title>
 	<!-- https://flyingzumwalt.gitbooks.io/decentralized-web-primer/ -->
-	<para>IPFS “星际文件系统”
-		是去中心化保存和共享文件的分布式文件系统，它是一种内容可寻址、版本化、点对点超媒体的分布式协议，IPFS旨在替代HTTP。它希望将所有的计算设备都连接到同一个文件系统中。
-	</para>
-	<para>由于 IPFS 去中心化特点，使得很多区块链项目做文件存储的时候首选IPFS。</para>
+	<section>
+		<title>什么是 IPFS</title>
+		<para>IPFS “星际文件系统”
+			是去中心化保存和共享文件的分布式文件系统，它是一种内容可寻址、版本化、点对点超媒体的分布式协议，IPFS旨在替代HTTP。它希望将所有的计算设备都连接到同一个文件系统中。
+		</para>
+		<para>由于 IPFS 去中心化特点，使得很多区块链项目做文件存储的时候首选IPFS。</para>
+		<section>
+			<title>传统的中心化HTTP服务</title>
+			<para>举个例子，服务器上有一个文件https://www.netkiller.cn/video/av.mp4，按照HTTP协议标准流程，浏览器首先会解析域名并查找到服务器的IP地址，随后与服务器建立链接，并根据路径向服务器请求该文件/video/av.mp4。在这种体系下用户是否能获取该文件取决于文件是否被移动或删除，并且服务器没有关闭。
+			</para>
+			<para>另一个问题就是文件服务器管理，中心化管理是很复杂的，如果访问量比较大，我们通常会使用负载均衡来解决，负载均衡需要每个节点上的数据是完整的，这就需要大量的数据同步。如果从深圳数据中心同步到上海数据中心
+				100T的数据可能要数个工作日。
+			</para>
+			<para>HTTP过度依赖Internet主干网，同时网络通信遭遇DDoS攻击的风险也大大增加。</para>
+			<para>CDN 只解决最后一公里的性能问题，数据回源仍然是中心化，仍然无法彻底解决。</para>
+		</section>
+		<section>
+			<title>IPFS 解决方案</title>
+			<para>IPFS的做解决方案是不再关心中心服务器的位置，也不考虑文件的名字和路径，只关注文件中的内容。例如将文件av.mp4添加到IPFS节点，会得到一个新名字QmS8R3nSbDHjQ7WRTjtX1pkiQ6BUpti9qTjweZkBgGPKiN，通过文件内容计算出的哈希值，访问文件不在使用文件名而是使用这个统一的
+				hash 值。
+			</para>
+			<para>当用户被请求一个文件哈希时，它会根据这个分布式哈希表找到文件所在的节点，并取回文件内容并验证文件数据。大文件会被切分成小的分块，下载的时候可以从多个服务器同时获取。
+			</para>
+			<para>IPFS 可以理解为内容被永久缓存到节点上的CDN。</para>
+		</section>
+	</section>
 	<section id="ipfs.setup">
 		<title>安装 IPFS</title>
-		<section id="">
+		<section id="ipfs.go.get">
 			<title>go get 方式</title>
 			<screen>
 			<![CDATA[
 $ go get -u -d github.com/ipfs/go-ipfs
 
 $ cd $GOPATH/src/github.com/ipfs/go-ipfs
-$ make install	
+$ make install
 			]]>
 			</screen>
 		</section>
@@ -106,6 +128,37 @@ added QmSb8DSVmu4Qip56jcqPVz1Cx9RJ3vTf3d1Gf9ixaG2tWg QmSb8DSVmu4Qip56jcqPVz1Cx9R
 [ipfs@netkiller ~]$ ipfs cat QmSb8DSVmu4Qip56jcqPVz1Cx9RJ3vTf3d1Gf9ixaG2tWg
 Look! Things have changed!
 
+				]]>
+				</screen>
+				<para>修改内容</para>
+				<screen>
+				<![CDATA[
+[root@netkiller ~]# echo "version 1 of my text" | ipfs add
+added QmZtmD2qt6fJot32nabSP3CUjicnypEBz7bHVDhPQt9aAy QmZtmD2qt6fJot32nabSP3CUjicnypEBz7bHVDhPQt9aAy
+
+[root@netkiller ~]# echo "version 2 of my text" | ipfs add
+added QmTudJSaoKxtbEnTddJ9vh8hbN84ZLVvD5pNpUaSbxwGoa QmTudJSaoKxtbEnTddJ9vh8hbN84ZLVvD5pNpUaSbxwGoa
+
+[root@netkiller ~]# ipfs cat QmZtmD2qt6fJot32nabSP3CUjicnypEBz7bHVDhPQt9aAy
+version 1 of my text
+
+[root@netkiller ~]# ipfs cat QmTudJSaoKxtbEnTddJ9vh8hbN84ZLVvD5pNpUaSbxwGoa
+version 2 of my text
+
+
+[root@netkiller ~]# echo "version 1" > version.txt
+[root@netkiller ~]# ipfs add version.txt
+added QmQBcXurY2QBpv7sg8zyS4UXQeHGCqx4DBp86kBLPDzS18 version.txt
+
+[root@netkiller ~]# echo "version 2" > version.txt
+[root@netkiller ~]# ipfs add version.txt
+added QmWzK72EZJJhW96x1tgaz8yU3G6okJ9MfMxbLianzFLhY2 version.txt
+
+[root@netkiller ~]# ipfs cat QmQBcXurY2QBpv7sg8zyS4UXQeHGCqx4DBp86kBLPDzS18
+version 1
+
+[root@netkiller ~]# ipfs cat QmWzK72EZJJhW96x1tgaz8yU3G6okJ9MfMxbLianzFLhY2
+version 2
 				]]>
 				</screen>
 			</section>
@@ -301,6 +354,66 @@ $ ipfs daemon
 				</screen>
 				<para>http://localhost:5001/webui</para>
 			</section>
+			<section id="ipfs.name">
+				<title>发布并解析IPNS</title>
+				<screen>
+				<![CDATA[
+[root@netkiller ~]# ipfs add readme.txt
+added QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn readme.txt
+[root@netkiller ~]# ipfs name publish QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn
+
+Published to QmPNH1AKXNidUgsW6MaMABiNRhdXnqpTbthbYoZzhZE9ve: /ipfs/QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn
+
+[root@netkiller ~]# ipfs cat /ipfs/QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn
+				]]>
+				</screen>
+				<para>验证发布</para>
+				<screen>
+				<![CDATA[
+[root@netkiller ~]# ipfs add version.txt
+added QmWzK72EZJJhW96x1tgaz8yU3G6okJ9MfMxbLianzFLhY2 version.txt
+
+[root@netkiller ~]# ipfs name publish QmWzK72EZJJhW96x1tgaz8yU3G6okJ9MfMxbLianzFLhY2
+Published to QmPNH1AKXNidUgsW6MaMABiNRhdXnqpTbthbYoZzhZE9ve: /ipfs/QmWzK72EZJJhW96x1tgaz8yU3G6okJ9MfMxbLianzFLhY2
+
+[root@netkiller ~]# ipfs name resolve QmPNH1AKXNidUgsW6MaMABiNRhdXnqpTbthbYoZzhZE9ve
+/ipfs/QmWzK72EZJJhW96x1tgaz8yU3G6okJ9MfMxbLianzFLhY2
+				]]>
+				</screen>
+			</section>
+			<section id="ipfs.pin">
+				<title>将 Pin 对象存储到本地</title>
+				<para>ls </para>
+				<screen>
+				<![CDATA[
+[root@netkiller ~]# ipfs pin ls
+QmQBcXurY2QBpv7sg8zyS4UXQeHGCqx4DBp86kBLPDzS18 recursive
+QmTudJSaoKxtbEnTddJ9vh8hbN84ZLVvD5pNpUaSbxwGoa recursive
+QmXgqKTbzdh83pQtKFb19SpMCpDDcKR2ujqk3pKph9aCNF indirect
+QmcUcr4nbCDE4V1fPNZXoZa3YkCwjCv8Wd9EqLJeysAt48 indirect
+QmcUnyBqYgAR5rxVQ1Pzw2DBh9evqSRBRogjshb9khJA9T indirect
+QmejvEPop4D7YUadeGqYWmZxHhLc4JBUCzJJHWMzdcMe2y indirect
+QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv recursive
+QmTiu69XGzh1iqK6JuJNzoTiQ4SJEeQSso3uCHRwbXFba8 indirect
+QmW2nvZqf6fwmcgBeeUEv2UyePizsFjjkNCubqRjmCZHNV indirect
+QmY5heUM5qgRubMDD1og9fhCPA6QdkMp3QCwd4s7gJsyE7 indirect
+QmYCvbfNbCwFR45HiNP45rwJgvatpiW38D961L5qAhUM5Y indirect
+QmZtmD2qt6fJot32nabSP3CUjicnypEBz7bHVDhPQt9aAy recursive
+QmPZ9gcCEpqKTo6aq61g2nXGUhM4iCL3ewB6LDXZCtioEB indirect
+QmQ5vhrL7uv6tuoN9KeVBwd4PwfQkXdVVmDLUZuTNxqgvm indirect
+QmRpsaigHjE4udpVDXZ8T4YtA477M7YTox6xxxkbYjisgN indirect
+QmWkLpc4aCRCgPYokdXGZU3zuupRognVGVccALY4aJH31W indirect
+QmWzK72EZJJhW96x1tgaz8yU3G6okJ9MfMxbLianzFLhY2 recursive
+QmaHUhxr4NPTsxc2iubLAVGAvJ6hRKfZsbDPYZDT6Bdcb1 indirect
+QmSLNhoZCHiRUyAsPRsLRMscu2AromEYJgJJWw229DypXT indirect
+QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn recursive
+QmVbXqY6kY7iFjPNw1vNGggtRmNxTVLGAziLvC9GEsMLGR recursive
+QmZTR5bcpQD7cFgTorqxZDYaew1Wqgfbd2ud9QqGPAkK2V indirect
+Qmbh35NHRNYfpaXaj1bQF4gcVYKRjjBvD7eys4dK4iwNrY indirect
+Qmen15DKJhF5ngxiBEzmpMyPA3HpMfXNqgogeyeati2sEx indirect
+				]]>
+				</screen>
+			</section>
 			<section id="ipfs.stats">
 				<title>查看状态</title>
 				<section>
@@ -372,7 +485,15 @@ RateOut: 3.4 kB/s
 				]]>
 				</screen>
 			</section>
-
+			<section>
+				<title>管理P2P网络链接</title>
+				<screen>
+				<![CDATA[
+[root@netkiller ~]# ipfs swarm peers
+/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ
+				]]>
+				</screen>
+			</section>
 		</section>
 		<section id="ipfs.tool">
 			<title>工具命令</title>
@@ -715,13 +836,6 @@ ipfs version
 				</screen>
 			</section>
 		</section>
-		<section>
-			<title></title>
-			<screen>
-			<![CDATA[]]>
-			</screen>
-		</section>
-
 	</section>
 	<section id="ipfs.http">
 		<title>HTTP 网关</title>
@@ -741,9 +855,72 @@ Gateway (readonly) server listening on /ip4/127.0.0.1/tcp/8080
 Daemon is ready
 		]]>
 		</screen>
-		<para>或者修改配置文件直接暴漏地址出去</para>
-		<screen>
-		<![CDATA[
+		<section>
+			<title>访问文件</title>
+			<screen>
+			<![CDATA[
+[root@netkiller ~]# hash=$(cat /etc/centos-release | ipfs add -q)
+[root@netkiller ~]# curl "http://127.0.0.1:8080/ipfs/$hash"
+CentOS Linux release 7.4.1708 (Core)
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>配置代理服务器</title>
+			<para>Nginx 配置</para>
+			<screen>
+			<![CDATA[
+    server {
+        listen       80 default_server;
+        listen       [::]:80 default_server;
+        server_name  _;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        location / {
+			proxy_pass      http://127.0.0.1:8080;
+        }
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[
+[root@netkiller ~]# hash=$(cat /etc/centos-release | ipfs add -q)
+[root@netkiller ~]# curl "http://localhost/ipfs/$hash"
+CentOS Linux release 7.4.1708 (Core)
+			]]>
+			</screen>
+			<para>使用浏览器访问文件</para>
+			<para>
+				<ulink
+					url="http://localhost/ipfs/QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn" />
+			</para>
+		</section>
+
+		<section>
+			<screen>ipfs.io 节点</screen>
+			<screen>
+			<![CDATA[
+[root@netkiller ~]# hash=$(cat /etc/centos-release | ipfs add -q)
+[root@netkiller ~]# curl "https://ipfs.io/ipfs/$hash"
+CentOS Linux release 7.4.1708 (Core)
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>监听地址</title>
+			<para>或者修改配置文件直接暴漏地址出去</para>
+			<screen>
+			<![CDATA[
 [ipfs@netkiller ~]$ export EDITOR=/usr/bin/vim
 [ipfs@netkiller ~]$ ipfs config edit
 
@@ -752,8 +929,47 @@ Daemon is ready
 
 "API": "/ip4/你的IP地址/tcp/5001",
 "Gateway": "/ip4/你的IP地址/tcp/8080"
+			]]>
+			</screen>
+			
+		</section>
+	</section>
+	<section id="ipfs.webui">
+		<title>WebUI</title>
+		<para>如果你远程访问 webui 会议都 403 问题,需要配置 IPFS 然后重启 ipfs daemon</para>
+		<screen>
+		<![CDATA[
+ipfs config show
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST", "OPTIONS"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials '["true"]'
+ipfs config show
 		]]>
 		</screen>
+		<para>修改后如下</para>
+		<screen>
+		<![CDATA[
+  "HTTPHeaders": {
+      "Access-Control-Allow-Credentials": [
+        "true"
+      ],
+      "Access-Control-Allow-Methods": [
+        "PUT",
+        "GET",
+        "POST",
+        "OPTIONS"
+      ],
+      "Access-Control-Allow-Origin": [
+        "*"
+      ],
+      "Server": [
+        "go-ipfs/0.4.14"
+      ]
+    }
+  },
+		]]>
+		</screen>
+		<para>现在就可以访问 http://your_ip_address/webui 了</para>
 	</section>
 	<section id="ipfs-update">
 		<title>ipfs-update</title>
@@ -797,6 +1013,28 @@ v0.4.14
 		]]>
 		</screen>
 	</section>
+	<section id="ipfs.dns">
+		<title>DNS 解析</title>
+		<para>IPFS 允许用户使用现有的域名系统替代HASH值，这样更便于记忆。</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# ipfs cat /ipfs/QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv/readme
+		]]>
+		</screen>
+		<para>DNS设置，只需要在 DNS 解析加入一条 TXT 记录：</para>
+		<screen>
+		<![CDATA[
+记录类型		主机记录		记录值
+TXT			ipfs		dnslink=/ipns/QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv
+		]]>
+		</screen>
+		<para>IPFS 允许用户使用现有的域名系统替代HASH值，这样更便于记忆。</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# ipfs cat /ipns/ipfs.netkiller.cn/readme
+		]]>
+		</screen>
+	</section>
 	<section id="ipfs-api">
 		<title>ipfs-api</title>
 		<screen>
@@ -810,5 +1048,12 @@ const ipfsAPI = require('ipfs-api');
 const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});		
 		]]>
 		</programlisting>
+	</section>
+
+	<section>
+		<title></title>
+		<screen>
+			<![CDATA[]]>
+		</screen>
 	</section>
 </chapter>
