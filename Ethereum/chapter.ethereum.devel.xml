@@ -673,6 +673,24 @@ setTimeout(function(){
 		]]>
 		</programlisting>
 	</section>
+	<section>
+		<title>ABI-encoded</title>
+		<para>ABI-encoded 实际上就是构造方法变量数据</para>
+		<programlisting>
+		<![CDATA[
+var abi = require('ethereumjs-abi')
+
+var parameterTypes = ["address", "uint256", "bool"];
+var parameterValues = ["0x1234567812345678", "0x314159268", true];
+
+var encoded = abi.rawEncode(parameterTypes, parameterValues);
+
+console.log(encoded.toString('hex'));
+		]]>
+		</programlisting>
+		<para>在线生成工具 https://abi.sonnguyen.ws/， https://abi.hashex.org/ </para>
+		<para>还有一种方法可以找到  ABI 数据 https://etherscan.io/tx/0xc53f52b287ec1c71e9d203dd08cc68035ef40bf5155f8b0711da227c01d84d70 查看 Input Data: 0029之后所有的数据就是 ABI</para>
+	</section>
 	<section id="web3.example">
 		<title>实用例子</title>
 		<section>
