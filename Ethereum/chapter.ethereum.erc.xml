@@ -1505,9 +1505,10 @@ contract SurpriseToken is Ownable{
 			<para>原合约</para>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.21;
 
 contract NetkillerToken {
+  address public owner;
   string public name;
   string public symbol;
   uint public decimals;
@@ -1519,6 +1520,7 @@ contract NetkillerToken {
   mapping (address => uint256) public balanceOf;
 
   function NetkillerToken(uint256 initialSupply, string tokenName, string tokenSymbol, uint decimalUnits) public {
+    owner = msg.sender;
     totalSupply = initialSupply * 10 ** uint256(decimals);
     balanceOf[msg.sender] = totalSupply;
     name = tokenName;
