@@ -165,6 +165,53 @@ web3.eth.getCoinbase(
 			</screen>
 
 		</section>
+		<section id="web3.eth.getBalance()">
+			<title>获得余额</title>
+			<programlisting>
+			<![CDATA[
+web3.eth.getBalance(req.query.address).then(function(balance){
+      res.json({"status": true, "code":0, "data":{"account":req.query.address, "balance": web3.utils.fromWei(balance)}}); 
+});
+			]]>
+			</programlisting>
+			<para>Callback 方式</para>
+			<programlisting>
+			<![CDATA[
+web3.eth.getBalance(req.query.address, function (error, wei) {
+    if (!error) {
+        var balance = web3.utils.fromWei(wei, 'ether');
+        res.json({"status": true, "code":0, "data":{"account":req.query.address, "balance": balance}});
+    }else{
+        console.log(error);
+        res.json({"status": false, "code":1, "data":{"error":error.message}});
+    }
+});
+			]]>
+			</programlisting>
+			<para>捕捉错误</para>
+			<programlisting>
+			<![CDATA[
+router.get('/balance.json', function(req, res) {
+ 
+	try {
+		web3.eth.getBalance(req.query.address, function (error, wei) {
+		    if (!error) {
+		        var balance = web3.utils.fromWei(wei, 'ether');
+		        res.json({"status": true, "code":0, "data":{"account":req.query.address, "balance": balance}});
+		    }else{
+		        console.log(error);
+		        res.json({"status": false, "code":1, "data":{"error":error.message}})
+	       }
+		});
+	}
+	catch(error){
+		res.json({"status": false, "code":1, "data":{"error":error.message}});
+	};
+
+});				
+			]]>
+			</programlisting>
+		</section>
 		<section id="web3.eth.sendTransaction()">
 			<title>web3.eth.sendTransaction()</title>
 			<programlisting>
