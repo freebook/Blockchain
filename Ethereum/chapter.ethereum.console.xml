@@ -91,26 +91,26 @@ personal.newAccount("123")
 				<title>单位转换</title>
 				<para>eth.getBalance()返回的余额是以太币的最小面额wei，将wei转换为以太币ether。</para>
 				<programlisting>
-					<![CDATA[
+				<![CDATA[
 primary = eth.accounts[0]
 balance = web3.fromWei(eth.getBalance(primary), "ether");	
-					]]>
+				]]>
 				</programlisting>
 				<para>演示</para>
 				<screen>
-					<![CDATA[
+				<![CDATA[
 > primary = eth.accounts[0]
 "0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6"
 > balance = web3.fromWei(eth.getBalance(primary), "ether");
 70			
-					]]>
+				]]>
 				</screen>
 			</section>
 			<section>
 				<title>一次检查所有账号余额</title>
 				<para>定义函数</para>
 				<programlisting>
-					<![CDATA[
+				<![CDATA[
 function checkAllBalances() {
   web3.eth.getAccounts(function(err, accounts) {
    accounts.forEach(function(id) {
@@ -120,17 +120,17 @@ function checkAllBalances() {
   });
  });
 };					
-					]]>
+				]]>
 				</programlisting>
 				<para>运行函数</para>
 				<screen>
-					<![CDATA[
+				<![CDATA[
 checkAllBalances()					
-					]]>
+				]]>
 				</screen>
 				<para>输出演示</para>
 				<screen>
-					<![CDATA[
+				<![CDATA[
 > function checkAllBalances() {
 ...   web3.eth.getAccounts(function(err, accounts) {
 .........    accounts.forEach(function(id) {
@@ -145,17 +145,26 @@ undefined
 0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6:	balance: 929 ether
 0xe8abf98484325fd6afc59b804ac15804b978e607:	balance: 11 ether
 undefined					
-					]]>
+				]]>
 				</screen>
 			</section>
+		</section>
+		<section id="console.personal.unlockAccount">
+			<title>解锁账号</title>
+			<screen>
+			<![CDATA[
+> personal.unlockAccount(eth.accounts[0],"password",50000)
+true
+			]]>
+			</screen>
 		</section>
 		<section id="console.eth.sendTransaction">
 			<title>转账</title>
 			<screen>
-				<![CDATA[
+			<![CDATA[
 personal.unlockAccount("0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6", "", 300)	
 eth.sendTransaction({from: '0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6', to: '0xe8abf98484325fd6afc59b804ac15804b978e607', value: web3.toWei(1, "ether")})
-				]]>
+			]]>
 			</screen>
 			<screen>
 				<![CDATA[
