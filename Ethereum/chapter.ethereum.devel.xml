@@ -673,7 +673,7 @@ setTimeout(function(){
 		]]>
 		</programlisting>
 	</section>
-	<section>
+	<section id="ABI-encoded">
 		<title>ABI-encoded</title>
 		<para>ABI-encoded 实际上就是构造方法变量数据</para>
 		<programlisting>
@@ -939,6 +939,147 @@ contract.methods.balanceOf(coinbase).call().then(console.log).catch(console.log)
 contract.methods.balanceOf(toAddress).call().then(console.log).catch(console.log);
 			]]>
 			</programlisting>
+		</section>
+	</section>
+	<section id="web3.js.example">
+		<title>HD Wallet(Hierarchical Deterministic wallet)</title>
+		<para></para>
+		<screen>
+		<![CDATA[
+npm install bip39 ethereumjs-wallet ethereumjs-util --save
+		]]>
+		</screen>
+		<section>
+			<title>创建项目</title>
+			<para>导入开发包</para>
+			<screen>
+			<![CDATA[
+var bip39 = require('bip39')
+var hdkey = require('ethereumjs-wallet/hdkey')
+var util = require('ethereumjs-util')
+			]]>
+			</screen>
+			<para>生成 mnemonic code</para>
+			<screen>
+			<![CDATA[
+var mnemonic = bip39.generateMnemonic()
+			]]>
+			</screen>
+			<para>生成 HD Wallet 首先将 mnemonic code 转成 binary二进制的 seed</para>
+			<screen>
+			<![CDATA[
+var seed = bip39.mnemonicToSeed(mnemonic)
+			]]>
+			</screen>
+			<para>生成  Master Key 地址 "m/44'/60'/0'/0/0" 使用 seed 生成  HD Wallet。</para>
+			<screen>
+			<![CDATA[
+var hdwallet = hdkey.fromMasterSeed(seed)
+			]]>
+			</screen>
+			<para>从路径 m/44'/60'/0'/0/0 导入 Master Key 并生成  Wallet 中第一个帐户的第一组 keypair。</para>
+			<screen>
+			<![CDATA[
+var key1 = hdwallet.derivePath("m/44'/60'/0'/0/0")
+			]]>
+			</screen>
+			<para>使用 keypair 中的公钥产生 address。</para>
+			<screen>
+			<![CDATA[
+var address1 = util.pubToAddress(key1._hdkey._publicKey, true)
+			]]>
+			</screen>
+			<para>获得以太坊钱包地址</para>
+			<screen>
+			<![CDATA[
+address1 = util.toChecksumAddress(address1.toString('hex'))
+			]]>
+			</screen>
+			<para>操作演示</para>
+			<screen>
+			<![CDATA[
+[ethereum@netkiller web3.js]$ node
+> var bip39 = require('bip39')
+undefined
+> var hdkey = require('ethereumjs-wallet/hdkey')
+undefined
+> var util = require('ethereumjs-util')
+undefined
+> var mnemonic = bip39.generateMnemonic()
+undefined
+> mnemonic
+'client dune unfair assume level width bind control mad member old crystal'
+> var seed = bip39.mnemonicToSeed(mnemonic)
+undefined
+> seed
+<Buffer 51 12 a3 47 f3 bb b9 24 80 ac 05 6c ce 8c 9f dd b2 98 c8 d3 06 8f 4d 0b 6c 90 86 aa d4 b6 41 36 35 5f b4 42 89 b5 e4 6d 43 9b cf 8d 6a d7 9b 45 3e 5a ... >
+> var hdwallet = hdkey.fromMasterSeed(seed)
+undefined
+> hdwallet
+EthereumHDKey {
+  _hdkey:
+   HDKey {
+     versions: { private: 76066276, public: 76067358 },
+     depth: 0,
+     index: 0,
+     _privateKey: <Buffer 1c 37 00 1b f7 1d a5 de 3a 8a 4c e8 54 2d 69 78 81 f3 aa a9 d5 3e 64 74 bd ea 76 28 44 07 d3 04>,
+     _publicKey: <Buffer 03 77 fc 6b c7 f3 e3 51 01 db 95 0a a9 0f c0 7f 31 40 af 75 f8 7a 4f 5a c3 4c 93 ac cb 44 a3 20 5f>,
+     chainCode: <Buffer 51 fe 32 23 a0 ab aa 10 5d ff 90 28 26 dc fc 86 fc 5f 8c dc 1b b7 39 31 7e 2d b8 a4 77 33 45 3a>,
+     _fingerprint: 1056395940,
+     parentFingerprint: 0,
+     _identifier: <Buffer 3e f7 52 a4 ed 86 00 f7 ac 4d 1a b4 15 1c 0d 87 cd 7d fe de> } }
+> var key1 = hdwallet.derivePath("m/44'/60'/0'/0/0")
+undefined
+> key1
+EthereumHDKey {
+  _hdkey:
+   HDKey {
+     versions: { private: 76066276, public: 76067358 },
+     depth: 5,
+     index: 0,
+     _privateKey: <Buffer f5 92 b7 bf 06 ca 9f d7 69 6b a9 5d 6e d8 e3 57 de 6a 23 79 b6 d5 fe 1f fd 53 c6 b4 b0 63 cd 4a>,
+     _publicKey: <Buffer 02 99 ff bb ea 3d 80 e1 8c d5 54 a1 6e 6a ca b2 4b 7e 69 3d 1d 2d 8a 68 f8 61 bf 18 dc 4a f8 d0 26>,
+     chainCode: <Buffer 5a 9b b2 0e 7a 62 07 b0 82 db e5 5a 1f 17 4b 47 8a 64 cf 40 67 d5 49 09 89 da aa 33 66 00 d7 e6>,
+     _fingerprint: 3510386860,
+     parentFingerprint: 1205114865,
+     _identifier: <Buffer d1 3c 40 ac 09 92 fc d7 a4 14 8e d8 91 d1 a7 21 55 7e b8 e3> } }
+> var address1 = util.pubToAddress(key1._hdkey._publicKey, true)
+undefined
+> address1
+<Buffer 37 2f da 02 e8 a1 ec a5 13 f2 ee 59 01 dc 55 b8 b5 dd 74 11>
+> address1.toString('hex')
+'372fda02e8a1eca513f2ee5901dc55b8b5dd7411'
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>生成第二个钱包</title>
+			<para>只需递增最后一位数即可 "m/44'/60'/0'/0/1"， "m/44'/60'/0'/0/2"，"m/44'/60'/0'/0/3"</para>
+			<screen>
+			<![CDATA[
+var key2 = hdwallet.derivePath("m/44'/60'/0'/0/1")
+			]]>
+			</screen>
+			<para>使用 keypair 中的公钥产生 address。</para>
+			<screen>
+			<![CDATA[
+var address2 = util.pubToAddress(key2._hdkey._publicKey, true)
+			]]>
+			</screen>
+			<para>获得以太坊钱包地址</para>
+			<screen>
+			<![CDATA[
+address2 = util.toChecksumAddress(address2.toString('hex'))
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>Mnemonic Code Converter</title>
+			<para><ulink url="https://iancoleman.io/bip39/" /></para>
+			<para>输入 mnemonic，选择 ETH - Ethereum</para>
+			<graphic format="png" fileref="../../images/ethereum/wallet/hdwallet/mnemonic.png" width="1024" srccredit="netkiller" />
+			<para>系统将计算出钱包地址</para>
+			<graphic format="png" fileref="../../images/ethereum/wallet/hdwallet/walletpath.png" width="1024" srccredit="netkiller" />
 		</section>
 	</section>
 	<section id="web3.js.example">

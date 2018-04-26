@@ -334,5 +334,11 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 			<para>查看 mnemonic 字符串</para>
 			<graphic format="png" fileref="../../images/ethereum/metamask/save-seed-words.png" width="800" srccredit="netkiller" />
 		</section>
+		<section>
+			<title>MetaMask Vault Decryptor</title>
+			<para>MetaMask 将钱包数据存储在浏览中  Local Storage 中，这是Chrome 谷歌浏览器特有的 Key,Value数据库。</para>
+			<para>Key 的名字是 metamask-config 将它复制到  <ulink url="https://metamask.github.io/vault-decryptor/" /> 中可以解密。</para>
+			<para>解密程序的 Github 地址 https://github.com/MetaMask/vault-decryptor</para>
+		</section>
 	</section>
 </chapter>
