@@ -5,4 +5,11 @@
 		<title>Hyperledger Fabric</title>
 		<para>http://hyperledger-fabric.readthedocs.io/en/latest/</para>
 	</section>
+	<section>
+		<title>Ethereum</title>
+		<section>
+			<title>Standardizing of HD wallet derivation paths</title>
+			<para>https://github.com/ethereum/EIPs/issues/84</para>
+		</section>
+	</section>
 </appendix>

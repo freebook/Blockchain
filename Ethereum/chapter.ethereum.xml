@@ -7,5 +7,5 @@
 	&chapter.ethereum.devel.xml;
 	&chapter.ethereum.erc.xml;
 	&chapter.ethereum.case.xml;
-	&chapter.ethereum.exchange.xml;
+	<!-- &chapter.ethereum.exchange.xml; -->
 	&chapter.ethereum.faq.xml;
