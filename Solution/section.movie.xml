@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="movie">
+	<title>以太坊·电影院场景区块链应用探索</title>
+	<para>最近一直在思考区块链在各种场景下的落地问题。</para>
+	<para>下面是电影院场景区块链应用探索，这是我的一个设想，区块链如何在院线场景落地的一些思路。</para>
+	<para>为此我写一个这样的智能合约，实现了构造方法描述一部电影票价，坐位数量，可以实现订票，扣款，退票，还款等功能。</para>
+	<section id="movie.contact">
+		<title>合约文件</title>
+		<programlisting>
+		<![CDATA[
+pragma solidity ^0.4.21;
+
+// author: netkiller
+// home: http://www.netkiller.cn
+// QQ:13721218
+
+contract Movie {
+  address public publisher;	//电影院
+  string name;				//影片名称
+  uint price;				//票价
+  uint public seat;			//坐位数量
+  mapping (address => uint) public audience;
+  
+  bool play = false;			//电影是否已经开播，开播后不允许买票和退票。
+
+  //合约构造方法
+  function Movie(string _name, uint _price, uint _seat) public{
+    publisher = msg.sender;
+    name = _name;
+    price = _price;
+    seat = _seat;
+  }
+  
+  //获取剩余坐位数量
+  function getName() public view returns (string){
+      return name;
+  }
+  
+  //有时需要开放预留坐位，调整坐位数量
+  function changeSeat(uint _seat) public {
+    if (msg.sender != publisher) { return; }
+    if (play == true){ return; }
+    seat = _seat;
+  }
+  
+  //获取剩余坐位数量
+  function getSeat() public view returns (uint){
+      return seat;
+  }
+    
+  //买票方法，参数买票者，票数，买票后扣除用户以太币。
+  function buyTicket(address _audience, uint _ticket) public payable returns (bool success) {
+    if (_ticket >= seat) { return false; }
+    if (play == true){ return false; }
+    uint amount = price * _ticket;	//计算票价
+    
+    if (this.balance >= amount) { 
+        _audience.transfer(_audience.balance - amount);
+        publisher.transfer(publisher.balance + amount);
+        audience[_audience] = _ticket;
+        seat -= _ticket;
+    }
+
+    return true;
+  }
+
+  //退票
+  function refundTicket(address _audience, uint _ticket) public {
+    if (msg.sender != publisher) { return; }
+    if (play == true){ return; }
+    uint amount = price * _ticket;
+    
+    if (audience[_audience] <= _ticket) { 
+      
+      if (publisher.balance >= amount) { 
+        _audience.transfer(_audience.balance + amount);
+        publisher.transfer(publisher.balance - amount);
+        audience[_audience] -= _ticket;
+        seat += _ticket;
+
+      }
+    }
+  }
+  
+  //播放电影，锁定
+  function playMovie() public {
+      play = true;
+  }
+  
+  //销毁合约
+  function destroy() public{ 
+    if (msg.sender == publisher) { 
+      selfdestruct(publisher); 
+    }
+  }
+}
+
+		]]>
+		</programlisting>
+	</section>
+	<section id="">
+		<title>合约用法</title>
+		<para>例如现在要上映一部影片步骤是, 首先实例化合约，然后部署合约</para>
+		<programlisting>
+		<![CDATA[
+ 
+Movie("黑客帝国", "25", 80)		
+		]]>
+		</programlisting>
+		<programlisting>
+		<![CDATA[
+var contract;
+Movie.deployed().then(function(instance){contract=instance;});
+contract.getName(); //获得影片名字
+
+contract.buyTicket("0x627306090abab3a6e1400e9345bc60c78a8bef57",1) // 购买 1 张票
+contract.buyTicket("0x627306090abab3a6ebc60c78a8bef571400e9345",5) // 购买 5 张票
+contract.buyTicket("0xf17f52151EbEF6C7334FAD080c5704D77216b732",2) // 购买 2 张票
+
+...
+...
+contract.refundTicket("0x627306090abab3a6ebc60c78a8bef571400e9345", 2 ) // 退 2 张票
+
+contract.audience.call().then(console.log);
+
+contract.playMovie() // 电影开播，锁定这个合约
+		]]>
+		</programlisting>
+	</section>
+</section>

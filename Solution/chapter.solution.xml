@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="index"><?dbhtml dir="blockchain" ?>
+	<title>区块链探索</title>
+	&section.logistics.xml;
+	&section.trace.xml;
+	&section.movie.xml;
+	&section.game.xml;
+	&section.guess.xml;
+	&section.dapp.xml;
+	&section.credit.xml;
+	&section.bank.xml;
+</chapter>

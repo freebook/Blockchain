@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY chapter.solution.xml 			SYSTEM "chapter.solution.xml">
+<!ENTITY section.logistics.xml			SYSTEM "section.logistics.xml">
+<!ENTITY section.trace.xml 				SYSTEM "section.trace.xml">
+<!ENTITY section.movie.xml				SYSTEM "section.movie.xml">
+<!ENTITY section.game.xml				SYSTEM "section.game.xml">
+<!ENTITY section.guess.xml				SYSTEM "section.guess.xml">
+<!ENTITY section.dapp.xml				SYSTEM "section.dapp.xml">
+<!ENTITY section.credit.xml				SYSTEM "section.credit.xml">
+<!ENTITY section.bank.xml				SYSTEM "section.bank.xml">

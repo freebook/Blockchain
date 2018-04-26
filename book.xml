@@ -9,20 +9,23 @@
 	<!ENTITY BG7NYT "&Neo;">
 	<!ENTITY Netkiller "<emphasis><trademark>Netkiller</trademark></emphasis>">
 
-	<!ENTITY % common.doctype.entity.xml 	SYSTEM "../common/doctype.entity.xml">
+	<!ENTITY % common.doctype.entity.xml 		SYSTEM "../common/doctype.entity.xml">
 	%common.doctype.entity.xml;
 	
-	<!ENTITY book.appendix.xml 		SYSTEM "book.appendix.xml">
+	<!ENTITY book.appendix.xml 					SYSTEM "book.appendix.xml">
 
-	<!ENTITY % doctype.entity.xml 			SYSTEM "doctype.entity.xml">
+	<!ENTITY % doctype.entity.xml 				SYSTEM "doctype.entity.xml">
 	%doctype.entity.xml;
 	
-	<!ENTITY % ethereum.doctype.entity.xml 			SYSTEM "Ethereum/doctype.entity.xml">
+	<!ENTITY % ethereum.doctype.entity.xml 		SYSTEM "Ethereum/doctype.entity.xml">
 	%ethereum.doctype.entity.xml;
 	
-	<!ENTITY % hyperledger.doctype.entity.xml 		SYSTEM "Hyperledger/doctype.entity.xml">
+	<!ENTITY % hyperledger.doctype.entity.xml 	SYSTEM "Hyperledger/doctype.entity.xml">
 	%hyperledger.doctype.entity.xml;
-
+	
+	<!ENTITY % solution.doctype.entity.xml 		SYSTEM "Solution/doctype.entity.xml">
+	%solution.doctype.entity.xml;
+	
 ]>
 <book xml:base="http://netkiller.sourceforge.net/linux/www"
 	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
@@ -58,6 +61,7 @@
 	&part.ethereum.xml;
 	&part.hyperledger.xml;
 	&chapter.ipfs.xml;
+	&chapter.solution.xml;
 <!-- =========================================================================== -->
 	&book.appendix.xml;
 </book>

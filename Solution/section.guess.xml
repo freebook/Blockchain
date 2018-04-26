@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="guess">
+	<title>以太坊竞猜活动区块链探索</title>
+	<para>合约实现了报名，退出，参加人数控制，竞猜次数控制，公布答案，获奖名单等等功能</para>
+	<programlisting>
+	<![CDATA[
+pragma solidity ^0.4.20;
+// Author netkiller<netkiller@msn.com>
+// Home http://www.netkiller.cn
+contract Guess {
+
+    address public owner;
+    
+    string name;        //活动名称
+    bool start = false;	//合约锁
+    uint number;			//参赛人数统计
+    uint public quota;	//名额限定
+    mapping (address => string) public registrantsPaid; //参加活动 
+    uint maxCounter = 3;	//最大竞猜次数
+    mapping (address  => uint) counter; //竞猜次数统计
+
+    string public question; //竞猜问题 
+    mapping (uint  => string) public options; //选项 
+    
+    // 答案结构
+    struct Answer {
+        address player;
+        uint answer;
+    }
+    
+    mapping (uint  => Answer) public answer; //答案 
+    uint answerIndex = 0;
+    
+    //公布最终答案
+    uint public expose;
+    
+    //获奖名单
+    mapping (address  => uint) winner;
+
+    function Guess(string _name, uint _quota) public {
+        name = _name;
+        quota = _quota;
+        number = 0;
+	}
+	
+	modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
+	
+    // 获取活动名称
+    function getName() public view returns(string){
+        return name;
+    }
+    function setStatus(bool _start) onlyOwner public {
+        start = _start;
+    }
+    function setQuestion(string _question) public {
+        question = _question;
+    }
+    // 增加人物属性，例如肤色，眼睛，头发等等
+    function putOptions(uint _key, string _value) onlyOwner public{
+        if(start == false){
+        	options[_key] = _value;
+        }
+    }
+    function join(string _password) onlyOwner public returns (bool success) {
+    		require(start == ture);
+        if (number >= quota) { return false; }
+        registrantsPaid[msg.sender] = _password;
+        number++;
+    
+        return true;
+      }
+      function changeQuota(uint _quota) onlyOwner public {
+        quota = _quota;
+      }
+    function quit() onlyOwner public {
+    		require(start == false);
+        //require (registrantsPaid[msg.sender] == _password);
+        delete registrantsPaid[msg.sender];
+        number--;
+    }
+    function setGuess(uint _answer) public{
+        require(start == ture);
+        if(maxCounter > counter[msg.sender]){
+            counter[msg.sender]++;
+            answer[answerIndex] = Answer(msg.sender, _answer);
+            answerIndex++;
+        }
+        
+    }
+    //揭秘答案 
+    function setExpose(uint _expose) onlyOwner public {
+	    require(start == ture);
+        expose = _expose;  
+        
+        for(uint i=0;i<answerIndex;i++)
+        {
+            Answer memory ans = answer[i];
+            if(ans.answer == expose){
+                winner[ans.player] = ans.answer;
+            }
+        }
+    }
+	
+	// 数量
+	function getCount() public view returns(uint){
+	    return number;
+	}
+
+}
+	]]>
+	</programlisting>
+</section>
+
