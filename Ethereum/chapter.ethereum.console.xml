@@ -259,6 +259,15 @@ true
 				]]>
 			</screen>
 		</section>
+		<section id="console.web3.eth.gasPrice">
+			<title>查看当前Gas价格</title>
+			<screen>
+			<![CDATA[
+> web3.eth.gasPrice
+5000000000
+			]]>
+			</screen>
+		</section>
 		<section id="console.eth.getBlock">
 			<title>查看区块信息</title>
 			<screen>

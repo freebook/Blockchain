@@ -1029,6 +1029,100 @@ address2 = util.toChecksumAddress(address2.toString('hex'))
 			<para>系统将计算出钱包地址</para>
 			<graphic format="png" fileref="../../images/ethereum/wallet/hdwallet/walletpath.png" width="1024" srccredit="netkiller" />
 		</section>
+		<section>
+			<title>HD Wallet 例子</title>
+			<programlisting>
+			<![CDATA[
+var bip39 = require('bip39');
+var hdkey = require('ethereumjs-wallet/hdkey');
+var util = require('ethereumjs-util');
+
+mnemonic = 'client dune unfair assume level width bind control mad member old crystal';
+var seed = bip39.mnemonicToSeed(mnemonic);
+var hdwallet = hdkey.fromMasterSeed(seed);
+var key1 = hdwallet.derivePath("m/44'/60'/0'/0/0");
+var address1 = util.pubToAddress(key1._hdkey._publicKey, true);
+var address = util.toChecksumAddress(address1.toString('hex'));
+
+coinbase = "0xaa96686a050e4916afbe9f6d8c5107062fa646dd";
+contractAddress = "0x9ABcF16f6685fE1F79168534b1D30056c90B8A8A"
+
+console.log(address);
+
+fs = require('fs');
+const Web3 = require('web3');
+const HDWalletProvider = require("truffle-hdwallet-provider");
+
+const web3 = new Web3(new HDWalletProvider(mnemonic,'http://localhost:8545'));
+console.log(web3.version)
+
+web3.eth.getBalance("0xaa96686a050e4916afbe9f6d8c5107062fa646dd").then(function(balance){
+      console.log( web3.utils.fromWei(balance) );
+});
+
+web3.eth.getBalance(address).then(function(balance){
+      console.log( web3.utils.fromWei(balance) );
+});
+
+const abi = fs.readFileSync('output/NetkillerToken.abi', 'utf-8');
+const contract = new web3.eth.Contract(JSON.parse(abi), contractAddress, { from: address, gas: 100000});
+
+contract.methods.balanceOf(coinbase).call().then(console.log).catch(console.log);
+contract.methods.balanceOf(address).call().then(console.log).catch(console.log);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>获得钱包地址和私钥</title>
+			<programlisting>
+			<![CDATA[
+const bip39 = require('bip39');
+const hdkey = require('ethereumjs-wallet/hdkey');
+
+const mnemonic = 'client dune unfair assume level width bind control mad member old crystal';
+const hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic));
+const path = "m/44'/60'/0'/0/0";
+const wallet = hdwallet.derivePath(path).getWallet();
+
+const address = `0x${wallet.getAddress().toString('hex')}`;
+const privateKey = wallet.getPrivateKey().toString('hex');
+// wallet._privKey.toString('hex');
+console.log(`Address: ${address}`);
+console.log(`Private Key: ${privateKey}`);
+
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>truffle.js 例子</title>
+			<screen>
+			<![CDATA[
+npm install truffle-hdwallet-provider
+			]]>
+			</screen>
+			<programlisting>
+			<![CDATA[
+
+var HDWalletProvider = require("truffle-hdwallet-provider");
+
+var mnemonic = "opinion destroy betray ...";
+
+module.exports = {
+  networks: {
+    development: {
+      host: "localhost",
+      port: 8545,
+      network_id: "*" // Match any network id
+    },
+    ropsten: {
+      provider: new HDWalletProvider(mnemonic, "https://ropsten.infura.io/"),
+      network_id: 3
+    }
+  }
+};
+			]]>
+			</programlisting>
+		</section>
 	</section>
 	<section id="web3.js.example">
 		<title>Express + web3.js 实例</title>

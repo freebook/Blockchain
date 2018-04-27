@@ -8,6 +8,10 @@
 	<section>
 		<title>Ethereum</title>
 		<section>
+			<title>web3.js Document</title>
+			<para>https://web3js.readthedocs.io/en/1.0/index.html</para>
+		</section>
+		<section>
 			<title>Standardizing of HD wallet derivation paths</title>
 			<para>https://github.com/ethereum/EIPs/issues/84</para>
 		</section>
