@@ -6,7 +6,8 @@
 	<para>你看到网上很多实例，安照例子的步骤操作，发现无法成功，很可能跟版本有关。v1.0.0
 		与之前的版本还是有很大差异，所以选择版本很重要。因为 v1.0.0 很快就会 release 所以本章不会在用早起版本举例。
 	</para>
-	<graphic format="png" fileref="../../images/ethereum/devel/devel.png" width="" srccredit="netkiller" />
+	<graphic format="png" fileref="../../images/ethereum/devel/devel.png"
+		width="" srccredit="netkiller" />
 	<section id="web3.js.setup">
 		<title>开发环境</title>
 		<screen>
@@ -242,6 +243,148 @@ web3.eth.sendTransaction({from: coinbase, data: code}).then(function(receipt){
 			]]>
 			</programlisting>
 		</section>
+		<section id="web3.eth.sendSignedTransaction">
+			<title>web3.eth.sendSignedTransaction() 私钥签名转账</title>
+			<para>获取 pending 状态的区块</para>
+			<screen>
+			<![CDATA[
+[ethereum@netkiller web3.example]$ vim test.js
+[ethereum@netkiller web3.example]$ export PRIVATE_KEY=585a219fd6a5583b325e96770a88e69660f404efc06e56be71d82beedb7a989e
+[ethereum@netkiller web3.example]$ echo $PRIVATE_KEY
+585a219fd6a5583b325e96770a88e69660f404efc06e56be71d82beedb7a989e
+[ethereum@netkiller web3.example]$ node
+> process.env["PRIVATE_KEY"]
+'585a219fd6a5583b325e96770a88e69660f404efc06e56be71d82beedb7a989e'
+			]]>
+			</screen>
+			<programlisting>
+			<![CDATA[
+[ethereum@netkiller web3.example]$ cat transfer.js
+fs = require('fs');
+const Web3 = require('web3');
+var Tx = require('ethereumjs-tx');
+const web3 = new Web3('http://localhost:8545');
+console.log(web3.version)
+
+coinbase 	= "0xaa96686a050e4916afbe9f6d8c5107062fa646dd";
+address 	= "0x372fda02e8a1eca513f2ee5901dc55b8b5dd7411"
+contractAddress = "0x9ABcF16f6685fE1F79168534b1D30056c90B8A8A"
+
+const main = async () => {
+	var balance = await web3.eth.getBalance(coinbase);
+	console.log(`Balance ETH: ${balance} \n`);
+
+	const abi = fs.readFileSync('output/NetkillerToken.abi', 'utf-8');
+	const contract = new web3.eth.Contract(JSON.parse(abi), contractAddress, { from: address});
+
+	var balance = await contract.methods.balanceOf(address).call();
+	console.log(`Balance before send: ${balance} \n`);
+
+	var count = await web3.eth.getTransactionCount(coinbase);
+	const gasPrice = await web3.eth.getGasPrice();
+	console.log(`gasPrice: ${gasPrice}\n`)
+    	var gasLimit = 1000000;
+	var transferAmount = 1000;
+    // Chain ID of Ropsten Test Net is 3, replace it to 1 for Main Net
+    var chainId = 1;
+
+    var rawTransaction = {
+        "from": coinbase,
+        /* "nonce": "0x" + count.toString(16),*/
+        "nonce":  web3.utils.toHex(count),
+        "gasPrice": web3.utils.toHex(gasPrice),
+        "gasLimit": web3.utils.toHex(gasLimit),
+        "to": contractAddress,
+        "value": "0x0",
+        "data": contract.methods.transfer(address, transferAmount).encodeABI(),
+        "chainId": web3.utils.toHex(chainId)
+    };
+
+    console.log(`Raw of Transaction: \n${JSON.stringify(rawTransaction, null, '\t')}\n`);
+
+    // The private key for myAddress in .env
+    var privateKey = new Buffer(process.env["PRIVATE_KEY"], 'hex');
+    var tx = new Tx(rawTransaction);
+    tx.sign(privateKey);
+    var serializedTx = tx.serialize();
+
+    // Comment out these four lines if you don't really want to send the TX right now
+    console.log(`Attempting to send signed tx:  ${serializedTx.toString('hex')}\n`);
+
+    var receipt = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
+
+    // The receipt info of transaction, Uncomment for debug
+    console.log(`Receipt info: \n${JSON.stringify(receipt, null, '\t')}\n`);
+
+    // The balance may not be updated yet, but let's check
+	var balance = await contract.methods.balanceOf(address).call();
+	console.log(`Balance after send: ${balance}`);
+}
+
+main();
+			]]>
+			</programlisting>
+			<screen>
+			<![CDATA[
+[ethereum@netkiller web3.example]$ node test.js
+1.0.0-beta.34
+Balance ETH: 8695480352861952
+
+Balance before send: 100
+
+gasPrice: 3000000000
+
+Raw of Transaction:
+{
+	"from": "0xaa96686a050e4916afbe9f6d8c5107062fa646dd",
+	"nonce": "0x20",
+	"gasPrice": "0xb2d05e00",
+	"gasLimit": "0xf4240",
+	"to": "0x9ABcF16f6685fE1F79168534b1D30056c90B8A8A",
+	"value": "0x0",
+	"data": "0xa9059cbb000000000000000000000000372fda02e8a1eca513f2ee5901dc55b8b5dd741100000000000000000000000000000000000000000000000000000000000003e8",
+	"chainId": "0x1"
+}
+
+Attempting to send signed tx:  f8a92084b2d05e00830f4240949abcf16f6685fe1f79168534b1d30056c90b8a8a80b844a9059cbb000000000000000000000000372fda02e8a1eca513f2ee5901dc55b8b5dd741100000000000000000000000000000000000000000000000000000000000003e825a05017058348d8f751cc40e71c13a63b8d8e21683841bd002c9f6bf691d34b6a4ba07df3fa8792aa66cc272ff89373509f6335272a4298e98177536a79c8ab7c947c
+
+Receipt info:
+{
+	"blockHash": "0x32f45f27040b1df616ff4efd25557416793782541b995a6d4ecbd66f8441783f",
+	"blockNumber": 5518045,
+	"contractAddress": null,
+	"cumulativeGasUsed": 5054117,
+	"from": "0xaa96686a050e4916afbe9f6d8c5107062fa646dd",
+	"gasUsed": 36184,
+	"logs": [
+		{
+			"address": "0x9ABcF16f6685fE1F79168534b1D30056c90B8A8A",
+			"topics": [
+				"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+				"0x000000000000000000000000aa96686a050e4916afbe9f6d8c5107062fa646dd",
+				"0x000000000000000000000000372fda02e8a1eca513f2ee5901dc55b8b5dd7411"
+			],
+			"data": "0x00000000000000000000000000000000000000000000000000000000000003e8",
+			"blockNumber": 5518045,
+			"transactionHash": "0x203ebcbe1cc8340c4b5a13f4e6c36a4f63142754437e0f43b0ff5e5c0bf512cc",
+			"transactionIndex": 104,
+			"blockHash": "0x32f45f27040b1df616ff4efd25557416793782541b995a6d4ecbd66f8441783f",
+			"logIndex": 94,
+			"removed": false,
+			"id": "log_7ef3f104"
+		}
+	],
+	"logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000100000000040000000000000000000000000000000008000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000002000000000000000000000000000000001200000000000000000000200000000000000000000000000000100000000000000000000000000000000000",
+	"status": true,
+	"to": "0x9abcf16f6685fe1f79168534b1d30056c90b8a8a",
+	"transactionHash": "0x203ebcbe1cc8340c4b5a13f4e6c36a4f63142754437e0f43b0ff5e5c0bf512cc",
+	"transactionIndex": 104
+}
+
+Balance after send: 1100
+			]]>
+			</screen>
+		</section>
 		<section id="web3.eth.getBlock">
 			<title>web3.eth.getBlock() 获取区块</title>
 			<para>获取 pending 状态的区块</para>
@@ -378,7 +521,8 @@ Saving artifacts...
 			
 			]]>
 			</screen>
-			<para>得到合约地址 MetaCoin: 0xfb88de099e13c3ed21f80a7a1e49f8caecf10df6</para>
+			<para>得到合约地址 MetaCoin: 0xfb88de099e13c3ed21f80a7a1e49f8caecf10df6
+			</para>
 			<para>编译合约获得 abi 接口</para>
 			<screen>
 			<![CDATA[
@@ -653,7 +797,9 @@ undefined
 	</section>
 	<section id="web3admin">
 		<title>web3admin</title>
-		<para><ulink url="https://github.com/DecentricCorp/web3admin" /></para>
+		<para>
+			<ulink url="https://github.com/DecentricCorp/web3admin" />
+		</para>
 		<screen>
 		<![CDATA[
 npm install web3admin
@@ -689,7 +835,9 @@ console.log(encoded.toString('hex'));
 		]]>
 		</programlisting>
 		<para>在线生成工具 https://abi.sonnguyen.ws/， https://abi.hashex.org/ </para>
-		<para>还有一种方法可以找到  ABI 数据 https://etherscan.io/tx/0xc53f52b287ec1c71e9d203dd08cc68035ef40bf5155f8b0711da227c01d84d70 查看 Input Data: 0029之后所有的数据就是 ABI</para>
+		<para>还有一种方法可以找到 ABI 数据
+			https://etherscan.io/tx/0xc53f52b287ec1c71e9d203dd08cc68035ef40bf5155f8b0711da227c01d84d70
+			查看 Input Data: 0029之后所有的数据就是 ABI</para>
 	</section>
 	<section id="web3.example">
 		<title>实用例子</title>
@@ -919,13 +1067,15 @@ var mnemonic = bip39.generateMnemonic()
 var seed = bip39.mnemonicToSeed(mnemonic)
 			]]>
 			</screen>
-			<para>生成  Master Key 地址 "m/44'/60'/0'/0/0" 使用 seed 生成  HD Wallet。</para>
+			<para>生成 Master Key 地址 "m/44'/60'/0'/0/0" 使用 seed 生成 HD Wallet。
+			</para>
 			<screen>
 			<![CDATA[
 var hdwallet = hdkey.fromMasterSeed(seed)
 			]]>
 			</screen>
-			<para>从路径 m/44'/60'/0'/0/0 导入 Master Key 并生成  Wallet 中第一个帐户的第一组 keypair。</para>
+			<para>从路径 m/44'/60'/0'/0/0 导入 Master Key 并生成 Wallet 中第一个帐户的第一组
+				keypair。</para>
 			<screen>
 			<![CDATA[
 var key1 = hdwallet.derivePath("m/44'/60'/0'/0/0")
@@ -1002,7 +1152,8 @@ undefined
 		</section>
 		<section>
 			<title>生成第二个钱包</title>
-			<para>只需递增最后一位数即可 "m/44'/60'/0'/0/1"， "m/44'/60'/0'/0/2"，"m/44'/60'/0'/0/3"</para>
+			<para>只需递增最后一位数即可 "m/44'/60'/0'/0/1"，
+				"m/44'/60'/0'/0/2"，"m/44'/60'/0'/0/3"</para>
 			<screen>
 			<![CDATA[
 var key2 = hdwallet.derivePath("m/44'/60'/0'/0/1")
@@ -1023,11 +1174,17 @@ address2 = util.toChecksumAddress(address2.toString('hex'))
 		</section>
 		<section>
 			<title>Mnemonic Code Converter</title>
-			<para><ulink url="https://iancoleman.io/bip39/" /></para>
+			<para>
+				<ulink url="https://iancoleman.io/bip39/" />
+			</para>
 			<para>输入 mnemonic，选择 ETH - Ethereum</para>
-			<graphic format="png" fileref="../../images/ethereum/wallet/hdwallet/mnemonic.png" width="1024" srccredit="netkiller" />
+			<graphic format="png"
+				fileref="../../images/ethereum/wallet/hdwallet/mnemonic.png" width="1024"
+				srccredit="netkiller" />
 			<para>系统将计算出钱包地址</para>
-			<graphic format="png" fileref="../../images/ethereum/wallet/hdwallet/walletpath.png" width="1024" srccredit="netkiller" />
+			<graphic format="png"
+				fileref="../../images/ethereum/wallet/hdwallet/walletpath.png"
+				width="1024" srccredit="netkiller" />
 		</section>
 		<section>
 			<title>HD Wallet 例子</title>
@@ -1123,6 +1280,49 @@ module.exports = {
 			]]>
 			</programlisting>
 		</section>
+		<section>
+			<title>代币转账</title>
+			<!-- https://github.com/ethereum/web3.js/issues/1151 -->
+		</section>
+	</section>
+	<section id="web3.js.keythereum">
+		<title>从 .ethereum/keystore 文件导入私钥</title>
+
+		<para></para>
+		<screen>
+		<![CDATA[
+[ethereum@netkiller web3.example]$ npm install keythereum
+		]]>
+		</screen>
+		<para>代码</para>
+		<screen>
+		<![CDATA[
+var keyth=require('keythereum')
+// Mac
+// keystore = './Appdata/roaming/ethereum';
+// Ubuntu 
+// keystore = '~/.ethereum';
+keystore = '../.ethereum';
+var keyobj=keyth.importFromFile('0x372fda02e8a1eca513f2ee5901dc55b8b5dd7411',keystore)
+var privateKey=keyth.recover('12345678',keyobj)
+privateKey.toString('hex')
+		]]>
+		</screen>
+		<para>操作演示</para>
+		<screen>
+		<![CDATA[
+> var keyth=require('keythereum')
+undefined
+> keystore = '../.ethereum';
+'../.ethereum'
+> var keyobj=keyth.importFromFile('0x372fda02e8a1eca513f2ee5901dc55b8b5dd7411',keystore)
+undefined
+> var privateKey=keyth.recover('12345678',keyobj)
+undefined
+> privateKey.toString('hex')
+'f592b7bf06ca9fd7696ba95d6ed8e357de6a2379b6d5fe1ffd53c6b4b063cd4a'
+		]]>
+		</screen>
 	</section>
 	<section id="web3.js.example">
 		<title>Express + web3.js 实例</title>
