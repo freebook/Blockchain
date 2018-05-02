@@ -61,7 +61,11 @@
 	&part.ethereum.xml;
 	&part.hyperledger.xml;
 	&chapter.ipfs.xml;
+	
 	&chapter.solution.xml;
+	
+	&chapter.eos.xml;
+	&chapter.other.xml;
 <!-- =========================================================================== -->
 	&book.appendix.xml;
 </book>

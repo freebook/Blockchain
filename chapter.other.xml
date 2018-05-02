@@ -4,7 +4,18 @@
 	<title>FISCO BCOS</title>
 	<para>早在2016年，微众银行、上海万向区块链、矩阵元三家公司达成战略合作，致力于共同进行区块链技术的探索，且在2017年7月，三方将顺利完成的区块链底层平台BCOS（取BlockChain OpenSource涵义命名）完全开源，以便更多的开发者加入，共同完善技术，构建真正根植中国的区块链生态。</para>
 </section>
-
+	<section>
+		<title>量子链（QTUM）</title>
+		<para><ulink url="https://qtum.org/" /></para>
+		<para>量子链致力于开发比特币和以太坊之外的第三种区块链生态系统，通过价值传输协议（“Value Transfer Protocol”）来实现点对点的价值转移，并根据此协议，构建一个支持多个行业（包括金融、物联网、供应链、社交、游戏等）的去中心化的应用开发平台（DApp Platform）</para>
+		<section>
+			<title>BeeChat</title>
+			<para>
+				<ulink url="https://beechat.io" />
+			</para>
+			<para>BeeChat是基于区块链的手机通讯应用。以独有的去中心化分布式技术，高度安全的加密服务确保免费环球畅聊，群人数最高可达10000人。它还基于量子链区块链技术，支持BTC,ETH,Qtum的移动钱包，发红包转账和聊天一样简单快捷。</para>
+		</section>
+	</section>
 <section id="asch">
 	<title>asch</title>
 	<para>https://www.asch.io</para>
