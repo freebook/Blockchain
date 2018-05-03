@@ -196,25 +196,25 @@ contract TokenERC20 {
 	
 	<section id="etherscan.update">
 		<title>Links 链接更新</title>
-		<graphic format="png" fileref="../../images/ethereum/etherscan/upate.png" width="" srccredit="netkiller" />
-		<graphic format="png" fileref="../../images/ethereum/etherscan/submit.png" width="" srccredit="netkiller" />
-		<graphic format="png" fileref="../../images/ethereum/etherscan/sign_message.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/update/update.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/update/submit.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/update/sign_message.png" width="" srccredit="netkiller" />
 		<para>复制签名信息</para>
 		<para>进入 MyEtherWallet 签名页面 <ulink url="https://www.myetherwallet.com/signmsg.html"/></para>
 		<para>粘贴签名信息</para>
-		<graphic format="png" fileref="../../images/ethereum/etherscan/verify_message.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/update/verify_message.png" width="" srccredit="netkiller" />
 		<para>选择私钥签名</para>
-		<graphic format="png" fileref="../../images/ethereum/etherscan/private_key.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/update/private_key.png" width="" srccredit="netkiller" />
 		<para>解锁账号</para>
-		<graphic format="png" fileref="../../images/ethereum/etherscan/unlock.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/update/unlock.png" width="" srccredit="netkiller" />
 		<para>签名，复制 sig 的值</para>
-		<graphic format="png" fileref="../../images/ethereum/etherscan/signature.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/update/signature.png" width="" srccredit="netkiller" />
 		<para>粘贴 sig，然后点击 Verify 按钮</para>
-		<graphic format="png" fileref="../../images/ethereum/etherscan/signature_hash.png" width="" srccredit="netkiller" />
-		<graphic format="png" fileref="../../images/ethereum/etherscan/fill_in_form.png" width="" srccredit="netkiller" />
-		<graphic format="png" fileref="../../images/ethereum/etherscan/fill_in_form1.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/update/signature_hash.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/update/fill_in_form.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/update/fill_in_form1.png" width="" srccredit="netkiller" />
 		<para>信息填写完成后点击“Send Message” 保存</para>
-		<graphic format="png" fileref="../../images/ethereum/etherscan/done.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/update/done.png" width="" srccredit="netkiller" />
 	</section>
 	
 </section>

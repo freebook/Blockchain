@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="index"><?dbhtml dir="eos" ?>
+<chapter id="index"><?dbhtml dir="eos" ?>
 	<title>其他区块链区块链解决方案</title>
 	<para>
 		<ulink url="https://eos.io">https://eos.io</ulink>
@@ -110,5 +110,5 @@ make install
 		]]>
 		</screen>
 	</section>
-</section>
+</chapter>
 
