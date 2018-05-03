@@ -1340,7 +1340,7 @@ undefined
 </chapter>
 
 <chapter id="index"><?dbhtml dir="web3j" ?>
-	<title>web3j v3.3.1 - Jave Client</title>
+	<title>web3j v3.4.0 - Jave Client</title>
 	<para>
 		官方网站
 		<ulink url="https://web3j.io">https://web3j.io</ulink>
@@ -1452,7 +1452,7 @@ INFO [02-01|23:35:15] Mapped network port                      proto=tcp extport
 		<dependency>
 			<groupId>org.web3j</groupId>
 			<artifactId>core</artifactId>
-			<version>3.3.1</version>
+			<version>3.4.0</version>
 		</dependency>
 	</dependencies>
 </project>
