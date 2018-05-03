@@ -194,7 +194,7 @@ contract TokenERC20 {
 		<graphic format="png" fileref="../../images/ethereum/coin/coin9.png" width="1024" srccredit="netkiller" />
 	</section>
 	
-	<section>
+	<section id="etherscan.update">
 		<title>Links 链接更新</title>
 		<graphic format="png" fileref="../../images/ethereum/etherscan/upate.png" width="" srccredit="netkiller" />
 		<graphic format="png" fileref="../../images/ethereum/etherscan/submit.png" width="" srccredit="netkiller" />
@@ -214,6 +214,7 @@ contract TokenERC20 {
 		<graphic format="png" fileref="../../images/ethereum/etherscan/fill_in_form.png" width="" srccredit="netkiller" />
 		<graphic format="png" fileref="../../images/ethereum/etherscan/fill_in_form1.png" width="" srccredit="netkiller" />
 		<para>信息填写完成后点击“Send Message” 保存</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/done.png" width="" srccredit="netkiller" />
 	</section>
 	
 </section>
