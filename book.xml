@@ -66,6 +66,7 @@
 	
 	&chapter.eos.xml;
 	&chapter.other.xml;
+	&chapter.bitcoin.xml;
 <!-- =========================================================================== -->
 	&book.appendix.xml;
 </book>
