@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="index"><?dbhtml dir="bitcoin" ?>
+	<title>BitCoin</title>
+	<section>
+		<title>私钥</title>
+		<para>它一个256bit的随机数，一般随机生成，范围在0x1到0xFFFF FFFF FFFF FFFF FFFF FFFF FFFF FFFE BAAE DCE6 AF48 A03B BFD2 5E8C D036 4140之间（这是由ECDSA spec256k1算法限定的）</para>
+	</section>
+	<section>
+		<title>Base58编码</title>
+		<para>Base64是常见的可读性编码算法，所谓Base64，即是说在编码过程中使用了64种字符：大写A到Z、小写a到z、数字0到9、“+”和“/”。</para>
+		<para>Base58是Bitcoin中使用的一种编码方式，主要用于产生Bitcoin的钱包地址。相比Base64，Base58不使用数字"0"，字母大写"O"，字母大写"I"，和字母小写"i"，以及"+"和"/"符号。</para>
+		<para></para>
+	</section>
+	<section>
+		<title>HD Wallet</title>
+		<para></para>
+		<screen>
+		<![CDATA[
+npm install bip39 bitcoinjs-lib
+		]]>
+		</screen>
+		<para></para>
+		<programlisting>
+		<![CDATA[
+	const bip39 = require('bip39');
+    const bitcoin = require('bitcoinjs-lib')
+
+    const mnemonic = bip39.generateMnemonic();
+    const seed = bip39.mnemonicToSeed(mnemonic);
+	const root = bitcoin.HDNode.fromSeedBuffer(seed)
+	//const root = bitcoin.HDNode.fromSeedHex(seed.toString('hex'))
+    const wallet = root.derivePath("m/44'/0'/0'/0/0");
+
+    const address = wallet.getAddress();
+    const wif = wallet.keyPair.toWIF();
+
+	console.log(mnemonic)
+    console.log(address)
+    console.log(wif)		
+		]]>
+		</programlisting>
+	</section>
+	
+</chapter>

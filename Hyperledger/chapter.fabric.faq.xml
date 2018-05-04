@@ -52,4 +52,32 @@ curl -s https://raw.githubusercontent.com/oscm/shell/master/virtualization/docke
 		]]>
 		</screen>
 	</section>
+	<section>
+		<title>超级账本的硬伤</title>
+		<para>在使用超级账本的过程中我发现一个问题，超级账本无法并发操作一个 key，stub.PutState 是异步执行，我们无法确认它是否执行完成，在没有执行完成之前再发起操作，就会产生覆盖。这个问题限制了超级账本的很多场景应用，这是超级账本的硬伤。</para>
+		<para>下面举一个例子来说明超级账本的问题</para>
+		<programlisting>
+		<![CDATA[
+func (s *SmartContract) counter(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	key  := "counter"
+	count,err = stub.GetState(key)
+	count = count + 1
+	stub.PutState(key,count)
+	return shim.Success(count)
+}
+		]]>
+		</programlisting>
+		<para>使用多线程请求chaincode中的counter函数100次。你会发现最终 count 并不等于 100。学习过多线程的朋友一定很清楚出了什么问题。</para>
+		<para>问题出在 stub.PutState 函数count还没有被写入，其他线程就开始读取stub.GetState(key)，导致读取旧数据，最终计数器数字混乱。 </para>
+		<para>很多场景需要更新区块中的数据，如果频繁操作，就会产生覆盖，目前Hyperledger Fabirc 并没有提供解决方案。</para>
+		<para>1. 我们不知道 stub.PutState是否执行完成，因为存储过程需要共识排序。</para>
+		<para>2. 超级账本没有提供事物处理或者互斥锁。</para>
+		<para>golang 提供的 mutex 也无法解决上面的问题，因为 mutex 锁只能工作在一个进程中。Peer / Orderer 节点不止一个。</para>
+		<para>使用 redis实现分布式锁或许能实现，但思考过后决定放弃，转为传统数据库。</para>
+		<para>总结，超级账本只适合一次写，多次读的场景，和极低频修改的场景</para>
+		<programlisting>
+		<![CDATA[
+		]]>
+		</programlisting>
+	</section>
 </chapter>
