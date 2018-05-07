@@ -12,6 +12,53 @@
 		<para></para>
 	</section>
 	<section>
+		<title>Bitcoin Core</title>
+		
+		<graphic format="png" fileref="../images/bitcoin/wallet/bitcoin1.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../images/bitcoin/wallet/bitcoin2.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../images/bitcoin/wallet/bitcoin3.png" width="" srccredit="netkiller" />
+		
+		<para>获得测试比特币<ulink url="https://testnet.manu.backend.hamburg/faucet" /></para>
+	</section>
+	<section id="bcoin">
+		<title>bcoin</title>
+		<para>A Fullnode Bitcoin Implementation for Miners, Wallets, and Exchanges</para>
+		<para><ulink url="bcoin.io/" /></para>
+		<screen>
+		<![CDATA[
+$ npm install bcoin
+		]]>
+		</screen>
+		<para>设置比特币测试网节点</para>
+		<programlisting>
+		<![CDATA[
+'use strict';
+
+var bcoin = require('bcoin');
+
+var node = new bcoin.fullnode({
+  network: 'testnet',
+  db: 'memory'
+});
+
+(async function() {
+  await node.open();
+  await node.connect();
+
+  node.on('connect', function(entry, block) {
+    console.log('%s (%d) added to chain.', entry.rhash(), entry.height);
+  });
+
+  node.on('tx', function(tx) {
+    console.log('%s added to mempool.', tx.txid());
+  });
+
+  node.startSync();
+})();
+		]]>
+		</programlisting>
+	</section>
+	<section>
 		<title>HD Wallet</title>
 		<para></para>
 		<screen>

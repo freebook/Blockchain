@@ -187,22 +187,22 @@ instance: Geth/v1.8.1-stable-1e67410e/darwin-amd64/go1.9.4
 				<para>连接测试网络，启动 "Ethereum Wallet"，主菜单-Develop-Network，选择 "Rinkeby - Test network"。</para>
 				<para>如果这个菜单是灰色的，可以你在本地运行过 geth，解决方法如下：</para>
 				<screen>
-			<![CDATA[
+				<![CDATA[
 mkdir ~/ethereum/rinkeby			
 geth --datadir ~/ethereum/rinkeby --rinkeby --rpc console
-			]]>
+				]]>
 				</screen>
 				<para>在另一个终端窗口执行</para>
 				<screen>
-			<![CDATA[
+				<![CDATA[
 neo@MacBook-Pro ~/ethereum/rinkeby % "/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" ~/ethereum/rinkeby/geth.ipc	
-			]]>
+				]]>
 				</screen>
 				<para>或者使用TCP方式连接</para>
 				<screen>
-			<![CDATA[
+				<![CDATA[
 "/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet" --rpc http://localhost:8545				
-			]]>
+				]]>
 				</screen>
 
 				<para>如果你没有安装 geth，可以使用下面的方法</para>
