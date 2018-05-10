@@ -1977,6 +1977,7 @@ public class Infura {
 		<para>https://etherscan.io/register</para>
 		<graphic format="png" fileref="../../images/ethereum/etherscan/api/newaccount.png" width="" srccredit="netkiller" />
 		<para>前往邮箱查看以太坊发出的确认邮件，并点击里面链接地址。</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/api/email.png" width="" srccredit="netkiller" />
 		<para>登陆</para>
 		<graphic format="png" fileref="../../images/ethereum/etherscan/api/login.png" width="" srccredit="netkiller" />
 		<para>创建 API Key</para>
