@@ -1970,3 +1970,28 @@ public class Infura {
 	</para>
 
 </chapter>
+<chapter id="index"><?dbhtml dir="api" ?>
+	<title>Ethereum Developer APIs</title>
+	<section>
+		<title>API Keys</title>
+		<para>https://etherscan.io/register</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/api/newaccount.png" width="" srccredit="netkiller" />
+		<para>前往邮箱查看以太坊发出的确认邮件，并点击里面链接地址。</para>
+		<para>登陆</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/api/login.png" width="" srccredit="netkiller" />
+		<para>创建 API Key</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/api/api-keys-create.png" width="" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/etherscan/api/api-keys-token.png" width="" srccredit="netkiller" />
+		<para>创建完成</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/api/api-keys-successfully.png" width="" srccredit="netkiller" />
+	</section>
+	<section>
+		<title>账号</title>
+		<para>获得账号的余额</para>
+		<screen>
+		<![CDATA[
+https://api.etherscan.io/api?module=account&action=balance&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a&tag=latest&apikey=JFZWPE88I3TZFZWXKVHJ32INUIYQRRINJ9
+		]]>
+		</screen>
+	</section>
+</chapter>
