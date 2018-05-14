@@ -31,7 +31,8 @@ npm update -g truffle
 		<section>
 			<title>Ganache</title>
 			<para>truffle develop 使用起来并不直观，还有另一个开发环境是
-				Ganache，Ganache有命令行版本和图形界面版本。下面是命令行版本安装方法：</para>
+				Ganache，Ganache有命令行版本和图形界面版本。下面是命令行版本安装方法：
+			</para>
 			<screen>
 			<![CDATA[
 sudo npm install -g ganache-cli
@@ -47,7 +48,8 @@ sudo npm install -g ganache-cli
 		<section>
 			<title>testrpc</title>
 			<para>由于truffle 4.0 自带开发环境(truffle develop)，所以本章不在使用
-				testrpc(不建议使用)，如果仍需要testrpc请参考下面安装方法：</para>
+				testrpc(不建议使用)，如果仍需要testrpc请参考下面安装方法：
+			</para>
 			<screen>
 			<![CDATA[
 # 安装testrpc
@@ -57,7 +59,7 @@ sudo npm install -g ethereumjs-testrpc
 		</section>
 
 	</section>
-	
+
 	<section id="truffle.tutorial">
 		<title>Truffle 快速入门</title>
 		<section>
@@ -815,7 +817,7 @@ Saving artifacts...
 				<programlisting>
 				<![CDATA[
 var contract;
-NetkillerAdvancedToken.deployed().then(function(instance){contract=instance;});
+NetkillerAdvancedTokenAirDrop.deployed().then(function(instance){contract=instance;});
 contract.symbol.call().then(console.log);
 contract.name.call().then(console.log);
 contract.totalSupply.call().then(console.log);
@@ -829,14 +831,7 @@ contract.balanceOf.call(web3.eth.accounts[0]).then(console.log);
 				]]>
 				</screen>
 			</section>
-			<section>
-				<title>锁仓</title>
-				<screen>
-				<![CDATA[
-contract.setLock(true);
-				]]>
-				</screen>
-			</section>
+
 			<section>
 				<title>测试转账</title>
 				<screen>
@@ -851,6 +846,72 @@ contract.transferFrom(web3.eth.accounts[0],web3.eth.accounts[1],100).then(functi
 				</screen>
 			</section>
 			<section>
+				<title>锁仓</title>
+				<screen>
+				<![CDATA[
+contract.setLock(true);
+contract.transfer(web3.eth.accounts[2],100).then(function(){contract.balanceOf.call(web3.eth.accounts[2]).then(console.log);});
+				
+				]]>
+				</screen>
+				<para>演示</para>
+				<screen>
+				<![CDATA[
+truffle(development)> contract.setLock(true);
+{ tx: '0x6a603ca9456b574224aa97b8bf1d66280fc8509c94253c0037bc5bb71135a667',
+  receipt: 
+   { transactionHash: '0x6a603ca9456b574224aa97b8bf1d66280fc8509c94253c0037bc5bb71135a667',
+     transactionIndex: 0,
+     blockHash: '0x4e0893b5ff6b1d85182dca0ceb3c0c2cb750183ff856b7ad2e323ad2a3b55fdc',
+     blockNumber: 13,
+     gasUsed: 42424,
+     cumulativeGasUsed: 42424,
+     contractAddress: null,
+     logs: [],
+     status: 1 },
+  logs: [] }
+truffle(development)> contract.transfer(web3.eth.accounts[2],100).then(function(){contract.balanceOf.call(web3.eth.accounts[2]).then(console.log);});
+Error: VM Exception while processing transaction: revert
+    at XMLHttpRequest._onHttpResponseEnd (/usr/local/lib/node_modules/truffle/build/webpack:/~/xhr2/lib/xhr2.js:509:1)
+    at XMLHttpRequest._setReadyState (/usr/local/lib/node_modules/truffle/build/webpack:/~/xhr2/lib/xhr2.js:354:1)
+    at XMLHttpRequestEventTarget.dispatchEvent (/usr/local/lib/node_modules/truffle/build/webpack:/~/xhr2/lib/xhr2.js:64:1)
+    at XMLHttpRequest.request.onreadystatechange (/usr/local/lib/node_modules/truffle/build/webpack:/~/web3/lib/web3/httpprovider.js:128:1)
+    at /usr/local/lib/node_modules/truffle/build/webpack:/~/truffle-provider/wrapper.js:134:1
+    at /usr/local/lib/node_modules/truffle/build/webpack:/~/web3/lib/web3/requestmanager.js:86:1
+    at Object.InvalidResponse (/usr/local/lib/node_modules/truffle/build/webpack:/~/web3/lib/web3/errors.js:38:1)
+
+				]]>
+				</screen>
+				<para>解锁后再测试</para>
+				<screen>
+				<![CDATA[
+contract.setLock(false);
+contract.transfer(web3.eth.accounts[2],100).then(function(){contract.balanceOf.call(web3.eth.accounts[2]).then(console.log);});
+				]]>
+				</screen>
+				<screen>
+				<![CDATA[
+truffle(development)> contract.setLock(false);
+{ tx: '0x3d4b8d49626c1171ab7160274a9f573bb06999fa7bc33240704199c7905f62fd',
+  receipt: 
+   { transactionHash: '0x3d4b8d49626c1171ab7160274a9f573bb06999fa7bc33240704199c7905f62fd',
+     transactionIndex: 0,
+     blockHash: '0x0c78b27d817449b6a3727a13041f1880cbf5466a8b81719f2541c08d59ca5fb3',
+     blockNumber: 15,
+     gasUsed: 13680,
+     cumulativeGasUsed: 13680,
+     contractAddress: null,
+     logs: [],
+     status: 1 },
+  logs: [] }
+truffle(development)> contract.transfer(web3.eth.accounts[2],100).then(function(){contract.balanceOf.call(web3.eth.accounts[2]).then(console.log);});
+undefined
+truffle(development)> BigNumber { s: 1, e: 2, c: [ 100 ] }
+				]]>
+				</screen>
+			</section>
+			
+			<section>
 				<title>测试空投</title>
 				<screen>
 				<![CDATA[
@@ -864,9 +925,66 @@ Address: {3c1ba8b80b9a8697f2e34194c2a73a93105be23d}
 				</screen>
 				<screen>
 				<![CDATA[
-contract.currentTotalAirdrop.call().then(console.log);
+contract.mintAirdropToken(1000000);
+contract.totalAirdropSupply.call().then(console.log);
+contract.totalSupply.call().then(console.log);
+contract.setAirdrop(10);
 contract.setAirdropLock(true);
-contract.balanceOf.call("0x3c1ba8b80b9a8697f2e34194c2a73a93105be23d").then(console.log);
+contract.balanceOf.call(web3.eth.accounts[3]).then(console.log);
+
+contract.currentTotalAirdrop.call().then(console.log);
+				]]>
+				</screen>
+				<para>操作演示</para>
+				<screen>
+				<![CDATA[
+[ethereum@netkiller ~]$  truffle console      
+truffle(development)> var contract;
+NetkillerAdvancedTokenAirDrop.deployed().then(function(instance){contract=instance;});undefined
+truffle(development)> NetkillerAdvancedTokenAirDrop.deployed().then(function(instance){contract=instance;});
+undefined
+truffle(development)> contract.mintAirdropToken(1000000);
+{ tx: '0xab251fafc30724273259442fc02bfa429235ff14535f4fb25e29bed7de09ea11',
+  receipt: 
+   { transactionHash: '0xab251fafc30724273259442fc02bfa429235ff14535f4fb25e29bed7de09ea11',
+     transactionIndex: 0,
+     blockHash: '0x5498eb579a08e8da1ca2d5ad3d6dd5b0a5c21cc9a630809783d09b65e26929b9',
+     blockNumber: 28,
+     gasUsed: 47701,
+     cumulativeGasUsed: 47701,
+     contractAddress: null,
+     logs: [],
+     status: 1 },
+  logs: [] }
+truffle(development)> contract.setAirdrop(10);
+{ tx: '0xd8a3a16328373858e3cc30c7947b3c3c00db447bb3306f2cf2af58fd0215aef8',
+  receipt: 
+   { transactionHash: '0xd8a3a16328373858e3cc30c7947b3c3c00db447bb3306f2cf2af58fd0215aef8',
+     transactionIndex: 0,
+     blockHash: '0x5be96cfd95031a132fc643b06d01dba0b14f736fa9fa3f16dd5bbd9c7f030700',
+     blockNumber: 29,
+     gasUsed: 42209,
+     cumulativeGasUsed: 42209,
+     contractAddress: null,
+     logs: [],
+     status: 1 },
+  logs: [] }
+truffle(development)> contract.setAirdropLock(true);
+{ tx: '0x7b8b5747a64111a500cce22371d78b2c3c4ce0b5a2b585b26c0278876044e231',
+  receipt: 
+   { transactionHash: '0x7b8b5747a64111a500cce22371d78b2c3c4ce0b5a2b585b26c0278876044e231',
+     transactionIndex: 0,
+     blockHash: '0xd6960add791b36afac1126a00af16f2833043dcb3416d68bb4056db64313dc93',
+     blockNumber: 30,
+     gasUsed: 42408,
+     cumulativeGasUsed: 42408,
+     contractAddress: null,
+     logs: [],
+     status: 1 },
+  logs: [] }
+truffle(development)> contract.balanceOf.call(web3.eth.accounts[5]).then(console.log);
+BigNumber { s: 1, e: 1, c: [ 10 ] }
+undefined				
 				]]>
 				</screen>
 			</section>
@@ -961,6 +1079,23 @@ contract('MyTest', function(accounts) {
 				</screen>
 			</section>
 		</section>
+		<section>
+			<title>migrate</title>
+			<screen>
+			<![CDATA[
+% truffle migrate --reset			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>compile</title>
+			<screen>
+				<![CDATA[
+% truffle compile --all
+				]]>
+			</screen>
+		</section>
+
 		<section id="truffle.test">
 			<title>test</title>
 			<para>运行测试</para>
@@ -1114,7 +1249,7 @@ undefined
 		</section>
 
 	</section>
-	<section>
+	<section id="truffle.test">
 		<title>测试</title>
 		<section>
 			<title>balanceOf</title>
@@ -1208,7 +1343,8 @@ it("should show the transfer event", function() {
 truffle unbox webpack
 		]]>
 		</screen>
-	</section><section id="zeppelin.solidity">
+	</section>
+	<section id="zeppelin.solidity">
 		<title>Zeppelin Solidity - OpenZeppelin is a library for writing secure Smart Contracts on Ethereum.</title>
 		<para>OpenZeppelin is an open framework of reusable and secure smart contracts in the Solidity language.</para>
 		<para>
