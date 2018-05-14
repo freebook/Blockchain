@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section id="coin">
-	<title>创建代币</title>
+	<title>Ethereum Wallet 创建ERC20代币合约</title>
 	<ulink url="https://ethereum.org/token" />
 	<section id="token.contract">
 		<title>合约文件</title>

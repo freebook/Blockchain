@@ -2,6 +2,159 @@
 <chapter id="index"><?dbhtml dir="token" ?>
 	<title>Token</title>
 	<subtitle>ERC 代币标准</subtitle>
+	&chapter.ethereum.coin.xml;
+	<section>
+		<title>ERC20 Token Solidity 0.4.23</title>
+		<section>
+			<title>构造方法</title>
+			<para>原合约</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.21;
+
+contract NetkillerToken {
+  address public owner;
+  string public name;
+  string public symbol;
+  uint public decimals;
+  uint256 public totalSupply;
+
+  event Transfer(address indexed from, address indexed to, uint256 value);
+
+  /* This creates an array with all balances */
+  mapping (address => uint256) public balanceOf;
+
+  function NetkillerToken(uint256 initialSupply, string tokenName, string tokenSymbol, uint decimalUnits) public {
+    owner = msg.sender;
+    name = tokenName;
+    symbol = tokenSymbol;
+    decimals = decimalUnits;
+    totalSupply = initialSupply * 10 ** uint256(decimals);
+    balanceOf[msg.sender] = totalSupply;
+  }
+
+  /* Send coins */
+  function transfer(address _to, uint256 _value) public {
+    /* Check if the sender has balance and for overflows */
+    require(balanceOf[msg.sender] >= _value && balanceOf[_to] + _value >= balanceOf[_to]);
+
+    /* Add and subtract new balances */
+    balanceOf[msg.sender] -= _value;
+    balanceOf[_to] += _value;
+
+    /* Notify anyone listening that this transfer took place */
+    emit Transfer(msg.sender, _to, _value);
+  }
+}
+			]]>
+			</programlisting>
+			<para>新版合约</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.23;
+
+contract NetkillerToken {
+  address public owner;
+  string public name;
+  string public symbol;
+  uint public decimals;
+  uint256 public totalSupply;
+
+  event Transfer(address indexed from, address indexed to, uint256 value);
+
+  /* This creates an array with all balances */
+  mapping (address => uint256) public balanceOf;
+
+  constructor(uint256 initialSupply, string tokenName, string tokenSymbol, uint decimalUnits) public {
+    owner = msg.sender;
+    name = tokenName;
+    symbol = tokenSymbol;
+    decimals = decimalUnits;
+    totalSupply = initialSupply * 10 ** uint256(decimals);
+    balanceOf[msg.sender] = totalSupply;
+  }
+
+  /* Send coins */
+  function transfer(address _to, uint256 _value) public {
+    /* Check if the sender has balance and for overflows */
+    require(balanceOf[msg.sender] >= _value && balanceOf[_to] + _value >= balanceOf[_to]);
+
+    /* Add and subtract new balances */
+    balanceOf[msg.sender] -= _value;
+    balanceOf[_to] += _value;
+
+    /* Notify anyone listening that this transfer took place */
+    emit Transfer(msg.sender, _to, _value);
+  }
+}
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>官方规定 Method 方法</title>
+			<para>所有的ERC20代币都是按照下面这些方法来定义的。下面我们讲解一下每个方法的作用。</para>
+			<section>
+				<title>name</title>
+				<para>function name() view public returns (string name) </para>
+				<para>返回string类型的ERC20代币的名字，例如：Netkiller Reader Coin</para>
+			</section>
+			<section>
+				<title>symbol</title>
+				<para>function symbol() view public returns (string symbol)</para>
+				<para>返回string类型的ERC20代币的符号，也就是代币的简称，例如：NRC。</para>
+			</section>
+			<section>
+				<title>decimals</title>
+				<para>function decimals() view public returns (uint decimals)</para>
+				<para>支持几位小数点后几位。如果设置为3。也就是支持0.001表示。</para>
+			</section>
+			<section>
+				<title>totalSupply</title>
+				<para>function totalSupply() view public returns (uint256 totalSupply)</para>
+				<para>发行代币的总量，可以通过这个函数来获取。所有智能合约发行的代币总量是一定的，totalSupply必须设置初始值。</para>
+			</section>
+			<section>
+				<title>balanceOf</title>
+				<para>function balanceOf(address _owner) public returns (uint256 balance)</para>
+				<para>输入地址，可以获取该地址代币的余额。</para>
+			</section>
+			<section>
+				<title>transfer</title>
+				<para>function transfer(address _to, uint256 _value) public returns (bool success)</para>
+				<para>调用transfer函数将自己的token转账给_to地址，_value为转账金额</para>
+			</section>
+			<section>
+				<title>approve</title>
+				<para>function approve(address _spender, uint256 _value) public returns (bool success)</para>
+				<para>批准_spender账户从自己的账户转移_value个token。可以分多次转移。</para>
+			</section>
+			<section>
+				<title>transferFrom</title>
+				<para>function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)</para>
+				<para>与approve搭配使用，approve批准之后，调用transferFrom函数来转移token。</para>
+			</section>
+			<section>
+				<title>allowance</title>
+				<para>function allowance(address _owner, address _spender) public returns (uint256 remaining)</para>
+				<para>返回_spender还能提取token的个数。</para>
+				<para>approve、transferFrom及allowance解释：账户A有1000个代币，想允许B账户随意调用100个代币。A账户按照以下形式调用approve函数approve(B,100)。当B账户想用这100个代币中的10个代币给C账户时，则调用transferFrom(A, C, 10)。这时调用allowance(A, B)可以查看B账户还能够调用A账户多少个token。</para>
+			</section>
+		</section>
+		<section>
+			<title>事件</title>
+			<section>
+				<title>Transfer</title>
+				<para>event Transfer(address indexed _from, address indexed _to, uint256 _value)</para>
+				<para>当成功转移token时，一定要触发Transfer事件</para>
+			</section>
+			<section>
+				<title>Approval</title>
+				<para>event Approval(address indexed _owner, address indexed _spender, uint256 _value)</para>
+				<para>当调用approval函数成功时，一定要触发Approval事件</para>
+			</section>
+		</section>
+
+	</section>
 	<section id="ERC20">
 		<title>ERC20</title>
 		<para>https://github.com/ethereum/EIPs/issues/20</para>
@@ -26,6 +179,8 @@
 				<para>批准花费代币</para>
 			</listitem>
 		</itemizedlist>
+
+		
 		<section>
 			<title>基本Token 官方提供的例子</title>
 			<para>这个例子仅仅用来初学使用，请不用使用在生产环境。</para>
@@ -1500,91 +1655,7 @@ contract SurpriseToken is Ownable{
 				</programlisting>
 			</section>
 		</section>
-		<section>
-			<title>Token 0.4.23</title>
-			<para>原合约</para>
-			<programlisting>
-			<![CDATA[
-pragma solidity ^0.4.21;
-
-contract NetkillerToken {
-  address public owner;
-  string public name;
-  string public symbol;
-  uint public decimals;
-  uint256 public totalSupply;
-
-  event Transfer(address indexed from, address indexed to, uint256 value);
-
-  /* This creates an array with all balances */
-  mapping (address => uint256) public balanceOf;
-
-  function NetkillerToken(uint256 initialSupply, string tokenName, string tokenSymbol, uint decimalUnits) public {
-    owner = msg.sender;
-    name = tokenName;
-    symbol = tokenSymbol;
-    decimals = decimalUnits;
-    totalSupply = initialSupply * 10 ** uint256(decimals);
-    balanceOf[msg.sender] = totalSupply;
-  }
-
-  /* Send coins */
-  function transfer(address _to, uint256 _value) public {
-    /* Check if the sender has balance and for overflows */
-    require(balanceOf[msg.sender] >= _value && balanceOf[_to] + _value >= balanceOf[_to]);
-
-    /* Add and subtract new balances */
-    balanceOf[msg.sender] -= _value;
-    balanceOf[_to] += _value;
-
-    /* Notify anyone listening that this transfer took place */
-    emit Transfer(msg.sender, _to, _value);
-  }
-}
-			]]>
-			</programlisting>
-			<para>新版合约</para>
-			<programlisting>
-			<![CDATA[
-pragma solidity ^0.4.23;
-
-contract NetkillerToken {
-  address public owner;
-  string public name;
-  string public symbol;
-  uint public decimals;
-  uint256 public totalSupply;
-
-  event Transfer(address indexed from, address indexed to, uint256 value);
-
-  /* This creates an array with all balances */
-  mapping (address => uint256) public balanceOf;
-
-  constructor(uint256 initialSupply, string tokenName, string tokenSymbol, uint decimalUnits) public {
-    owner = msg.sender;
-    name = tokenName;
-    symbol = tokenSymbol;
-    decimals = decimalUnits;
-    totalSupply = initialSupply * 10 ** uint256(decimals);
-    balanceOf[msg.sender] = totalSupply;
-  }
-
-  /* Send coins */
-  function transfer(address _to, uint256 _value) public {
-    /* Check if the sender has balance and for overflows */
-    require(balanceOf[msg.sender] >= _value && balanceOf[_to] + _value >= balanceOf[_to]);
-
-    /* Add and subtract new balances */
-    balanceOf[msg.sender] -= _value;
-    balanceOf[_to] += _value;
-
-    /* Notify anyone listening that this transfer took place */
-    emit Transfer(msg.sender, _to, _value);
-  }
-}
-			]]>
-			</programlisting>
-		</section>
+		
 	</section>
 	<section id="ERC223">
 		<title>ERC223 token standard reference implementation.</title>

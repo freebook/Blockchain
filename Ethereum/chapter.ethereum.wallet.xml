@@ -300,9 +300,6 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 			]]>
 			</screen>
 		</section>
-	
-		&chapter.ethereum.coin.xml;
-		
 		<section>
 			<title>删除废弃的合约</title>
 			<para>在 Ethereum Wallet 钱包上会显示所有自己创建或者Watch的合约，有些合约仅仅是测试用的，用过即废弃，合约列表依然会显示在那里，只是变成灰色并且无法选择</para>
