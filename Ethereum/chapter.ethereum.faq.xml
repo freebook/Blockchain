@@ -200,6 +200,65 @@ module.exports = {
 };			
 		]]>
 		</screen>
-		
+	</section>
+	<section>
+		<title>Migrations.sol:11:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.</title>
+		<para>Solidity 0.4.23 合约构造方法与之前的版本不同</para>
+		<screen>
+		<![CDATA[
+[ethereum@netkiller truffle]$ cat contracts/Migrations.sol
+pragma solidity ^0.4.17;
+
+contract Migrations {
+  address public owner;
+  uint public last_completed_migration;
+
+  modifier restricted() {
+    if (msg.sender == owner) _;
+  }
+
+  function Migrations() public {
+    owner = msg.sender;
+  }
+
+  function setCompleted(uint completed) public restricted {
+    last_completed_migration = completed;
+  }
+
+  function upgrade(address new_address) public restricted {
+    Migrations upgraded = Migrations(new_address);
+    upgraded.setCompleted(last_completed_migration);
+  }
+}
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+[ethereum@netkiller truffle]$ cat contracts/Migrations.sol
+pragma solidity ^0.4.17;
+
+contract Migrations {
+  address public owner;
+  uint public last_completed_migration;
+
+  modifier restricted() {
+    if (msg.sender == owner) _;
+  }
+
+  constructor() public {
+    owner = msg.sender;
+  }
+
+  function setCompleted(uint completed) public restricted {
+    last_completed_migration = completed;
+  }
+
+  function upgrade(address new_address) public restricted {
+    Migrations upgraded = Migrations(new_address);
+    upgraded.setCompleted(last_completed_migration);
+  }
+}
+		]]>
+		</screen>
 	</section>
 </chapter>

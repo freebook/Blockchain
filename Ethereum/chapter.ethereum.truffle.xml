@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="truffle" ?>
-	<title>Truffle v4.1.5 开发框架</title>
+	<title>Truffle v4.1.8 开发框架</title>
 	<para>
 		Truffle 是 solidity 开发框架，
 		<ulink url="http://truffleframework.com">http://truffleframework.com</ulink>
@@ -735,6 +735,142 @@ Netkiller Coin
 				</programlisting>
 			</section>
 		</section>
+		<section>
+			<title>高级ERC20代币合约</title>
+			<section>
+				<title>部署合约</title>
+				<para>解锁账号，查看 gas limit 价格</para>
+				<screen>
+				<![CDATA[
+[ethereum@netkiller ~]$ geth attach
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.8.7-stable/linux-amd64/go1.10.2
+coinbase: 0x8232ef29d29f46d3621350ab7097604247ed4830
+at block: 2863 (Fri, 11 May 2018 17:16:01 CST)
+ datadir: /home/ethereum/.ethereum
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> personal.unlockAccount(eth.accounts[0],"12345678",50000)
+true
+> web3.eth.getBlock("pending").gasLimit
+4712388
+> exit
+				]]>
+				</screen>
+				<para>配置 truffle.js</para>
+				<screen>
+				<![CDATA[
+[ethereum@netkiller truffle]$ cat truffle.js
+module.exports = {
+  // See <http://truffleframework.com/docs/advanced/configuration>
+  // to customize your Truffle configuration!
+
+  networks: {
+    development: {
+      host: "localhost",
+      port: 8545,
+	  gas: 4712388,
+      network_id: "*" // Match any network id
+    }
+  }
+
+};
+				]]>
+				</screen>
+				<screen>
+				<![CDATA[
+[ethereum@netkiller truffle]$ truffle compile
+(node:23256) ExperimentalWarning: The fs.promises API is experimental
+Compiling ./contracts/NetkillerAdvancedToken.sol...
+Writing artifacts to ./build/contracts
+				]]>
+				</screen>
+				<screen>
+				<![CDATA[
+[ethereum@netkiller truffle]$ truffle migrate
+(node:23456) ExperimentalWarning: The fs.promises API is experimental
+Using network 'development'.
+
+Running migration: 1_initial_migration.js
+  Deploying Migrations...
+  ... 0xa5937808d9d42dba231738d79d5989e160a2bbc02aa7e8938d0ee71a11eab9a7
+  Migrations: 0x0f6d790c0ce6453161ead810246602c601f836e7
+Saving successful migration to network...
+  ... 0xabd2d76488caa48eac5b9ad5d662b34a8b41acacb5657ff4f78c5c4530913d2b
+Saving artifacts...
+Running migration: 2_initial_token.js
+  Deploying NetkillerAdvancedToken...
+  ... 0x190239e85c54aa407ba8dd98357ebabbe2dcab65811f3c4aab7486af27436a09
+  NetkillerAdvancedToken: 0xb45bd60c48ea18991a5f25a644682d8cf7572ccf
+Saving successful migration to network...
+  ... 0x97b9fffef368b2411341d9fed31bd771d0beebe02bde8c19c61a9e0dde0cc773
+Saving artifacts...
+				]]>
+				</screen>
+			</section>
+
+			<section>
+				<title>控制台检查合约</title>
+				<programlisting>
+				<![CDATA[
+var contract;
+NetkillerAdvancedToken.deployed().then(function(instance){contract=instance;});
+contract.symbol.call().then(console.log);
+contract.name.call().then(console.log);
+contract.totalSupply.call().then(console.log);
+contract.balanceOf.call(web3.eth.accounts[0]).then(console.log);
+
+				]]>
+				</programlisting>
+				<screen>
+				<![CDATA[
+	
+				]]>
+				</screen>
+			</section>
+			<section>
+				<title>锁仓</title>
+				<screen>
+				<![CDATA[
+contract.setLock(true);
+				]]>
+				</screen>
+			</section>
+			<section>
+				<title>测试转账</title>
+				<screen>
+				<![CDATA[
+contract.transfer(web3.eth.accounts[1],100).then(function(){contract.balanceOf.call(web3.eth.accounts[1]).then(console.log);});
+				]]>
+				</screen>
+				<screen>
+				<![CDATA[
+contract.transferFrom(web3.eth.accounts[0],web3.eth.accounts[1],100).then(function(){contract.balanceOf.call(web3.eth.accounts[1]).then(console.log);});
+				]]>
+				</screen>
+			</section>
+			<section>
+				<title>测试空投</title>
+				<screen>
+				<![CDATA[
+[ethereum@netkiller ~]$ geth account new
+INFO [05-11|17:25:49] Maximum peer count                       ETH=25 LES=0 total=25
+Your new account is locked with a password. Please give a password. Do not forget this password.
+Passphrase:
+Repeat passphrase:
+Address: {3c1ba8b80b9a8697f2e34194c2a73a93105be23d}
+				]]>
+				</screen>
+				<screen>
+				<![CDATA[
+contract.currentTotalAirdrop.call().then(console.log);
+contract.setAirdropLock(true);
+contract.balanceOf.call("0x3c1ba8b80b9a8697f2e34194c2a73a93105be23d").then(console.log);
+				]]>
+				</screen>
+			</section>
+		</section>
 	</section>
 	<section id="truffle.command">
 		<title>Truffle 命令详解</title>
@@ -916,6 +1052,30 @@ deployer.deploy([
 	<section id="truffle.console">
 		<title>truffle console</title>
 		<section>
+			<title>获取账号列表</title>
+			<screen>
+			<![CDATA[
+truffle(development)> web3.eth.accounts
+[ '0x8232ef29d29f46d3621350ab7097604247ed4830',
+  '0x3c1ba8b80b9a8697f2e34194c2a73a93105be23d' ]
+  
+truffle(development)> web3.eth.getAccounts(function(err,res) { accounts = res; });
+undefined
+truffle(development)> accounts[0]
+'0x8232ef29d29f46d3621350ab7097604247ed4830'
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>余额</title>
+			<screen>
+			<![CDATA[
+truffle(development)> web3.eth.getBalance(web3.eth.accounts[0])
+BigNumber { s: 1, e: 22, c: [ 206250000 ] }
+			]]>
+			</screen>
+		</section>
+		<section>
 			<title>实例化合约</title>
 			<screen>
 			<![CDATA[
@@ -943,8 +1103,97 @@ Conference.deployed().then(function(instance){contract=instance;});
 contract.buyTicket();
 			]]>
 			</screen>
+			<para>函数参数 call(param1, param2 ......)</para>
+			<screen>
+			<![CDATA[
+truffle(development)> contract.balanceOf.call(web3.eth.accounts[0]).then(console.log);
+BigNumber { s: 1, e: 27, c: [ 12000000000000 ] }
+undefined
+			]]>
+			</screen>
 		</section>
 
+	</section>
+	<section>
+		<title>测试</title>
+		<section>
+			<title>balanceOf</title>
+			<screen>
+			<![CDATA[
+it("should return the balance of token owner", function() {
+  var token;
+  return Token.deployed().then(function(instance){
+    token = instance;
+    return token.balanceOf.call(accounts[0]);
+  }).then(function(result){
+    assert.equal(result.toNumber(), 1000000, 'balance is wrong');
+  })
+});
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>transfer</title>
+			<programlisting>
+			<![CDATA[
+it("should transfer right token", function() {
+  var token;
+  return Token.deployed().then(function(instance){
+    token = instance;
+    return token.transfer(accounts[1], 500000);
+  }).then(function(){
+    return token.balanceOf.call(accounts[0]);
+  }).then(function(result){
+    assert.equal(result.toNumber(), 500000, 'accounts[0] balance is wrong');
+    return token.balanceOf.call(accounts[1]);
+  }).then(function(result){
+    assert.equal(result.toNumber(), 500000, 'accounts[1] balance is wrong');
+  })
+});			
+			]]>
+			</programlisting>
+			<para>transferFrom</para>
+			<programlisting>
+			<![CDATA[
+it("should give accounts[1] authority to spend account[0]'s token", function() {
+  var token;
+  return Token.deployed().then(function(instance){
+   token = instance;
+   return token.approve(accounts[1], 200000);
+  }).then(function(){
+   return token.allowance.call(accounts[0], accounts[1]);
+  }).then(function(result){
+   assert.equal(result.toNumber(), 200000, 'allowance is wrong');
+   return token.transferFrom(accounts[0], accounts[2], 200000, {from: accounts[1]});
+  }).then(function(){
+   return token.balanceOf.call(accounts[0]);
+  }).then(function(result){
+   assert.equal(result.toNumber(), 300000, 'accounts[0] balance is wrong');
+   return token.balanceOf.call(accounts[1]);
+  }).then(function(result){
+   assert.equal(result.toNumber(), 500000, 'accounts[1] balance is wrong');
+   return token.balanceOf.call(accounts[2]);
+  }).then(function(result){
+   assert.equal(result.toNumber(), 200000, 'accounts[2] balance is wrong');
+  })
+});
+			]]>
+			</programlisting>
+			<para>Transfer Event</para>
+			<programlisting>
+			<![CDATA[
+it("should show the transfer event", function() {
+  var token;
+  return Token.deployed().then(function(instance){
+    token = instance;
+    return token.transfer(accounts[1], 100000);
+  }).then(function(result){
+    console.log(result.logs[0].event)
+  })
+});
+			]]>
+			</programlisting>
+		</section>
 	</section>
 	<section id="truffle.boxes">
 		<title>TRUFFLE BOXES</title>
