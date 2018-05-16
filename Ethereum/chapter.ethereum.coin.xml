@@ -193,7 +193,23 @@ contract TokenERC20 {
 		<para>进入目标账号查看余额。</para>
 		<graphic format="png" fileref="../../images/ethereum/coin/coin9.png" width="1024" srccredit="netkiller" />
 	</section>
-	
+	<section id="Verify.And.Publish">
+		<title>Verify And Publish</title>
+		<para>查看合约执行状态等待执行完成 TxReceipt Status:Success</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/code/transaction.png" width="" srccredit="netkiller" />
+		<para>点击合约地址，查看合约</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/code/contract.png" width="" srccredit="netkiller" />
+		<para>进入 Code 选项卡，点击 Verify And Publish 按钮</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/code/code.png" width="" srccredit="netkiller" />
+		<para>输入合约名称 Contract Name，选择编译器版本 Compiler，点击 Fetch From Gist 按钮输入 Gist 上的合约地址。</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/code/gist.png" width="" srccredit="netkiller" />
+		<para>Optimization 选择 Yes</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/code/verify-and-publish.png" width="" srccredit="netkiller" />
+		<para>勾选验证码, 然后点击 Verify And Publish 按钮</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/code/captcha.png" width="" srccredit="netkiller" />
+		<para>合约校验成功</para>
+		<graphic format="png" fileref="../../images/ethereum/etherscan/code/done.png" width="" srccredit="netkiller" />
+	</section>
 	<section id="etherscan.update">
 		<title>Links 链接更新</title>
 		<graphic format="png" fileref="../../images/ethereum/etherscan/update/update.png" width="" srccredit="netkiller" />
