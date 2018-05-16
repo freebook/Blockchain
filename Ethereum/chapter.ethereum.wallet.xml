@@ -307,7 +307,7 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 			<screen>
 			<![CDATA[
 1. Ethereum Wallet上打开开发者工具（从窗口选择开发->切换开发工具->钱包界面，或者输入快捷键Alt+Ctrl+I），显示出控制台界面
-2. 查询Watch Contract列表 - 在控制台输入命令: CustomContracts.find().fetch()；
+2. 查询Watch Contract列表 - 在控制台输入命令: CustomContracts.find().fetch();
 3. 在合约列表中找到需要删除的合约，并且复制ContractID
 4. 删除合约，在控制台输入命令：CustomContracts.remove('<ContractID>')
 			]]>

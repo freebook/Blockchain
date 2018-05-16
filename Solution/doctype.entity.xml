@@ -8,3 +8,4 @@
 <!ENTITY section.dapp.xml				SYSTEM "section.dapp.xml">
 <!ENTITY section.credit.xml				SYSTEM "section.credit.xml">
 <!ENTITY section.bank.xml				SYSTEM "section.bank.xml">
+<!ENTITY section.hospital.xml			SYSTEM "section.hospital.xml">

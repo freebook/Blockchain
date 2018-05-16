@@ -40,25 +40,26 @@
 	</section>
 	<section>
 		<title>健康信息</title>
+		<para>另外现在又很多穿戴设备可以记录脉搏、运动数据、例如跑步，健身等等数据。</para>
 	</section>
-
-	<section id="">
+	<section>
 		<title>出生证明</title>
+		<para>新生儿出生证明</para>
 	</section>
-	<section id="">
-		<title>DNA</title>
-	</section>
-	<section id="">
+	<section>
 		<title>保险</title>
-		理赔过程
-		医疗保险合约，减少出险流程，降低难度，
-		商业保险，社会保险
+		<section>
+			<title>保险信息上链</title>
+			<para>就诊过程中医生经常询问患者，是否购买了商业保险以及社会保险，这样医生可以根据患者的承受能力为患者提供可承受的治疗方案。</para>
+		</section>	
+		<section>
+			<title>区块链解决出险理赔过程</title>
+			<para>传统出险，需要患者保存好单据，填写好出险单，提交病历，收据等资料交给保险公司。保险公司收到单据后审核，如果没有问题转账到患者银行卡上。</para>
+			<para>保险公司加入到盟链中，可以直接访问患者病历，无需患者再提交纸质单据。通过智能合约完成整个理赔过程，也降低了患者理赔操作难度。</para>
+		</section>
 	</section>
 	<section>
-		<title>医疗废物上链</title>
-	</section>
-	<section>
-		<title>激励层</title>
-		<para>区块链的激励层，给予共享医疗数据的</para>
+		<title>智能合约</title>
+		<para>暂无时间写</para>
 	</section>
 </section>
