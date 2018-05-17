@@ -1690,7 +1690,7 @@ Usage: web3j version|wallet|solidity ...
 		<screen>
 		<![CDATA[
 neo@netkiller ~ % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover 
-INFO [02-01|23:35:12] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+INFO [02-01|23:35:12] Starting peer-to-peer node               instance=Geth/v1.8.7-stable-4bb3c89d/linux-amd64/go1.10.2	
 INFO [02-01|23:35:12] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
 INFO [02-01|23:35:12] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
 INFO [02-01|23:35:12] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
@@ -1793,7 +1793,7 @@ public class Web3JClient {
 		<para>运行结果</para>
 		<screen>
 		<![CDATA[
-Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1			
+Geth/v1.8.7-stable-4bb3c89d/linux-amd64/go1.10.2				
 		]]>
 		</screen>
 		<para>除了 TCP 方式连接，还支持 IPC 方式。这种方式比较少用，可以使用 localhost 替代。</para>
