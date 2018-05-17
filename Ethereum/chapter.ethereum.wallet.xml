@@ -313,6 +313,9 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 			]]>
 			</screen>
 		</section>
+		<section>
+			<title>获得空投币</title>
+		</section>
 	</section>
 	<section id="MetaMask">
 		<title>MetaMask</title>
@@ -351,5 +354,13 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 			<para>Key 的名字是 metamask-config 将它复制到  <ulink url="https://metamask.github.io/vault-decryptor/" /> 中可以解密。</para>
 			<para>解密程序的 Github 地址 https://github.com/MetaMask/vault-decryptor</para>
 		</section>
+	</section>
+	<section id="MyEtherWallet">
+		<title>MyEtherWallet</title>
+		<para><ulink url="https://www.myetherwallet.com/">https://www.myetherwallet.com/</ulink></para>
+	</section>
+	<section>
+		<title>MyCrypto</title>
+		<para><ulink url="https://www.mycrypto.com/" /></para>
 	</section>
 </chapter>
