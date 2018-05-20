@@ -6,8 +6,7 @@
 	<para>你看到网上很多实例，安照例子的步骤操作，发现无法成功，很可能跟版本有关。v1.0.0
 		与之前的版本还是有很大差异，所以选择版本很重要。因为 v1.0.0 很快就会 release 所以本章不会在用早起版本举例。
 	</para>
-	<graphic format="png" fileref="../../images/ethereum/devel/devel.png"
-		width="" srccredit="netkiller" />
+	<graphic format="png" fileref="../../images/ethereum/devel/devel.png" width="" srccredit="netkiller" />
 	<section id="web3.js.setup">
 		<title>开发环境</title>
 		<screen>
@@ -245,8 +244,34 @@ web3.eth.sendTransaction({from: coinbase, data: code}).then(function(receipt){
 		</section>
 		<section id="web3.eth.sendSignedTransaction">
 			<title>web3.eth.sendSignedTransaction() 私钥签名转账</title>
-			<para>获取 pending 状态的区块</para>
-			<screen>
+			<section>
+				<title>例子1</title>
+				<programlisting>
+			<![CDATA[
+var account = web3.eth.accounts.privateKeyToAccount(privateKey);
+
+web3.eth.accounts.signTransaction({
+  from: account.address,
+  to: "0x0013a861865d74b13ba94713d4e84d97c57e7081",
+  gas: "3000000",
+  value: '100000000000000000',
+  gasPrice: '0x09184e72a000',
+  data: "0x00"
+}, account.privateKey)
+.then(function(result) {
+  console.log("Results: ", result)
+
+  web3.eth.sendSignedTransaction(result.rawTransaction)
+    .on('receipt', console.log);
+})			
+			]]>
+				</programlisting>
+			</section>
+			<section>
+				<title>例子2</title>
+
+				<para>获取 pending 状态的区块</para>
+				<screen>
 			<![CDATA[
 [ethereum@netkiller web3.example]$ vim test.js
 [ethereum@netkiller web3.example]$ export PRIVATE_KEY=585a219fd6a5583b325e96770a88e69660f404efc06e56be71d82beedb7a989e
@@ -256,8 +281,8 @@ web3.eth.sendTransaction({from: coinbase, data: code}).then(function(receipt){
 > process.env["PRIVATE_KEY"]
 '585a219fd6a5583b325e96770a88e69660f404efc06e56be71d82beedb7a989e'
 			]]>
-			</screen>
-			<programlisting>
+				</screen>
+				<programlisting>
 			<![CDATA[
 [ethereum@netkiller web3.example]$ cat transfer.js
 fs = require('fs');
@@ -323,8 +348,8 @@ const main = async () => {
 
 main();
 			]]>
-			</programlisting>
-			<screen>
+				</programlisting>
+				<screen>
 			<![CDATA[
 [ethereum@netkiller web3.example]$ node test.js
 1.0.0-beta.34
@@ -383,7 +408,8 @@ Receipt info:
 
 Balance after send: 1100
 			]]>
-			</screen>
+				</screen>
+			</section>
 		</section>
 		<section id="web3.eth.getBlock">
 			<title>web3.eth.getBlock() 获取区块</title>
@@ -837,7 +863,8 @@ console.log(encoded.toString('hex'));
 		<para>在线生成工具 https://abi.sonnguyen.ws/， https://abi.hashex.org/ </para>
 		<para>还有一种方法可以找到 ABI 数据
 			https://etherscan.io/tx/0xc53f52b287ec1c71e9d203dd08cc68035ef40bf5155f8b0711da227c01d84d70
-			查看 Input Data: 0029之后所有的数据就是 ABI</para>
+			查看 Input Data: 0029之后所有的数据就是 ABI
+		</para>
 	</section>
 	<section id="web3.example">
 		<title>实用例子</title>
@@ -1077,7 +1104,8 @@ var hdwallet = hdkey.fromMasterSeed(seed)
 			]]>
 			</screen>
 			<para>从路径 m/44'/60'/0'/0/0 导入 Master Key 并生成 Wallet 中第一个帐户的第一组
-				keypair。</para>
+				keypair。
+			</para>
 			<screen>
 			<![CDATA[
 var key1 = hdwallet.derivePath("m/44'/60'/0'/0/0")
@@ -1155,7 +1183,8 @@ undefined
 		<section>
 			<title>生成第二个钱包</title>
 			<para>只需递增最后一位数即可 "m/44'/60'/0'/0/1"，
-				"m/44'/60'/0'/0/2"，"m/44'/60'/0'/0/3"</para>
+				"m/44'/60'/0'/0/2"，"m/44'/60'/0'/0/3"
+			</para>
 			<screen>
 			<![CDATA[
 var key2 = hdwallet.derivePath("m/44'/60'/0'/0/1")
@@ -1180,13 +1209,9 @@ address2 = util.toChecksumAddress(address2.toString('hex'))
 				<ulink url="https://iancoleman.io/bip39/" />
 			</para>
 			<para>输入 mnemonic，选择 ETH - Ethereum</para>
-			<graphic format="png"
-				fileref="../../images/ethereum/wallet/hdwallet/mnemonic.png" width="1024"
-				srccredit="netkiller" />
+			<graphic format="png" fileref="../../images/ethereum/wallet/hdwallet/mnemonic.png" width="1024" srccredit="netkiller" />
 			<para>系统将计算出钱包地址</para>
-			<graphic format="png"
-				fileref="../../images/ethereum/wallet/hdwallet/walletpath.png"
-				width="1024" srccredit="netkiller" />
+			<graphic format="png" fileref="../../images/ethereum/wallet/hdwallet/walletpath.png" width="1024" srccredit="netkiller" />
 		</section>
 		<section>
 			<title>HD Wallet 例子</title>
