@@ -265,8 +265,20 @@ true
 			<![CDATA[
 > web3.eth.gasPrice
 5000000000
+
+> web3.fromWei(web3.eth.gasPrice.toString())
+"0.000000018"
 			]]>
 			</screen>
+		</section>
+		<section id="console.eth.estimateGas">
+			<title>评估执行花费的GAS</title>
+			<programlisting>
+			<![CDATA[
+> eth.estimateGas({from:eth.accounts[1], to: eth.accounts[2], value:12340000000000000000})
+21000
+			]]>
+			</programlisting>
 		</section>
 		<section id="console.eth.getBlock">
 			<title>查看区块信息</title>
@@ -321,6 +333,68 @@ true
 				
 				]]>
 			</screen>
+		</section>
+		<section id="console.web3.eth.getTransaction">
+			<title>返回交易信息</title>
+			<screen>
+			<![CDATA[
+> web3.eth.getTransaction("0x4e27a477e128b200239bc2ecd899077c6ae064da963a919fef41bcc7462aec8d")
+{
+  blockHash: "0x59a9905831e7ae3cb9e7c6f125cf48e2688ef4b39317838f6f6b6c8837d01404",
+  blockNumber: 4367,
+  from: "0x8efb99ec55bcfbe2cfe47918f2d9e55fa732111f",
+  gas: 21000,
+  gasPrice: 18000000000,
+  hash: "0x4e27a477e128b200239bc2ecd899077c6ae064da963a919fef41bcc7462aec8d",
+  input: "0x",
+  nonce: 15,
+  r: "0xa297401df3a1fb0298cbc1dd609deebe9ded319fadc55934ecef4d525198215",
+  s: "0x780d8c46bc8d1bb89ae9d78055307d9d68a4f89ba699ef86d3f8ba88383139a6",
+  to: "0xf0688330101d53bd0c6ede2ef04d33c2010e9a5d",
+  transactionIndex: 0,
+  v: "0x42",
+  value: 999622000000000000
+}
+			]]>
+			</screen>
+		</section>
+		<section id="console.web3.eth.getTransactionReceipt">
+			<title>返回交易收据</title>
+			<screen>
+			<![CDATA[
+> web3.eth.getTransactionReceipt("0x4e27a477e128b200239bc2ecd899077c6ae064da963a919fef41bcc7462aec8d")
+{
+  blockHash: "0x59a9905831e7ae3cb9e7c6f125cf48e2688ef4b39317838f6f6b6c8837d01404",
+  blockNumber: 4367,
+  contractAddress: null,
+  cumulativeGasUsed: 21000,
+  from: "0x8efb99ec55bcfbe2cfe47918f2d9e55fa732111f",
+  gasUsed: 21000,
+  logs: [],
+  logsBloom: "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  root: "0x69d278e7594e8a5affbebc84380516437f3e4b241b272e6eaebf752af9c76047",
+  to: "0xf0688330101d53bd0c6ede2ef04d33c2010e9a5d",
+  transactionHash: "0x4e27a477e128b200239bc2ecd899077c6ae064da963a919fef41bcc7462aec8d",
+  transactionIndex: 0
+}
+			]]>
+			</screen>
+			<para>返回值：</para>
+			<literallayout>
+			<![CDATA[
+Object - 交易的收据对象，如果找不到返回null 
+blockHash: String - 32字节，这个交易所在区块的哈希。
+blockNumber: Number - 交易所在区块的块号。
+transactionHash: String - 32字节，交易的哈希值。
+transactionIndex: Number - 交易在区块里面的序号，整数。
+from: String - 20字节，交易发送者的地址。
+to: String - 20字节，交易接收者的地址。如果是一个合约创建的交易，返回null。
+cumulativeGasUsed: Number - 当前交易执行后累计花费的gas总值10。
+gasUsed: Number - 执行当前这个交易单独花费的gas。
+contractAddress: String - 20字节，创建的合约地址。如果是一个合约创建交易，返回合约地址，其它情况返回null。
+logs: Array - 这个交易产生的日志对象数组。		
+			]]>
+			</literallayout>
 		</section>
 		<section id="console.eth.syncing">
 			<title>eth.syncing 同步状态</title>
@@ -388,7 +462,7 @@ setInterval(function(){
 
 	<section id="console.web3">
 		<title>web3</title>
-		<section id="console.web3.fromWei">
+		<section id="console.web3.unit">
 			<title>Ether币的基本单位</title>
 			<para>Ether币最小的单位是Wei，也是命令行默认的单位, 然后每1000个进一个单位，依次是</para>
 			<literallayout>
@@ -411,10 +485,10 @@ ether (1000 finney)
 "0.01"				
 					]]>
 			</screen>
-
-			<section id="console.web3.toWei">
-				<title>web3.toWei</title>
-				<screen>
+		</section>
+		<section id="console.web3.toWei">
+			<title>web3.toWei</title>
+			<screen>
 						<![CDATA[
 Ether–> Wei
 
@@ -425,11 +499,11 @@ Ether–> Wei
 > web3.toWei(0.00034)
 "340000000000000"						
 						]]>
-				</screen>
-			</section>
-			<section id="console.web3.fromWei">
-				<title>web3.fromWei</title>
-				<screen>
+			</screen>
+		</section>
+		<section id="console.web3.fromWei">
+			<title>web3.fromWei</title>
+			<screen>
 						<![CDATA[
 Wei –> Ether
 
@@ -439,10 +513,8 @@ Wei –> Ether
 "1"
 >
 						]]>
-				</screen>
-			</section>
+			</screen>
 		</section>
-
 	</section>
 	<section id="console.admin">
 		<title>admin 管理</title>

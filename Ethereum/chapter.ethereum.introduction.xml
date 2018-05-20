@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="">
+	<title>以太坊</title>
+	<section>
+		<title>名词解释</title>
+		<literallayout>
+		<![CDATA[
+DAPP 去中心化应用		
+		]]>
+		</literallayout>
+		<literallayout>
+		<![CDATA[
+离线的钱包就是冷钱包，
+在线的钱包就是热钱包，
+
+从安全性角度看：冷钱包>热钱包>平台
+从便捷性看：平台>热钱包>冷钱包
+		]]>
+		</literallayout>
+		
+	</section>
+	<section id="ethereum.cost">
+		<title>如何计算Gas手续费</title>
+		<para>下面我们用实例讲解怎样计算以太坊在执行交易时花费的 gas 费用。</para>
+		<screen>
+		<![CDATA[
+> miner.start(1)
+null
+		]]>
+		</screen>
+		<para>准备两个账号</para>
+		<screen>
+		<![CDATA[
+> eth.getBalance(eth.accounts[3])
+1000000000000000000
+> eth.getBalance(eth.accounts[5])
+0
+		]]>
+		</screen>
+		<para>开始计算 gas 费用</para>
+		<screen>
+		<![CDATA[
+> var estimateGas = eth.estimateGas({from:eth.accounts[1], to: eth.accounts[2], value: web3.toWei(1)})
+undefined
+> console.log(estimateGas)
+21000
+undefined
+> 
+> var cost = estimateGas * gasPrice
+undefined
+> console.log(cost)
+378000000000000
+undefined
+> web3.fromWei(cost)
+"0.000378"
+		]]>
+		</screen>
+		<para>gas 花费 0.000378 ETH</para>
+		
+	</section>
+	<section id="">
+		<title>转出账号中所有 ETH，Ethereum Wallet 中的 Send everything 实现方法</title>
+		<screen>
+		<![CDATA[
+> personal.unlockAccount(eth.accounts[3], "12345678")
+true
+
+> eth.sendTransaction({from: eth.accounts[3], to: eth.accounts[5], value: eth.getBalance(eth.accounts[3]) - cost, gas: estimateGas})
+"0x4e27a477e128b200239bc2ecd899077c6ae064da963a919fef41bcc7462aec8d"
+		]]>
+		</screen>
+		<para>查看交易细节</para>
+		<screen>
+		<![CDATA[
+> web3.eth.getTransaction("0x4e27a477e128b200239bc2ecd899077c6ae064da963a919fef41bcc7462aec8d")
+{
+  blockHash: "0x59a9905831e7ae3cb9e7c6f125cf48e2688ef4b39317838f6f6b6c8837d01404",
+  blockNumber: 4367,
+  from: "0x8efb99ec55bcfbe2cfe47918f2d9e55fa732111f",
+  gas: 21000,
+  gasPrice: 18000000000,
+  hash: "0x4e27a477e128b200239bc2ecd899077c6ae064da963a919fef41bcc7462aec8d",
+  input: "0x",
+  nonce: 15,
+  r: "0xa297401df3a1fb0298cbc1dd609deebe9ded319fadc55934ecef4d525198215",
+  s: "0x780d8c46bc8d1bb89ae9d78055307d9d68a4f89ba699ef86d3f8ba88383139a6",
+  to: "0xf0688330101d53bd0c6ede2ef04d33c2010e9a5d",
+  transactionIndex: 0,
+  v: "0x42",
+  value: 999622000000000000
+}
+		
+		]]>
+		</screen>
+		<para>现在查看from账号，余额已经清零。</para>
+		<screen>
+		<![CDATA[
+> eth.getBalance(eth.accounts[3])
+0		
+		]]>
+		</screen>
+	</section>
+</chapter>

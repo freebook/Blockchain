@@ -2,8 +2,8 @@
 <chapter id="faq">
 	<title>FAQ</title>
 
-	<section id="">
-		<title>Error: etherbase missing: etherbase address must be explicitly	specified</title>
+	<section>
+		<title>Error: etherbase missing: etherbase address must be explicitly specified</title>
 		<screen>
 		<![CDATA[
 ERROR[02-10|16:12:45] Cannot start mining without etherbase    err="etherbase address must be explicitly specified"

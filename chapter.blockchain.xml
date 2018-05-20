@@ -250,26 +250,4 @@
 			<para>缺点：选举固定数量的见证人作记账候选人有可能不适合于完全去中心化的场景。另外在网络节点数少的场景，选举的见证人的代表性也不强。</para>
 		</section>
 	</section>
-	<section>
-		<title>名词解释</title>
-		<literallayout>
-		<![CDATA[
-DAPP 去中心化应用		
-		]]>
-		</literallayout>
-		<literallayout>
-		<![CDATA[
-离线的钱包就是冷钱包，
-在线的钱包就是热钱包，
-
-从安全性角度看：冷钱包>热钱包>平台
-从便捷性看：平台>热钱包>冷钱包
-		]]>
-		</literallayout>
-		<literallayout>
-		<![CDATA[
-		]]>
-		</literallayout>
-	</section>
-
 </chapter>
