@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="">
+<chapter>
 	<title>以太坊</title>
 	<section>
 		<title>名词解释</title>
@@ -17,7 +17,7 @@ DAPP 去中心化应用
 从便捷性看：平台>热钱包>冷钱包
 		]]>
 		</literallayout>
-		
+
 	</section>
 	<section id="ethereum.cost">
 		<title>如何计算Gas手续费</title>
@@ -56,9 +56,9 @@ undefined
 		]]>
 		</screen>
 		<para>gas 花费 0.000378 ETH</para>
-		
+
 	</section>
-	<section id="">
+	<section>
 		<title>转出账号中所有 ETH，Ethereum Wallet 中的 Send everything 实现方法</title>
 		<screen>
 		<![CDATA[
