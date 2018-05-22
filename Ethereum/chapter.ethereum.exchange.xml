@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="exchange">
-	<title>交易所</title>
+	<section id="btctrade">
+		<title>btctrade api</title>
+		<para><ulink url="https://www.btctrade.com/api.help.html" /></para>
+	</section>
+	<section id="xchange">
+		<title>XChange - Cryptocurrency Exchange API</title>
+		<para><ulink url="https://knowm.org/open-source/xchange/" /></para>
+	</section>
+	
+<!-- 	<title>交易所</title>
 	<section id="gate">
 		<title>gate</title>
 		<para><ulink url="https://gate.io">https://gate.io</ulink></para>
@@ -20,5 +29,5 @@
 	<section id="OTCBTC">
 		<title>OTCBTC</title>
 		<para><ulink url="https://otcbtc.com">https://otcbtc.com</ulink></para>
-	</section>
+	</section> -->
 </chapter>

@@ -213,6 +213,55 @@ contract.methods.balanceOf(toAddress).call().then(console.log).catch(console.log
     web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', console.log);
 			]]>
 			</programlisting>
+			<programlisting>
+			<![CDATA[
+'use strict';
+const Web3 = require('web3');
+
+const wsAddress = 'wss://rinkeby.infura.io/ws';
+const contractJson = '(taken from solc or remix online compiler)';
+const privateKey = '0xOOOX';
+const contractAddress = '0xOOOX';
+const walletAddress = '0xOOOX';
+
+const webSocketProvider = new Web3.providers.WebsocketProvider(wsAddress);
+const web3 = new Web3(new Web3.providers.WebsocketProvider(webSocketProvider));
+const contract = new web3.eth.Contract(
+  JSON.parse(contractJson),
+  contractAddress
+);
+// change this to whatever contract method you are trying to call, E.G. SimpleStore("Hello World")
+const query = contract.methods.SimpleStore('Hello World');
+const encodedABI = query.encodeABI();
+const tx = {
+  from: walletAddress,
+  to: contractAddress,
+  gas: 2000000,
+  data: encodedABI,
+};
+
+const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+console.log(account);
+web3.eth.getBalance(walletAddress).then(console.log);
+
+web3.eth.accounts.signTransaction(tx, privateKey).then(signed => {
+  const tran = web3.eth
+    .sendSignedTransaction(signed.rawTransaction)
+    .on('confirmation', (confirmationNumber, receipt) => {
+      console.log('=> confirmation: ' + confirmationNumber);
+    })
+    .on('transactionHash', hash => {
+      console.log('=> hash');
+      console.log(hash);
+    })
+    .on('receipt', receipt => {
+      console.log('=> reciept');
+      console.log(receipt);
+    })
+    .on('error', console.error);
+});
+			]]>
+			</programlisting>
 		</section>
 	</section>
 
