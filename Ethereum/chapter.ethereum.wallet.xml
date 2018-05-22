@@ -348,6 +348,16 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 			<para>查看 mnemonic 字符串</para>
 			<graphic format="png" fileref="../../images/ethereum/metamask/save-seed-words.png" width="800" srccredit="netkiller" />
 		</section>
+		<section id="metamask.addtoken">
+			<title>添加 Token 币种</title>
+			<para>有时我们需要添加新币种，还有一个目的是为了接收空投币。</para>
+			<para>只需输入合约地址即可，其他选项会自动填充。</para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/add-token.png" width="800" srccredit="netkiller" />
+			<para>显示代币数量</para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/add-token-balance.png" width="800" srccredit="netkiller" />
+			<para>完成代币添加</para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/add-token-done.png" width="800" srccredit="netkiller" />
+		</section>
 		<section>
 			<title>MetaMask Vault Decryptor</title>
 			<para>MetaMask 将钱包数据存储在浏览中  Local Storage 中，这是Chrome 谷歌浏览器特有的 Key,Value数据库。</para>
