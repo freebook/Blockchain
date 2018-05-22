@@ -1,32 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="infura">
+<chapter id="index"><?dbhtml dir="infura" ?>
 	<title>infura</title>
 	<para>
 		<ulink url="https://infura.io/" />
 	</para>
 	<para>SCALABLE BLOCKCHAIN INFRASTRUCTURE</para>
-	<para>We provide secure, reliable, and scalable access to Ethereum and
-		IPFS.
-	</para>
+	<para>We provide secure, reliable, and scalable access to Ethereum and IPFS. </para>
 	<section id="infura.signup">
 		<title>注册账号</title>
-		<para>
-
-		</para>
+		<para></para>
 		<para>
 			<ulink url="https://infura.io/signup" />
 		</para>
 		<para>输入用户名和邮箱即可注册</para>
-		<graphic format="png" fileref="../../images/ethereum/infura/signup.png"
-			width="1024" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/infura/signup.png" width="1024" srccredit="netkiller" />
 		<para>这些地址你需要牢记</para>
-		<graphic format="png" fileref="../../images/ethereum/infura/network.png"
-			width="1024" srccredit="netkiller" />
+		<graphic format="png" fileref="../../images/ethereum/infura/network.png" width="1024" srccredit="netkiller" />
 
 		<literallayout>
 			<![CDATA[
 NETWORK		DESCRIPTION			URL
-Mainnet		production network	https://mainnet.infura.io/CsS9shwaAab0z7B4LP2d
+Mainnet		production network		https://mainnet.infura.io/CsS9shwaAab0z7B4LP2d
 Ropsten		test network			https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d
 INFURAnet	test network			https://infuranet.infura.io/CsS9shwaAab0z7B4LP2d
 Kovan		test network			https://kovan.infura.io/CsS9shwaAab0z7B4LP2d
@@ -44,8 +38,7 @@ IPFS			gateway				https://ipfs.infura.io
 			<title>jsonrpc</title>
 			<para>
 				JSONRPC 文档
-				<ulink
-					url="https://github.com/INFURA/infura/blob/master/docs/source/index.html.md#choosing-a-client-to-handle-your-request" />
+				<ulink url="https://github.com/INFURA/infura/blob/master/docs/source/index.html.md#choosing-a-client-to-handle-your-request" />
 			</para>
 			<screen>
 				<![CDATA[
@@ -263,6 +256,121 @@ web3.eth.accounts.signTransaction(tx, privateKey).then(signed => {
 			]]>
 			</programlisting>
 		</section>
-	</section>
+		<section>
+			<title>执行合约</title>
+			<programlisting>
+			<![CDATA[
+const fs = require('fs');
+const Web3 = require('web3');
+const web3 = new Web3("https://mainnet.infura.io/CsS9shwaAab0z7B4LP2d");
+const Tx = require('ethereumjs-tx');
 
+const abi = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_status","type":"bool"}],"name":"setAirdropStatus","outputs":[{"name":"status","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"airdropStatus","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_mintedAmount","type":"uint256"}],"name":"mintAirdropToken","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"burn","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_lock","type":"bool"}],"name":"setLock","outputs":[{"name":"status","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"airdropCurrentTotal","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"target","type":"address"},{"name":"mintedAmount","type":"uint256"}],"name":"mintToken","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_value","type":"uint256"}],"name":"burnFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_amount","type":"uint256"}],"name":"setAirdropAmount","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"frozenAccount","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"airdropTotalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"touched","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"target","type":"address"},{"name":"freeze","type":"bool"}],"name":"freezeAccount","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"lock","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"airdropAmount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"initialSupply","type":"uint256"},{"name":"tokenName","type":"string"},{"name":"tokenSymbol","type":"string"},{"name":"decimalUnits","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"target","type":"address"},{"indexed":false,"name":"frozen","type":"bool"}],"name":"FrozenFunds","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"target","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"AirDrop","type":"event"}];
+const address = "0x3e827461Cc53CAE366175A291ed7c629F87CfF39";
+const key = "19A57E4F6274AF1E0B9C3F8F7E3503876A850AFEE1912B8B9C5D9358EDEA0362"
+
+const contractAddress = "0x44cCf3d1601427Fe0B0f7588eD058216830cd13C";
+const contract = new web3.eth.Contract(abi, contractAddress, { "from": address});
+
+contract.methods.balanceOf(address).call().then(function(balance){
+    console.log(balance)
+});
+
+contract.methods.decimals().call().then(function(decimals){
+    console.log(decimals)
+});
+    
+web3.eth.getGasPrice().then(function(gasPrice){
+    var price = Number(gasPrice);
+
+    web3.eth.getTransactionCount(address).then(function(nonce){
+        var amount = "1000000";
+        contract.methods.mintAirdropToken(amount).estimateGas().then(function(gas){
+            var rawTransaction = {
+                "nonce": web3.utils.toHex(nonce),
+                "from": address,
+                "to": contractAddress,
+                "gas": web3.utils.toHex(gas),
+                "gasPrice": web3.utils.toHex(price),
+                // "gasLimit": this.web3.utils.toHex(gasLimit.gasLimit),
+                "value": "0x0",
+                "data": contract.methods.mintAirdropToken(amount).encodeABI()
+            };
+
+            console.log(rawTransaction);
+            
+            var privateKey = new Buffer.from(key, 'hex');
+            var tx = new Tx(rawTransaction);
+            tx.sign(privateKey);
+            var serializedTx = tx.serialize();
+
+            web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', function(txhash){
+                console.log(txhash);
+            }); 
+        });
+    });
+});
+
+web3.eth.getGasPrice().then(function(gasPrice){
+    var price = Number(gasPrice);
+
+    web3.eth.getTransactionCount(address).then(function(nonce){
+        var amount = "10";
+        contract.methods.setAirdropAmount(amount).estimateGas().then(function(gas){
+            var rawTransaction = {
+                "nonce": web3.utils.toHex(nonce),
+                "from": address,
+                "to": contractAddress,
+                "gas": web3.utils.toHex(gas),
+                "gasPrice": web3.utils.toHex(price),
+                "value": "0x0",
+                "data": contract.methods.setAirdropAmount(amount).encodeABI()
+            };
+
+            console.log(rawTransaction);
+            
+            var privateKey = new Buffer.from(key, 'hex');
+            var tx = new Tx(rawTransaction);
+            tx.sign(privateKey);
+            var serializedTx = tx.serialize();
+
+            web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', function(txhash){
+                console.log(txhash);
+            }); 
+        });
+    });
+});
+
+web3.eth.getGasPrice().then(function(gasPrice){
+    var price = Number(gasPrice);
+
+    web3.eth.getTransactionCount(address).then(function(nonce){
+        var status = true;
+        contract.methods.setAirdropStatus(status).estimateGas().then(function(gas){
+            var rawTransaction = {
+                "nonce": web3.utils.toHex(nonce),
+                "from": address,
+                "to": contractAddress,
+                "gas": web3.utils.toHex(gas),
+                "gasPrice": web3.utils.toHex(price),
+                "value": "0x0",
+                "data": contract.methods.setAirdropStatus(status).encodeABI()
+            };
+            console.log(rawTransaction);
+            
+            var privateKey = new Buffer.from(key, 'hex');
+            var tx = new Tx(rawTransaction);
+            tx.sign(privateKey);
+            var serializedTx = tx.serialize();
+
+            web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', function(txhash){
+                console.log(txhash);
+            }); 
+        });
+    });
+});			
+			]]>
+			</programlisting>
+		</section>
+	</section>
 </chapter>

@@ -4,9 +4,9 @@
 	&chapter.ethereum.wallet.xml;
 	&chapter.ethereum.token.xml;
 	&chapter.ethereum.solidity.xml;
-	&chapter.ethereum.infura.xml;
 	&chapter.ethereum.truffle.xml;
 	&chapter.ethereum.devel.xml;
+	&chapter.ethereum.infura.xml;
 	&chapter.ethereum.case.xml;
 	<!-- &chapter.ethereum.exchange.xml; -->
 	&chapter.ethereum.faq.xml;
