@@ -487,6 +487,41 @@ myContract.deploy({ data: bin }).send({
 			</programlisting>
 		</section>
 		<section>
+			<title>使用最佳手续费创建合约</title>
+			<programlisting>
+			<![CDATA[
+var fs = require('fs');
+var net = require('net');
+var Web3 = require("web3");
+var fs = require ('fs');
+
+var web3 = new Web3("http://localhost:8545");
+
+var abi = JSON.parse(fs.readFileSync('NetkillerAdvancedToken.abi'));
+var bin = '0x'+fs.readFileSync('NetkillerAdvancedToken.bin').toString();
+var address = '0x22c57F0537414FD95b9f0f08f1E51d8b96F14029';
+var myContract = new web3.eth.Contract(abi, null, {from: address});
+
+var options = { data: bin, arguments: [100000000, 'Netkiller Test Coin', 'NTC', 18] };
+
+web3.eth.getGasPrice().then(function(gasPrice){
+    myContract.deploy(options).estimateGas(function(err, gas){
+        console.log(gas);
+        web3.eth.personal.unlockAccount(req.body.from, req.body.password).then(function(error){
+            myContract.deploy(options).send({
+                from: address,
+                gas: gas,
+                gasPrice: gasPrice
+            }).then(function(newContractInstance){
+                console.log(newContractInstance.options.address) 
+            });
+        });
+    });
+});			
+			]]>
+			</programlisting>
+		</section>
+		<section>
 			<title>调用合约</title>
 			<para>部署智能合约，你可以使用钱包部署，也可以使用Truffer部署，不管你采用什么方式，最终我们需要合约地址。</para>
 			<programlisting>
@@ -1958,7 +1993,7 @@ public class CredentialsTest {
 			</programlisting>
 		</section>
 		<section>
-			<title>转账</title>
+			<title>通过 Keystore 转账</title>
 			<programlisting>
 			<![CDATA[
 	public void transfer(String account, float coin)
@@ -1970,6 +2005,98 @@ public class CredentialsTest {
 				.sendFunds(web3j, credentials, account, BigDecimal.valueOf(coin), Unit.ETHER).send();
 		System.out.println(transactionReceipt.getStatus());
 	}
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>通过私钥转账</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.ethereum.transaction;
+
+import org.web3j.crypto.Credentials;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.tx.Transfer;
+import org.web3j.utils.Convert;
+
+import java.math.BigDecimal;
+
+public class TransactionTest {
+	public static void main(String[] args) throws Exception {
+		Web3j web3j = Web3j.build(new HttpService("https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d"));
+		String toAddress = "0xf56b81a2bcb964D2806071e9Be4289A5559BB0fA";
+		Credentials credentials = Credentials.create("16690967F2BADABE13A067066558537228D8AF63ECCB022FFBDC970EC717BC3A");
+
+		TransactionReceipt transactionReceipt = Transfer.sendFunds(web3j, credentials, toAddress, BigDecimal.valueOf(0.002), Convert.Unit.ETHER).send();
+
+		System.out.println(transactionReceipt.getTransactionHash());
+	}
+}		
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>指定 gas 费用</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.ethereum.transaction;
+
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.TransactionEncoder;
+import org.web3j.crypto.RawTransaction;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
+import org.web3j.protocol.core.methods.response.EthSendTransaction;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.utils.Convert;
+import org.web3j.utils.Numeric;
+
+import java.math.BigInteger;
+import java.util.concurrent.ExecutionException;
+
+public class RawTransactionTest {
+
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
+		// TODO Auto-generated method stub
+		// 设置需要的矿工费
+		BigInteger gasPrice = BigInteger.valueOf(18_000_000_000L);
+		BigInteger gasLimit = BigInteger.valueOf(4_300_000);
+		// System.out.println(gasPrice);
+
+		// 连接 ropsten测试环境，这里使用的是infura这个客户端
+		Web3j web3j = Web3j.build(new HttpService("https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d"));
+		// 转出账户地址
+		String fromAddress = "0x22c57F0537414FD95b9f0f08f1E51d8b96F14029";
+		// 接收账户地址
+		String toAddress = "0xf56b81a2bcb964D2806071e9Be4289A5559BB0fA";
+		// 转账人的私钥
+		Credentials credentials = Credentials.create("16697AC066558537CADABF68BDE13A06790967F2BC3A228DB022FF0EC717B3EC");
+
+		// Nonce 就相当于数据中PK主键，每次Nonce会做 +1 操作
+		EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(fromAddress, DefaultBlockParameterName.LATEST).sendAsync().get();
+		BigInteger nonce = ethGetTransactionCount.getTransactionCount();
+
+		// 创建交易并转0.05个以太币
+		BigInteger value = Convert.toWei("0.05", Convert.Unit.ETHER).toBigInteger();
+		RawTransaction rawTransaction = RawTransaction.createEtherTransaction(nonce, gasPrice, gasLimit, toAddress, value);
+
+		// 对交易做签名
+		byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction, credentials);
+		String hexValue = Numeric.toHexString(signedMessage);
+
+		// 发送交易
+		EthSendTransaction ethSendTransaction = web3j.ethSendRawTransaction(hexValue).sendAsync().get();
+		String transactionHash = ethSendTransaction.getTransactionHash();
+
+		// 获得到transactionHash后就可以到以太坊的网站上查询这笔交易的状态了
+		System.out.println("https://ropsten.etherscan.io/tx/" + transactionHash);
+
+	}
+
+}
 			]]>
 			</programlisting>
 		</section>

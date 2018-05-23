@@ -364,12 +364,25 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 			<para>Key 的名字是 metamask-config 将它复制到  <ulink url="https://metamask.github.io/vault-decryptor/" /> 中可以解密。</para>
 			<para>解密程序的 Github 地址 https://github.com/MetaMask/vault-decryptor</para>
 		</section>
+		<section>
+			<title>部署合约</title>
+			<para>这里假设你已经安装 MetaMask 钱包，并且创建了账号，账号有足够的 ETH 用来创建合约。</para>
+			<para>现在打开 https://remix.ethereum.org/</para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/remix.png" width="800" srccredit="netkiller" />
+			<para>点击“+”加号创建合约，合约名称NetkillerToken, 编译合约。进入 “Run” 选项卡运行合约</para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/remix-transact.png" width="800" srccredit="netkiller" />
+			<para>Environment 设置为 Injected Web3 这时可以看到 MetaMask 中的账号以及余额, 然后设置构造方法，最后点击“transact”按钮开始部署合约。</para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/remix-metamask.png" width="800" srccredit="netkiller" />
+			<para>确认手续费</para>
+			<graphic format="png" fileref="../../images/ethereum/metamask/remix-console.png" width="800" srccredit="netkiller" />
+			<para>remix 显示出TX Hash 表示完成。</para>
+		</section>
 	</section>
 	<section id="MyEtherWallet">
 		<title>MyEtherWallet</title>
 		<para><ulink url="https://www.myetherwallet.com/">https://www.myetherwallet.com/</ulink></para>
 	</section>
-	<section>
+	<section id="MyCrypto">
 		<title>MyCrypto</title>
 		<para><ulink url="https://www.mycrypto.com/" /></para>
 	</section>
