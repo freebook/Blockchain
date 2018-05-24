@@ -2394,6 +2394,93 @@ public class Infura {
 		]]>
 		</programlisting>
 	</section>
+	<section>
+		<title>助记词</title>
+		<section>
+			<title>获取随机助记词</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.ethereum.mnemonic;
+
+import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.List;
+
+import org.bitcoinj.wallet.DeterministicSeed;
+import org.bitcoinj.wallet.UnreadableWalletException;
+
+public class MnemonicTest {
+	public static void main(String[] args) throws UnreadableWalletException, IOException {
+		// TODO Auto-generated method stub
+
+		String passphrase = "";
+		SecureRandom secureRandom = new SecureRandom();
+		long creationTimeSeconds = System.currentTimeMillis() / 1000;
+		DeterministicSeed deterministicSeed = new DeterministicSeed(secureRandom, 128, passphrase, creationTimeSeconds);
+		List<String> mnemonicCode = deterministicSeed.getMnemonicCode();
+		System.out.println(String.join(" ", mnemonicCode));
+
+	}
+}
+			]]>
+			</programlisting>
+			<para>输出</para>
+			<screen>
+			<![CDATA[
+romance rhythm session oyster upgrade include hammer chimney float bridge autumn accident
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>助记词导出公钥和私钥</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.ethereum.mnemonic;
+
+import java.math.BigInteger;
+import java.util.List;
+
+import org.bitcoinj.crypto.ChildNumber;
+import org.bitcoinj.crypto.DeterministicKey;
+import org.bitcoinj.crypto.HDUtils;
+import org.bitcoinj.wallet.DeterministicKeyChain;
+import org.bitcoinj.wallet.DeterministicSeed;
+import org.bitcoinj.wallet.UnreadableWalletException;
+import org.web3j.crypto.Credentials;
+
+public class Test {
+
+	public static void main(String[] args) throws UnreadableWalletException {
+		// TODO Auto-generated method stub
+		String seedCode = "client dune unfair assume level width bind control mad member old crystal";
+
+		// BitcoinJ
+		DeterministicSeed seed = new DeterministicSeed(seedCode, null, "", 1409478661L);
+		DeterministicKeyChain chain = DeterministicKeyChain.builder().seed(seed).build();
+		List<ChildNumber> keyPath = HDUtils.parsePath("M/44H/60H/0H/0/0");
+		DeterministicKey key = chain.getKeyByPath(keyPath, true);
+		BigInteger privKey = key.getPrivKey();
+
+		// Web3j
+
+		Credentials credentials = Credentials.create(privKey.toString(16));
+		String address = credentials.getAddress();
+		String privateKey = privKey.toString(16);
+		System.out.println(address);
+		System.out.println(privateKey);
+	}
+}			
+			]]>
+			</programlisting>
+			<para>输出</para>
+			<screen>
+			<![CDATA[
+0x372fda02e8a1eca513f2ee5901dc55b8b5dd7411
+f592b7bf06ca9fd7696ba95d6ed8e357de6a2379b6d5fe1ffd53c6b4b063cd4a
+			]]>
+			</screen>
+		</section>
+	</section>
 </chapter>
 <chapter id="web3.py">
 	<title>web3.py - A python interface for interacting with the Ethereum

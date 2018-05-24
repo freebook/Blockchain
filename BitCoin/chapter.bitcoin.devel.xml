@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+	<title>BitCoinJ</title>
+	<section>
+		<title>生成 Mnemonic</title>
+		<programlisting>
+		<![CDATA[
+package cn.netkiller.bitcoin.mnemonic;
+
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.wallet.DeterministicSeed;
+import org.bitcoinj.wallet.Wallet;
+
+public class MnemonicTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		NetworkParameters params = TestNet3Params.get();
+		Wallet wallet = new Wallet(params);
+
+		DeterministicSeed seed = wallet.getKeyChainSeed();
+		System.out.println("seed: " + seed.toString());
+
+		System.out.println("creation time: " + seed.getCreationTimeSeconds());
+		System.out.println("mnemonicCode: " + String.join(" ", seed.getMnemonicCode()));
+	}
+
+}
+		]]>
+		</programlisting>
+		<para>运行结果</para>
+		<screen>
+		<![CDATA[
+seed: DeterministicSeed cf1a8c22b2733ed80a4e9e89337ad58c069a58f43ce819826fc428e0e9b21dd025f912b45211e839897188d0dfa510882ef8bbe4691ba8795f03fd236b537ca5 source effort task misery system sorry avocado coach isolate body transfer result
+creation time: 1527126797
+mnemonicCode: source effort task misery system sorry avocado coach isolate body transfer result
+		]]>
+		</screen>
+	</section>
+</chapter>
