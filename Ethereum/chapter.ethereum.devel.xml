@@ -1343,6 +1343,55 @@ module.exports = {
 			</programlisting>
 		</section>
 		<section>
+			<title>Mnemonic To Seed 加密</title>
+			<para>没有加密 seed 是很不安全的，任何人都能通过 Mnemonic 还原出公钥和私钥。</para>
+			<programlisting>
+			<![CDATA[
+var bip39 = require('bip39')
+var hdkey = require('ethereumjs-wallet/hdkey')
+var util = require('ethereumjs-util')
+var mnemonic = bip39.generateMnemonic()
+
+var password = "http://www.netkiller.cn"
+var seed = bip39.mnemonicToSeed(mnemonic, password)
+var hdwallet = hdkey.fromMasterSeed(seed)
+var key1 = hdwallet.derivePath("m/44'/60'/0'/0/0")
+var address1 = util.pubToAddress(key1._hdkey._publicKey, true)
+address1 = util.toChecksumAddress(address1.toString('hex'))
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>中文助记词</title>
+			<programlisting>
+			<![CDATA[
+var bip39 = require('bip39')
+var mnemonic = bip39.generateMnemonic(128, null, bip39.wordlists.chinese_simplified)
+console.log(mnemonic)
+
+var seed = bip39.mnemonicToSeed(mnemonic)
+var hdwallet = hdkey.fromMasterSeed(seed)
+var key1 = hdwallet.derivePath("m/44'/60'/0'/0/0")
+var address1 = util.pubToAddress(key1._hdkey._publicKey, true)
+address1 = util.toChecksumAddress(address1.toString('hex'))
+			]]>
+			</programlisting>
+			<para>演示</para>
+			<screen>
+			<![CDATA[
+> var bip39 = require('bip39')
+undefined
+
+> var mnemonic = bip39.generateMnemonic(128, bip39.randomBytes, bip39.wordlists.chinese_simplified)
+undefined
+
+> console.log(mnemonic)
+俄 判 菌 诗 仪 偏 方 都 激 输 失 稀
+undefined
+			]]>
+			</screen>
+		</section>
+		<section>
 			<title>代币转账</title>
 			<!-- https://github.com/ethereum/web3.js/issues/1151 -->
 		</section>

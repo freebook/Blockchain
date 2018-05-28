@@ -15,6 +15,10 @@ DAPP 去中心化应用
 
 从安全性角度看：冷钱包>热钱包>平台
 从便捷性看：平台>热钱包>冷钱包
+
+bip32 = hd wallets, what they are how they work
+bip39 = specific type of mnemonic, and the process for turning it into a bip32 seed
+bip44 = a specific format of a bip32 wallet
 		]]>
 		</literallayout>
 
