@@ -16,7 +16,7 @@ npm install web3 --save
 npm install solc
 		]]>
 		</screen>
-		<section id="">
+		<section>
 			<title>Ropsten 测试网</title>
 			<screen>
 			<![CDATA[
@@ -1063,7 +1063,7 @@ tokenContract.deploy({
 			]]>
 			</screen>
 		</section>
-		<section id="">
+		<section>
 			<title>ERC20 Example</title>
 			<para>通过Web3操作代币转账</para>
 			<screen>
@@ -1445,7 +1445,7 @@ undefined
 			<![CDATA[
 curl -s https://raw.githubusercontent.com/oscm/shell/master/lang/gcc/gcc.sh | bash
 curl -s https://raw.githubusercontent.com/oscm/shell/master/lang/golang/golang-1.10.2.sh | bash
-curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/ethereum/centos/go-ethereum-1.8.7.sh | bash
+curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/ethereum/centos/go-ethereum-1.8.8.sh | bash
 curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/ethereum/systemd/private.sh | bash
 
 curl -s https://raw.githubusercontent.com/oscm/shell/master/lang/node.js/binrary/node-v10.1.0.sh | bash
@@ -1799,7 +1799,7 @@ Usage: web3j version|wallet|solidity ...
 		<screen>
 		<![CDATA[
 neo@netkiller ~ % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover 
-INFO [02-01|23:35:12] Starting peer-to-peer node               instance=Geth/v1.8.7-stable-4bb3c89d/linux-amd64/go1.10.2	
+INFO [02-01|23:35:12] Starting peer-to-peer node               instance=Geth/v1.8.8-stable-4bb3c89d/linux-amd64/go1.10.2	
 INFO [02-01|23:35:12] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
 INFO [02-01|23:35:12] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
 INFO [02-01|23:35:12] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
@@ -1902,7 +1902,7 @@ public class Web3JClient {
 		<para>运行结果</para>
 		<screen>
 		<![CDATA[
-Geth/v1.8.7-stable-4bb3c89d/linux-amd64/go1.10.2				
+Geth/v1.8.8-stable-4bb3c89d/linux-amd64/go1.10.2				
 		]]>
 		</screen>
 		<para>除了 TCP 方式连接，还支持 IPC 方式。这种方式比较少用，可以使用 localhost 替代。</para>
@@ -1917,6 +1917,100 @@ Web3j web3 = Web3j.build(new WindowsIpcService("/path/to/namedpipefile"));
 ...			
 		]]>
 		</programlisting>
+	</section>
+	<section id="web3j.status">
+		<title>获得以太坊状态信息</title>
+		<section>
+			<title>获取客户端版本</title>
+			<programlisting>
+			<![CDATA[
+			Web3ClientVersion web3ClientVersion = web3j.web3ClientVersion().send();
+			String clientVersion = web3ClientVersion.getWeb3ClientVersion();
+			System.out.println("客户端版本: " + clientVersion);			
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>协议版本</title>
+			<programlisting>
+			<![CDATA[
+			EthProtocolVersion ethProtocolVersion = web3j.ethProtocolVersion().send();
+			String protocolVersion = ethProtocolVersion.getProtocolVersion();
+			System.out.println("协议版本" + protocolVersion);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>查看当前区块</title>
+			<programlisting>
+			<![CDATA[
+			EthBlockNumber ethBlockNumber = web3j.ethBlockNumber().send();
+			BigInteger blockNumber = ethBlockNumber.getBlockNumber();
+			System.out.println("当前区块：" + blockNumber);			
+			]]>
+			</programlisting>
+		</section>
+
+		<section>
+			<title>同步状态</title>
+			<programlisting>
+			<![CDATA[
+			EthSyncing ethSyncing = web3j.ethSyncing().send();
+			boolean isSyncing = ethSyncing.isSyncing();
+			System.out.println("同步状态：" + isSyncing);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>挖矿状态</title>
+			<programlisting>
+			<![CDATA[
+			EthMining ethMining = web3j.ethMining().send();
+			boolean isMining = ethMining.isMining();
+			System.out.println("挖矿状态：" + isMining);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>矿工账号</title>
+			<programlisting>
+			<![CDATA[
+			EthCoinbase ethCoinbase = web3j.ethCoinbase().send();
+			String coinbase = ethCoinbase.getAddress();
+			System.out.println("矿工账号：" + coinbase);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>挖矿速度</title>
+			<programlisting>
+			<![CDATA[
+			EthHashrate ethHashrate = web3j.ethHashrate().send();
+			BigInteger hashRate = ethHashrate.getHashrate();
+			System.out.println("挖矿速度：" + hashRate);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>Gas 价格</title>
+			<programlisting>
+			<![CDATA[
+			EthGasPrice ethGasPrice = web3j.ethGasPrice().send();
+			BigInteger gasPrice = ethGasPrice.getGasPrice();
+			System.out.println("Gas 价格：" + gasPrice);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>节点数量</title>
+			<programlisting>
+			<![CDATA[
+			NetPeerCount netPeerCount = web3j.netPeerCount().send();
+			BigInteger peerCount = netPeerCount.getQuantity();
+			System.out.println("节点数量：" + peerCount);
+			]]>
+			</programlisting>
+		</section>
 	</section>
 	<section id="web3j.account">
 		<title>账号管理</title>
@@ -1956,7 +2050,50 @@ Web3j web3 = Web3j.build(new WindowsIpcService("/path/to/namedpipefile"));
 
 			</programlisting>
 		</section>
+		<section id="web3j.account.new">
+			<title>创建账号</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.ethereum.account;
 
+import java.io.IOException;
+import java.math.BigInteger;
+import java.util.List;
+
+import org.web3j.protocol.admin.Admin;
+import org.web3j.protocol.admin.methods.response.NewAccountIdentifier;
+import org.web3j.protocol.admin.methods.response.PersonalListAccounts;
+import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount;
+//import org.web3j.protocol.http.HttpService;
+import org.web3j.protocol.ipc.UnixIpcService;
+
+public class AccountTest {
+	private static Admin admin;
+
+	public AccountTest() {
+		// TODO Auto-generated constructor stub
+		// admin = Admin.build(new HttpService("http://127.0.0.1:8545"));
+		admin = Admin.build(new UnixIpcService("/Users/neo/Library/Ethereum/geth.ipc"));
+
+	}
+
+	private void createAccount() throws IOException {
+		String password = "12345678";
+		NewAccountIdentifier newAccountIdentifier = admin.personalNewAccount(password).send();
+		String address = newAccountIdentifier.getAccountId();
+		System.out.println("New account address: " + address);
+	}
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		AccountTest account = new AccountTest();
+		account.createAccount();
+	}
+
+}
+			]]>
+			</programlisting>
+		</section>
 		<section id="web3j.personalUnlockAccount">
 			<title>解锁账号</title>
 			<programlisting>
@@ -1968,15 +2105,52 @@ if (personalUnlockAccount.accountUnlocked()) {
 }				
 			]]>
 			</programlisting>
-		</section>
-
-		<section id="web3j.account.new">
-			<title>创建账号</title>
 			<programlisting>
 			<![CDATA[
-web3.eth.personal.newAccount('!@superpassword')
-.then(console.log);
-> '0x1234567891011121314151617181920212223456'			
+package cn.netkiller.example.ethereum.account;
+
+import java.io.IOException;
+import java.math.BigInteger;
+import java.util.List;
+
+import org.web3j.protocol.admin.Admin;
+import org.web3j.protocol.admin.methods.response.NewAccountIdentifier;
+import org.web3j.protocol.admin.methods.response.PersonalListAccounts;
+import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount;
+//import org.web3j.protocol.http.HttpService;
+import org.web3j.protocol.ipc.UnixIpcService;
+
+public class AccountTest {
+	private static Admin admin;
+
+	public AccountTest() {
+		// TODO Auto-generated constructor stub
+		// admin = Admin.build(new HttpService("http://127.0.0.1:8545"));
+		admin = Admin.build(new UnixIpcService("/Users/neo/Library/Ethereum/geth.ipc"));
+
+	}
+
+	private void unlockAccount() {
+		String address = "0xf56b81a2bcb964D2806071e9Be4289A5559BB0fA";
+		String password = "12345678";
+		// 账号解锁持续时间 单位秒 缺省值300秒
+		BigInteger unlockDuration = BigInteger.valueOf(60L);
+		try {
+			PersonalUnlockAccount personalUnlockAccount = admin.personalUnlockAccount(address, password, unlockDuration).send();
+			Boolean isUnlocked = personalUnlockAccount.accountUnlocked();
+			System.out.println("Account unlock " + isUnlocked);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		AccountTest account = new AccountTest();
+		account.unlockAccount();
+	}
+
+}
 			]]>
 			</programlisting>
 		</section>
