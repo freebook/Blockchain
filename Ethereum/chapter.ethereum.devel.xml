@@ -1739,6 +1739,10 @@ neo@MacBook-Pro ~/example % node main.js
 		官方网站
 		<ulink url="https://web3j.io">https://web3j.io</ulink>
 	</para>
+	<para>
+		文档
+		<ulink url="https://github.com/web3j/web3j/tree/master/docs/source" />
+	</para>
 	<para>Java 客户端与 Server 之间采用json-rpc协议连接。</para>
 	<section id="web3j.command.line.tools">
 		<title>安装命令行工具</title>
@@ -1865,6 +1869,16 @@ String -> string and address types
 List<> -> dynamic/static array			
 		]]>
 		</screen>
+	</section>
+	<section id="web3j.define">
+		<title>常量</title>
+		<screen>
+		<![CDATA[
+DefaultBlockParameterName.LATEST	当前块地址
+DefaultBlockParameterName.PENDING	处理中块地址		
+		]]>
+		</screen>
+
 	</section>
 	<section id="web3j.connect">
 		<title>连接到服务器获取版本号</title>
@@ -2002,12 +2016,36 @@ Web3j web3 = Web3j.build(new WindowsIpcService("/path/to/namedpipefile"));
 			</programlisting>
 		</section>
 		<section>
+			<title>评估GAS</title>
+			<programlisting>
+			<![CDATA[
+	EthEstimateGas ethEstimateGas = web3.ethEstimateGas(Transaction.createEthCallTransaction(credentials.getAddress(), null, encodedFunction)).sendAsync().get();
+	BigInteger estimateGas = ethEstimateGas.getAmountUsed();
+	System.out.println(estimateGas);			
+			]]>
+			</programlisting>
+		</section>
+		<section>
 			<title>节点数量</title>
 			<programlisting>
 			<![CDATA[
 			NetPeerCount netPeerCount = web3j.netPeerCount().send();
 			BigInteger peerCount = netPeerCount.getQuantity();
 			System.out.println("节点数量：" + peerCount);
+			]]>
+			</programlisting>
+		</section>
+	</section>
+	<section id="web3j.unit">
+		<title>单位转换</title>
+		<section>
+			<title>GWEI to WEI</title>
+			<para>GWEI 转化为 WEI</para>
+			<programlisting>
+			<![CDATA[
+BigInteger wei = Convert.toWei(BigDecimal.valueOf(0.001), Convert.Unit.GWEI).toBigInteger();
+
+BigInteger value = Convert.toWei("1.0", Convert.Unit.ETHER).toBigInteger();
 			]]>
 			</programlisting>
 		</section>
@@ -2198,6 +2236,7 @@ public class CredentialsTest {
 			
 		]]>
 		</programlisting>
+
 	</section>
 	<section id="web3j.transaction">
 		<title>交易</title>
@@ -2256,7 +2295,7 @@ public class TransactionTest {
 
 		System.out.println(transactionReceipt.getTransactionHash());
 	}
-}		
+}
 			]]>
 			</programlisting>
 		</section>
@@ -2320,6 +2359,17 @@ public class RawTransactionTest {
 	}
 
 }
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>查询 Transaction Information</title>
+			<programlisting>
+			<![CDATA[
+	public TransactionReceipt getTransactionReceipt(String transactionHash) throws InterruptedException, ExecutionException {
+		EthGetTransactionReceipt ethGetTransactionReceipt = web3.ethGetTransactionReceipt(transactionHash).sendAsync().get();
+		return ethGetTransactionReceipt.getResult();
+	}			
 			]]>
 			</programlisting>
 		</section>
@@ -2440,6 +2490,67 @@ public class WalletMain {
 			]]>
 			</screen>
 
+		</section>
+		<section>
+			<title>生成助记词钱包</title>
+			<programlisting>
+			<![CDATA[
+		String keystore = WalletUtils.getDefaultKeyDirectory();
+		System.out.println("生成keystore文件的默认目录：" + keystore);
+		// 通过密码及keystore目录生成钱包
+		Bip39Wallet wallet = WalletUtils.generateBip39Wallet("yourpassword", new File(keystore));
+		// keystore文件名
+		System.out.println(wallet.getFilename());
+		// 12个单词的助记词
+		System.out.println(wallet.getMnemonic());			
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>随机产生助记词</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.ethereum.mnemonic;
+
+import java.security.SecureRandom;
+import org.web3j.crypto.MnemonicUtils;
+
+public class MnemonicUtilsTest {
+
+	public MnemonicUtilsTest() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) {
+
+		// TODO Auto-generated method stub
+		byte[] initialEntropy = new byte[16];
+		SecureRandom secureRandom = new SecureRandom();
+		secureRandom.nextBytes(initialEntropy);
+
+		String mnemonic = MnemonicUtils.generateMnemonic(initialEntropy);
+		System.out.println(mnemonic);
+
+	}
+
+}
+			
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>导入 BIP39 钱包</title>
+			<programlisting>
+			<![CDATA[
+		Credentials credentials = WalletUtils.loadBip39Credentials("password", "spoon crisp length scrub train scrap initial inherit airport that answer tornado");
+		// 钱包地址
+		System.out.println(credentials.getAddress());
+		// 公钥16进制字符串表示
+		System.out.println(credentials.getEcKeyPair().getPublicKey().toString(16));
+		// 私钥16进制字符串表示
+		System.out.println(credentials.getEcKeyPair().getPrivateKey().toString(16));			
+			]]>
+			</programlisting>
 		</section>
 	</section>
 	<section id="web3j.contract">
@@ -2589,6 +2700,72 @@ HelloWorld contract = HelloWorld.load(contractAddress,web3j,credentials, Managed
 			<![CDATA[]]>
 			</screen>
 		</section>
+		
+	</section>
+	<section id="web3j.erc20">
+		<title>ERC20合约</title>
+		<section id="web3j.erc20.balanceOf">
+			<title>balanceOf</title>
+			<programlisting>
+				<![CDATA[
+	@SuppressWarnings("rawtypes")
+	public BigInteger getTokenBalance(String account, String contractAddress) throws InterruptedException, ExecutionException {
+		Function function = new Function("balanceOf", Arrays.<Type>asList(new Address(account)), Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {
+		}));
+
+		String encodedFunction = FunctionEncoder.encode(function);
+
+		EthCall response = web3.ethCall(Transaction.createEthCallTransaction(account, contractAddress, encodedFunction), DefaultBlockParameterName.LATEST).sendAsync().get();
+
+		List<Type> result = FunctionReturnDecoder.decode(response.getValue(), function.getOutputParameters());
+
+		BigInteger balance = BigInteger.ZERO;
+		if (result.size() == 1) {
+			balance = (BigInteger) result.get(0).getValue();
+		}
+		return balance;
+	}				
+				]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title></title>
+			<programlisting>
+			<![CDATA[
+		 String methodName = "name"; 
+		 String fromAddr = emptyAddress; 
+		 List<Type> inputParameters = new ArrayList<>(); 
+		 List<TypeReference<?>> outputParameters = new ArrayList<>(); 
+		 TypeReference<Utf8String> typeReference = new TypeReference<Utf8String>() {}; outputParameters.add(typeReference);
+		 
+		 Function function = new Function(methodName, inputParameters,outputParameters);
+			]]>
+			</programlisting>
+			<programlisting>
+			<![CDATA[
+@SuppressWarnings("rawtypes")
+	public String getName(String contractAddress) {
+		String name = null;
+
+		Function function = new Function("name", Arrays.<Type>asList(), Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {
+		}));
+
+		String data = FunctionEncoder.encode(function);
+		Transaction transaction = Transaction.createEthCallTransaction(null, contractAddress, data);
+
+		EthCall ethCall;
+		try {
+			ethCall = web3.ethCall(transaction, DefaultBlockParameterName.LATEST).sendAsync().get();
+			List<Type> results = FunctionReturnDecoder.decode(ethCall.getValue(), function.getOutputParameters());
+			name = results.get(0).getValue().toString();
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		return name;
+	}			
+			]]>
+			</programlisting>
+		</section>
 	</section>
 	<section id="web3j.infura">
 		<title>Infura</title>
@@ -2617,7 +2794,7 @@ public class Infura {
 		]]>
 		</programlisting>
 	</section>
-	<section>
+	<section id="web3j.mnemonic">
 		<title>助记词</title>
 		<section>
 			<title>获取随机助记词</title>
@@ -2703,6 +2880,17 @@ f592b7bf06ca9fd7696ba95d6ed8e357de6a2379b6d5fe1ffd53c6b4b063cd4a
 			]]>
 			</screen>
 		</section>
+	</section>
+	<section id="web3j.iban">
+		<title>iban 协议</title>
+		<para>
+			<ulink url="https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol" />
+		</para>
+		<screen>
+		<![CDATA[
+iban:XE4214YF25M7C0Q6QFUF989GYBCR29987SX?amount=100&token=ETH	
+		]]>
+		</screen>
 	</section>
 </chapter>
 <chapter id="web3.py">
