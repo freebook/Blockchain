@@ -1148,7 +1148,7 @@ f592b7bf06ca9fd7696ba95d6ed8e357de6a2379b6d5fe1ffd53c6b4b063cd4a
 		</section>
 	</section>
 	<section id="web3j.iban">
-		<title>iban 协议</title>
+		<title>IBAN (International Bank Account Number)</title>
 		<para>
 			<ulink url="https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol" />
 		</para>
@@ -1157,5 +1157,6 @@ f592b7bf06ca9fd7696ba95d6ed8e357de6a2379b6d5fe1ffd53c6b4b063cd4a
 iban:XE4214YF25M7C0Q6QFUF989GYBCR29987SX?amount=100&token=ETH	
 		]]>
 		</screen>
+		<para><ulink url="https://github.com/arturmkrtchyan/iban4j" /></para>
 	</section>
 </chapter>

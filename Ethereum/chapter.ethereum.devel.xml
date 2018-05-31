@@ -11,7 +11,11 @@
 		文档地址
 		<ulink url="http://web3py.readthedocs.io/">http://web3py.readthedocs.io/</ulink>
 	</para>
-
+</chapter>
+<chapter>
+	<title>Ethereum iOS</title>
+	<para><ulink url="https://github.com/MercuryProtocol/web3.swift" /></para>
+	<para>https://medium.com/mercuryprotocol/introducing-web3-swift-for-ethereum-ios-development-1e02212b662b</para>
 </chapter>
 <chapter id="index"><?dbhtml dir="api" ?>
 	<title>Ethereum Developer APIs</title>
