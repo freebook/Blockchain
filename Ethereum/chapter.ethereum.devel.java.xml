@@ -1,0 +1,1161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="index"><?dbhtml dir="web3j" ?>
+	<title>web3j v3.4.0 - Jave Client</title>
+	<para>
+		官方网站
+		<ulink url="https://web3j.io">https://web3j.io</ulink>
+	</para>
+	<para>
+		文档
+		<ulink url="https://github.com/web3j/web3j/tree/master/docs/source" />
+	</para>
+	<para>Java 客户端与 Server 之间采用json-rpc协议连接。</para>
+	<section id="web3j.command.line.tools">
+		<title>安装命令行工具</title>
+		<para>web3j 命令用于将 sol 合约文件转换为 java 文件。</para>
+		<section>
+			<title>Mac OS</title>
+			<screen>
+			<![CDATA[
+brew tap web3j/web3j
+brew install web3j
+
+neo@MacBook-Pro ~ % web3j
+
+              _      _____ _     _        
+             | |    |____ (_)   (_)       
+__      _____| |__      / /_     _   ___  
+\ \ /\ / / _ \ '_ \     \ \ |   | | / _ \ 
+ \ V  V /  __/ |_) |.___/ / | _ | || (_) |
+  \_/\_/ \___|_.__/ \____/| |(_)|_| \___/ 
+                         _/ |             
+                        |__/              
+
+Usage: web3j version|wallet|solidity ...	
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>二进制包安装</title>
+			<para>
+				下载二进制文件
+				<ulink url="https://github.com/web3j/web3j/releases">https://github.com/web3j/web3j/releases</ulink>
+			</para>
+			<screen>
+			<![CDATA[
+wget https://github.com/web3j/web3j/releases/download/v3.2.0/web3j-3.2.0.zip
+unzip web3j-3.2.0.zip
+
+$ ./web3j-3.2.0/bin/web3j
+
+              _      _____ _     _
+             | |    |____ (_)   (_)
+__      _____| |__      / /_     _   ___
+\ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
+ \ V  V /  __/ |_) |.___/ / | _ | || (_) |
+  \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
+                         _/ |
+                        |__/
+
+Usage: web3j version|wallet|solidity ...
+			]]>
+			</screen>
+		</section>
+	</section>
+	<section id="web3j.geth">
+		<title>启动以太坊</title>
+
+		<para>首先启动服务</para>
+		<screen>
+		<![CDATA[
+neo@netkiller ~ % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover 
+INFO [02-01|23:35:12] Starting peer-to-peer node               instance=Geth/v1.8.8-stable-4bb3c89d/linux-amd64/go1.10.2	
+INFO [02-01|23:35:12] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
+INFO [02-01|23:35:12] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
+INFO [02-01|23:35:12] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
+INFO [02-01|23:35:12] Disk storage enabled for ethash DAGs     dir=/home/neo/.ethash               count=2
+INFO [02-01|23:35:12] Initialising Ethereum protocol           versions="[63 62]" network=123456
+INFO [02-01|23:35:12] Loaded most recent local header          number=719 hash=61330b…82786e td=108754979
+INFO [02-01|23:35:12] Loaded most recent local full block      number=719 hash=61330b…82786e td=108754979
+INFO [02-01|23:35:12] Loaded most recent local fast block      number=719 hash=61330b…82786e td=108754979
+INFO [02-01|23:35:12] Loaded local transaction journal         transactions=0 dropped=0
+INFO [02-01|23:35:12] Regenerated local transaction journal    transactions=0 accounts=0
+WARN [02-01|23:35:12] Blockchain not empty, fast sync disabled 
+INFO [02-01|23:35:12] Starting P2P networking 
+INFO [02-01|23:35:12] RLPx listener up                         self="enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@[::]:30303?discport=0"
+INFO [02-01|23:35:12] IPC endpoint opened: /home/neo/.ethereum/geth.ipc 
+INFO [02-01|23:35:12] HTTP endpoint opened: http://0.0.0.0:8545 
+INFO [02-01|23:35:15] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"		
+		]]>
+		</screen>
+		<para>Web3j 将使用这个地址连接 HTTP endpoint opened:
+			http://your_ip_address:8545
+		</para>
+	</section>
+	<section id="web3j.pom.xml">
+		<title>Maven pom.xml 文件</title>
+		<screen>
+		<![CDATA[
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>cn.netkiller</groupId>
+	<artifactId>ethereum</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>ethereum</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.web3j</groupId>
+			<artifactId>core</artifactId>
+			<version>3.4.0</version>
+		</dependency>
+	</dependencies>
+</project>
+			
+		]]>
+		</screen>
+	</section>
+	<section id="web3j.type">
+		<title>Java 与 Solidity 数据类型映射关系</title>
+		<screen>
+		<![CDATA[
+boolean -> bool
+BigInteger -> uint/int
+byte[] -> bytes
+String -> string and address types
+List<> -> dynamic/static array			
+		]]>
+		</screen>
+	</section>
+	<section id="web3j.define">
+		<title>常量</title>
+		<screen>
+		<![CDATA[
+DefaultBlockParameterName.LATEST	当前块地址
+DefaultBlockParameterName.PENDING	处理中块地址		
+		]]>
+		</screen>
+
+	</section>
+	<section id="web3j.connect">
+		<title>连接到服务器获取版本号</title>
+		<programlisting>
+		<![CDATA[
+package cn.netkiller.ethereum;
+
+import java.io.IOException;
+
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.Web3ClientVersion;
+import org.web3j.protocol.http.HttpService;
+
+public class Web3JClient {
+	// TODO Auto-generated method stub
+
+	public static void main(String[] args) {
+		String url = "http://172.16.0.1:8545/";
+		Web3j web3j = Web3j.build(new HttpService(url)); // defaults to http://localhost:8545/
+
+		try {
+			Web3ClientVersion web3ClientVersion = web3j.web3ClientVersion().send();
+			String clientVersion = web3ClientVersion.getWeb3ClientVersion();
+			System.out.println(clientVersion);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+}
+		]]>
+		</programlisting>
+		<para>运行结果</para>
+		<screen>
+		<![CDATA[
+Geth/v1.8.8-stable-4bb3c89d/linux-amd64/go1.10.2				
+		]]>
+		</screen>
+		<para>除了 TCP 方式连接，还支持 IPC 方式。这种方式比较少用，可以使用 localhost 替代。</para>
+		<programlisting>
+		<![CDATA[
+// OS X/Linux/Unix:
+Web3j web3 = Web3j.build(new UnixIpcService("/path/to/socketfile"));
+...
+
+// Windows
+Web3j web3 = Web3j.build(new WindowsIpcService("/path/to/namedpipefile"));
+...			
+		]]>
+		</programlisting>
+	</section>
+	<section id="web3j.status">
+		<title>获得以太坊状态信息</title>
+		<section>
+			<title>获取客户端版本</title>
+			<programlisting>
+			<![CDATA[
+			Web3ClientVersion web3ClientVersion = web3j.web3ClientVersion().send();
+			String clientVersion = web3ClientVersion.getWeb3ClientVersion();
+			System.out.println("客户端版本: " + clientVersion);			
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>协议版本</title>
+			<programlisting>
+			<![CDATA[
+			EthProtocolVersion ethProtocolVersion = web3j.ethProtocolVersion().send();
+			String protocolVersion = ethProtocolVersion.getProtocolVersion();
+			System.out.println("协议版本" + protocolVersion);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>查看当前区块</title>
+			<programlisting>
+			<![CDATA[
+			EthBlockNumber ethBlockNumber = web3j.ethBlockNumber().send();
+			BigInteger blockNumber = ethBlockNumber.getBlockNumber();
+			System.out.println("当前区块：" + blockNumber);			
+			]]>
+			</programlisting>
+		</section>
+
+		<section>
+			<title>同步状态</title>
+			<programlisting>
+			<![CDATA[
+			EthSyncing ethSyncing = web3j.ethSyncing().send();
+			boolean isSyncing = ethSyncing.isSyncing();
+			System.out.println("同步状态：" + isSyncing);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>挖矿状态</title>
+			<programlisting>
+			<![CDATA[
+			EthMining ethMining = web3j.ethMining().send();
+			boolean isMining = ethMining.isMining();
+			System.out.println("挖矿状态：" + isMining);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>矿工账号</title>
+			<programlisting>
+			<![CDATA[
+			EthCoinbase ethCoinbase = web3j.ethCoinbase().send();
+			String coinbase = ethCoinbase.getAddress();
+			System.out.println("矿工账号：" + coinbase);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>挖矿速度</title>
+			<programlisting>
+			<![CDATA[
+			EthHashrate ethHashrate = web3j.ethHashrate().send();
+			BigInteger hashRate = ethHashrate.getHashrate();
+			System.out.println("挖矿速度：" + hashRate);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>Gas 价格</title>
+			<programlisting>
+			<![CDATA[
+			EthGasPrice ethGasPrice = web3j.ethGasPrice().send();
+			BigInteger gasPrice = ethGasPrice.getGasPrice();
+			System.out.println("Gas 价格：" + gasPrice);
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>评估GAS</title>
+			<programlisting>
+			<![CDATA[
+	EthEstimateGas ethEstimateGas = web3.ethEstimateGas(Transaction.createEthCallTransaction(credentials.getAddress(), null, encodedFunction)).sendAsync().get();
+	BigInteger estimateGas = ethEstimateGas.getAmountUsed();
+	System.out.println(estimateGas);			
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>节点数量</title>
+			<programlisting>
+			<![CDATA[
+			NetPeerCount netPeerCount = web3j.netPeerCount().send();
+			BigInteger peerCount = netPeerCount.getQuantity();
+			System.out.println("节点数量：" + peerCount);
+			]]>
+			</programlisting>
+		</section>
+	</section>
+	<section id="web3j.unit">
+		<title>单位转换</title>
+		<section>
+			<title>GWEI to WEI</title>
+			<para>GWEI 转化为 WEI</para>
+			<programlisting>
+			<![CDATA[
+BigInteger wei = Convert.toWei(BigDecimal.valueOf(0.001), Convert.Unit.GWEI).toBigInteger();
+
+BigInteger value = Convert.toWei("1.0", Convert.Unit.ETHER).toBigInteger();
+			]]>
+			</programlisting>
+		</section>
+	</section>
+	<section id="web3j.account">
+		<title>账号管理</title>
+		<section>
+			<title>获得账号列表</title>
+			<programlisting>
+			<![CDATA[
+	public List<String> getAccountlist() {
+
+		try {
+			return web3j.ethAccounts().send().getAccounts();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}				
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>获得账号信息</title>
+			<programlisting>
+			<![CDATA[
+	public String getAccount(int index) {
+		String account = null;
+
+		try {
+			account = web3j.ethAccounts().send().getAccounts().get(index);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return account;
+	}				
+			]]>
+
+			</programlisting>
+		</section>
+		<section id="web3j.account.new">
+			<title>创建账号</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.ethereum.account;
+
+import java.io.IOException;
+import java.math.BigInteger;
+import java.util.List;
+
+import org.web3j.protocol.admin.Admin;
+import org.web3j.protocol.admin.methods.response.NewAccountIdentifier;
+import org.web3j.protocol.admin.methods.response.PersonalListAccounts;
+import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount;
+//import org.web3j.protocol.http.HttpService;
+import org.web3j.protocol.ipc.UnixIpcService;
+
+public class AccountTest {
+	private static Admin admin;
+
+	public AccountTest() {
+		// TODO Auto-generated constructor stub
+		// admin = Admin.build(new HttpService("http://127.0.0.1:8545"));
+		admin = Admin.build(new UnixIpcService("/Users/neo/Library/Ethereum/geth.ipc"));
+
+	}
+
+	private void createAccount() throws IOException {
+		String password = "12345678";
+		NewAccountIdentifier newAccountIdentifier = admin.personalNewAccount(password).send();
+		String address = newAccountIdentifier.getAccountId();
+		System.out.println("New account address: " + address);
+	}
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		AccountTest account = new AccountTest();
+		account.createAccount();
+	}
+
+}
+			]]>
+			</programlisting>
+		</section>
+		<section id="web3j.personalUnlockAccount">
+			<title>解锁账号</title>
+			<programlisting>
+			<![CDATA[
+Admin web3j = Admin.build(new HttpService());  // defaults to http://localhost:8545/
+PersonalUnlockAccount personalUnlockAccount = web3j.personalUnlockAccount("0x000...", "a password").sendAsync().get();
+if (personalUnlockAccount.accountUnlocked()) {
+    // send a transaction
+}				
+			]]>
+			</programlisting>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.ethereum.account;
+
+import java.io.IOException;
+import java.math.BigInteger;
+import java.util.List;
+
+import org.web3j.protocol.admin.Admin;
+import org.web3j.protocol.admin.methods.response.NewAccountIdentifier;
+import org.web3j.protocol.admin.methods.response.PersonalListAccounts;
+import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount;
+//import org.web3j.protocol.http.HttpService;
+import org.web3j.protocol.ipc.UnixIpcService;
+
+public class AccountTest {
+	private static Admin admin;
+
+	public AccountTest() {
+		// TODO Auto-generated constructor stub
+		// admin = Admin.build(new HttpService("http://127.0.0.1:8545"));
+		admin = Admin.build(new UnixIpcService("/Users/neo/Library/Ethereum/geth.ipc"));
+
+	}
+
+	private void unlockAccount() {
+		String address = "0xf56b81a2bcb964D2806071e9Be4289A5559BB0fA";
+		String password = "12345678";
+		// 账号解锁持续时间 单位秒 缺省值300秒
+		BigInteger unlockDuration = BigInteger.valueOf(60L);
+		try {
+			PersonalUnlockAccount personalUnlockAccount = admin.personalUnlockAccount(address, password, unlockDuration).send();
+			Boolean isUnlocked = personalUnlockAccount.accountUnlocked();
+			System.out.println("Account unlock " + isUnlocked);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		AccountTest account = new AccountTest();
+		account.unlockAccount();
+	}
+
+}
+			]]>
+			</programlisting>
+		</section>
+	</section>
+	<section id="web3j.credentials">
+		<title>Credentials</title>
+		<programlisting>
+		<![CDATA[
+package cn.netkiller.ethereum.credentials;
+
+import java.io.IOException;
+import java.math.BigInteger;
+
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.ECKeyPair;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.http.HttpService;
+
+public class CredentialsTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		String url = "http://172.16.0.1:8545/";
+		Web3j web3j = Web3j.build(new HttpService(url)); // defaults to http://localhost:8545/
+
+		try {
+			String account = web3j.ethAccounts().send().getAccounts().get(0);
+			Credentials credentials = Credentials.create(account);
+			ECKeyPair keyPair = credentials.getEcKeyPair();
+			BigInteger privateKey = keyPair.getPrivateKey();
+			BigInteger publicKey = keyPair.getPublicKey();
+
+			System.out.println(privateKey);
+			System.out.println("---");
+			System.out.println(publicKey);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+}
+			
+		]]>
+		</programlisting>
+
+	</section>
+	<section id="web3j.transaction">
+		<title>交易</title>
+		<section>
+			<title>获取余额</title>
+			<programlisting>
+			<![CDATA[
+	public BigInteger getBalance(String account) throws IOException {
+
+		EthGetBalance ethGetBalance = web3j.ethGetBalance(account, DefaultBlockParameterName.LATEST).send();
+		BigInteger balance = ethGetBalance.getBalance();
+		return balance;
+
+	}				
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>通过 Keystore 转账</title>
+			<programlisting>
+			<![CDATA[
+	public void transfer(String account, float coin)
+			throws InterruptedException, IOException, TransactionException, Exception {
+		String password = "";
+		String walletfile = "/Users/neo/netkiller/UTC--2018-01-20T04-04-06.786586541Z--83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6";
+		Credentials credentials = WalletUtils.loadCredentials(password, walletfile);
+		TransactionReceipt transactionReceipt = Transfer
+				.sendFunds(web3j, credentials, account, BigDecimal.valueOf(coin), Unit.ETHER).send();
+		System.out.println(transactionReceipt.getStatus());
+	}
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>通过私钥转账</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.ethereum.transaction;
+
+import org.web3j.crypto.Credentials;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.tx.Transfer;
+import org.web3j.utils.Convert;
+
+import java.math.BigDecimal;
+
+public class TransactionTest {
+	public static void main(String[] args) throws Exception {
+		Web3j web3j = Web3j.build(new HttpService("https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d"));
+		String toAddress = "0xf56b81a2bcb964D2806071e9Be4289A5559BB0fA";
+		Credentials credentials = Credentials.create("16690967F2BADABE13A067066558537228D8AF63ECCB022FFBDC970EC717BC3A");
+
+		TransactionReceipt transactionReceipt = Transfer.sendFunds(web3j, credentials, toAddress, BigDecimal.valueOf(0.002), Convert.Unit.ETHER).send();
+
+		System.out.println(transactionReceipt.getTransactionHash());
+	}
+}
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>指定 gas 费用</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.ethereum.transaction;
+
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.TransactionEncoder;
+import org.web3j.crypto.RawTransaction;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
+import org.web3j.protocol.core.methods.response.EthSendTransaction;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.utils.Convert;
+import org.web3j.utils.Numeric;
+
+import java.math.BigInteger;
+import java.util.concurrent.ExecutionException;
+
+public class RawTransactionTest {
+
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
+		// TODO Auto-generated method stub
+		// 设置需要的矿工费
+		BigInteger gasPrice = BigInteger.valueOf(18_000_000_000L);
+		BigInteger gasLimit = BigInteger.valueOf(4_300_000);
+		// System.out.println(gasPrice);
+
+		// 连接 ropsten测试环境，这里使用的是infura这个客户端
+		Web3j web3j = Web3j.build(new HttpService("https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d"));
+		// 转出账户地址
+		String fromAddress = "0x22c57F0537414FD95b9f0f08f1E51d8b96F14029";
+		// 接收账户地址
+		String toAddress = "0xf56b81a2bcb964D2806071e9Be4289A5559BB0fA";
+		// 转账人的私钥
+		Credentials credentials = Credentials.create("16697AC066558537CADABF68BDE13A06790967F2BC3A228DB022FF0EC717B3EC");
+
+		// Nonce 就相当于数据中PK主键，每次Nonce会做 +1 操作
+		EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(fromAddress, DefaultBlockParameterName.LATEST).sendAsync().get();
+		BigInteger nonce = ethGetTransactionCount.getTransactionCount();
+
+		// 创建交易并转0.05个以太币
+		BigInteger value = Convert.toWei("0.05", Convert.Unit.ETHER).toBigInteger();
+		RawTransaction rawTransaction = RawTransaction.createEtherTransaction(nonce, gasPrice, gasLimit, toAddress, value);
+
+		// 对交易做签名
+		byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction, credentials);
+		String hexValue = Numeric.toHexString(signedMessage);
+
+		// 发送交易
+		EthSendTransaction ethSendTransaction = web3j.ethSendRawTransaction(hexValue).sendAsync().get();
+		String transactionHash = ethSendTransaction.getTransactionHash();
+
+		// 获得到transactionHash后就可以到以太坊的网站上查询这笔交易的状态了
+		System.out.println("https://ropsten.etherscan.io/tx/" + transactionHash);
+
+	}
+
+}
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>查询 Transaction Information</title>
+			<programlisting>
+			<![CDATA[
+	public TransactionReceipt getTransactionReceipt(String transactionHash) throws InterruptedException, ExecutionException {
+		EthGetTransactionReceipt ethGetTransactionReceipt = web3.ethGetTransactionReceipt(transactionHash).sendAsync().get();
+		return ethGetTransactionReceipt.getResult();
+	}			
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>交易结果查询</title>
+			<programlisting>
+			<![CDATA[
+EthTransaction transaction = web3.ethGetTransactionByHash("TRANSACTION_HASH")
+                                   .sendAsync().get();
+System.out.println(transaction.getResult());				
+			]]>
+			</programlisting>
+		</section>
+	</section>
+	<section id="web3j.walletutils">
+		<title>钱包</title>
+		<section id="WalletUtils.generateFullNewWalletFile">
+			<title>创建钱包</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.ethereum.wallet;
+
+import java.io.File;
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+
+import org.web3j.crypto.CipherException;
+import org.web3j.crypto.WalletUtils;
+
+public class WalletMain {
+
+	public void createWallet() throws NoSuchAlgorithmException, NoSuchProviderException,
+			InvalidAlgorithmParameterException, CipherException, IOException {
+
+		File file = new File("/tmp/ethereum/keystore");
+		String password = "passw0rd";
+		String fileName = WalletUtils.generateFullNewWalletFile(password, file);
+		System.out.println(fileName);
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		WalletMain wallet = new WalletMain();
+		try {
+			wallet.createWallet();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+}
+				
+			]]>
+			</programlisting>
+			<para>运行结果</para>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~ % mkdir -p /tmp/ethereum/keystore
+neo@MacBook-Pro ~ % ll /tmp/ethereum/keystore
+total 8
+-rw-r--r--  1 neo  wheel   491B Feb  4 18:30 UTC--2018-02-04T10-30-58.476000000Z--75d01e920d6e018445dae504058ce4d968fd2a58.json
+
+neo@MacBook-Pro ~ % cat /tmp/ethereum/keystore/UTC--2018-02-04T10-30-58.476000000Z--75d01e920d6e018445dae504058ce4d968fd2a58.json 
+{"address":"75d01e920d6e018445dae504058ce4d968fd2a58","id":"80700448-69bc-475a-aaf9-f2b836f17b13","version":3,"crypto":{"cipher":"aes-128-ctr","ciphertext":"fe86f5dbd61d15d092f9d6870e70bff7ed99a7925703ea71eef23669c8e3ec62","cipherparams":{"iv":"d058819ab660cd062080b405591ba143"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"f69c535137b08667dbac53b8001313f5b43f81fce67a5d0e94b518c97d212d14"},"mac":"c247e34760bc838c3a4c8b2da286ccc6acec244bbc13fc6cc9ce28e88a7319d5"}}
+			]]>
+			</screen>
+		</section>
+		<section id="WalletUtils.loadCredentials">
+			<title>从钱包取出账号</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.ethereum.wallet;
+
+import java.io.File;
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+
+import org.web3j.crypto.CipherException;
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.WalletUtils;
+
+public class WalletMain {
+
+	public void walletAddress() throws IOException, CipherException {
+
+		File file = new File(
+				"/tmp/ethereum/keystore/UTC--2018-02-04T10-43-27.339000000Z--7cab470df532710d13078c5cdc0812a27f70cf51.json");
+		String password = "passw0rd";
+		Credentials credentials = WalletUtils.loadCredentials(password, file);
+		System.out.println(credentials.getAddress());
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		WalletMain wallet = new WalletMain();
+		try {
+			wallet.walletAddress();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+}
+			]]>
+			</programlisting>
+			<para>运行结果</para>
+			<screen>
+			<![CDATA[
+0x7cab470df532710d13078c5cdc0812a27f70cf51				
+			]]>
+			</screen>
+
+		</section>
+		<section>
+			<title>生成助记词钱包</title>
+			<programlisting>
+			<![CDATA[
+		String keystore = WalletUtils.getDefaultKeyDirectory();
+		System.out.println("生成keystore文件的默认目录：" + keystore);
+		// 通过密码及keystore目录生成钱包
+		Bip39Wallet wallet = WalletUtils.generateBip39Wallet("yourpassword", new File(keystore));
+		// keystore文件名
+		System.out.println(wallet.getFilename());
+		// 12个单词的助记词
+		System.out.println(wallet.getMnemonic());			
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>随机产生助记词</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.ethereum.mnemonic;
+
+import java.security.SecureRandom;
+import org.web3j.crypto.MnemonicUtils;
+
+public class MnemonicUtilsTest {
+
+	public MnemonicUtilsTest() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) {
+
+		// TODO Auto-generated method stub
+		byte[] initialEntropy = new byte[16];
+		SecureRandom secureRandom = new SecureRandom();
+		secureRandom.nextBytes(initialEntropy);
+
+		String mnemonic = MnemonicUtils.generateMnemonic(initialEntropy);
+		System.out.println(mnemonic);
+
+	}
+
+}
+			
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>导入 BIP39 钱包</title>
+			<programlisting>
+			<![CDATA[
+		Credentials credentials = WalletUtils.loadBip39Credentials("password", "spoon crisp length scrub train scrap initial inherit airport that answer tornado");
+		// 钱包地址
+		System.out.println(credentials.getAddress());
+		// 公钥16进制字符串表示
+		System.out.println(credentials.getEcKeyPair().getPublicKey().toString(16));
+		// 私钥16进制字符串表示
+		System.out.println(credentials.getEcKeyPair().getPrivateKey().toString(16));			
+			]]>
+			</programlisting>
+		</section>
+	</section>
+	<section id="web3j.contract">
+		<title>智能合约</title>
+		<programlisting>
+		<![CDATA[
+neo@netkiller ~/ethereum/solidity % cat netkiller.sol 
+pragma solidity ^0.4.18;
+
+contract Netkiller {
+    string name;
+    int num;
+    function Netkiller() public{
+        name = "default";
+        num = 1;
+    }
+    function setName(string _name) public{
+        name = _name;
+    }
+    function getName() public view returns(string){
+        return name;
+    }
+    function setNum(int n) public{
+        num = n;
+    }
+    function addNum(int m) public view returns(int res){
+        res = m + num;
+    }
+}
+
+		]]>
+		</programlisting>
+		<para>编译智能合约</para>
+		<screen>
+		<![CDATA[
+$ solc /path/to/<smart-contract>.sol --bin --abi --optimize -o output/
+$ web3j solidity generate /path/to/<smart-contract>.bin /path/to/<smart-contract>.abi -o /path/to/src/main/java -p com.your.organisation.name			
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+$ solc netkiller.sol --bin --abi --optimize -o output/
+$ web3j solidity generate output/Netkiller.bin output/Netkiller.abi -p cn.netkiller.ethereum.contract -o java
+
+              _      _____ _     _        
+             | |    |____ (_)   (_)       
+__      _____| |__      / /_     _   ___  
+\ \ /\ / / _ \ '_ \     \ \ |   | | / _ \ 
+ \ V  V /  __/ |_) |.___/ / | _ | || (_) |
+  \_/\_/ \___|_.__/ \____/| |(_)|_| \___/ 
+                         _/ |             
+                        |__/              
+
+Generating cn.netkiller.ethereum.contract.Netkiller ... File written to java	
+
+neo@netkiller ~/ethereum/solidity % ll java/cn/netkiller/ethereum/contract/Netkiller.java 
+-rw-rw-r-- 1 neo neo 5.9K Feb  3 23:02 java/cn/netkiller/ethereum/contract/Netkiller.java
+		]]>
+		</screen>
+		<para>启动以太坊，并开始挖矿。注意参数 --mine --minerthreads 1 ，你也可以启动后在JavaScript
+			控制台钟启动挖矿。
+		</para>
+		<screen>
+		<![CDATA[
+neo@netkiller ~ % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --mine --minerthreads 1	
+		]]>
+		</screen>
+		<programlisting>
+		<![CDATA[
+package cn.netkiller.ethereum;
+
+import java.math.BigInteger;
+
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.WalletUtils;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.tx.Contract;
+import org.web3j.tx.ManagedTransaction;
+
+import cn.netkiller.ethereum.contract.Netkiller;
+
+public class ContractTest {
+
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+
+		String walletfile = "/Users/neo/Downloads/UTC--2018-01-20T04-04-06.786586541Z--83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6";
+
+		Web3j web3j = Web3j.build(new HttpService("http://172.16.0.1:8545"));
+		Credentials credentials = WalletUtils.loadCredentials("", walletfile);
+
+		Netkiller contract = Netkiller.deploy(web3j, credentials, ManagedTransaction.GAS_PRICE, Contract.GAS_LIMIT).send();
+
+		System.out.println(contract.isValid());
+		if (contract.isValid()) {
+			System.out.println("---");
+			String contractAddress = contract.getContractAddress();
+			System.out.println(contractAddress);
+			System.out.println("---");
+			String result = contract.getName().send();
+			System.out.println(result);
+
+			contract.setName("Netkiller").send();
+			System.out.println(contract.getName().send());
+			System.out.println("---");
+			contract.setNum(BigInteger.valueOf(8)).send();
+			System.out.println(contract.addNum(BigInteger.valueOf(8)).send());
+			System.out.println("---");
+		} else {
+			System.out.println("Deploy ERROR !!!");
+		}
+	}
+
+}
+		
+		]]>
+		</programlisting>
+		<para>运行结果</para>
+		<screen>
+		<![CDATA[
+true
+---
+0xef872f1b344a4b7c765c7d765a3cc82b741777a9
+---
+default
+Netkiller
+---
+16
+---
+		]]>
+		</screen>
+		<para>在程序运行是，去看 geth 打印的日志，有如下记录打印</para>
+		<screen>
+		<![CDATA[
+INFO [02-04|00:04:43] Submitted transaction                    fullhash=0x9f70ccb600294d2dd6dda08d090362131b107d42a692f27dd4a3b7548dbaf22c recipient=0xEF872F1b344a4B7C765c7D765a3cC82b741777a9			
+		]]>
+		</screen>
+		<section id="contract.load">
+			<title>载入合约</title>
+			<programlisting>
+			<![CDATA[
+HelloWorld contract = HelloWorld.load(contractAddress,web3j,credentials, ManagedTransaction.GAS_PRICE, Contract.GAS_LIMIT);				
+			]]>
+			</programlisting>
+			<screen>
+			<![CDATA[]]>
+			</screen>
+		</section>
+		
+	</section>
+	<section id="web3j.erc20">
+		<title>ERC20合约</title>
+		<section id="web3j.erc20.balanceOf">
+			<title>balanceOf</title>
+			<programlisting>
+				<![CDATA[
+	@SuppressWarnings("rawtypes")
+	public BigInteger getTokenBalance(String account, String contractAddress) throws InterruptedException, ExecutionException {
+		Function function = new Function("balanceOf", Arrays.<Type>asList(new Address(account)), Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {
+		}));
+
+		String encodedFunction = FunctionEncoder.encode(function);
+
+		EthCall response = web3.ethCall(Transaction.createEthCallTransaction(account, contractAddress, encodedFunction), DefaultBlockParameterName.LATEST).sendAsync().get();
+
+		List<Type> result = FunctionReturnDecoder.decode(response.getValue(), function.getOutputParameters());
+
+		BigInteger balance = BigInteger.ZERO;
+		if (result.size() == 1) {
+			balance = (BigInteger) result.get(0).getValue();
+		}
+		return balance;
+	}				
+				]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title></title>
+			<programlisting>
+			<![CDATA[
+		 String methodName = "name"; 
+		 String fromAddr = emptyAddress; 
+		 List<Type> inputParameters = new ArrayList<>(); 
+		 List<TypeReference<?>> outputParameters = new ArrayList<>(); 
+		 TypeReference<Utf8String> typeReference = new TypeReference<Utf8String>() {}; outputParameters.add(typeReference);
+		 
+		 Function function = new Function(methodName, inputParameters,outputParameters);
+			]]>
+			</programlisting>
+			<programlisting>
+			<![CDATA[
+@SuppressWarnings("rawtypes")
+	public String getName(String contractAddress) {
+		String name = null;
+
+		Function function = new Function("name", Arrays.<Type>asList(), Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {
+		}));
+
+		String data = FunctionEncoder.encode(function);
+		Transaction transaction = Transaction.createEthCallTransaction(null, contractAddress, data);
+
+		EthCall ethCall;
+		try {
+			ethCall = web3.ethCall(transaction, DefaultBlockParameterName.LATEST).sendAsync().get();
+			List<Type> results = FunctionReturnDecoder.decode(ethCall.getValue(), function.getOutputParameters());
+			name = results.get(0).getValue().toString();
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		return name;
+	}			
+			]]>
+			</programlisting>
+		</section>
+	</section>
+	<section id="web3j.infura">
+		<title>Infura</title>
+		<programlisting>
+		<![CDATA[
+package cn.netkiller.ethereum.infura;
+
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.Web3ClientVersion;
+import org.web3j.protocol.http.HttpService;
+
+public class Infura {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			Web3j web3 = Web3j.build(new HttpService("https://rinkeby.infura.io/CsS9shwaAab0z7B4LP2d"));
+			Web3ClientVersion web3ClientVersion = web3.web3ClientVersion().send();
+			System.out.println(web3ClientVersion.getWeb3ClientVersion());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
+		
+		]]>
+		</programlisting>
+	</section>
+	<section id="web3j.mnemonic">
+		<title>助记词</title>
+		<section>
+			<title>获取随机助记词</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.ethereum.mnemonic;
+
+import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.List;
+
+import org.bitcoinj.wallet.DeterministicSeed;
+import org.bitcoinj.wallet.UnreadableWalletException;
+
+public class MnemonicTest {
+	public static void main(String[] args) throws UnreadableWalletException, IOException {
+		// TODO Auto-generated method stub
+
+		String passphrase = "";
+		SecureRandom secureRandom = new SecureRandom();
+		long creationTimeSeconds = System.currentTimeMillis() / 1000;
+		DeterministicSeed deterministicSeed = new DeterministicSeed(secureRandom, 128, passphrase, creationTimeSeconds);
+		List<String> mnemonicCode = deterministicSeed.getMnemonicCode();
+		System.out.println(String.join(" ", mnemonicCode));
+
+	}
+}
+			]]>
+			</programlisting>
+			<para>输出</para>
+			<screen>
+			<![CDATA[
+romance rhythm session oyster upgrade include hammer chimney float bridge autumn accident
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>助记词导出公钥和私钥</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.ethereum.mnemonic;
+
+import java.math.BigInteger;
+import java.util.List;
+
+import org.bitcoinj.crypto.ChildNumber;
+import org.bitcoinj.crypto.DeterministicKey;
+import org.bitcoinj.crypto.HDUtils;
+import org.bitcoinj.wallet.DeterministicKeyChain;
+import org.bitcoinj.wallet.DeterministicSeed;
+import org.bitcoinj.wallet.UnreadableWalletException;
+import org.web3j.crypto.Credentials;
+
+public class Test {
+
+	public static void main(String[] args) throws UnreadableWalletException {
+		// TODO Auto-generated method stub
+		String seedCode = "client dune unfair assume level width bind control mad member old crystal";
+
+		// BitcoinJ
+		DeterministicSeed seed = new DeterministicSeed(seedCode, null, "", 1409478661L);
+		DeterministicKeyChain chain = DeterministicKeyChain.builder().seed(seed).build();
+		List<ChildNumber> keyPath = HDUtils.parsePath("M/44H/60H/0H/0/0");
+		DeterministicKey key = chain.getKeyByPath(keyPath, true);
+		BigInteger privKey = key.getPrivKey();
+
+		// Web3j
+
+		Credentials credentials = Credentials.create(privKey.toString(16));
+		String address = credentials.getAddress();
+		String privateKey = privKey.toString(16);
+		System.out.println(address);
+		System.out.println(privateKey);
+	}
+}			
+			]]>
+			</programlisting>
+			<para>输出</para>
+			<screen>
+			<![CDATA[
+0x372fda02e8a1eca513f2ee5901dc55b8b5dd7411
+f592b7bf06ca9fd7696ba95d6ed8e357de6a2379b6d5fe1ffd53c6b4b063cd4a
+			]]>
+			</screen>
+		</section>
+	</section>
+	<section id="web3j.iban">
+		<title>iban 协议</title>
+		<para>
+			<ulink url="https://github.com/ethereum/wiki/wiki/ICAP:-Inter-exchange-Client-Address-Protocol" />
+		</para>
+		<screen>
+		<![CDATA[
+iban:XE4214YF25M7C0Q6QFUF989GYBCR29987SX?amount=100&token=ETH	
+		]]>
+		</screen>
+	</section>
+</chapter>
