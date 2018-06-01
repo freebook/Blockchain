@@ -144,7 +144,32 @@ DefaultBlockParameterName.LATEST	当前块地址
 DefaultBlockParameterName.PENDING	处理中块地址		
 		]]>
 		</screen>
+		<section id="">
+			<title>默认 Gas</title>
+			<para>获取默认GAS Transaction.DEFAULT_GAS</para>]
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.wallet.ethereum;
 
+import org.web3j.protocol.core.methods.request.Transaction;
+
+public class Test {
+
+	public Test() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println(Transaction.DEFAULT_GAS);
+
+	}
+
+}
+			
+			]]>
+			</programlisting>
+		</section>
 	</section>
 	<section id="web3j.connect">
 		<title>连接到服务器获取版本号</title>
@@ -288,6 +313,8 @@ Web3j web3 = Web3j.build(new WindowsIpcService("/path/to/namedpipefile"));
 	EthEstimateGas ethEstimateGas = web3.ethEstimateGas(Transaction.createEthCallTransaction(credentials.getAddress(), null, encodedFunction)).sendAsync().get();
 	BigInteger estimateGas = ethEstimateGas.getAmountUsed();
 	System.out.println(estimateGas);			
+	
+    ethEstimateGas.getAmountUsed().divide(BigInteger.valueOf(100));
 			]]>
 			</programlisting>
 		</section>
@@ -529,8 +556,7 @@ public class CredentialsTest {
 		String password = "";
 		String walletfile = "/Users/neo/netkiller/UTC--2018-01-20T04-04-06.786586541Z--83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6";
 		Credentials credentials = WalletUtils.loadCredentials(password, walletfile);
-		TransactionReceipt transactionReceipt = Transfer
-				.sendFunds(web3j, credentials, account, BigDecimal.valueOf(coin), Unit.ETHER).send();
+		TransactionReceipt transactionReceipt = Transfer.sendFunds(web3j, credentials, account, BigDecimal.valueOf(coin), Unit.ETHER).send();
 		System.out.println(transactionReceipt.getStatus());
 	}
 			]]>
@@ -643,9 +669,17 @@ public class RawTransactionTest {
 			<title>交易结果查询</title>
 			<programlisting>
 			<![CDATA[
-EthTransaction transaction = web3.ethGetTransactionByHash("TRANSACTION_HASH")
-                                   .sendAsync().get();
+EthTransaction transaction = web3.ethGetTransactionByHash("TRANSACTION_HASH").sendAsync().get();
 System.out.println(transaction.getResult());				
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>RawTransaction 编码与解码</title>
+			<programlisting>
+			<![CDATA[
+		String hexTransaction = Numeric.toHexString(TransactionEncoder.encode(rawTransaction));
+		RawTransaction tx1 = TransactionDecoder.decode(hexTransaction);			
 			]]>
 			</programlisting>
 		</section>
@@ -1032,6 +1066,54 @@ HelloWorld contract = HelloWorld.load(contractAddress,web3j,credentials, Managed
 			]]>
 			</programlisting>
 		</section>
+		<section id="">
+			<title>合约转账</title>
+			<programlisting>
+			<![CDATA[
+	@SuppressWarnings("rawtypes")
+	public String sendTokenTransaction(String fromAddress, String password, String toAddress, BigInteger amount) {
+		String txHash = null;
+
+		try {
+
+			PersonalUnlockAccount personalUnlockAccount = admin.personalUnlockAccount(fromAddress, password, BigInteger.valueOf(10)).send();
+			if (personalUnlockAccount.accountUnlocked()) {
+				String methodName = "transfer";
+				List<Type> inputParameters = new ArrayList<>();
+				List<TypeReference<?>> outputParameters = new ArrayList<>();
+
+				Address tAddress = new Address(toAddress);
+
+				Uint256 value = new Uint256(amount);
+				inputParameters.add(tAddress);
+				inputParameters.add(value);
+
+				TypeReference<Bool> typeReference = new TypeReference<Bool>() {
+				};
+				outputParameters.add(typeReference);
+
+				Function function = new Function(methodName, inputParameters, outputParameters);
+
+				String data = FunctionEncoder.encode(function);
+
+				EthGetTransactionCount ethGetTransactionCount = web3.ethGetTransactionCount(fromAddress, DefaultBlockParameterName.PENDING).sendAsync().get();
+				BigInteger nonce = ethGetTransactionCount.getTransactionCount();
+				BigInteger gasPrice = Convert.toWei(BigDecimal.valueOf(5), Convert.Unit.GWEI).toBigInteger();
+
+				Transaction transaction = Transaction.createFunctionCallTransaction(fromAddress, nonce, gasPrice, BigInteger.valueOf(60000), this.contractAddress, data);
+
+				EthSendTransaction ethSendTransaction = web3.ethSendTransaction(transaction).sendAsync().get();
+				txHash = ethSendTransaction.getTransactionHash();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return txHash;
+	}
+			]]>
+			</programlisting>
+		</section>
 	</section>
 	<section id="web3j.infura">
 		<title>Infura</title>
@@ -1146,6 +1228,119 @@ f592b7bf06ca9fd7696ba95d6ed8e357de6a2379b6d5fe1ffd53c6b4b063cd4a
 			]]>
 			</screen>
 		</section>
+	</section>
+	<section id="web3j.filter">
+		<title>过滤器 (Filter)</title>
+		<para>在区块链上发生的事件时，能不通知到订阅事件者。</para>
+		<section id="">
+			<title>接收所有添加到区块链的新区块</title>
+			<programlisting>
+			<![CDATA[
+Subscription subscription = web3j.blockObservable(false).subscribe(block -> {
+    ...
+});
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>接收所有添加到区块链的新交易</title>
+			<programlisting>
+			<![CDATA[
+Subscription subscription = web3j.transactionObservable().subscribe(tx -> {
+    ...
+});
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>接收所有待处理的事务</title>
+			<programlisting>
+			<![CDATA[
+Subscription subscription = web3j.pendingTransactionObservable().subscribe(tx -> {
+    ...
+});
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>将区块块重放到当前的当前位置</title>
+			<programlisting>
+			<![CDATA[
+Subscription subscription = catchUpToLatestAndSubscribeToNewBlocksObservable(
+        <startBlockNumber>, <fullTxObjects>)
+        .subscribe(block -> {
+            ...
+});
+
+作者：ChainBoard链博科技
+链接：https://www.jianshu.com/p/c7c5556a436b
+來源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。			
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>过滤主题</title>
+			<programlisting>
+			<![CDATA[
+EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST, DefaultBlockParameterName.LATEST, <contract-address>).addSingleTopic(...)|.addOptionalTopics(..., ...)|...;
+
+web3j.ethLogObservable(filter).subscribe(log -> {
+    ...
+});		
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>停止订阅 Subscriptions</title>
+			<programlisting>
+			<![CDATA[
+subscription.unsubscribe();
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title></title>
+			<programlisting>
+			<![CDATA[
+Web3j web3 = Web3j.build(new HttpService("http://127.0.0.1:8080"));
+        System.out.println("Connected to Ethereum client version: "
+                + web3.toString());
+        subscription = web3.blockObservable(false)
+                .subscribe(tx -> {
+                    System.out.println("observation tx:" + tx.getRawResponse());
+                });
+        txSubscription = web3.transactionObservable().subscribe((tx) -> {
+            System.out.println("txSubscription hash:" + tx.getHash() + ":::::address:" + tx.getTo());
+            if (!ValidationUtil.isEmpty(tx.getTo())) {
+                System.out.println("getBlockNumber:" + tx.getBlockNumber().longValue());
+                System.out.println("getValue:" + tx.getValue());
+                System.out.println("getTo:" + tx.getTo());
+                System.out.println("getFrom:" + tx.getFrom());
+                System.out.println("getHash:" + tx.getHash());
+            }
+        });
+        pendingSubscription = web3.pendingTransactionObservable().subscribe(tx -> {
+            System.out.println("pending hash:" + tx.getHash() + ":::::address:" + tx.getTo());
+        });
+        latestSubscription = web3.catchUpToLatestTransactionObservable(new DefaultBlockParameterNumber(2576860)).subscribe(block ->
+                System.out.println("*+observer+getblock" + block.getBlockNumber())
+        );			
+			]]>
+			</programlisting>
+		</section>
+	</section>
+	<section id="admin.personalUnlockAccount">
+		<title></title>
+		<programlisting>
+		<![CDATA[
+Admin admin = Admin.build(new HttpService());  // defaults to http://localhost:8545/
+PersonalUnlockAccount personalUnlockAccount = admin.personalUnlockAccount("0x000...", "a password").sendAsync().get();
+if (personalUnlockAccount.accountUnlocked()) {
+    // send a transaction
+}		
+		]]>
+		</programlisting>
 	</section>
 	<section id="web3j.iban">
 		<title>IBAN (International Bank Account Number)</title>

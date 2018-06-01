@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="geth" ?>
-	<title>geth v1.8.7 命令详解</title>
+	<title>geth v1.8.10 命令详解</title>
 	<para>
 		<ulink url="https://geth.ethereum.org" />
 	</para>
@@ -9,7 +9,7 @@
 		<![CDATA[
 neo@MacBook-Pro ~/ethereum/web3 % geth version
 Geth
-Version: 1.8.7-stable
+Version: 1.8.10-stable
 Architecture: amd64
 Protocol Versions: [63 62]
 Network Id: 1
@@ -32,7 +32,7 @@ USAGE:
    geth [options] command [command options] [arguments...]
    
 VERSION:
-   1.8.7-stable
+   1.8.10-stable
    
 COMMANDS:
    account     Manage accounts
