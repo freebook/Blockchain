@@ -315,6 +315,124 @@ WHISPER实验选项:
 	]]>
 	</literallayout>
 
+	<section id="geth.rpc">
+		<title>api 相关参数</title>
+		<para>rpcapi 启动后允许连接到系统的API协议</para>
+		<screen>
+			<![CDATA[
+geth --networkid 100000 --rpc --rpcapi "db,eth,net,web3" --rpccorsdomain "*" --datadir "/app/chain" --port "30303" console	
+			]]>
+		</screen>
+
+		<para>系统默认监听 127.0.0.1 如果希望外部访问本机，需要通过--rpcaddr指定监听地址。</para>
+		<screen>
+			<![CDATA[
+geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover		
+			]]>
+		</screen>
+		<section id="rpcapi">
+			<title>rpcapi</title>
+			<para>--rpcapi 可以控制访问内容</para>
+			<screen>
+				<![CDATA[
+$ geth --rpc --rpcapi personal,db,eth,net,web3 --rinkeby	
+				]]>
+			</screen>
+
+		</section>
+		<section id="rpcaddr">
+			<title>rpcaddr</title>
+			<para>默认是 127.0.0.1 </para>
+			<para>HTTP endpoint closed: http://127.0.0.1:8545</para>
+			<para>通过 --rpcaddr="0.0.0.0" 指定监听地址</para>
+			<para>HTTP endpoint opened: http://0.0.0.0:8545</para>
+			<screen>
+				<![CDATA[
+neo@netkiller ~/ethereum % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover console  
+INFO [01-20|01:41:33] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+INFO [01-20|01:41:33] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
+INFO [01-20|01:41:34] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
+INFO [01-20|01:41:34] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
+INFO [01-20|01:41:34] Disk storage enabled for ethash DAGs     dir=/home/neo/.ethash               count=2
+INFO [01-20|01:41:34] Initialising Ethereum protocol           versions="[63 62]" network=123456
+INFO [01-20|01:41:34] Loaded most recent local header          number=531 hash=1a2707…3a27bc td=79083846
+INFO [01-20|01:41:34] Loaded most recent local full block      number=531 hash=1a2707…3a27bc td=79083846
+INFO [01-20|01:41:34] Loaded most recent local fast block      number=531 hash=1a2707…3a27bc td=79083846
+INFO [01-20|01:41:34] Loaded local transaction journal         transactions=0 dropped=0
+INFO [01-20|01:41:34] Regenerated local transaction journal    transactions=0 accounts=0
+WARN [01-20|01:41:34] Blockchain not empty, fast sync disabled 
+INFO [01-20|01:41:34] Starting P2P networking 
+INFO [01-20|01:41:34] RLPx listener up                         self="enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@[::]:30303?discport=0"
+INFO [01-20|01:41:34] IPC endpoint opened: /home/neo/.ethereum/geth.ipc 
+INFO [01-20|01:41:34] HTTP endpoint opened: http://0.0.0.0:8545 
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
+coinbase: 0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6
+at block: 531 (Tue, 14 Nov 2017 17:36:05 HST)
+ datadir: /home/neo/.ethereum
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> INFO [01-20|01:41:40] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"
+				]]>
+			</screen>
+		</section>
+
+	</section>
+	<section id="geth.websocket">
+		<title>启动 Websocket 端口</title>
+		<screen>
+		<![CDATA[
+geth --syncmode light --rpc --rpcaddr 0.0.0.0 --rpcapi web3,eth --ws --wsaddr 0.0.0.0 --wsapi web3,eth --wsorigins '*'
+		]]>
+		</screen>
+		<para>安装 websocket 测试工具 wscat</para>
+		<screen>
+		<![CDATA[
+npm install -g wscat
+		]]>
+		</screen>
+		<para>测试 Websocket</para>
+		<screen>
+		<![CDATA[
+wscat -c ws://127.0.0.1:8546
+		]]>
+		</screen>
+	</section>
+	<section id="geth.log">
+		<title>日志</title>
+		<para>--verbosity 日志输出级别控制</para>
+		<screen>
+			<![CDATA[
+geth --verbosity 0 console
+			]]>
+		</screen>
+		<para>日志输出到文件中。</para>
+		<screen>
+			<![CDATA[
+geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*"  2>> /tmp/geth.log			
+			]]>
+		</screen>
+		<para>后台运行</para>
+		<screen>
+			<![CDATA[
+neo@netkiller ~ % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" 2>> /tmp/geth.log &     
+[1] 30075
+ 
+neo@netkiller ~ % tail -f /tmp/geth.log        
+INFO [02-02|21:18:59] Got interrupt, shutting down... 
+INFO [02-02|21:18:59] HTTP endpoint closed: http://0.0.0.0:8545 
+INFO [02-02|21:18:59] IPC endpoint closed: /home/neo/.ethereum/geth.ipc 
+INFO [02-02|21:18:59] Blockchain manager stopped 
+INFO [02-02|21:18:59] Stopping Ethereum protocol 
+INFO [02-02|21:18:59] Ethereum protocol stopped 
+INFO [02-02|21:18:59] Transaction pool stopped 
+INFO [02-02|21:18:59] Database closed                          database=/home/neo/.ethereum/geth/chaindata
+INFO [02-02|21:18:59] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"
+WARN [02-02|21:19:00] Already shutting down, interrupt more to panic. times=9			
+			]]>
+		</screen>
+	</section>
 	<section id="geth.console">
 		<title>控制台</title>
 		<subtitle>Geth JavaScript console</subtitle>
@@ -517,70 +635,7 @@ Address: {372fda02e8a1eca513f2ee5901dc55b8b5dd7411}
 			</screen>
 		</section>
 	</section>
-	<section id="geth.rpc">
-		<title>api 相关参数</title>
-		<para>rpcapi 启动后允许连接到系统的API协议</para>
-		<screen>
-			<![CDATA[
-geth --networkid 100000 --rpc --rpcapi "db,eth,net,web3" --rpccorsdomain "*" --datadir "/app/chain" --port "30303" console	
-			]]>
-		</screen>
-
-		<para>系统默认监听 127.0.0.1 如果希望外部访问本机，需要通过--rpcaddr指定监听地址。</para>
-		<screen>
-			<![CDATA[
-geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover		
-			]]>
-		</screen>
-		<section id="rpcapi">
-			<title>rpcapi</title>
-			<para>--rpcapi 可以控制访问内容</para>
-			<screen>
-				<![CDATA[
-$ geth --rpc --rpcapi personal,db,eth,net,web3 --rinkeby	
-				]]>
-			</screen>
-
-		</section>
-		<section id="rpcaddr">
-			<title>rpcaddr</title>
-			<para>默认是 127.0.0.1 </para>
-			<para>HTTP endpoint closed: http://127.0.0.1:8545</para>
-			<para>通过 --rpcaddr="0.0.0.0" 指定监听地址</para>
-			<para>HTTP endpoint opened: http://0.0.0.0:8545</para>
-			<screen>
-				<![CDATA[
-neo@netkiller ~/ethereum % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" --nodiscover console  
-INFO [01-20|01:41:33] Starting peer-to-peer node               instance=Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
-INFO [01-20|01:41:33] Allocated cache and file handles         database=/home/neo/.ethereum/geth/chaindata cache=128 handles=1024
-INFO [01-20|01:41:34] Initialised chain configuration          config="{ChainID: 15 Homestead: 0 DAO: <nil> DAOSupport: false EIP150: <nil> EIP155: 0 EIP158: 0 Byzantium: <nil> Engine: unknown}"
-INFO [01-20|01:41:34] Disk storage enabled for ethash caches   dir=/home/neo/.ethereum/geth/ethash count=3
-INFO [01-20|01:41:34] Disk storage enabled for ethash DAGs     dir=/home/neo/.ethash               count=2
-INFO [01-20|01:41:34] Initialising Ethereum protocol           versions="[63 62]" network=123456
-INFO [01-20|01:41:34] Loaded most recent local header          number=531 hash=1a2707…3a27bc td=79083846
-INFO [01-20|01:41:34] Loaded most recent local full block      number=531 hash=1a2707…3a27bc td=79083846
-INFO [01-20|01:41:34] Loaded most recent local fast block      number=531 hash=1a2707…3a27bc td=79083846
-INFO [01-20|01:41:34] Loaded local transaction journal         transactions=0 dropped=0
-INFO [01-20|01:41:34] Regenerated local transaction journal    transactions=0 accounts=0
-WARN [01-20|01:41:34] Blockchain not empty, fast sync disabled 
-INFO [01-20|01:41:34] Starting P2P networking 
-INFO [01-20|01:41:34] RLPx listener up                         self="enode://9f6490ffb5236f2ddc5710ae73d47c740e0a3644bbd2d67029cf4a6c4693d2f470b642fd2cc3507f7e851df60aaeb730a1270b7a477f91ec5b6b17a8a4b40527@[::]:30303?discport=0"
-INFO [01-20|01:41:34] IPC endpoint opened: /home/neo/.ethereum/geth.ipc 
-INFO [01-20|01:41:34] HTTP endpoint opened: http://0.0.0.0:8545 
-Welcome to the Geth JavaScript console!
-
-instance: Geth/v1.7.3-stable-4bb3c89d/linux-amd64/go1.9.1
-coinbase: 0x83fda0ba7e6cfa8d7319d78fa0e6b753a2bcb5a6
-at block: 531 (Tue, 14 Nov 2017 17:36:05 HST)
- datadir: /home/neo/.ethereum
- modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
-
-> INFO [01-20|01:41:40] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"
-				]]>
-			</screen>
-		</section>
-
-	</section>
+	
 	<section id="geth.password">
 		<title>配置自动解锁账号</title>
 		<para>创建password文件，在里面输入密码，每个账号一行密码如：</para>
@@ -768,40 +823,7 @@ $ nohup geth --datadir $DATADIR \
 		]]>
 		</screen>
 	</section>
-	<section id="geth.log">
-		<title>日志</title>
-		<para>--verbosity 日志输出级别控制</para>
-		<screen>
-			<![CDATA[
-geth --verbosity 0 console
-			]]>
-		</screen>
-		<para>日志输出到文件中。</para>
-		<screen>
-			<![CDATA[
-geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*"  2>> /tmp/geth.log			
-			]]>
-		</screen>
-		<para>后台运行</para>
-		<screen>
-			<![CDATA[
-neo@netkiller ~ % geth --networkid 123456 --rpc --rpcaddr="0.0.0.0" --rpccorsdomain "*" 2>> /tmp/geth.log &     
-[1] 30075
- 
-neo@netkiller ~ % tail -f /tmp/geth.log        
-INFO [02-02|21:18:59] Got interrupt, shutting down... 
-INFO [02-02|21:18:59] HTTP endpoint closed: http://0.0.0.0:8545 
-INFO [02-02|21:18:59] IPC endpoint closed: /home/neo/.ethereum/geth.ipc 
-INFO [02-02|21:18:59] Blockchain manager stopped 
-INFO [02-02|21:18:59] Stopping Ethereum protocol 
-INFO [02-02|21:18:59] Ethereum protocol stopped 
-INFO [02-02|21:18:59] Transaction pool stopped 
-INFO [02-02|21:18:59] Database closed                          database=/home/neo/.ethereum/geth/chaindata
-INFO [02-02|21:18:59] Mapped network port                      proto=tcp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"
-WARN [02-02|21:19:00] Already shutting down, interrupt more to panic. times=9			
-			]]>
-		</screen>
-	</section>
+	
 	<section id="static-nodes.json">
 		<title>静态节点</title>
 		<screen>
