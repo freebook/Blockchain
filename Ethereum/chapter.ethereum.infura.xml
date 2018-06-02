@@ -57,6 +57,42 @@ https://api.infura.io/v1/jsonrpc/mainnet/eth_blockNumber?token=CsS9shwaAab0z7B4L
 			</screen>
 		</section>
 	</section>
+	<section id="infura.websocket">
+		<title>websocket</title>
+		<screen>
+		<![CDATA[
+wss://mainnet.infura.io/ws
+wss://ropsten.infura.io/ws
+wss://rinkeby.infura.io/ws
+		]]>
+		</screen>
+		<section id="infura.newBlockHeaders">
+			<title>订阅 newBlockHeaders</title>
+			<programlisting>
+			<![CDATA[
+#!/usr/bin/env node
+const Web3 = require('web3');
+
+const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws'));
+
+const subscription = web3.eth.subscribe('newBlockHeaders', (error, blockHeader) => {
+  if (error) return console.error(error);
+
+  console.log('Successfully subscribed!', blockHeader);
+}).on('data', (blockHeader) => {
+  console.log('data: ', blockHeader);
+});
+
+// unsubscribes the subscription
+subscription.unsubscribe((error, success) => {
+  if (error) return console.error(error);
+
+  console.log('Successfully unsubscribed!');
+});			
+			]]>
+			</programlisting>
+		</section>
+	</section>
 	<section id="infura.truffle">
 		<title>配置 Truffle</title>
 		<para>安装 truffle-hdwallet-provider</para>

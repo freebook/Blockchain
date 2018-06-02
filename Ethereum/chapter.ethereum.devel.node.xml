@@ -71,7 +71,7 @@ neo@MacBook-Pro ~/ethereum/web3 % npm install truffle-contract
 		</screen>
 	</section>
 
-	<section id="web3.js.connect">
+	<section id="web3.js.js.connect">
 		<title>连接到以太坊客户端</title>
 		<section>
 			<title>http 方式</title>
@@ -117,7 +117,7 @@ var web3 = new Web3('/Users/myuser/Library/Ethereum/geth.ipc', net); // mac os p
 	</section>
 	<section id="web3">
 		<title>web3</title>
-		<section id="web3.version">
+		<section id="web3.js.version">
 			<title>version 显示web3版本号</title>
 			<screen>
 			<![CDATA[
@@ -127,9 +127,9 @@ var web3 = new Web3('/Users/myuser/Library/Ethereum/geth.ipc', net); // mac os p
 			</screen>
 		</section>
 	</section>
-	<section id="web3.eth">
+	<section id="web3.js.eth">
 		<title>web3.eth</title>
-		<section id="web3.eth.getAccounts()">
+		<section id="web3.js.eth.getAccounts()">
 			<title>查看账号列表</title>
 			<screen>
 			<![CDATA[
@@ -140,7 +140,7 @@ web3.eth.getAccounts().then(console.log);
 			]]>
 			</screen>
 		</section>
-		<section id="web3.eth.getCoinbase()">
+		<section id="web3.js.eth.getCoinbase()">
 			<title>查询矿工账号</title>
 			<screen>
 			<![CDATA[
@@ -165,7 +165,7 @@ web3.eth.getCoinbase(
 			</screen>
 
 		</section>
-		<section id="web3.eth.getBalance()">
+		<section id="web3.js.eth.getBalance()">
 			<title>获得余额</title>
 			<programlisting>
 			<![CDATA[
@@ -212,7 +212,7 @@ router.get('/balance.json', function(req, res) {
 			]]>
 			</programlisting>
 		</section>
-		<section id="web3.eth.sendTransaction()">
+		<section id="web3.js.eth.sendTransaction()">
 			<title>web3.eth.sendTransaction()</title>
 			<programlisting>
 			<![CDATA[
@@ -242,7 +242,7 @@ web3.eth.sendTransaction({from: coinbase, data: code}).then(function(receipt){
 			]]>
 			</programlisting>
 		</section>
-		<section id="web3.eth.sendSignedTransaction">
+		<section id="web3.js.eth.sendSignedTransaction">
 			<title>web3.eth.sendSignedTransaction() 私钥签名转账</title>
 			<section>
 				<title>例子1</title>
@@ -411,7 +411,7 @@ Balance after send: 1100
 				</screen>
 			</section>
 		</section>
-		<section id="web3.eth.getBlock">
+		<section id="web3.js.eth.getBlock">
 			<title>web3.eth.getBlock() 获取区块</title>
 			<para>获取 pending 状态的区块</para>
 			<screen>
@@ -429,9 +429,9 @@ function (error, block) {
 			</screen>
 		</section>
 	</section>
-	<section id="web3.eth.personal">
+	<section id="web3.js.eth.personal">
 		<title>账号管理</title>
-		<section id="web3.eth.personal.unlockAccount()">
+		<section id="web3.js.eth.personal.unlockAccount()">
 			<title>web3.eth.personal.unlockAccount()</title>
 			<programlisting>
 				<![CDATA[
@@ -442,7 +442,7 @@ web3.eth.personal.unlockAccount(coinbase, "your password").then(console.log);
 			</programlisting>
 		</section>
 	</section>
-	<section id="web3.js.contracts">
+	<section id="web3.js.js.contracts">
 		<title>智能合约</title>
 		<section>
 			<title>部署合约</title>
@@ -770,9 +770,155 @@ neo@MacBook-Pro ~/ethereum/web3 % node event.js
 			</screen>
 		</section>
 	</section>
-	<section id="web3.utils">
+	<section id="web3.js.subscribe">
+		<title></title>
+		<section id="">
+			<title></title>
+			<programlisting>
+			<![CDATA[
+const Web3 = require('web3');
+
+const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws'));
+
+var subscription = web3.eth.subscribe('pendingTransactions', function(error, result){
+    if (!error)
+        console.log(result);
+})
+.on("data", function(transaction){
+    console.log(transaction);
+});
+
+// unsubscribes the subscription
+subscription.unsubscribe(function(error, success){
+    if(success)
+        console.log('Successfully unsubscribed!');
+});
+			]]>
+			</programlisting>
+			
+			<para></para>
+			<programlisting>
+			<![CDATA[
+const Web3 = require('web3');
+
+const web3wss = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws'));
+const web3 = new Web3("https://mainnet.infura.io/CsS9shwaAab0z7B4LP2d");
+
+
+
+var subscription = web3wss.eth.subscribe('pendingTransactions', function(error, result){
+    if (!error){
+        console.log("--------------------" + result +"--------------------");
+        var receipt = web3.eth.getTransactionReceipt(result).then(console.log);
+     }
+})
+.on("data", function(transaction){
+    console.log(transaction);
+});
+
+// unsubscribes the subscription
+subscription.unsubscribe(function(error, success){
+    if(success)
+        console.log('Successfully unsubscribed!');
+});
+			
+	
+			]]>
+			</programlisting>
+			
+		</section>
+		<section id="web3.js.subscribe.newBlockHeaders">
+			<title>订阅 newBlockHeaders</title>
+			<programlisting>
+			<![CDATA[
+#!/usr/bin/env node
+const Web3 = require('web3');
+
+const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws'));
+
+const subscription = web3.eth.subscribe('newBlockHeaders', (error, blockHeader) => {
+  if (error) return console.error(error);
+
+  console.log('Successfully subscribed!', blockHeader);
+}).on('data', (blockHeader) => {
+  console.log('data: ', blockHeader);
+});
+
+// unsubscribes the subscription
+subscription.unsubscribe((error, success) => {
+  if (error) return console.error(error);
+
+  console.log('Successfully unsubscribed!');
+});			
+			]]>
+			</programlisting>
+		</section>
+		<section id="web3.js.subscribe.log">
+			<title>订阅 log</title>
+			<programlisting>
+			<![CDATA[
+#!/usr/bin/env node
+const Web3 = require('web3');
+
+const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws'));
+
+var subscription = web3.eth.subscribe('logs', {
+	fromBlock: 5709426,
+    address: '0x7fFdCccC3E7e33C6163393195A947A6d45f25814'
+}, function(error, result){
+    if (!error)
+        console.log(result);
+})
+.on("data", function(log){
+    console.log(log);
+})
+.on("changed", function(log){
+});
+
+// unsubscribes the subscription
+subscription.unsubscribe(function(error, success){
+    if(success)
+        console.log('Successfully unsubscribed!');
+});
+			]]>
+			</programlisting>
+		</section>
+		<section id=" web3.eth.subscribe.syncing">
+			<title>订阅同步状态</title>
+			<programlisting>
+			<![CDATA[
+const Web3 = require('web3');
+
+const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws'));
+
+var subscription = web3.eth.subscribe('syncing', function(error, sync){
+    if (!error)
+        console.log(sync);
+})
+.on("data", function(sync){
+    // show some syncing stats
+})
+.on("changed", function(isSyncing){
+    if(isSyncing) {
+        // stop app operation
+    } else {
+        // regain app operation
+    }
+});
+
+// unsubscribes the subscription
+subscription.unsubscribe(function(error, success){
+    if(success)
+        console.log('Successfully unsubscribed!');
+});
+
+			]]>
+			</programlisting>
+		</section>
+	</section>
+	<section id="web3.js.utils">
 		<title>utils</title>
-		<section id="web3.utils.toWei()">
+		<section id="web3.js.utils.toWei()">
 			<title>web3.utils.toWei()</title>
 			<screen>
 			<![CDATA[
@@ -790,7 +936,7 @@ web3.utils.toWei('1', 'shannon');
 			]]>
 			</screen>
 		</section>
-		<section id="web3.utils.fromWei()">
+		<section id="web3.js.utils.fromWei()">
 			<title>将 Wei 转换到指定单位</title>
 			<programlisting>
 			<![CDATA[
@@ -901,7 +1047,7 @@ console.log(encoded.toString('hex'));
 			查看 Input Data: 0029之后所有的数据就是 ABI
 		</para>
 	</section>
-	<section id="web3.example">
+	<section id="web3.js.example">
 		<title>实用例子</title>
 		<section>
 			<title>数据写入到区块链中</title>
@@ -1099,7 +1245,7 @@ contract.methods.balanceOf('0x2C687bfF93677D69bd20808a36E4BC2999B4767C').call().
 		</section>
 	</section>
 
-	<section id="web3.js.HDWallet">
+	<section id="web3.js.js.HDWallet">
 		<title>HD Wallet(Hierarchical Deterministic wallet)</title>
 		<para>BIP32 定义 Hierarchical Deterministic wallet (简称 "HD Wallet")，是一个系统可以从单个seed产生树状结构储存多组 keypairs（私钥和公钥）</para>
 		<para>BIP39 定义钱包助记词和seed生成规则，一般由 12 -24个单字组成，称为 mnemonic。助记词列表，https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt</para>
@@ -1396,7 +1542,7 @@ undefined
 			<!-- https://github.com/ethereum/web3.js/issues/1151 -->
 		</section>
 	</section>
-	<section id="web3.js.keythereum">
+	<section id="web3.js.js.keythereum">
 		<title>从 .ethereum/keystore 文件导入私钥</title>
 
 		<para></para>
@@ -1435,7 +1581,7 @@ undefined
 		]]>
 		</screen>
 	</section>
-	<section id="web3.js.example">
+	<section id="web3.js.js.example">
 		<title>Express + web3.js 实现简单网页钱包</title>
 		<para>下面的例子，实现查询余额，创建账号，ETH转账，代币转账。</para>
 		<section>
