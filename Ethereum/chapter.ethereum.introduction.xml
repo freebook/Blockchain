@@ -23,6 +23,10 @@ bip44 = a specific format of a bip32 wallet
 		</literallayout>
 
 	</section>
+	<section id="iban">
+		<title>IBAN (International Bank Account Number)</title>
+		<para>iban其英文全称为International Bank Account Number， 即国际银行帐号。iban的作用是为全球任意一家银行中的任意一个账户 生成一个全球唯一的账号，以便进行跨行交易。</para>
+	</section>
 	<section id="ethereum.cost">
 		<title>如何计算Gas手续费</title>
 		<para>下面我们用实例讲解怎样计算以太坊在执行交易时花费的 gas 费用。</para>

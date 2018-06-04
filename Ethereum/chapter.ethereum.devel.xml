@@ -73,7 +73,7 @@ web3.eth.sendTransaction({'to': toAddress, 'from': fromAddress, 'value': value})
 			<programlisting>
 			<![CDATA[
 from web3 import Web3
-web3 = Web3(Web3.IPCProvider("https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d"))	
+web3 = Web3(Web3.HTTPProvider("https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d"))	
 
 privateKey = '8D16063C3F665A6FB37195D18968E63CC04CEE4BFB1B98C184121D4C31D9875E'
 fromAddress = "0xb3cedc76e75fcd278c988b22963c2f35c99c10b7"
@@ -94,6 +94,21 @@ web3.eth.sendRawTransaction(signed_txn.rawTransaction)
 			]]>
 			</programlisting>
 		</section>
+	</section>
+	<section id="">
+		<title></title>
+		<programlisting>
+		<![CDATA[
+from web3 import Web3
+web3 = Web3(Web3.HTTPProvider("https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d"))	
+
+contract = web3.eth.contract(address='0x000000000000000000000000000000000000dead', abi=...)
+
+contract.functions.balanceOf(address).call()
+
+contract.functions.transfer(to, value).call()
+		]]>
+		</programlisting>
 	</section>
 </chapter>
 <chapter>
