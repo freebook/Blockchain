@@ -50,6 +50,51 @@ neo@MacBook-Pro ~/ethereum/web3.py % pip3 install web3
 		</section>
 		
 	</section>
+	<section id="web3.py.sendTransaction">
+		<title>交易</title>
+		<section id="">
+			<title>发送 ETH</title>
+			<programlisting>
+			<![CDATA[
+from web3 import Web3
+web3 = Web3(Web3.IPCProvider("~/Library/Ethereum/geth.ipc"))	
+
+fromAddress = '0xf56b81a2bcb964D2806071e9Be4289A5559BB0fA'
+toAddress = '0x997e5CA600E19447D0B82aFBf9c7F00De2B39B16'
+value = 0.0001
+
+web3.personal.unlockAccount(fromAddress, '12345678')
+web3.eth.sendTransaction({'to': toAddress, 'from': fromAddress, 'value': value})
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>签名发送 ETH</title>
+			<programlisting>
+			<![CDATA[
+from web3 import Web3
+web3 = Web3(Web3.IPCProvider("https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d"))	
+
+privateKey = '8D16063C3F665A6FB37195D18968E63CC04CEE4BFB1B98C184121D4C31D9875E'
+fromAddress = "0xb3cedc76e75fcd278c988b22963c2f35c99c10b7"
+toAddress = '0x997e5CA600E19447D0B82aFBf9c7F00De2B39B16'
+amount = 0.0001
+
+signed_txn = web3.eth.account.signTransaction(dict(
+    nonce=web3.eth.getTransactionCount(fromAddress),
+    gasPrice=web3.eth.gasPrice,
+    gas=21000,
+    to=toAddress,
+    value=amount,
+    data=b'',
+  ),
+  private_key,
+)
+web3.eth.sendRawTransaction(signed_txn.rawTransaction)
+			]]>
+			</programlisting>
+		</section>
+	</section>
 </chapter>
 <chapter>
 	<title>Ethereum iOS</title>
