@@ -870,20 +870,5 @@ $ vim ~/.ethereum/static-nodes.json
 		</screen>
 	</section>
 	&chapter.ethereum.console.xml;
-	<section id="ethereum.jsonrpc">
-		<title>jsonrpc 原生交口调用</title>
-		<screen>
-		<![CDATA[
-neo@MacBook-Pro ~ % curl -XPOST -H "Accept: application/json" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x5c18a33df2cc41a1beddc91133b8422e89f041b7", "latest"],"id":1}' http://localhost:8545 
-{"jsonrpc":"2.0","id":1,"result":"0x153e5f3aeb667075800"}		
-		]]>
-		</screen>
-		<screen>
-		<![CDATA[
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":[],"id":1}'		
 
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "latest"],"id":1}'
-		]]>
-		</screen>
-	</section>
 </chapter>

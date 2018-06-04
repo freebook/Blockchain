@@ -11,10 +11,51 @@
 		文档地址
 		<ulink url="http://web3py.readthedocs.io/">http://web3py.readthedocs.io/</ulink>
 	</para>
+	<section id="web3.py.install">
+		<title>安装 web3.py 开发环境</title>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~/ethereum/web3.py % pip3 install web3
+		]]>
+		</screen>
+	</section>
+	<section id="">
+		<title>连接到以太坊节点</title>
+		<section id="">
+			<title>HTTP</title>
+			<programlisting>
+			<![CDATA[
+>>> from web3 import Web3
+>>> web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545")
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>IPC</title>
+			<programlisting>
+			<![CDATA[
+>>> from web3 import Web3
+>>> web3 = Web3(Web3.IPCProvider("~/Library/Ethereum/geth.ipc"))	
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>Websocket</title>
+			<programlisting>
+			<![CDATA[
+>>> from web3 import Web3
+>>> web3 = Web3(Web3.WebsocketProvider("ws://127.0.0.1:8546")			
+			]]>
+			</programlisting>
+		</section>
+		
+	</section>
 </chapter>
 <chapter>
 	<title>Ethereum iOS</title>
-	<para><ulink url="https://github.com/MercuryProtocol/web3.swift" /></para>
+	<para>
+		<ulink url="https://github.com/MercuryProtocol/web3.swift" />
+	</para>
 	<para>https://medium.com/mercuryprotocol/introducing-web3-swift-for-ethereum-ios-development-1e02212b662b</para>
 </chapter>
 <chapter id="index"><?dbhtml dir="api" ?>
@@ -42,4 +83,22 @@ https://api.etherscan.io/api?module=account&action=balance&address=0xddbd2b932c7
 		]]>
 		</screen>
 	</section>
+
+	<section id="ethereum.jsonrpc">
+		<title>jsonrpc 原生交口调用</title>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~ % curl -XPOST -H "Accept: application/json" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x5c18a33df2cc41a1beddc91133b8422e89f041b7", "latest"],"id":1}' http://localhost:8545 
+{"jsonrpc":"2.0","id":1,"result":"0x153e5f3aeb667075800"}		
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_accounts","params":[],"id":1}'		
+
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "latest"],"id":1}'
+		]]>
+		</screen>
+	</section>
+
 </chapter>
