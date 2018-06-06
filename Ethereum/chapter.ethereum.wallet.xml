@@ -313,6 +313,10 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 			]]>
 			</screen>
 		</section>
+		<section id="">
+			<title>免安装，在线使用</title>
+			<para><ulink url="https://wallet.ethereum.org" /></para>
+		</section>
 		<section>
 			<title>获得空投币</title>
 		</section>

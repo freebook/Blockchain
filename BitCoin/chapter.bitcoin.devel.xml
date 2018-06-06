@@ -1,8 +1,194 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter>
+<chapter id="Bitcoinj">
 	<title>BitCoinJ</title>
+	<section id="">
+		<title>testnet faucet</title>
+		<para>
+			<ulink url="http://faucet.xeno-genesis.com/" />
+		</para>
+		<para>
+			<ulink url="http://tpfaucet.appspot.com/" />
+		</para>
+		<para>
+			区块浏览器
+			<ulink url="https://testnet.blockexplorer.com/" />
+		</para>
+	</section>
+	<section id="">
+		<title>Maven pom.xml</title>
+		<para>Java 10 maven 配置</para>
+		<programlisting>
+		<![CDATA[
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>cn.netkiller</groupId>
+	<artifactId>wallet</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>ethereum</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.bitcoinj</groupId>
+			<artifactId>bitcoinj-core</artifactId>
+			<version>0.14.7</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<release>10</release>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+		]]>
+		</programlisting>
+	</section>
+	<section id="">
+		<title>网络参数</title>
+		<programlisting>
+		<![CDATA[
+NetworkParameters params;  // 网络参数声明
+params = TestNet3Params.get(); // 公共测试网络
+params = RegTestParams.get(); // 私有测试网络
+params = MainNetParams.get(); // 生产主网络
+		]]>
+		</programlisting>
+	</section>
+	<section id="bitcoinj.key">
+		<title>公钥和私钥</title>
+		<section id="">
+			<title>导入私钥</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.bitcoin;
+
+import java.math.BigInteger;
+
+import org.bitcoinj.core.Address;
+import org.bitcoinj.core.ECKey;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.params.TestNet3Params;
+
+public class PrivateKey {
+
+	public PrivateKey() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// 私钥地址
+		String privateKey = "114975678953706493006078288858395390389542766334692100030647313125562885805365";
+		// 专为 BigInteger
+		BigInteger privateKeyBigInteger = new BigInteger(privateKey);
+		// 设置比特币网络
+		NetworkParameters params = TestNet3Params.get();
+		// 构造初始拥有者key
+		ECKey ecKey = ECKey.fromPrivate(privateKeyBigInteger);
+		// 导出地址
+		Address address = ecKey.toAddress(params);
+		// 打印地址
+		System.out.println(address.toString());
+	}
+
+}
+			]]>
+			</programlisting>
+
+		</section>
+
+		<section id="bitcoinj.privateKey">
+			<title>生成地址和私钥</title>
+			<programlisting>
+		<![CDATA[
+package cn.netkiller.example.bitcoin;
+
+import java.io.File;
+
+import org.bitcoinj.core.Address;
+import org.bitcoinj.core.BlockChain;
+import org.bitcoinj.core.ECKey;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.core.PeerGroup;
+import org.bitcoinj.net.discovery.DnsDiscovery;
+import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.store.BlockStoreException;
+import org.bitcoinj.store.SPVBlockStore;
+import org.bitcoinj.wallet.Wallet;
+
+public class AddressTest {
+
+	public AddressTest() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) throws BlockStoreException {
+		// TODO Auto-generated method stub
+		NetworkParameters params = TestNet3Params.get();
+
+		ECKey key = new ECKey();
+		System.out.println("We created a new key:\n" + key);
+
+		Address addressFromKey = key.toAddress(params);
+		System.out.println("Public Address generated: " + addressFromKey);
+
+		System.out.println("Private key is: " + key.getPrivateKeyEncoded(params).toString());
+
+		Wallet wallet = new Wallet(params);
+		wallet.importKey(key);
+
+		File blockFile = new File("/tmp/bitcoin-blocks");
+		SPVBlockStore blockStore = new SPVBlockStore(params, blockFile);
+
+		BlockChain blockChain = new BlockChain(params, wallet, blockStore);
+		PeerGroup peerGroup = new PeerGroup(params, blockChain);
+		peerGroup.addPeerDiscovery(new DnsDiscovery(params));
+		peerGroup.addWallet(wallet);
+
+		System.out.println("Start peer group");
+		peerGroup.start();
+
+		System.out.println("Downloading block chain");
+		peerGroup.downloadBlockChain();
+		System.out.println("Block chain downloaded");
+	}
+
+}		
+		]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>从 Base58导入地址</title>
+			<programlisting>
+			<![CDATA[
+Address to = Address.fromBase58(params, "n4EghfqvyCG92EwxmorudbuaTRH7WdXBoG");			
+			]]>
+			</programlisting>
+		</section>
+	</section>
 	<section>
-		<title>生成 Mnemonic</title>
+		<title>生成 Mnemonic 助记词</title>
 		<programlisting>
 		<![CDATA[
 package cn.netkiller.bitcoin.mnemonic;
@@ -38,4 +224,297 @@ mnemonicCode: source effort task misery system sorry avocado coach isolate body 
 		]]>
 		</screen>
 	</section>
+	<section id="">
+		<title>Coin 币操作</title>
+		<programlisting>
+		<![CDATA[
+Coin value = Coin.parseCoin("0.009");		
+		]]>
+		</programlisting>
+	</section>
+	<section id="WalletAppKit">
+		<title>WalletAppKit</title>
+		<para>bitcoinj提供了一个高级别的封装类，名为WalletAppKit。它设置bitcoinj为SPV模式（与之相对的是全校验模式），如果你不适用 WalletAppKit 类，你需要处理很多复杂的逻辑，例如 BlockChain、BlockStore、PeerGroup和Wallet等等。</para>
+		<tip>
+			<para>注意：WalletAppKit 采用的钱包格式是 BIP32 - MultiBit HD 格式，BIP32 Derivation Path 是 m/0'/0</para>
+		</tip>
+		<section id="">
+			<title>创建钱包</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.bitcoin;
+
+import java.io.File;
+
+import org.bitcoinj.core.ECKey;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.kits.WalletAppKit;
+import org.bitcoinj.params.RegTestParams;
+import org.bitcoinj.params.TestNet3Params;
+
+public class CreateAddress {
+
+	public CreateAddress() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		String filePrefix = "testnet";
+		NetworkParameters params = TestNet3Params.get();
+		WalletAppKit kit = new WalletAppKit(params, new File("."), filePrefix) {
+			@Override
+			protected void onSetupCompleted() {
+				if (wallet().getKeyChainGroupSize() < 1)
+					wallet().importKey(new ECKey());
+			}
+		};
+
+		if (params == RegTestParams.get()) {
+			kit.connectToLocalHost();
+		}
+
+		// Download the block chain and wait until it's done.
+		kit.startAsync();
+		kit.awaitRunning();
+	}
+
+}
+			
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>创建钱包并返回助记词</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.bitcoin.mnemonic;
+
+import java.io.File;
+import org.bitcoinj.core.ECKey;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.kits.WalletAppKit;
+import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.wallet.UnreadableWalletException;
+import org.bitcoinj.wallet.Wallet;
+
+public class WalletAppKitMnemonic {
+
+	public WalletAppKitMnemonic() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) throws UnreadableWalletException {
+		// TODO Auto-generated method stub
+
+		String filePrefix = "testnet9";
+		NetworkParameters params = TestNet3Params.get();
+		WalletAppKit kit = new WalletAppKit(params, new File("."), filePrefix) {
+			@Override
+			protected void onSetupCompleted() {
+
+				if (wallet().getKeyChainGroupSize() < 5)
+					wallet().importKey(new ECKey());
+
+			}
+		};
+
+		// Download the block chain and wait until it's done.
+		kit.startAsync();
+		kit.awaitRunning();
+
+		Wallet wallet = kit.wallet();
+		System.out.println(wallet);
+
+		System.out.println("Current Receive Address: " + wallet.currentReceiveAddress().toString() + "\nIssued Receive Addresses: " + wallet.getIssuedReceiveAddresses().toString() + "\nMnemonic: " + String.join(" ", wallet.getActiveKeyChain().getMnemonicCode()) + "\nWallets Balance: " + wallet.getBalance().toPlainString() + " BTC");
+
+	}
+
+}			
+			
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>获取余额</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.bitcoin;
+
+import java.io.File;
+import java.util.List;
+
+import org.bitcoinj.core.Address;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.kits.WalletAppKit;
+import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.wallet.Wallet;
+
+public class BalanceTest {
+
+	public BalanceTest() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		NetworkParameters params = TestNet3Params.get();
+		String filePrefix = "testnet";
+		WalletAppKit kit = new WalletAppKit(params, new File("."), filePrefix);
+
+		// Download the block chain and wait until it's done.
+		kit.startAsync();
+		kit.awaitRunning();
+
+		Wallet wallet = kit.wallet();
+
+		List<Address> list = wallet.getWatchedAddresses();
+
+		System.out.println("You have " + list.size() + " addresses!");
+		for (Address address : list) {
+			System.out.println(address.toString());
+
+		}
+
+		String balance = wallet.getBalance().toFriendlyString();
+		System.out.println(balance);
+	}
+
+}
+			]]>
+			</programlisting>
+			<para>查询余额如果没有账号，新建一个账号。</para>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.bitcoin;
+
+import java.io.File;
+import java.util.List;
+
+import org.bitcoinj.core.Address;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.kits.WalletAppKit;
+import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.wallet.Wallet;
+
+public class BalanceTest {
+
+	public BalanceTest() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		NetworkParameters params = TestNet3Params.get();
+		String filePrefix = "testnet1";
+		WalletAppKit kit = new WalletAppKit(params, new File("."), filePrefix);
+
+		// Download the block chain and wait until it's done.
+		kit.startAsync();
+		kit.awaitRunning();
+
+		Wallet wallet = kit.wallet();
+
+		List<Address> list = wallet.getWatchedAddresses();
+		if (list.size() < 1) {
+			wallet.addWatchedAddress(kit.wallet().freshReceiveAddress());
+			System.out.println("New address created");
+			list = wallet.getWatchedAddresses();
+		}
+
+		System.out.println("You have " + list.size() + " addresses!");
+		for (Address address : list) {
+			System.out.println(address.toString());
+
+		}
+
+		String balance = wallet.getBalance().toFriendlyString();
+		System.out.println(balance);
+	}
+
+}			
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>设置网络节点</title>
+			<programlisting>
+			<![CDATA[
+walletAppKit = new WalletAppKit(NETWORK_PARAMETERS,DIRECTORY, "test");
+        walletAppKit
+                .setAutoSave(true)
+                .setBlockingStartup(false)
+                .setPeerNodes(//Seed nodes for the test network
+                        new PeerAddress(InetAddress.getByName("seed.bitcoin.sipa.be"), 18333),
+                        new PeerAddress(InetAddress.getByName("testnet-seed.bitcoin.petertodd.org"), 18333),
+                        new PeerAddress(InetAddress.getByName("node3.mycelium.com"), 18333),
+                        new PeerAddress(InetAddress.getLocalHost(), 18333));			
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>通过助记词恢复钱包</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.bitcoin.mnemonic;
+
+import java.io.File;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.crypto.MnemonicCode;
+import org.bitcoinj.kits.WalletAppKit;
+import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.wallet.DeterministicSeed;
+import org.bitcoinj.wallet.UnreadableWalletException;
+import org.bitcoinj.wallet.Wallet;
+
+public class ImportMnemonic {
+
+	public ImportMnemonic() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) throws UnreadableWalletException {
+		// TODO Auto-generated method stub
+
+		String mnemonic = "income velvet eye juice finger debris gloom already tobacco argue fault lava";
+
+		String filePrefix = "testnet";
+		NetworkParameters params = TestNet3Params.get();
+		WalletAppKit kit = new WalletAppKit(params, new File("."), filePrefix);
+
+		long creationTimeSeconds = MnemonicCode.BIP39_STANDARDISATION_TIME_SECS;
+		DeterministicSeed seed = new DeterministicSeed(mnemonic, null, "", creationTimeSeconds);
+
+		kit.restoreWalletFromSeed(seed);
+
+		kit.startAsync();
+		kit.awaitRunning();
+
+		Wallet wallet = kit.wallet();
+		System.out.println(wallet);
+
+		System.out.println("Current Receive Address: " + wallet.currentReceiveAddress().toString() + "\nIssued Receive Addresses: " + wallet.getIssuedReceiveAddresses().toString() + "\nMnemonic: " + String.join(" ", wallet.getActiveKeyChain().getMnemonicCode()) + "\nWallets Balance: " + wallet.getBalance().toPlainString() + " BTC");
+
+	}
+
+}			
+			]]>
+			</programlisting>
+		</section>
+	</section>
+
+</chapter>
+<chapter id="Bitherj">
+	<title>Bitherj</title>
+	<para>
+		官方网站
+		<ulink url="https://bither.net" />
+	</para>
+	<para>
+		Github 地址：
+		<ulink url="https://github.com/bither/bitherj" />
+	</para>
 </chapter>
