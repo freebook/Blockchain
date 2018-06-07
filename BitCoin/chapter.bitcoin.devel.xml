@@ -14,7 +14,7 @@
 			<ulink url="https://testnet.blockexplorer.com/" />
 		</para>
 	</section>
-	<section id="">
+	<section id="bitcoinj.maven">
 		<title>Maven pom.xml</title>
 		<para>Java 10 maven 配置</para>
 		<programlisting>
@@ -64,7 +64,7 @@
 		]]>
 		</programlisting>
 	</section>
-	<section id="">
+	<section id="bitcoinj.network">
 		<title>网络参数</title>
 		<programlisting>
 		<![CDATA[
@@ -187,9 +187,12 @@ Address to = Address.fromBase58(params, "n4EghfqvyCG92EwxmorudbuaTRH7WdXBoG");
 			</programlisting>
 		</section>
 	</section>
-	<section>
-		<title>生成 Mnemonic 助记词</title>
-		<programlisting>
+	<section id="mnemonic">
+		<title>Mnemonic 助记词</title>
+
+		<section id="bitcoin.create.mnemonic">
+			<title>生成 Mnemonic 助记词</title>
+			<programlisting>
 		<![CDATA[
 package cn.netkiller.bitcoin.mnemonic;
 
@@ -214,17 +217,94 @@ public class MnemonicTest {
 
 }
 		]]>
-		</programlisting>
-		<para>运行结果</para>
-		<screen>
+			</programlisting>
+			<para>运行结果</para>
+			<screen>
 		<![CDATA[
 seed: DeterministicSeed cf1a8c22b2733ed80a4e9e89337ad58c069a58f43ce819826fc428e0e9b21dd025f912b45211e839897188d0dfa510882ef8bbe4691ba8795f03fd236b537ca5 source effort task misery system sorry avocado coach isolate body transfer result
 creation time: 1527126797
 mnemonicCode: source effort task misery system sorry avocado coach isolate body transfer result
 		]]>
-		</screen>
+			</screen>
+			<programlisting>
+			<![CDATA[
+			
+			]]>
+			</programlisting>
+		</section>
+		<section id="bitcoin.import.mnemonic">
+			<title>导入助记词</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.bitcoin.mnemonic;
+
+import java.io.File;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bitcoinj.core.ECKey;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.crypto.ChildNumber;
+import org.bitcoinj.crypto.DeterministicKey;
+import org.bitcoinj.crypto.HDUtils;
+import org.bitcoinj.crypto.MnemonicCode;
+import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.wallet.DeterministicKeyChain;
+import org.bitcoinj.wallet.DeterministicSeed;
+import org.bitcoinj.wallet.UnreadableWalletException;
+import org.bitcoinj.wallet.Wallet;
+
+import com.google.common.base.Joiner;
+
+public class ImportMnemonic {
+
+	public ImportMnemonic() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) throws UnreadableWalletException {
+		// TODO Auto-generated method stub
+
+		String mnemonic = "income velvet eye juice finger debris gloom already tobacco argue fault lava";
+
+		NetworkParameters params = TestNet3Params.get();
+		long creationTimeSeconds = MnemonicCode.BIP39_STANDARDISATION_TIME_SECS;
+		DeterministicSeed seed = new DeterministicSeed(mnemonic, null, "", creationTimeSeconds);
+
+		DeterministicKeyChain chain = DeterministicKeyChain.builder().seed(seed).build();
+
+		List<ChildNumber> keyPath = HDUtils.parsePath("M/44H/1H/0H/0/0");
+
+		DeterministicKey dkey = chain.getKeyByPath(keyPath, true);
+
+		BigInteger privKey = dkey.getPrivKey();
+
+		String mnemonicCode = Joiner.on(" ").join(seed.getMnemonicCode());
+
+		System.out.println("We created a new mnemonicCode:\n" + mnemonicCode);
+		System.out.println("We created a new seed:\n" + seed);
+		System.out.println("We created a new dkey:\n" + dkey);
+		System.out.println("privKey:" + privKey + "\nprivateKey:" + dkey.getPrivateKeyEncoded(params) + "\nAddress:" + dkey.toAddress(params).toString());
+
+		ECKey key1 = ECKey.fromPrivate(dkey.getPrivKey());
+
+		List<ECKey> keys = new ArrayList<ECKey>();
+		keys.add(key1);
+
+		Wallet w1 = Wallet.fromKeys(params, keys);
+		System.out.println("wallet(): " + w1);
+
+	}
+
+}
+			
+			]]>
+			</programlisting>
+		</section>
 	</section>
-	<section id="">
+
+	<section id="bitcoinj.coin">
 		<title>Coin 币操作</title>
 		<programlisting>
 		<![CDATA[
