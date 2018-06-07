@@ -139,7 +139,7 @@
 				<para>ETH（以太坊）采用 fast 模式也需要200G的磁盘空间同步一周左右。就算采用最新的 light 模式，同步过程中经常出现中断，没有peers节点，断断续续，体验极度不好。</para>
 			</listitem>
 			<listitem>
-				<para>区块链没有事务处理</para>	
+				<para>区块链没有事务处理</para>
 				<para>因为区块链是首尾相连的，只能在尾部添加新区块，区块无法修改，所以区块链无法做事务处理。</para>
 				<screen>
 				<![CDATA[
@@ -147,13 +147,13 @@ Block 0 -> Block 1 -> Block 2 -> Block 3 -> Block 4
 				]]>
 				</screen>
 				<para>试想一下上面的 Block 2 回滚会怎样？如果 Block 2 回滚，Hash 值产生变化，后面所有区块都作废。所以区块链无法实现事务处理。</para>
-				
+
 				<para>超级账本(Hyperledger Fabric)记不了帐</para>
 				<para>Hyperledger Fabric 中文名称叫超级账本，这个翻译坑害了无数人。 Hyperledger Fabric 跟账本没有任何关系。</para>
 				<para>实际工作中我使用 Hyperledger Fabric 实现了类似以太坊ERC20代币的功能，发行一个代币后将发行金额写入一个总账，然后从总账中项其他账号转账，用户消费后将金额从用户转会总账。</para>
 				<para>问题来了，因为超级账本没有事务处理，也无法串行执行每一笔操作，当并发执行的时候，账目出现混乱。</para>
 				<para>区块链无法将一组业务逻辑放到事物中执行。这样在实际的开发中我们只能依赖应用层，只能在应用层上实现事物锁的功能。由于区块存储在多个节点上，共识时间无法预计，不知道 stub.PutState（异步写入）执行完成的具体时间，无法达到100%无误。对于财务数据来不得半点马虎，我还是决定放弃这个功能，专为传统数据库。</para>
-				<para>所以超级账本记不了</para>	
+				<para>所以超级账本记不了</para>
 			</listitem>
 			<listitem>
 				<para>TPS:Transactions Per Second(每秒传输的事物处理个数)</para>
@@ -337,6 +337,223 @@ Block 0 -> Block 1 -> Block 2 -> Block 3 -> Block 4
 			<para>DPoS很容易理解，类似于现代企业董事会制度。比特股采用的DPoS机制是由持股者投票选出一定数量的见证人，每个见证人按序有两秒的权限时间生成区块，若见证人在给定的时间片不能生成区块，区块生成权限交给下一个时间片对应的见证人。持股人可以随时通过投票更换这些见证人。DPoS的这种设计使得区块的生成更为快速，也更加节能。从某种角度来说，DPOS可以理解为多中心系统，兼具去中心化和中心化优势。</para>
 			<para>优点：大幅缩小参与验证和记账节点的数量，可以达到秒级的共识验证。</para>
 			<para>缺点：选举固定数量的见证人作记账候选人有可能不适合于完全去中心化的场景。另外在网络节点数少的场景，选举的见证人的代表性也不强。</para>
+		</section>
+	</section>
+	<section id="bip39">
+		<title>BIP39协议:使用助记词生成确定性钱包</title>
+		<literallayout>
+		<![CDATA[
+BIP:39
+层：应用层
+标题：使用助记词生成确定性钱包秘钥
+作者：Marek Palatinus <slush@satoshilabs.com>
+     Pavol Rusnak <stick@satoshilabs.com>
+     Aaron Voisine <voisine@gmail.com>
+     Sean Bowe <ewillbefull@gmail.com>
+状态：已经被提议
+类型：标准化跟踪
+创建日期：2013-09-10
+译者：kimziv
+		]]>
+		</literallayout>
+		<section id="摘要">
+			<title>摘要</title>
+			<para>这个BIP描述了使用助记码或者助记句子（简称助记词）--一组便于记忆的单词来生成确定性钱包。</para>
+			<para>这个BIP由两部分构成：生成助记词和把生成的助记词转化成一个二进制种子。这个种子后面会更急类似于BIP32的方法生成确定性钱包。</para>
+		</section>
+		<section id="动机">
+			<title>动机</title>
+			<para> 与处理原始的二进制或者十六进制的钱包种子相比，在人机交互过程中助记词是更胜一筹的。这些助记单词可以被写在纸上或者通过电话说出来。			</para>
+			<para>本指南旨在通过人类可读的转录来传输计算机生成的随机性。并不是将用户创建的句子（也称为脑钱包）处理到钱包种子中的方法。</para>
+		</section>
+		<section id="生成助记词">
+			<title>生成助记词</title>
+			<para>助记符必须以32位的倍数编码熵。随着熵的安全性提高，同时句子的长度也在增加。我们将初始熵长度称为ENT。ENT允许的大小为128-256位。</para>
+			<para>首先，生成ENT位的初始熵。通过取第一个生成的校验和</para>
+			<literallayout>
+			<![CDATA[
+ENT/32			
+			]]>
+			</literallayout>
+			<para>它的SHA256哈希的位。该校验和附加到初始熵的末尾。接下来，这些连接的比特位被分成多个11位的组，每个组用从0-2047的数字编码，用作单词表的索引。最后，我们将这些数字转换为单词，并将加入的所有单词组成助记句。</para>
+			<para>下表描述了初始熵长度（ENT），校验和长度（CS）和生成助记词（MS）的长度之间的关系。</para>
+			<literallayout>
+			<![CDATA[
+CS = ENT / 32
+MS = (ENT + CS) / 11			
+			]]>
+			</literallayout>
+			<screen>
+			<![CDATA[
+ENT		CS		ENT + CS	MS
+------------------------------
+128		4		132			12
+160		5		165			15
+192		6		198			18
+224		7		231			21
+256		8		264			24			
+			]]>
+			</screen>
+		</section>
+		<section id="单词表">
+			<title>单词表</title>
+			<itemizedlist>
+				<title>理想的单词列表具有以下特点：</title>
+				<listitem>
+					<para>智能选词</para>
+					<para>单词列表以这种方式创建：输入前四个字母来就足以明确地标识这个单词；</para>
+				</listitem>
+				<listitem>
+					<para>避免相似的单词</para>
+					<para>"build" and "built", "woman" and "women", or "quick" and "quickly" 这样的词对，不仅使记忆困难，而且更容易出错，更难猜到；</para>
+				</listitem>
+				<listitem>
+					<para>排序的单词列表</para>
+					<para>排序的单词列表允许更有效地查找代码字（即，实现可以使用二分搜索而不是线性搜索）</para>
+					<para>这也允许使用字典树（前缀树），例如用于更好的压缩</para>
+				</listitem>
+			</itemizedlist>
+			<para>单词表可以包含本土字符，但必须使用规范化形式兼容性分解（NFKD）以UTF-8编码。</para>
+		</section>
+		<section id="从助记词到种子">
+			<title>从助记词到种子</title>
+			<para>用户可以决定用密码保护他们的助词。如果密码不存在，则使用空字符串“”代替。</para>
+			<para>要通过助记词创建一个二进制种子，我们使用助记符作为密码（UTF-8 NFKD）和字符串“mnemonic”+ passphrase 作为盐（再次以UTF-8 NFKD）来调用PBKDF2函数。迭代计数设置为2048，HMAC-SHA512用作伪随机函数。派生密钥的长度为512位（= 64字节）。</para>
+			<para>该种子可以随后用于使用BIP-0032或类似方法产生确定性钱包。</para>
+			<para>助记词转换为二进制种子完全独立于生成这个助记词。这导致相当简单的代码; 助记词结构没有约束，客户可以自由地实现自己的单词列表，甚至是整个助记词的生成器，允许字典列表中的输入错误检测或其他用途的灵活性。</para>
+			<para>虽然使用的助记词可能不是通过“生成助记词”部分中描述的算法生成的，但这是不建议的，软件必须使用单词表计算助记词的校验和，如果无效则发出警告。</para>
+			<para>所描述的方法还提供似乎可信的可否认性，因为每个密码短语产生一个有效的种子（因此产生确定性钱包），但是只有正确的那一个才能使所需的钱包可用。		</para>
+		</section>
+		<section id="单词列表">
+			<title>单词列表</title>
+			<para>
+				<ulink url="https://github.com/bitcoin/bips/blob/master/bip-0039/bip-0039-wordlists.md" />
+			</para>
+			<para>如果一个 HD 钱包助记词是 12 个单词，一共有 2048 个单词可能性，如何算出随机的生成的助记词可能性是一个排列问题，根据公式： n!/( n - r )! ，既 2048!/(2048-12)! = 5.2715379713014884760003093175282e+39。 </para>
+			<orderedlist>
+				<title>Wordlists</title>
+				<listitem>
+					<para>
+						English
+						<ulink url="https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt" />
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Japanese
+						<ulink url="https://github.com/bitcoin/bips/blob/master/bip-0039/japanese.txt" />
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Korean
+						<ulink url="https://github.com/bitcoin/bips/blob/master/bip-0039/korean.txt" />
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Spanish
+						<ulink url="https://github.com/bitcoin/bips/blob/master/bip-0039/spanish.txt" />
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Chinese (Simplified)
+						<ulink url="https://github.com/bitcoin/bips/blob/master/bip-0039/chinese_simplified.txt" />
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Chinese (Traditional)
+						<ulink url="https://github.com/bitcoin/bips/blob/master/bip-0039/chinese_traditional.txt" />
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						French
+						<ulink url="https://github.com/bitcoin/bips/blob/master/bip-0039/french.txt" />
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Italian
+						<ulink url="https://github.com/bitcoin/bips/blob/master/bip-0039/italian.txt" />
+					</para>
+				</listitem>
+			</orderedlist>
+		</section>
+		<section id="开发库">
+			<title>开发库</title>
+			<section id="">
+				<title>Node.js</title>
+				<para>
+					<ulink url="https://www.npmjs.com/package/bip39" />
+				</para>
+			</section>
+			<section>
+				<title>Python</title>
+				<para>
+					<ulink url="https://github.com/trezor/python-mnemonic" />
+				</para>
+			</section>
+			<section id="其他实现">
+				<title>其他实现</title>
+				<screen>
+				<![CDATA[
+Elixir: https://github.com/izelnakri/mnemonic
+
+Objective-C: https://github.com/nybex/NYMnemonic
+
+Haskell: https://github.com/haskoin/haskoin
+
+.NET C# (PCL): https://github.com/Thashiznets/BIP39.NET
+
+.NET C# (PCL): https://github.com/NicolasDorier/NBitcoin
+
+JavaScript: https://github.com/bitpay/bitcore-mnemonic, https://github.com/bitcoinjs/bip39 (used by blockchain.info)
+
+Ruby: https://github.com/sreekanthgs/bip_mnemonic
+
+Rust: https://github.com/infincia/bip39-rs
+
+Swift: https://github.com/CikeQiu/CKMnemonic
+
+C++: https://github.com/libbitcoin/libbitcoin/blob/master/include/bitcoin/bitcoin/wallet/mnemonic.hpp
+
+C (with Python/Java/Javascript bindings): https://github.com/ElementsProject/libwally-core				
+				]]>
+				</screen>
+			</section>
+		</section>
+		<section id="">
+			<title>Netkiller 助记词词库</title>
+			<para>HD Wallet 采用 2048 个单词，或者汉字作为助记词，这些词库对外公开，很多钱包仅仅使用path第一个地址并且没有加密。如果你知道某个用户的助记词中的11各词的排列顺序，那么我们就可以通过穷举方法，算出所有地址的私钥，如果碰巧找到了已经在使用的地址。就可以将里面的ETH全部转走。</para>
+			<para>为了增加 HD Wallet 的安全，我做了一个词库，这个词库不对外公开，并且使用的汉字均是不常用汉字。只能复制粘贴，几乎很难使用输入法输入该汉字。</para>
+			<para>同时path 还做了分层，和索引地址。分层采用时间维度，索引采用随机数， Seed 做加密处理。助记词共 15 个汉字。</para>
+			<para>效果如下</para>
+			<programlisting>
+			<![CDATA[
+汉字助记词：欈 戀 髎 響 麢 戵 邎 蠢 鶖 躒 蠈 鰘 譥 趱 巆
+地址：0x4949225eab0121d1e0b0eeb286a12b04ff596471
+私钥：b5ce4ac958fbdcd385d6ae850c1870c6da7b990981363c25036a31ba06be6636
+
+汉字助记词：霼 彎 曤 纀 鸇 鷔 鶹 纚 鱱 讁 艣 鼴 黭 纒 贛
+地址：0x430097d16819108068a7af22a116285e54bc3e6b
+私钥：3b78431a43a2c69e861870f0eff1d54d3965247ca5e588a9f907904f9ea5b822
+
+汉字助记词：聾 鱦 骥 鬘 鰕 蘲 韃 鏻 雤 鑀 瓤 蘣 壥 躠 罋
+地址：0x641fd58728cf08bc8795d41cfd3885a4f1c8dced
+私钥：b7c2ff2a39e3a534e6e89288b05b4a283b10b34b2dfca2b336676729c7a68ad1
+
+汉字助记词：轕 鶼 瀝 钁 麝 鸑 灙 纞 躐 嚹 櫞 鱁 贑 癠 躤
+地址：0xae6ad7cf3e31556bc7262e25fba2ebad9954d08b
+私钥：c989fe5c108b0bd33e5731919e09c30c639a4ff29fb4e66fe3052975855181f6
+
+汉字助记词：鰵 鐗 鱇 彏 鱞 鷮 鼯 矃 曟 鬙 衢 斅 櫜 鸒 襨
+地址：0x7fc6bca55c51ab3b4266d8f67d63c196ac874d93
+私钥：53e755075653a64867f885e702ca0a2612bdd13ec2bed0df647bf568a639bc46			
+			]]>
+			</programlisting>
 		</section>
 	</section>
 </chapter>

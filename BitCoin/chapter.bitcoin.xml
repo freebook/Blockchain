@@ -11,19 +11,51 @@
 		<para>Base58是Bitcoin中使用的一种编码方式，主要用于产生Bitcoin的钱包地址。相比Base64，Base58不使用数字"0"，字母大写"O"，字母大写"I"，和字母小写"i"，以及"+"和"/"符号。</para>
 		<para></para>
 	</section>
-	<section>
-		<title>Bitcoin Core</title>
-		
-		<graphic format="png" fileref="../images/bitcoin/wallet/bitcoin1.png" width="" srccredit="netkiller" />
-		<graphic format="png" fileref="../images/bitcoin/wallet/bitcoin2.png" width="" srccredit="netkiller" />
-		<graphic format="png" fileref="../images/bitcoin/wallet/bitcoin3.png" width="" srccredit="netkiller" />
-		
-		<para>获得测试比特币<ulink url="https://testnet.manu.backend.hamburg/faucet" /></para>
+
+	<section id="">
+		<title>比特币钱包</title>
+		<section>
+			<title>Bitcoin Core</title>
+
+			<graphic format="png" fileref="../images/bitcoin/wallet/bitcoin1.png" width="" srccredit="netkiller" />
+			<graphic format="png" fileref="../images/bitcoin/wallet/bitcoin2.png" width="" srccredit="netkiller" />
+			<graphic format="png" fileref="../images/bitcoin/wallet/bitcoin3.png" width="" srccredit="netkiller" />
+
+			<para>
+				获得测试比特币
+				<ulink url="https://testnet.manu.backend.hamburg/faucet" />
+			</para>
+		</section>
+		<section id="">
+			<title>网页钱包</title>
+		</section>
+		<section id="Coin.Space">
+			<title>Coin.Space</title>
+			<para>
+				<ulink url="https://coin.space/?network=bitcoin" />
+			</para>
+			response enter major zero net chief universe liquid ignore bean crash stand
+		</section>
+		<section id="">
+			<title>BitGo</title>
+			<para>
+				<ulink url="https://www.bitgo.com/login" />
+			</para>
+		</section>
+		<section id="">
+			<title>GreenAddress</title>
+			<para>
+				<ulink url="https://greenaddress.it/en/" />
+			</para>
+		</section>
+
 	</section>
 	<section id="bcoin">
 		<title>bcoin</title>
 		<para>A Fullnode Bitcoin Implementation for Miners, Wallets, and Exchanges</para>
-		<para><ulink url="bcoin.io/" /></para>
+		<para>
+			<ulink url="bcoin.io/" />
+		</para>
 		<screen>
 		<![CDATA[
 $ npm install bcoin
@@ -87,5 +119,5 @@ npm install bip39 bitcoinjs-lib
 		]]>
 		</programlisting>
 	</section>
-	
+
 </chapter>

@@ -48,7 +48,7 @@ neo@MacBook-Pro ~/ethereum/web3.py % pip3 install web3
 			]]>
 			</programlisting>
 		</section>
-		
+
 	</section>
 	<section id="web3.py.sendTransaction">
 		<title>交易</title>
@@ -136,16 +136,39 @@ contract.functions.transfer(to, value).call()
 	</section>
 	<section>
 		<title>账号</title>
-		<para>获得账号的余额</para>
-		<screen>
-		<![CDATA[
+		<section id="">
+			<title>余额</title>
+			<para>获得账号的余额</para>
+			<screen>
+			<![CDATA[
 https://api.etherscan.io/api?module=account&action=balance&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a&tag=latest&apikey=JFZWPE88I3TZFZWXKVHJ32INUIYQRRINJ9
-		]]>
-		</screen>
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>查询区块</title>
+			<screen>
+			<![CDATA[
+http://api.etherscan.io/api?module=account&action=txlist&address=0x3e827461Cc53ed7c75A29187CfF39629FCAE3661&startblock=0&endblock=99999999&sort=asc&apikey=RT5JW37AKEZVSW3C91Z86IGI2FF7JDPF1N
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>查询区块</title>
+			<screen>
+			<![CDATA[
+http://api.etherscan.io/api?module=account&action=txlistinternal&address=0x3e827461Cc53ed7c75A29187CfF39629FCAE3661&startblock=0&endblock=99999999&sort=asc&apikey=RT5JW37AKEZVSW3C91Z86IGI2FF7JDPF1N			
+			]]>
+			</screen>
+		</section>
 	</section>
 
 	<section id="ethereum.jsonrpc">
-		<title>jsonrpc 原生交口调用</title>
+		<title>JSON RPC 原生交口调用</title>
+		<para>
+			JSON RPC 文档
+			<ulink url="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getlogs" />
+		</para>
 		<screen>
 		<![CDATA[
 neo@MacBook-Pro ~ % curl -XPOST -H "Accept: application/json" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x5c18a33df2cc41a1beddc91133b8422e89f041b7", "latest"],"id":1}' http://localhost:8545 

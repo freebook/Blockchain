@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="exchange">
+	<title>交易所</title>
+	<para>广告招租</para>
+<!--
 	<section id="btctrade">
 		<title>btctrade api</title>
 		<para><ulink url="https://www.btctrade.com/api.help.html" /></para>
@@ -8,8 +11,12 @@
 		<title>XChange - Cryptocurrency Exchange API</title>
 		<para><ulink url="https://knowm.org/open-source/xchange/" /></para>
 	</section>
+<section id="">
+	<title>EHE 易赫交易所</title>
+	<para><ulink url="http://www.ehecoins.com/" /></para>
+</section>
 	
-<!-- 	<title>交易所</title>
+ 	<title>交易所</title>
 	<section id="gate">
 		<title>gate</title>
 		<para><ulink url="https://gate.io">https://gate.io</ulink></para>

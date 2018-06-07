@@ -198,7 +198,27 @@ contract NetkillerToken {
 			<para>
 				<ulink url="https://theethereum.wiki/w/index.php/ERC20_Token_Standard" />
 			</para>
-
+			<screen>
+			<![CDATA[
+ // ----------------------------------------------------------------------------
+ // ERC20 Token Standard Interface
+ // https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md
+ // ----------------------------------------------------------------------------
+contract ERC20 {
+      function name() constant returns (string name)
+      function symbol() constant returns (string symbol)
+      function decimals() constant returns (uint8 decimals)
+      function totalSupply() constant returns (uint totalSupply);
+      function balanceOf(address _owner) constant returns (uint balance);
+      function transfer(address _to, uint _value) returns (bool success);
+      function transferFrom(address _from, address _to, uint _value) returns (bool success);
+      function approve(address _spender, uint _value) returns (bool success);
+      function allowance(address _owner, address _spender) constant returns (uint remaining);
+      event Transfer(address indexed _from, address indexed _to, uint _value);
+      event Approval(address indexed _owner, address indexed _spender, uint _value);
+}			
+			]]>
+			</screen>
 			<section>
 				<title>基本Token 官方提供的例子</title>
 				<para>这个例子仅仅用来初学使用，请不用使用在生产环境。</para>
