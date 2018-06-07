@@ -31,8 +31,8 @@
 	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
 	<info>
 		<title>Netkiller Blockchain 手札</title>
-		<subtitle>本文作者最近在找工作，有意向致电 13113668890</subtitle>
-		<!-- <subtitle></subtitle> -->
+		<!-- <subtitle>本文作者最近在找工作，有意向致电 13113668890</subtitle> -->
+		<subtitle></subtitle>
 
 		&book.info.author.xml;
 
