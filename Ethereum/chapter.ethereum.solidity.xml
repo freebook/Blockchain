@@ -1136,18 +1136,16 @@ event Sent(address from, address to, uint amount);
 	<section id="solidity.oop">
 		<title>面向对象编程</title>
 		<section>
-			<title>修饰符</title>
+			<title>可见性修饰符</title>
+			<para>Solidity对函数和状态变量提供了四种可见性。分别是external,public,internal,private。其中函数默认是public。状态变量默认的可见性是internal。</para>
 			<screen>
 			<![CDATA[
-internal： 状态变量默认为internal类型，变量可供外部和子合约调用，函数和private类型的函数一样，智能合约自己内部调用		
-			
-public ： 函数可见性，可供外部、子合约、合约内部访问
-
-private: 智能合约自己内部调用
+internal - 状态变量默认为internal类型，函数只能通过内部访问（当前合约或者继承的合约），可在当前合约或继承合约中调用。类似于Java的protected
+public - public标识的函数是合约接口的一部分。可以通过内部，或者消息来进行调用。与Java的public含义一致。
+external - external标识的函数是合约接口的一部分。函数只能通过外部的方式调用。外部函数在接收大的数组时更有效。Java中无与此对应的关键字。
+private - 只能在当前合约内访问，在继承合约中都不可访问。与Java中的private含义一致。
 
 payable ：可支付的函数修饰符，没有该修饰符无法接受转账操作。
-
-		
 			]]>
 			</screen>
 		</section>

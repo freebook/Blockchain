@@ -152,6 +152,272 @@ https://api.etherscan.io/api?module=account&action=balance&address=0xddbd2b932c7
 http://api.etherscan.io/api?module=account&action=txlist&address=0x3e827461Cc53ed7c75A29187CfF39629FCAE3661&startblock=0&endblock=99999999&sort=asc&apikey=RT5JW37AKEZVSW3C91Z86IGI2FF7JDPF1N
 			]]>
 			</screen>
+			<para>Spring boot 2.0.2 实现交易记录查询</para>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.api.restful;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+@RestController
+public class TransactionsRestController {
+	private static final Logger logger = LoggerFactory.getLogger(TransactionsRestController.class);
+
+	private static final String url = "http://api.etherscan.io/api?module={module}&action={action}&address={address}&startblock={startblock}&endblock={endblock}&sort={sort}&apikey={apikey}";
+
+	@Autowired
+	public TestRestController() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@GetMapping("/block/{startblock}/{endblock}/{address}")
+	public TransactionsResponse block(@PathVariable String startblock, @PathVariable String endblock, @PathVariable String address) {
+		return this.getTransactionsByAddress(startblock, endblock, address);
+	}
+
+	private TransactionsResponse getTransactionsByAddress(String startblock, String endblock, String address) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("module", "account");
+		params.put("action", "txlist");
+		params.put("address", address);
+		params.put("startblock", startblock);
+		params.put("endblock", endblock);
+		params.put("sort", "asc");
+		params.put("apikey", "RT5JW37AKEZVSW3C91Z86IGI2FF7JDPF1N");
+		RestTemplate restTemplate = new RestTemplate();
+		TransactionsResponse result = restTemplate.getForObject(url, TransactionsResponse.class, params);
+		logger.info(params.toString());
+		logger.info(result.toString());
+		return result;
+	}
+}
+
+class Transactions {
+
+	private String blockNumber;
+	private String timeStamp;
+	private String hash;
+	private String nonce;
+	private String blockHash;
+	private String transactionIndex;
+	private String from;
+	private String to;
+	private String value;
+	private String gas;
+	private String gasPrice;
+	private String isError;
+	private String txreceipt_status;
+	private String input;
+	private String contractAddress;
+	private String cumulativeGasUsed;
+	private String gasUsed;
+	private String confirmations;
+
+	public Transactions() {
+	}
+
+	public String getBlockNumber() {
+		return blockNumber;
+	}
+
+	public void setBlockNumber(String blockNumber) {
+		this.blockNumber = blockNumber;
+	}
+
+	public String getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(String timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	public String getHash() {
+		return hash;
+	}
+
+	public void setHash(String hash) {
+		this.hash = hash;
+	}
+
+	public String getNonce() {
+		return nonce;
+	}
+
+	public void setNonce(String nonce) {
+		this.nonce = nonce;
+	}
+
+	public String getBlockHash() {
+		return blockHash;
+	}
+
+	public void setBlockHash(String blockHash) {
+		this.blockHash = blockHash;
+	}
+
+	public String getTransactionIndex() {
+		return transactionIndex;
+	}
+
+	public void setTransactionIndex(String transactionIndex) {
+		this.transactionIndex = transactionIndex;
+	}
+
+	public String getFrom() {
+		return from;
+	}
+
+	public void setFrom(String from) {
+		this.from = from;
+	}
+
+	public String getTo() {
+		return to;
+	}
+
+	public void setTo(String to) {
+		this.to = to;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getGas() {
+		return gas;
+	}
+
+	public void setGas(String gas) {
+		this.gas = gas;
+	}
+
+	public String getGasPrice() {
+		return gasPrice;
+	}
+
+	public void setGasPrice(String gasPrice) {
+		this.gasPrice = gasPrice;
+	}
+
+	public String getIsError() {
+		return isError;
+	}
+
+	public void setIsError(String isError) {
+		this.isError = isError;
+	}
+
+	public String getTxreceipt_status() {
+		return txreceipt_status;
+	}
+
+	public void setTxreceipt_status(String txreceipt_status) {
+		this.txreceipt_status = txreceipt_status;
+	}
+
+	public String getInput() {
+		return input;
+	}
+
+	public void setInput(String input) {
+		this.input = input;
+	}
+
+	public String getContractAddress() {
+		return contractAddress;
+	}
+
+	public void setContractAddress(String contractAddress) {
+		this.contractAddress = contractAddress;
+	}
+
+	public String getCumulativeGasUsed() {
+		return cumulativeGasUsed;
+	}
+
+	public void setCumulativeGasUsed(String cumulativeGasUsed) {
+		this.cumulativeGasUsed = cumulativeGasUsed;
+	}
+
+	public String getGasUsed() {
+		return gasUsed;
+	}
+
+	public void setGasUsed(String gasUsed) {
+		this.gasUsed = gasUsed;
+	}
+
+	public String getConfirmations() {
+		return confirmations;
+	}
+
+	public void setConfirmations(String confirmations) {
+		this.confirmations = confirmations;
+	}
+
+	@Override
+	public String toString() {
+		return "Transactions [blockNumber=" + blockNumber + ", timeStamp=" + timeStamp + ", hash=" + hash + ", nonce=" + nonce + ", blockHash=" + blockHash + ", transactionIndex=" + transactionIndex + ", from=" + from + ", to=" + to + ", value=" + value + ", gas=" + gas + ", gasPrice=" + gasPrice + ", isError=" + isError + ", txreceipt_status=" + txreceipt_status + ", input=" + input + ", contractAddress=" + contractAddress + ", cumulativeGasUsed=" + cumulativeGasUsed + ", gasUsed=" + gasUsed + ", confirmations=" + confirmations + "]";
+	}
+
+}
+
+class TransactionsResponse {
+	private String status;
+	private String message;
+	private List<Transactions> result = new ArrayList<Transactions>();
+
+	public TransactionsResponse() {
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public List<Transactions> getResult() {
+		return result;
+	}
+
+	public void setResult(List<Transactions> result) {
+		this.result = result;
+	}
+
+	@Override
+	public String toString() {
+		return "TransactionsResponse [status=" + status + ", message=" + message + ", result=" + result + "]";
+	}
+
+}			
+			]]>
+			</programlisting>
 		</section>
 		<section >
 			<title>查询区块</title>
@@ -171,6 +437,32 @@ http://api.etherscan.io/api?module=account&action=txlistinternal&address=0x3e827
 https://api.etherscan.io/api?module=transaction&action=getstatus&txhash=0x6cec54f03e6d9271f2c51e0696de03df4bba82171f2aff464c63554614915500&apikey=RT5JW37AKEZVSW3C91Z86IGI2FF7JDPF1N
 			]]>
 			</screen>
+		</section>
+	</section>
+	<section>
+		<title>Geth/Parity Proxy APIs</title>
+		<section id="">
+			<title></title>
+			<screen>
+			<![CDATA[
+https://api.etherscan.io/api?module=proxy&action=eth_blockNumber&apikey=RT5JW37AKEZVSW3C91Z86IGI2FF7JDPF1N			
+			]]>
+			</screen>
+			<programlisting>
+			<![CDATA[
+	private String getBlockNumber() {
+		final String url = "https://api.etherscan.io/api?module=proxy&action=eth_blockNumber&apikey=RT5JW37AKEZVSW3C91Z86IGI2FF7JDPF1N";
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("module", "proxy");
+		params.put("action", "eth_blockNumber");
+		params.put("apikey", "RT5JW37AKEZVSW3C91Z86IGI2FF7JDPF1N");
+		RestTemplate restTemplate = new RestTemplate();
+		JsonRpc result = restTemplate.getForObject(url, JsonRpc.class, params);
+
+		return Integer.valueOf(result.getResult().substring(2), 16).toString();
+	}			
+			]]>
+			</programlisting>
 		</section>
 	</section>
 	<section id="ethereum.jsonrpc">
