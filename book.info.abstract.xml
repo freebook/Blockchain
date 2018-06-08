@@ -43,4 +43,23 @@
 			</member>
 		</simplelist>
 	</blockquote>
+
+	<webtoc />
+
+	<table xml:id="ex.htmltable">
+		<caption>Sample HTML Table</caption>
+		<thead>
+			<tr>
+				<td>Head 1</td>
+				<td>Head 2</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Body 1</td>
+				<td>Body 2</td>
+			</tr>
+		</tbody>
+	</table>
+
 </abstract>
