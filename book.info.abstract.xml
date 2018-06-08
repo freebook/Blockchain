@@ -23,43 +23,41 @@
 		<ulink url="https://etherscan.io/address/0x3e827461Cc53ed7c75A29187CfF39629FCAE3661">0x3e827461Cc53ed7c75A29187CfF39629FCAE3661</ulink>
 	</para>
 	<para>喜大普奔！读者币（Netkiller eBook Reader Coin - NBRC）正式开始空投，请在钱包中添加NBRC代币即可看到10枚读者币。</para>
+	<para></para>
 
-	<blockquote>
-		<simplelist type='horiz' columns='5'>
-			<member>
-				公告位
-			</member>
-			<member>
-				公告位
-			</member>
-			<member>
-				公告位
-			</member>
-			<member>
-				公告位
-			</member>
-			<member>
-				公告位
-			</member>
-		</simplelist>
-	</blockquote>
+	<simplelist type='horiz' columns='5'>
+		<member>
+			LOGO 广告位招租
+		</member>
+		<member>
+			LOGO 广告位招租
+		</member>
+		<member>
+			LOGO 广告位招租
+		</member>
+		<member>
+			LOGO 广告位招租
+		</member>
+		<member>
+			LOGO 广告位招租
+		</member>
+	</simplelist>
 
-	<webtoc />
 
 	<table xml:id="ex.htmltable">
-		<caption>Sample HTML Table</caption>
+		<caption>企业招聘信息广告位，区块链工作机会</caption>
 		<thead>
 			<tr>
-				<td>Head 1</td>
-				<td>Head 2</td>
+				<td>XXX 企业招聘区块链软件开发工程师</td>
+				<td>XXX 企业招聘区块链架构师</td>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td>Body 1</td>
-				<td>Body 2</td>
+				<td>XXX 招聘信息</td>
+				<td>XXX 招聘信息</td>
 			</tr>
 		</tbody>
 	</table>
-
+	<para>广告发布，请联系 13113668890</para>
 </abstract>
