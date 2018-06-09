@@ -22,7 +22,7 @@
 		接受 ETH 捐赠：
 		<ulink url="https://etherscan.io/address/0x3e827461Cc53ed7c75A29187CfF39629FCAE3661">0x3e827461Cc53ed7c75A29187CfF39629FCAE3661</ulink>
 	</para>
-	<para>喜大普奔！读者币（Netkiller eBook Reader Coin - NBRC）正式开始空投，请在钱包中添加NBRC代币即可看到10枚读者币。</para>
+	<para>喜大普奔！读者币（Netkiller eBook Reader Coin - NBRC）正式开始空投，请在钱包中添加NBRC代币即可看到1000枚读者币。建议使用 Ethereum Wallet (Mist) 操作 NBRC，在 CONTRACTS菜单点击WATCH TOKEN按钮，输入合约地址 0x4488ed050cd13ccfe0b0fcf3d168216830142775 。注意imtoken 计算 Gas 有问题，转账会失败。MetaMask 建议 Gas Price 4GWei, Gas Limit 200000 费用 0.0004 左右的ETH</para>
 	<para></para>
 
 	<simplelist type='horiz' columns='5'>

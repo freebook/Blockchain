@@ -499,6 +499,13 @@ contract NetkillerMiniToken {
 	<section id="MyEtherWallet">
 		<title>MyEtherWallet</title>
 		<para><ulink url="https://www.myetherwallet.com/">https://www.myetherwallet.com/</ulink></para>
+		<section>
+			<title>执行职能合约</title>
+			<para>首先选择网络，例如主网，测试网，然后填写合约地址，粘贴ABI，点击ACCESS按钮</para>
+			<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/contact-1.png" width="800" srccredit="netkiller" />
+			<para>选择合约方法，输入参数，执行后可以看到结果，这里仅仅演示查询余额的方法。</para>
+			<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/contact-1.png" width="800" srccredit="netkiller" />
+		</section>
 	</section>
 	<section id="MyCrypto">
 		<title>MyCrypto</title>
