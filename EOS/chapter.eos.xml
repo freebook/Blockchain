@@ -6,7 +6,82 @@
 	</para>
 	<para>EOS是一种全新的区块链架构，旨在实现分布式应用的性能拓展。EOS
 		项目的目标是实现一个类似操作系统一样的支撑应用程序的区块链架构。该架构可以提供账户，身份认证，数据库，异步通信以及可在数以百计的 CPU
-		或群集上的程序调度。该技术的最终形式是一个区块链体系架构，该区块链每秒可以支持数百万个交易，同时普通用户无需支付使用费用。</para>
+		或群集上的程序调度。该技术的最终形式是一个区块链体系架构，该区块链每秒可以支持数百万个交易，同时普通用户无需支付使用费用。
+	</para>
+	<section id="eos.resource">
+		<title>EOS 资源</title>
+		<section>
+			<title>EOS 主网与投票状态</title>
+			<screen>
+			<![CDATA[
+https://eosnation.io
+https://eoscountdown.com
+https://status.producer.vote
+http://eos.host/mainnet
+https://www.mytokenpocket.vip
+http://eosportal.io/chain/12/producers
+http://eosnetworkmonitor.io
+https://eosauthority.com/voting			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>EOS 投票工具</title>
+			<screen>
+			<![CDATA[
+https://github.com/EOSLaoMao/eos-local-voter
+https://www.mytokenpocket.vip
+https://github.com/EOSLaoMao/eos-local-voter-desktop
+http://eosportal.io
+http://vote.libertyblock.io
+https://tokenika.github.io/secure-bp-voting
+https://github.com/greymass/eos-voter			
+			]]>
+			</screen>
+		</section>
+
+		<section>
+			<title>EOS 区块链浏览器</title>
+			<screen>
+			<![CDATA[
+https://eospark.com
+http://scaneos.io
+http://eosflare.io
+http://eostracker.io
+https://eosblock.co
+https://explorer.eoseco.com
+			]]>
+			</screen>
+		</section>
+		<section id="eos.wallet">
+			<title>EOS 钱包资源</title>
+			<para></para>
+			<screen>
+			<![CDATA[
+https://www.mytokenpocket.vip
+https://meet.one/pomelo
+http://halowallet.io
+https://scatter-eos.com
+https://eoswalletpro.com
+https://token.im
+http://www.medishares.org/wallet/cn
+http://bitpie.com
+http://www.eosbixin.com
+https://cybex.io
+http://eostoken.im
+https://oraclechain.io
+https://github.com/EOSPortal
+https://github.com/EOSEssentials/EOSWallet
+https://github.com/espritblock/eos4j
+https://github.com/eostoken/wallet
+https://github.com/espritblock/react-native-eos
+https://github.com/OracleChain/PocketEOS-IOS
+https://github.com/OracleChain/PocketEOS-Android
+https://github.com/plactal/EosCommander			
+			]]>
+			</screen>
+		</section>
+	</section>
 	<section id="eos.setup">
 		<title>EOS</title>
 		<screen>
