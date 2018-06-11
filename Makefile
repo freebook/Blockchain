@@ -18,6 +18,7 @@ html:
 	@$(XSLTPROC) -o $(HTML_DIR)/ $(DSSSL) $(PROJECT_DIR)/book.xml
 	@$(shell test -d $(HTML_DIR)/images && find $(HTML_DIR)/images/ -type f -exec rm -rf {} \;)
 	@$(shell test -d images && rsync -au --exclude=.svn $(PROJECT_DIR)/images $(HTML_DIR)/)
+	@$(shell test -d whitepaper && rsync -au --exclude=.svn $(PROJECT_DIR)/whitepaper $(HTML_DIR)/)
 
 htmlhelp:
 	@rm -rf $(HTMLHELP_DIR) && mkdir -p $(HTMLHELP_DIR)

@@ -6,3 +6,4 @@
 <!ENTITY chapter.eos.xml				SYSTEM "EOS/chapter.eos.xml">
 <!ENTITY chapter.other.xml				SYSTEM "chapter.other.xml">
 <!ENTITY chapter.bitcoin.xml			SYSTEM "BitCoin/chapter.bitcoin.xml">
+<!ENTITY book.info.abstract.ad.xml		SYSTEM "book.info.abstract.ad.xml">

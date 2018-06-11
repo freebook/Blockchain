@@ -1,0 +1,38 @@
+<table xml:id="ex.htmltable">
+	<caption>企业招聘信息广告位，区块链工作机会</caption>
+	<thead>
+		<tr>
+			<td>
+				<ulink url="https://www.lagou.com/jobs/4346529.html?source=pl&i=pl-1">趣快科技招聘后端开发工程师</ulink>
+			</td>
+			<td>
+				<ulink url="https://www.lagou.com/jobs/4346507.html?source=pl&i=pl-0">趣快科技招聘前端开发工程师</ulink>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>XXX 招聘信息</td>
+			<td>XXX 招聘信息</td>
+		</tr>
+	</tbody>
+</table>
+
+<simplelist type='horiz' columns='5'>
+	<member>
+		LOGO 广告位招租
+	</member>
+	<member>
+		LOGO 广告位招租
+	</member>
+	<member>
+		LOGO 广告位招租
+	</member>
+	<member>
+		LOGO 广告位招租
+	</member>
+	<member>
+		LOGO 广告位招租
+	</member>
+</simplelist>
+<para>广告发布，请联系 13113668890</para>

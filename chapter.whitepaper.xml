@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="whitepaper">
+	<title>White paper (白皮书)</title>
+	<para>A white paper is an authoritative report or guide that informs readers concisely about a complex issue and presents the issuing body's philosophy on the matter. It is meant to help readers understand an issue, solve a problem, or make a decision. The initial British term concerning a type of government-issued document has proliferated—taking a somewhat new meaning in business.</para>
+	<para></para>
+	<section id="whitepaper.bitcoin">
+		<title>比特币白皮书</title>
+		<para><ulink url="whitepaper/bitcoin_en.pdf">英文</ulink></para>
+		<para><ulink url="whitepaper/bitcoin_cn.pdf">中文</ulink></para>
+	</section>
+</section>
