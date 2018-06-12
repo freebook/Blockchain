@@ -128,7 +128,7 @@ instance: Geth/v1.8.1-stable-1e67410e/darwin-amd64/go1.9.4
 		<section id="main.network">
 			<title>主网络</title>
 			<para></para>
-			<section >
+			<section>
 				<title>主网启动参数</title>
 				<screen>
 				<![CDATA[
@@ -151,7 +151,7 @@ instance: Geth/v1.8.1-stable-1e67410e/darwin-amd64/go1.9.4
 		<section id="ropsten">
 			<title>Ropsten 测试网络</title>
 			<!-- <para><ulink url="https://ropsten.etherscan.io">https://ropsten.etherscan.io</ulink></para> -->
-			<section >
+			<section>
 				<title>启动参数</title>
 				<screen>
 				<![CDATA[
@@ -159,7 +159,7 @@ instance: Geth/v1.8.1-stable-1e67410e/darwin-amd64/go1.9.4
 				]]>
 				</screen>
 			</section>
-			<section >
+			<section>
 				<title>获得测试币</title>
 				<para>
 					<ulink url="http://faucet.ropsten.be:3001" />
@@ -313,9 +313,11 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 			]]>
 			</screen>
 		</section>
-		<section id="">
+		<section>
 			<title>免安装，在线使用</title>
-			<para><ulink url="https://wallet.ethereum.org" /></para>
+			<para>
+				<ulink url="https://wallet.ethereum.org" />
+			</para>
 		</section>
 		<section>
 			<title>获得空投币</title>
@@ -329,11 +331,11 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 		</para>
 		<!-- http://8btc.com/thread-76137-1-5.html -->
 		<graphic format="png" fileref="../../images/ethereum/metamask/metamask.png" width="800" srccredit="netkiller" />
-		<section >
+		<section>
 			<title>测试网络</title>
 			<para></para>
 			<graphic format="png" fileref="../../images/ethereum/metamask/network.png" width="800" srccredit="netkiller" />
-			<section >
+			<section>
 				<title>获取测试网络上的以太币</title>
 				<para>点击 Buy 按钮，然后再点击 ROPSTEN TEST FAUCET 按钮。</para>
 				<graphic format="png" fileref="../../images/ethereum/metamask/ropsten-test-faucet.png" width="800" srccredit="netkiller" />
@@ -364,8 +366,12 @@ geth --networkid=4 --datadir=$HOME/.rinkeby --syncmode=light --ethstats='yournod
 		</section>
 		<section>
 			<title>MetaMask Vault Decryptor</title>
-			<para>MetaMask 将钱包数据存储在浏览中  Local Storage 中，这是Chrome 谷歌浏览器特有的 Key,Value数据库。</para>
-			<para>Key 的名字是 metamask-config 将它复制到  <ulink url="https://metamask.github.io/vault-decryptor/" /> 中可以解密。</para>
+			<para>MetaMask 将钱包数据存储在浏览中 Local Storage 中，这是Chrome 谷歌浏览器特有的 Key,Value数据库。</para>
+			<para>
+				Key 的名字是 metamask-config 将它复制到
+				<ulink url="https://metamask.github.io/vault-decryptor/" />
+				中可以解密。
+			</para>
 			<para>解密程序的 Github 地址 https://github.com/MetaMask/vault-decryptor</para>
 		</section>
 		<section>
@@ -498,25 +504,75 @@ contract NetkillerMiniToken {
 	</section>
 	<section id="MyEtherWallet">
 		<title>MyEtherWallet</title>
-		<para><ulink url="https://www.myetherwallet.com/">https://www.myetherwallet.com/</ulink></para>
+		<para>
+			<ulink url="https://www.myetherwallet.com/">https://www.myetherwallet.com/</ulink>
+		</para>
 		<section>
-			<title>执行职能合约</title>
+			<title>执行ERC20智能合约函数</title>
 			<para>首先选择网络，例如主网，测试网，然后填写合约地址，粘贴ABI，点击ACCESS按钮</para>
-			<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/contact-1.png" width="800" srccredit="netkiller" />
-			<para>选择合约方法，输入参数，执行后可以看到结果，这里仅仅演示查询余额的方法。</para>
-			<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/contact-1.png" width="800" srccredit="netkiller" />
+			<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/contact.png" width="800" srccredit="netkiller" />
+
+			<section>
+				<title>查询余额</title>
+				<para>选择合约方法，输入参数，执行后可以看到结果，这里仅仅演示查询余额的方法。</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/balanceOf.png" width="800" srccredit="netkiller" />
+			</section>
+			<section>
+				<title>销毁代币</title>
+				<para>从合约的 Owner 账号中销毁一定数额的代币</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/burn.png" width="800" srccredit="netkiller" />
+				<para>从指定账号中销毁一定数额的代币</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/burnFrom.png" width="800" srccredit="netkiller" />
+			</section>
+			<section>
+				<title>冻结账号</title>
+				<para>冻结账号,输入地址，然后选择 True 最后点击按钮 Write </para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/freezeAccount.png" width="800" srccredit="netkiller" />
+				<para>解冻账号，重复上述步骤，选择 False 然后点击 Write 按钮。</para>
+				<para>查询账号状态，输入地址，点击 Write 按钮，返回 True 表示账号被冻结，返回 False 或 空值，表示没有冻结。</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/frozenAccount.png" width="800" srccredit="netkiller" />
+			</section>
+			<section>
+				<title>增发代币</title>
+				<para>输入需要增发到那个地址，然后输入增发数量</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/mintToken.png" width="800" srccredit="netkiller" />
+			</section>
+			<section>
+				<title>锁仓</title>
+				<para>冻结是针对单个用户的，如果你需要停止一切交易（任何账号都不能转入，转出），那么可以采用锁仓方案。</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/setLock.png" width="800" srccredit="netkiller" />
+				<para>True 表示开启锁仓， False 表示关闭锁仓。</para>
+			</section>
+			<section>
+				<title>批量打币</title>
+				<para>一次性对多个账号打币，输入账号使用逗号分隔（半角），然后输入数量。</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/transferBatch.png" width="800" srccredit="netkiller" />
+				<para></para>
+			</section>
+			<section>
+				<title>修改合约管理者</title>
+				<para>合约的管理者拥有上面所有权限，如果你想转移给其他账号，使用下面方法操作即可。</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/transferOwnership.png" width="800" srccredit="netkiller" />
+			</section>
 		</section>
 	</section>
 	<section id="MyCrypto">
 		<title>MyCrypto</title>
-		<para><ulink url="https://www.mycrypto.com/" /></para>
+		<para>
+			<ulink url="https://www.mycrypto.com/" />
+		</para>
 	</section>
 	<section id="imToken">
 		<title>imToken</title>
-		<para><ulink url="https://token.im" /></para>
+		<para>
+			<ulink url="https://token.im" />
+		</para>
 		<section>
 			<title>添加 Token</title>
-			<para>具体教程请参考: <ulink url="https://github.com/consenlabs/token-profile/blob/master/README.md" /></para>
+			<para>
+				具体教程请参考:
+				<ulink url="https://github.com/consenlabs/token-profile/blob/master/README.md" />
+			</para>
 			<para>创建文件 token-profile/erc20/0x4488ed050cd13ccfe0b0fcf3d168216830142775.json</para>
 			<programlisting>
 			<![CDATA[
