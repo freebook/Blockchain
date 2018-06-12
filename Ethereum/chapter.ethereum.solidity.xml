@@ -1328,6 +1328,185 @@ contract mortal is owned {
 			</programlisting>
 		</section>
 	</section>
+	<section>
+		<title>Solidity 安全问题</title>
+		<section>
+			<title>整形溢出</title>
+			<para>什么是整型溢出呢？在solidity编写合约时，定义整型一般是用uint8, uint256。一个变量如果定义为uint8表示的无符号的8位整型，即取值范围为0-255。当给这个变量赋值256时，即整型溢出变成了0，以此类推257变成了1。</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.24;
+
+//author: netkiller <netkiller@msn.com>
+//homepage: http://www.netkiller.cn
+
+contract NetkillerOverflowTest{
+    
+
+    function add(uint8 a, uint8 b) pure public returns (uint8){
+        
+        uint8 result = a + b;
+        
+        return result;
+        
+    }
+    
+    function sub(uint8 a, uint8 b) pure public returns (uint8){
+        
+        uint8 result = a - b;
+        
+        return result;
+        
+    }
+    
+    function mul(uint8 a, uint8 b) pure public returns (uint8){
+        
+        uint8 result = a * b;
+        
+        return result;
+        
+    }
+    
+    function div(uint8 a, uint8 b) pure public returns (uint8){
+        
+        uint8 result = a / b;
+        
+        return result;
+        
+    }
+    
+}		
+			]]>
+			</programlisting>
+			<para>调用上面合约，运行结果</para>
+			<screen>
+			<![CDATA[
+254 + 1 = 255
+254 + 2 = 0
+254 + 3 = 1
+			]]>
+			</screen>
+			<para>减法运行结果</para>
+			<screen>
+			<![CDATA[
+10 - 20 = 246
+			]]>
+			</screen>
+			<para>乘法运行结果</para>
+			<screen>
+			<![CDATA[
+51 * 5 = 255
+51 * 6 = 50
+			]]>
+			</screen>
+			<para>再来测试乘法</para>
+			<screen>
+			<![CDATA[
+255 / 10 = 25			
+			]]>
+			</screen>
+			<para>这有点想千年虫问题，即99年变成00年后，你无法区分1900年还是2000年。</para>
+			<para>现在测试一下uint256，uint256支持的取值范围是0到2^256-1</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.24;
+
+//author: netkiller <netkiller@msn.com>
+//homepage: http://www.netkiller.cn
+
+contract TestUint256Overflow {
+    // (2**256 – 1) + 1 = 0 向上溢出测试
+    function overflow() pure public returns (uint256 _overflow) {
+        uint256 max = 2 ** 256 - 1;
+        return max + 1;
+    }
+
+    // 0 – 1 = 2**256 – 1 向下溢出测试
+    function underflow() pure public returns (uint256 _underflow) {
+        uint256 min = 0;
+        return min - 1;
+    }
+}
+			]]>
+			</programlisting>
+			<para>运行结果</para>
+			<screen>
+			<![CDATA[
+_overflow : 0
+_underflow : 115792089237316195423570985008687907853269984665640564039457584007913129639935
+			]]>
+			</screen>
+			<para>第一个函数溢出为 0，第二个函数 0 - 1 = 115792089237316195423570985008687907853269984665640564039457584007913129639935</para>
+			<para>解决溢出问题使用SafeMath库</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.24;
+
+//author: netkiller <netkiller@msn.com>
+//homepage: http://www.netkiller.cn
+
+library SafeMath {
+
+  function mul(uint256 a, uint256 b) internal pure returns (uint256 c) {
+    if (a == 0) {
+      return 0;
+    }
+
+    c = a * b;
+    assert(c / a == b);
+    return c;
+  }
+
+  function div(uint256 a, uint256 b) internal pure returns (uint256) {
+    return a / b;
+  }
+
+  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+    assert(b <= a);
+    return a - b;
+  }
+
+  function add(uint256 a, uint256 b) internal pure returns (uint256 c) {
+    c = a + b;
+    assert(c >= a);
+    return c;
+  }
+}
+
+contract NetkillerSafeMath {
+ 
+    using SafeMath for uint256;    
+    
+    function add(uint256 a, uint256 b) pure public returns (uint256){
+        uint256 result = a.add(b);
+        return result;
+    }
+    function sub(uint256 a, uint256 b) pure public returns (uint256){
+        uint256 result = a.sub(b);
+        return result;
+    }
+    function mul(uint256 a, uint256 b) pure public returns (uint256){
+        uint256 result = a.mul(b);
+        return result;
+    }
+    function div(uint256 a, uint256 b) pure public returns (uint256){
+        uint256 result = a.div(b);
+        return result;
+    }
+}			
+			]]>
+			</programlisting>
+			<para>测试 SafeMath</para>
+			<programlisting>
+			<![CDATA[
+add(115792089237316195423570985008687907853269984665640564039457584007913129639934,1)  => 115792089237316195423570985008687907853269984665640564039457584007913129639935
+add(115792089237316195423570985008687907853269984665640564039457584007913129639935,1)  => 抛出异常
+
+
+			]]>
+			</programlisting>
+		</section>
+	</section>
 	<section id="solidity.example">
 		<title>solidity example</title>
 		<section id="voting">
@@ -1401,7 +1580,7 @@ contract MetaCoin {
 	function getBalance(address addr) public view returns(uint) {
 		return balances[addr];
 	}
-}			
+}
 			]]>
 			</programlisting>
 		</section>
