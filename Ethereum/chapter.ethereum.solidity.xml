@@ -1328,10 +1328,10 @@ contract mortal is owned {
 			</programlisting>
 		</section>
 	</section>
-	<section>
+	<section id="solidity.sectury">
 		<title>Solidity 安全问题</title>
 		<section>
-			<title>整形溢出</title>
+			<title>整型溢出</title>
 			<para>什么是整型溢出呢？在solidity编写合约时，定义整型一般是用uint8, uint256。一个变量如果定义为uint8表示的无符号的8位整型，即取值范围为0-255。当给这个变量赋值256时，即整型溢出变成了0，以此类推257变成了1。</para>
 			<programlisting>
 			<![CDATA[

@@ -63,8 +63,8 @@
 	&part.hyperledger.xml;
 	&chapter.ipfs.xml;
 	&chapter.eos.xml;
-	&chapter.other.xml;
 	&chapter.bitcoin.xml;
+	&chapter.other.xml;
 <!-- =========================================================================== -->
 	&book.appendix.xml;
 </book>

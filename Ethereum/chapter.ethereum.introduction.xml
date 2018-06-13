@@ -66,7 +66,7 @@ undefined
 		<para>gas 花费 0.000378 ETH</para>
 
 	</section>
-	<section>
+	<section id="Send everything">
 		<title>转出账号中所有 ETH，Ethereum Wallet 中的 Send everything 实现方法</title>
 		<screen>
 		<![CDATA[
@@ -108,7 +108,14 @@ true
 		]]>
 		</screen>
 	</section>
-
+	<section id="block.confirmations">
+		<title>（0/12 block confirmations)</title>
+		<programlisting>
+		<![CDATA[
+web3.eth.blockNumber-web3.eth.getTransaction(<txhash>).blockNumber		
+		]]>
+		</programlisting>
+	</section>
 	<section id="keystore">
 		<title>太坊账户管理 keystore 文件</title>
 		<para></para>

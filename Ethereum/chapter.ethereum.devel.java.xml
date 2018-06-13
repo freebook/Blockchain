@@ -144,9 +144,10 @@ DefaultBlockParameterName.LATEST	当前块地址
 DefaultBlockParameterName.PENDING	处理中块地址		
 		]]>
 		</screen>
-		<section id="">
+		<section>
 			<title>默认 Gas</title>
-			<para>获取默认GAS Transaction.DEFAULT_GAS</para>]
+			<para>获取默认GAS Transaction.DEFAULT_GAS</para>
+			]
 			<programlisting>
 			<![CDATA[
 package cn.netkiller.wallet.ethereum;
@@ -654,7 +655,7 @@ public class RawTransactionTest {
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section id="web3.ethGetTransactionReceipt">
 			<title>查询 Transaction Information</title>
 			<programlisting>
 			<![CDATA[
@@ -664,6 +665,23 @@ public class RawTransactionTest {
 	}			
 			]]>
 			</programlisting>
+			<para>执行返回结果</para>
+			<screen>
+			<![CDATA[
+TransactionReceipt{
+	transactionHash='0xece52bdbc6d4fa0c8eba7578a7c6e537883265199fa07ef8e5b1038e4bcdefb9', 
+	transactionIndex='0x13', blockHash='0x2642b35670872a0e024d30ab2393b6bd4f7dab449bf4fc3eac067e2677cbc085', 
+	blockNumber='0x344a79', cumulativeGasUsed='0x806f54', gasUsed='0x8fee', contractAddress='null', root='null', 
+	status='0x1', from='0x22c57f0537414fd95b9f0f08f1e51d8b96f14029', to='0xb3cedc76e75fcd278c988b22963c2f35c99c10b7', l
+	ogs=[Log{removed=false, logIndex='0xa', transactionIndex='0x13', transactionHash='0xece52bdbc6d4fa0c8eba7578a7c6e537883265199fa07ef8e5b1038e4bcdefb9', 
+	blockHash='0x2642b35670872a0e024d30ab2393b6bd4f7dab449bf4fc3eac067e2677cbc085', blockNumber='0x344a79', 
+	address='0xb3cedc76e75fcd278c988b22963c2f35c99c10b7', data='0x000000000000000000000000000000000000000000000000000000000000000a', 
+	type='null', topics=[0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef, 0x00000000000000000000000022c57f0537414fd95b9f0f08f1e51d8b96f14029, 0x000000000000000000000000cdf0253d8362d6c3334c8f28a6bfd74c90d03d92]}], 
+	logsBloom='0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000008020000001000000000000000000000000000800000000000000000000000000000000000000000000000000000000010000000000000000000004000000000000000000000000000800000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000002000000000000000400000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+}
+			]]>
+			</screen>
+			<para>注意：该函数只能返回 TxReceipt Status: Success 状态数据，无法返回 Pending 状态的数据。</para>
 		</section>
 		<section>
 			<title>交易结果查询</title>
@@ -674,7 +692,7 @@ System.out.println(transaction.getResult());
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title>RawTransaction 编码与解码</title>
 			<programlisting>
 			<![CDATA[
@@ -1000,7 +1018,7 @@ HelloWorld contract = HelloWorld.load(contractAddress,web3j,credentials, Managed
 			<![CDATA[]]>
 			</screen>
 		</section>
-		
+
 	</section>
 	<section id="web3j.erc20">
 		<title>ERC20合约</title>
@@ -1028,7 +1046,7 @@ HelloWorld contract = HelloWorld.load(contractAddress,web3j,credentials, Managed
 				]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title></title>
 			<programlisting>
 			<![CDATA[
@@ -1066,7 +1084,7 @@ HelloWorld contract = HelloWorld.load(contractAddress,web3j,credentials, Managed
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title>合约转账</title>
 			<programlisting>
 			<![CDATA[
@@ -1232,8 +1250,12 @@ f592b7bf06ca9fd7696ba95d6ed8e357de6a2379b6d5fe1ffd53c6b4b063cd4a
 	<section id="web3j.filter">
 		<title>过滤器 (Filter)</title>
 		<para>在区块链上发生的事件时，能不通知到订阅事件者。</para>
-		<tip>主意 https://docs.web3j.io/filters.html 有一段话：<para>Note: filters are not supported on Infura.</para> 目前 Infura 不支持。</tip>
-		<section id="">
+		<tip>
+			主意 https://docs.web3j.io/filters.html 有一段话：
+			<para>Note: filters are not supported on Infura.</para>
+			目前 Infura 不支持。
+		</tip>
+		<section>
 			<title>接收所有添加到区块链的新区块</title>
 			<programlisting>
 			<![CDATA[
@@ -1243,7 +1265,7 @@ Subscription subscription = web3j.blockObservable(false).subscribe(block -> {
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title>接收所有添加到区块链的新交易</title>
 			<programlisting>
 			<![CDATA[
@@ -1253,7 +1275,7 @@ Subscription subscription = web3j.transactionObservable().subscribe(tx -> {
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title>接收所有待处理的事务</title>
 			<programlisting>
 			<![CDATA[
@@ -1263,7 +1285,7 @@ Subscription subscription = web3j.pendingTransactionObservable().subscribe(tx ->
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title>将区块块重放到当前的当前位置</title>
 			<programlisting>
 			<![CDATA[
@@ -1280,7 +1302,7 @@ Subscription subscription = catchUpToLatestAndSubscribeToNewBlocksObservable(
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title>过滤主题</title>
 			<programlisting>
 			<![CDATA[
@@ -1292,7 +1314,7 @@ web3j.ethLogObservable(filter).subscribe(log -> {
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title>停止订阅 Subscriptions</title>
 			<programlisting>
 			<![CDATA[
@@ -1300,7 +1322,7 @@ subscription.unsubscribe();
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title></title>
 			<programlisting>
 			<![CDATA[
@@ -1353,6 +1375,82 @@ if (personalUnlockAccount.accountUnlocked()) {
 iban:XE4214YF25M7C0Q6QFUF989GYBCR29987SX?amount=100&token=ETH	
 		]]>
 		</screen>
-		<para><ulink url="https://github.com/arturmkrtchyan/iban4j" /></para>
+		<para>
+			<ulink url="https://github.com/arturmkrtchyan/iban4j" />
+		</para>
 	</section>
+	<section id="web3j.springboot">
+		<title>Springboot with Ethereum (web3j)</title>
+		<section>
+			<title>Maven</title>
+			<screen>
+			<![CDATA[
+		<dependency>
+			<groupId>org.web3j</groupId>
+			<artifactId>web3j-spring-boot-starter</artifactId>
+			<version>1.6.0</version>
+		</dependency>			
+			]]>
+			</screen>
+		</section>
+		<section id="web3j.springboot.application.properties">
+			<title>application.properties</title>
+			<screen>
+			<![CDATA[
+web3j.client-address=https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d
+web3j.admin-client=true			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>TestRestController</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.wallet.restful;
+
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.Web3ClientVersion;
+
+@RestController
+public class TestRestController {
+	private static final Logger logger = LoggerFactory.getLogger(TestRestController.class);
+
+	@Autowired
+	private Web3j web3j;
+
+	public TestRestController() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@GetMapping("/version")
+	public String version() throws IOException {
+		Web3ClientVersion web3ClientVersion = web3j.web3ClientVersion().send();
+		String clientVersion = web3ClientVersion.getWeb3ClientVersion();
+		logger.info(clientVersion);
+		return clientVersion;
+	}
+
+}
+			
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>测试</title>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~ % curl http://localhost:8080/version
+Geth/v1.8.3-stable/linux-amd64/go1.10
+			]]>
+			</screen>
+		</section>
+	</section>
+
 </chapter>
