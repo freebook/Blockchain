@@ -1353,6 +1353,9 @@ f592b7bf06ca9fd7696ba95d6ed8e357de6a2379b6d5fe1ffd53c6b4b063cd4a
 	</section>
 	<section id="web3j.filter">
 		<title>过滤器 (Filter)</title>
+	</section>
+	<section id="web3j.Subscription">
+		<title>Subscription</title>
 		<para>在区块链上发生的事件时，能不通知到订阅事件者。</para>
 		<tip>
 			主意 https://docs.web3j.io/filters.html 有一段话：
@@ -1388,6 +1391,44 @@ Subscription subscription = web3j.pendingTransactionObservable().subscribe(tx ->
 });
 			]]>
 			</programlisting>
+			<para>测试环境 Mac, 首先启动 Ethereum Wallet，然后启动下面程序，回到 Ethereum Wallet 中做一笔转账。</para>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.example.ethereum.subscription;
+
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.ipc.UnixIpcService;
+
+import rx.Subscription;
+
+public class PendingTest {
+
+	public PendingTest() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println("Subscription Starting...");
+		Web3j web3 = Web3j.build(new UnixIpcService("/Users/neo/Library/Ethereum/geth.ipc"));
+		Subscription subscription = web3.pendingTransactionObservable().subscribe(block -> {
+			// System.out.println(block.toString());
+			System.out.println("block number: " + block.getBlockHash());
+		});
+		// subscription.unsubscribe();
+	}
+
+}
+			
+			]]>
+			</programlisting>
+			<para>输出</para>
+			<programlisting>
+			<![CDATA[
+block number: 0x74f7dd053dadcf01599dc85d4abf60662695e78ce7531335f44dc03f49dee326
+			]]>
+			</programlisting>
+
 		</section>
 		<section>
 			<title>将区块块重放到当前的当前位置</title>

@@ -261,4 +261,52 @@ contract Migrations {
 		]]>
 		</screen>
 	</section>
+	<section id="error.Subscription">
+		<title>Exception in thread "main" rx.exceptions.OnErrorNotImplementedException: Invalid response received: okhttp3.internal.http.RealResponseBody@6c25e6c4</title>
+		<para>异常出现在 Subscription 订阅的时候，原因是 web3j Subscription 操作只能使用 ipc, rpc， infura.io 不支持该操作。</para>
+		<screen>
+		<![CDATA[
+Exception in thread "main" rx.exceptions.OnErrorNotImplementedException: Invalid response received: okhttp3.internal.http.RealResponseBody@6c25e6c4
+	at rx.internal.util.InternalObservableUtils$ErrorNotImplementedAction.call(InternalObservableUtils.java:386)
+	at rx.internal.util.InternalObservableUtils$ErrorNotImplementedAction.call(InternalObservableUtils.java:383)
+	at rx.internal.util.ActionSubscriber.onError(ActionSubscriber.java:44)
+	at rx.observers.SafeSubscriber._onError(SafeSubscriber.java:153)
+	at rx.observers.SafeSubscriber.onError(SafeSubscriber.java:115)
+	at rx.internal.operators.OnSubscribeMap$MapSubscriber.onError(OnSubscribeMap.java:88)
+	at rx.internal.operators.OnSubscribeFilter$FilterSubscriber.onError(OnSubscribeFilter.java:90)
+	at rx.internal.operators.OperatorMerge$MergeSubscriber.reportError(OperatorMerge.java:266)
+	at rx.internal.operators.OperatorMerge$MergeSubscriber.checkTerminate(OperatorMerge.java:818)
+	at rx.internal.operators.OperatorMerge$MergeSubscriber.emitLoop(OperatorMerge.java:579)
+	at rx.internal.operators.OperatorMerge$MergeSubscriber.emit(OperatorMerge.java:568)
+	at rx.internal.operators.OperatorMerge$MergeSubscriber.onError(OperatorMerge.java:276)
+	at rx.internal.operators.OnSubscribeMap$MapSubscriber.onError(OnSubscribeMap.java:88)
+	at rx.Observable.unsafeSubscribe(Observable.java:10334)
+	at rx.internal.operators.OnSubscribeMap.call(OnSubscribeMap.java:48)
+	at rx.internal.operators.OnSubscribeMap.call(OnSubscribeMap.java:33)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:48)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:30)
+	at rx.Observable.unsafeSubscribe(Observable.java:10327)
+	at rx.internal.operators.OnSubscribeFilter.call(OnSubscribeFilter.java:45)
+	at rx.internal.operators.OnSubscribeFilter.call(OnSubscribeFilter.java:30)
+	at rx.Observable.unsafeSubscribe(Observable.java:10327)
+	at rx.internal.operators.OnSubscribeMap.call(OnSubscribeMap.java:48)
+	at rx.internal.operators.OnSubscribeMap.call(OnSubscribeMap.java:33)
+	at rx.Observable.subscribe(Observable.java:10423)
+	at rx.Observable.subscribe(Observable.java:10390)
+	at rx.Observable.subscribe(Observable.java:10195)
+	at cn.netkiller.example.ethereum.subscription.PendingTest.main(PendingTest.java:20)
+Caused by: org.web3j.protocol.exceptions.ClientConnectionException: Invalid response received: okhttp3.internal.http.RealResponseBody@6c25e6c4
+	at org.web3j.protocol.http.HttpService.performIO(HttpService.java:114)
+	at org.web3j.protocol.Service.send(Service.java:31)
+	at org.web3j.protocol.core.Request.send(Request.java:71)
+	at org.web3j.protocol.core.filters.PendingTransactionFilter.sendRequest(PendingTransactionFilter.java:24)
+	at org.web3j.protocol.core.filters.Filter.run(Filter.java:45)
+	at org.web3j.protocol.rx.JsonRpc2_0Rx.run(JsonRpc2_0Rx.java:73)
+	at org.web3j.protocol.rx.JsonRpc2_0Rx.lambda$ethPendingTransactionHashObservable$1(JsonRpc2_0Rx.java:55)
+	at rx.Observable.unsafeSubscribe(Observable.java:10327)
+	... 14 more
+		
+		]]>
+		</screen>
+	</section>
 </chapter>
