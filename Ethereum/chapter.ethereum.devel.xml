@@ -13,15 +13,56 @@
 	</para>
 	<section id="web3.py.install">
 		<title>安装 web3.py 开发环境</title>
-		<screen>
-		<![CDATA[
-neo@MacBook-Pro ~/ethereum/web3.py % pip3 install web3
-		]]>
-		</screen>
+		<section id="">
+			<title>CentOS</title>
+			<screen>
+			<![CDATA[
+[root@iZj6c39y62jl5b1wmfv6u8Z ~]# yum install python34-pip
+
+[root@iZj6c39y62jl5b1wmfv6u8Z ~]# pip3 install --upgrade pip
+Collecting pip
+  Downloading http://mirrors.aliyun.com/pypi/packages/0f/74/ecd13431bcc456ed390b44c8a6e917c1820365cbebcb6a8974d1cd045ab4/pip-10.0.1-py2.py3-none-any.whl (1.3MB)
+    100% |████████████████████████████████| 1.3MB 68.9MB/s 
+Installing collected packages: pip
+  Found existing installation: pip 8.1.2
+    Uninstalling pip-8.1.2:
+      Successfully uninstalled pip-8.1.2
+Successfully installed pip-10.0.1
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[
+python3.6 -m venv env --without-pip
+source env/bin/activate
+curl https://bootstrap.pypa.io/get-pip.py | python3
+python3.6 -m pip install web3			
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>MAC OS</title>
+			<para>首先去 python.org 官网下载 Python 3.6.5 dmg格式，安装后进入终端。</para>
+			<screen>
+			<![CDATA[
+You should consider upgrading via the 'pip install --upgrade pip' command.
+neo@MacBook-Pro ~/ethereum/web3.py % pip3.6 install --upgrade pip
+Cache entry deserialization failed, entry ignored
+Collecting pip
+  Using cached https://files.pythonhosted.org/packages/0f/74/ecd13431bcc456ed390b44c8a6e917c1820365cbebcb6a8974d1cd045ab4/pip-10.0.1-py2.py3-none-any.whl
+Installing collected packages: pip
+  Found existing installation: pip 9.0.3
+    Uninstalling pip-9.0.3:
+      Successfully uninstalled pip-9.0.3
+Successfully installed pip-10.0.1
+			
+neo@MacBook-Pro ~/ethereum/web3.py % pip3.6 install web3
+			]]>
+			</screen>
+		</section>
 	</section>
-	<section >
+	<section>
 		<title>连接到以太坊节点</title>
-		<section >
+		<section>
 			<title>HTTP</title>
 			<programlisting>
 			<![CDATA[
@@ -30,7 +71,7 @@ neo@MacBook-Pro ~/ethereum/web3.py % pip3 install web3
 			]]>
 			</programlisting>
 		</section>
-		<section >
+		<section>
 			<title>IPC</title>
 			<programlisting>
 			<![CDATA[
@@ -39,7 +80,7 @@ neo@MacBook-Pro ~/ethereum/web3.py % pip3 install web3
 			]]>
 			</programlisting>
 		</section>
-		<section >
+		<section>
 			<title>Websocket</title>
 			<programlisting>
 			<![CDATA[
@@ -52,7 +93,7 @@ neo@MacBook-Pro ~/ethereum/web3.py % pip3 install web3
 	</section>
 	<section id="web3.py.sendTransaction">
 		<title>交易</title>
-		<section >
+		<section>
 			<title>发送 ETH</title>
 			<programlisting>
 			<![CDATA[
@@ -68,7 +109,7 @@ web3.eth.sendTransaction({'to': toAddress, 'from': fromAddress, 'value': value})
 			]]>
 			</programlisting>
 		</section>
-		<section >
+		<section>
 			<title>签名发送 ETH</title>
 			<programlisting>
 			<![CDATA[
@@ -95,8 +136,9 @@ web3.eth.sendRawTransaction(signed_txn.rawTransaction)
 			</programlisting>
 		</section>
 	</section>
-	<section >
-		<title></title>
+
+	<section>
+		<title>ERC20 代币合约</title>
 		<programlisting>
 		<![CDATA[
 from web3 import Web3
@@ -109,6 +151,56 @@ contract.functions.balanceOf(address).call()
 contract.functions.transfer(to, value).call()
 		]]>
 		</programlisting>
+		<section id="web3.py.erc20.transfer">
+			<title>签名发送ERC20代币</title>
+			<programlisting>
+		<![CDATA[
+from web3 import Web3
+from web3 import Web3, HTTPProvider, IPCProvider
+# w3 = Web3(Web3.IPCProvider("~/Library/Ethereum/geth.ipc"))	
+
+w3 = Web3(HTTPProvider("https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d"))
+
+fromAddress = '0xB94054c174995AE2A9E7fcf6c7924635FBa8ECF7'
+toAddress = '0xCdF0253d8362d6c3334c8F28A6BFd74c90d03d92'
+contractAddress='0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359'
+private_key = b''
+
+
+# '~/.ethereum/testnet/keystore/UTC--2018-03-02T12-12-51.966823000Z--b94054c174995ae2a9e7fcf6c7924635fba8ecf7'
+with open('/Users/neo/Library/Ethereum/testnet/keystore/UTC--2018-03-02T12-12-51.966823000Z--b94054c174995ae2a9e7fcf6c7924635fba8ecf7') as keyfile:
+    encrypted_key = keyfile.read()
+    private_key = w3.eth.account.decrypt(encrypted_key, '')
+
+print(private_key)
+
+interface='[ { "constant": true, "inputs": [], "name": "name", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "approve", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [ { "name": "", "type": "uint8" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_value", "type": "uint256" } ], "name": "burn", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_from", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "burnFrom", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transfer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }, { "name": "_extraData", "type": "bytes" } ], "name": "approveAndCall", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" }, { "name": "", "type": "address" } ], "name": "allowance", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [ { "name": "initialSupply", "type": "uint256", "index": 0, "typeShort": "uint", "bits": "256", "displayName": "initial Supply", "template": "elements_input_uint", "value": "100000" }, { "name": "tokenName", "type": "string", "index": 1, "typeShort": "string", "bits": "", "displayName": "token Name", "template": "elements_input_string", "value": "NEO" }, { "name": "tokenSymbol", "type": "string", "index": 2, "typeShort": "string", "bits": "", "displayName": "token Symbol", "template": "elements_input_string", "value": "#" } ], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Burn", "type": "event" } ]'
+contract = w3.eth.contract(address=contractAddress, abi=interface)
+
+nonce = w3.eth.getTransactionCount(fromAddress)
+print(nonce)
+
+txn = contract.functions.transfer(toAddress,5,).buildTransaction({
+    'chainId': 3,
+    'gas': 30000,
+    'gasPrice': w3.toWei('1', 'gwei'),
+    'nonce': nonce,
+    })
+
+print(txn)
+
+signed_txn = w3.eth.account.signTransaction(txn, private_key=private_key)
+print(signed_txn.hash)
+print(signed_txn.rawTransaction)
+
+tmp = w3.eth.sendRawTransaction(signed_txn.rawTransaction)  
+
+txhash = w3.toHex(w3.sha3(signed_txn.rawTransaction))
+
+print("https://ropsten.etherscan.io/tx/"+txhash)		
+		]]>
+			</programlisting>
+		</section>
 	</section>
 </chapter>
 <chapter>
@@ -136,7 +228,7 @@ contract.functions.transfer(to, value).call()
 	</section>
 	<section>
 		<title>账号</title>
-		<section >
+		<section>
 			<title>余额</title>
 			<para>获得账号的余额</para>
 			<screen>
@@ -145,7 +237,7 @@ https://api.etherscan.io/api?module=account&action=balance&address=0xddbd2b932c7
 			]]>
 			</screen>
 		</section>
-		<section >
+		<section>
 			<title>查询区块</title>
 			<screen>
 			<![CDATA[
@@ -419,7 +511,7 @@ class TransactionsResponse {
 			]]>
 			</programlisting>
 		</section>
-		<section >
+		<section>
 			<title>查询区块</title>
 			<screen>
 			<![CDATA[
@@ -428,9 +520,9 @@ http://api.etherscan.io/api?module=account&action=txlistinternal&address=0x3e827
 			</screen>
 		</section>
 	</section>
-	<section >
+	<section>
 		<title>查询交易</title>
-		<section >
+		<section>
 			<title>检查合约执行状态</title>
 			<screen>
 			<![CDATA[
