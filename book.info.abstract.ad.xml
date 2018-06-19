@@ -20,7 +20,9 @@
 
 <simplelist type='horiz' columns='5'>
 	<member>
-		LOGO 广告位招租
+		<ulink url="http://www.yungeen.cn">
+			<graphic format="png" fileref="images/ad/yungeen-logo.png" width="150" srccredit="netkiller" />
+		</ulink>
 	</member>
 	<member>
 		LOGO 广告位招租
