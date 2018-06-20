@@ -84,7 +84,10 @@ https://github.com/plactal/EosCommander
 	</section>
 	<section id="eos.setup">
 		<title>EOS</title>
-		<screen>
+		<section id="eos.centos">
+			<title>CentOS</title>
+
+			<screen>
 		<![CDATA[
 cd /usr/local/src/
 git clone https://github.com/EOSIO/eos --recursive
@@ -93,9 +96,9 @@ git submodule update --init --recursive
 
 ./eosio_build.sh
 		]]>
-		</screen>
-		<para></para>
-		<screen>
+			</screen>
+			<para></para>
+			<screen>
 		<![CDATA[
 [root@iZj6c7cj14ulhfndlmeicbZ eos]# ./eosio_build.sh
 
@@ -127,10 +130,10 @@ git submodule update --init --recursive
 2) No
 #? 1
 		]]>
-		</screen>
-		<para>输入 1 回车继续</para>
-		<para></para>
-		<screen>
+			</screen>
+			<para>输入 1 回车继续</para>
+			<para></para>
+			<screen>
 		<![CDATA[
 Complete!
 
@@ -171,19 +174,28 @@ Complete!
 2) No
 #?
 		]]>
-		</screen>
-		<para>输入 1 回车继续</para>
-		<screen>
+			</screen>
+			<para>输入 1 回车继续</para>
+			<screen>
 		<![CDATA[
 cd build
 make install
 		]]>
-		</screen>
-		<screen>
-		<![CDATA[
-		
-		]]>
-		</screen>
+			</screen>
+		</section>
+		<section id="eos.mac">
+			<title>Mac</title>
+			<screen>
+			<![CDATA[
+git clone https://github.com/eosio/eos --recursive
+
+cd eos
+cmake .
+make
+			]]>
+			</screen>
+		</section>
+
 	</section>
 </chapter>
 

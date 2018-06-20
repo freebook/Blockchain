@@ -3,8 +3,8 @@
 	<title>Token</title>
 	<subtitle>ERC 代币标准</subtitle>
 	&chapter.ethereum.coin.xml;
-	<section id="token.solidity.0.4.23">
-		<title>ERC20 Token Solidity 0.4.23</title>
+	<section id="token.solidity.0.4.24">
+		<title>ERC20 Token Solidity 0.4.24</title>
 		<para>ERC20 “描述了实现代币合约的标准功能”，ERC20 是各个代币的标准接口。ERC20 代币仅仅是以太坊代币的子集。为了充分兼容 ERC20，开发者需要将一组特定的函数集成到他们的智能合约中，以便在高层面能够执行以下操作：</para>
 		<itemizedlist>
 			<title>ERC20 提供的方法</title>
@@ -67,7 +67,7 @@ contract NetkillerToken {
 			<para>新版合约</para>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 
 contract NetkillerToken {
   address public owner;
@@ -171,7 +171,7 @@ contract NetkillerToken {
 		</section>
 
 	</section>
-	<section>
+	<section id="token.crowdsale">
 		<title>Netkiller Crowdsale Contract</title>
 		<section>
 			<title>Solidity 0.4.24</title>
@@ -2145,6 +2145,11 @@ contract ERC223Token is ERC223Interface {
 			<para>
 				<ulink url="https://github.com/OpenZeppelin/zeppelin-solidity/tree/master/contracts/token/ERC827" />
 			</para>
+		</section>
+		<section id="ERC875">
+			<title>ERC875 for non fungible tokens and simple atomic swaps</title>
+			<para><ulink url="https://github.com/ethereum/EIPs/issues/875" /></para>
+			<para><ulink url="https://github.com/alpha-wallet/ERC875-Example" /></para>
 		</section>
 		<section>
 			<title>ERC: Standard URI scheme with metadata, value and byte code</title>
