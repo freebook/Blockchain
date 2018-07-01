@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="eos.contract">
+	<title>只能合约开发</title>
+	<screen>
+		<![CDATA[
+eosiocpp -o helloworld.wast helloworld.cpp	
+eosiocpp -g helloworld.abi helloworld.cpp	
+		]]>
+	</screen>
+	<section id="eosio.token">
+		<title>eosio.token 合约详解</title>
+		<section id="token::create">
+			<title>token::create 方法</title>
+			<screen>
+				<![CDATA[
+void token::create( account_name issuer,
+                    asset        maximum_supply,
+                    uint8_t      issuer_can_freeze,
+                    uint8_t      issuer_can_recall,
+                    uint8_t      issuer_can_whitelist )				
+				]]>
+			</screen>
+		</section>
+		<section id="token::issue">
+			<title>token::issue 方法</title>
+			<screen>
+				<![CDATA[
+void token::issue( account_name to, asset quantity, string memo )
+				]]>
+			</screen>
+		</section>
+		<section id="token::transfer">
+			<title>token::transfer 转账方法</title>
+			<screen>
+				<![CDATA[
+void token::transfer( account_name from,
+                      account_name to,
+                      asset        quantity,
+                      string       memo )				
+				]]>
+			</screen>
+		</section>
+	</section>
+	<section id="">
+		<title>编译运行 hello 智能合约</title>
+		<para>hello 智能合约是官方提供的一个智能合约例子</para>
+		<para>源码</para>
+		<programlisting>
+		<![CDATA[
+[root@netkiller hello]# cat /usr/local/src/eos/contracts/hello/hello.cpp 
+#include <eosiolib/eosio.hpp>
+using namespace eosio;
+
+class hello : public eosio::contract {
+  public:
+      using contract::contract;
+
+      /// @abi action 
+      void hi( account_name user ) {
+         print( "Hello, ", name{user} );
+      }
+};
+
+EOSIO_ABI( hello, (hi) )		
+		]]>
+		</programlisting>
+		<para>编译智能合约</para>
+		<screen>
+		<![CDATA[
+cd /usr/local/src/eos/build/contracts/hello
+
+[root@netkiller hello]# make 
+[  4%] Built target libc++
+[  4%] Built target wasm
+[  4%] Built target ast
+[  4%] Built target asmjs
+[  4%] Built target cfg
+[ 10%] Built target passes
+[ 12%] Built target support
+[ 14%] Built target eosio-s2wasm
+[ 16%] Built target Platform
+[ 16%] Built target Logging
+[ 16%] Built target IR
+[ 16%] Built target WASM
+[ 16%] Built target WAST
+[ 16%] Built target eosio-wast2wasm
+[ 18%] Built target eosiolib
+[ 97%] Built target libc
+[100%] Built target hello
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+[root@netkiller hello]# cleos wallet unlock
+password: Unlocked: default
+
+[root@netkiller hello]# cleos set contract contract.hello /usr/local/src/eos/build/contracts/hello -p eosio
+Reading WAST/WASM from /usr/local/src/eos/build/contracts/hello/hello.wasm...
+Using already assembled WASM...
+Publishing contract...
+executed transaction: f5695465f35b153d65c36cb0e07443fd3d8ccadde9c1daf8c472b0a7e84196b0  4160 bytes  1040 us
+#         eosio <= eosio::setcode               "0000000000ea30550000e2170061736d01000000013b0c60027f7e006000017e60027e7e0060027f7f006000017f60027f7...
+#         eosio <= eosio::setabi                "0000000000ea3055912b0e656f73696f3a3a6162692f312e30000102686900010475736572046e616d65010000000000008...
+warning: transaction executed locally, but may not be confirmed by the network yet
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+[root@netkiller hello]# cleos push action eosio hi '["neo"]' -p eosio
+executed transaction: 476fa2416d227ffe078285714d10d2d726b8e9cc18b9f0ba672bfc1ef93efbd5  104 bytes  284 us
+#         eosio <= eosio::hi                    {"user":"neo"}
+warning: transaction executed locally, but may not be confirmed by the network yet
+		]]>
+		</screen>
+	</section>
+</section>

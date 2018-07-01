@@ -26,6 +26,9 @@
 	<!ENTITY % solution.doctype.entity.xml 		SYSTEM "Solution/doctype.entity.xml">
 	%solution.doctype.entity.xml;
 	
+	<!ENTITY % eos.doctype.entity.xml 			SYSTEM "EOS/doctype.entity.xml">
+	%eos.doctype.entity.xml;
+	
 ]>
 <book xml:base="http://netkiller.sourceforge.net/linux/www"
 	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">

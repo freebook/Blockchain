@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="eos.faq">
+	<title>FAQ</title>
+	<para></para>
+	<section>
+		<title>Error 3090003: provided keys, permissions, and delays do not satisfy declared authorizations</title>
+		<screen>
+			<![CDATA[
+[root@iZj6c39y62jl5b1wmfv6u8Z ~]# cleos create account eosio netkiller EOS7fcRYssRt5SXVnsPpRNzj86E9h5g62hBgKwr1NSzRmSpH9byZr EOS7fcRYssRt5SXVnsPpRNzj86E9h5g62hBgKwr1NSzRmSpH9byZr
+Error 3090003: provided keys, permissions, and delays do not satisfy declared authorizations
+Ensure that you have the related private keys inside your wallet and your wallet is unlocked.
+			]]>
+		</screen>
+		<para>eosio 私钥没有导入到钱包</para>
+	</section>
+</section>
