@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="cleos">
+<chapter id="cleos">
 	<title>CLEOS</title>
 	<section id="cleos.wallet">
 		<title>钱包</title>
@@ -568,4 +568,4 @@ warning: transaction executed locally, but may not be confirmed by the network y
 
 		</section>
 	</section>
-</section>
+</chapter>

@@ -1,12 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="eos.contract">
+<chapter id="eos.contract">
 	<title>只能合约开发</title>
-	<screen>
-		<![CDATA[
-eosiocpp -o helloworld.wast helloworld.cpp	
-eosiocpp -g helloworld.abi helloworld.cpp	
-		]]>
-	</screen>
+	<section id="eosiocpp">
+		<title>eosiocpp 命令</title>
+		<section id="">
+			<title>创建新合约</title>
+			<para></para>
+			<screen>
+			<![CDATA[
+[root@iZj6c39y62jl5b1wmfv6u8Z test]# eosiocpp -n hello
+created hello from skeleton
+
+[root@iZj6c39y62jl5b1wmfv6u8Z test]# find hello/
+hello/
+hello/hello.hpp
+hello/hello.cpp			
+			]]>
+			</screen>
+			<programlisting>
+			<![CDATA[
+
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>编译 WAST 文件</title>
+			<screen>
+			<![CDATA[
+eosiocpp -o output.wast contract.cpp			
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>编译 ABI 文件</title>
+			<screen>
+			<![CDATA[
+eosiocpp -g contract.abi types.hpp
+			]]>
+			</screen>
+		</section>
+	</section>
 	<section id="eosio.token">
 		<title>eosio.token 合约详解</title>
 		<section id="token::create">
@@ -41,7 +74,7 @@ void token::transfer( account_name from,
 			</screen>
 		</section>
 	</section>
-	<section id="">
+	<section id="contract.hello">
 		<title>编译运行 hello 智能合约</title>
 		<para>hello 智能合约是官方提供的一个智能合约例子</para>
 		<para>源码</para>
@@ -113,4 +146,5 @@ warning: transaction executed locally, but may not be confirmed by the network y
 		]]>
 		</screen>
 	</section>
-</section>
+
+</chapter>

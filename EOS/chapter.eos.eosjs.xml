@@ -1,1 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<section id="eosjs">
+	<title>eosjs</title>
+	<section id="">
+		<title>安装 eosjs</title>
+		<screen>
+		<![CDATA[
+curl -s https://raw.githubusercontent.com/oscm/shell/master/lang/node.js/binrary/node-v10.5.0.sh | bash
+curl -s https://raw.githubusercontent.com/oscm/shell/master/lang/node.js/binrary/profile.d.sh | bash
+			
+npm install eosjs		
+		]]>
+		</screen>
+	</section>
+	<section id="">
+		<title>实例演示</title>
+
+		<section id="">
+			<title>智能合约</title>
+			<screen>
+		<![CDATA[
+[root@netkiller ~]# mkdir echo
+[root@netkiller ~]# cd echo/		
+		]]>
+			</screen>
+			<programlisting>
+		<![CDATA[
+[root@netkiller echo]# cat echo.cpp 
+// website: http://www.netkiller.cn
+// author: netkiller@msn.com
+
+#include <eosiolib/eosio.hpp>
+#include <eosiolib/print.hpp>
+#include <string>
+
+using std::string;
+
+class echo_test : public eosio::contract {
+  public:
+      using eosio::contract::contract;
+      void echo(string tmp) {
+         eosio::print(tmp);
+      }
+};
+
+EOSIO_ABI( echo_test, (echo) )		
+		]]>
+			</programlisting>
+			<screen>
+		<![CDATA[
+[root@netkiller echo]# eosiocpp -o echo.wast echo.cpp
+[root@netkiller echo]# eosiocpp -g echo.abi echo.cpp
+760047ms thread-0   abi_generator.hpp:68          ricardian_contracts  ] Warning, no ricardian clauses found for echo_test
+
+760048ms thread-0   abi_generator.hpp:75          ricardian_contracts  ] Warning, no ricardian contract found for echo
+
+Generated echo.abi ...
+		]]>
+			</screen>
+			<screen>
+		<![CDATA[
+[root@netkiller echo]# cleos wallet unlock
+password: Unlocked: default
+
+[root@netkiller echo]# cleos set contract neo ~/echo -p neo
+Reading WAST/WASM from /root/echo/echo.wasm...
+Using already assembled WASM...
+Publishing contract...
+executed transaction: 61a7cf6eaef1f46e0974369c3905f0fe3b5993c44ef0cd138172e260b3e35fee  2656 bytes  846 us
+#         eosio <= eosio::setcode               "000000000000a89a0000bb250061736d0100000001320a60027f7f006000006000017e60027e7e006000017f60027f7f017...
+#         eosio <= eosio::setabi                "000000000000a89a360e656f73696f3a3a6162692f312e300001046563686f000103746d7006737472696e6701000000000...
+warning: transaction executed locally, but may not be confirmed by the network yet
+
+[root@netkiller echo]# cleos push action neo echo '["helloworld"]' -p neo
+executed transaction: 0dfe1d9599e59a92e593e89fcfdd7eb7b069dda362c9c65a6f333b7959b1b8b5  104 bytes  327 us
+#           neo <= neo::echo                    {"tmp":"helloworld"}
+warning: transaction executed locally, but may not be confirmed by the network yet
+		]]>
+			</screen>
+
+		</section>
+		<section id="">
+			<title>通过 eosjs 访问智能合约</title>
+			
+			<programlisting>
+			<![CDATA[
+EOS = require('eosjs') 
+eos = EOS.Localnet({ 
+    keyProvider: ['5JFMTVk4EjWW54xk73AMRPf5JbpFV2Cm7vtgt1jr9zVaPgLmaLQ'], 
+    httpEndpoint: 'http://127.0.0.1:8888'
+})
+
+eos.contract('neo').then((contract) => { 
+    contract.echo("helloworld", { authorization: ['neo'] }).then((res) => { 
+    console.log(res) }) 
+})
+			]]>
+			</programlisting>
+			<para>运行结果</para>
+			<screen>
+			<![CDATA[
+[root@iZj6c39y62jl5b1wmfv6u8Z test]# node test.js 
+deprecated, change Eos.Localnet(..) to just Eos(..)
+{ broadcast: true,
+  transaction:
+   { compression: 'none',
+     transaction:
+      { expiration: '2018-07-02T09:41:21',
+        ref_block_num: 4538,
+        ref_block_prefix: 91102360,
+        net_usage_words: 0,
+        max_cpu_usage_ms: 0,
+        delay_sec: 0,
+        context_free_actions: [],
+        actions: [Array],
+        transaction_extensions: [] },
+     signatures:
+      [ 'SIG_K1_K7kueHwDEYsX1xKrZrB1c1RZy2fD2iv8aeq74ww92ryGsmgYXA9qJXFUM1UtEE867y5jNyyaw52GEnFKmHTWe7RFYm2gpD' ] },
+  transaction_id:
+   '2643a8d5ac9d408822d7d20712518449e87d18e2164851a6164bfe19801a88d8',
+  processed:
+   { id:
+      '2643a8d5ac9d408822d7d20712518449e87d18e2164851a6164bfe19801a88d8',
+     receipt:
+      { status: 'executed', cpu_usage_us: 491, net_usage_words: 13 },
+     elapsed: 491,
+     net_usage: 104,
+     scheduled: false,
+     action_traces: [ [Object] ],
+     except: null } }
+
+			]]>
+			</screen>
+		</section>
+	</section>
+</section>

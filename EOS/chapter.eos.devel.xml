@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="">
-	<title></title>
+<chapter id="eos.devel">
+	<title>EOS Dapp 开发</title>
 	<screen>
 	<![CDATA[
 [root@iZj6c39y62jl5b1wmfv6u8Z ~]# curl http://127.0.0.1:8888/v1/chain/get_info
 {"server_version":"90fefdd1","chain_id":"cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f","head_block_num":22122,"last_irreversible_block_num":22121,"last_irreversible_block_id":"000056694107636adfcaa75fc4879d48eafb6ce7ee9b108af074494baa77b0ea","head_block_id":"0000566ada1e3bd2d57b707c67d6a817fac341b70efb59506f973031142ef25c","head_block_time":"2018-06-29T02:11:35.000","head_block_producer":"eosio","virtual_block_cpu_limit":200000000,"virtual_block_net_limit":1048576000,"block_cpu_limit":199900,"block_net_limit":1048576}	
 	]]>
 	</screen>
-</section>
+	
+	&chapter.eos.eosjs.xml;
+</chapter>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="eos.faq">
+<!-- https://eoswiki.readthedocs.io/zh_CN/latest/ -->
+<chapter id="eos.faq">
 	<title>FAQ</title>
 	<para></para>
 	<section>
@@ -13,4 +14,4 @@ Ensure that you have the related private keys inside your wallet and your wallet
 		</screen>
 		<para>eosio 私钥没有导入到钱包</para>
 	</section>
-</section>
+</chapter>

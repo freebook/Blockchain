@@ -556,4 +556,56 @@ C (with Python/Java/Javascript bindings): https://github.com/ElementsProject/lib
 			</programlisting>
 		</section>
 	</section>
+	<section id="区块链比较">
+		<title>Ethereum vs Hypterledger Fabic vs EOS 对比</title>
+		<table xml:id="ex.htmltable">
+			<caption>智能合约对比</caption>
+			<thead>
+				<tr>
+					<td></td>
+					<td>Ethereum</td>
+					<td>Hypterledger Fabic</td>
+					<td>EOS</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>合约语言</td>
+					<td>Solidity</td>
+					<td>Go/Node.js/Java</td>
+					<td>C/C++</td>
+				</tr>
+				<tr>
+					<td>难易程度</td>
+					<td>容易</td>
+					<td>较容易</td>
+					<td>难</td>
+				</tr>
+				<tr>
+					<td>成熟度</td>
+					<td>非常成熟</td>
+					<td>较成熟</td>
+					<td>不成熟</td>
+				</tr>
+				<tr>
+					<td>调试环境</td>
+					<td>有Remix,Truffle，钱包合约工具等等</td>
+					<td>没有较好的调试环境</td>
+					<td>智能手工排查</td>
+				</tr>
+				<tr>
+					<td>扩展性</td>
+					<td>Solidity 无法扩展，不能引用外部开发库</td>
+					<td>可以扩展，导入第三方库</td>
+					<td>可以扩展，并且支持STL开发库</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
 </chapter>

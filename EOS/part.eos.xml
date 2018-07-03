@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <part id="index"><?dbhtml dir="eos" ?>
 	<title>EOS</title>
-
+	&chapter.eos.xml;
+	&chapter.eos.setup.xml;
+	&chapter.eos.cleos.xml;
+	&chapter.eos.contract.xml;
+	&chapter.eos.devel.xml;
+	&chapter.eos.faq.xml;
 </part>

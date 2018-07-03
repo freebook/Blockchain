@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="eos.setup">
+<chapter id="eos.setup">
 	<title>EOS 安装</title>
 	<section id="eos.centos">
 		<title>CentOS</title>
@@ -195,8 +195,8 @@ make
 		<!-- https://developers.eos.io/eosio-nodeos/docs/docker-quickstart -->
 	</section>
 
-	<section id="">
-		<title></title>
+	<section id="eos.mainnet">
+		<title>主网</title>
 		<screen>
 		<![CDATA[
 git clone https://github.com/EOS-Mainnet/eos -b mainnet-1.0.7
@@ -221,22 +221,22 @@ nodeos
 		]]>
 		</screen>
 	</section>
-</section>
-<section id="eos.launch">
-	<title>启动 EOS 节点</title>
-	<section id="">
-		<title>EOS 本地网</title>
 
-		<section>
-			<title>单节点私链</title>
-			<para>这种模式一般用于合约开发，学习和测试</para>
-			<screen>
+	<section id="eos.launch">
+		<title>启动 EOS 节点</title>
+		<section id="">
+			<title>EOS 本地网</title>
+
+			<section>
+				<title>单节点私链</title>
+				<para>这种模式一般用于合约开发，学习和测试</para>
+				<screen>
 			<![CDATA[
 nodeos -e -p eosio --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --plugin eosio::wallet_api_plugin
 			]]>
-			</screen>
-			<para>区块数据保存在 ~/.local/share/eosio/nodeos/data</para>
-			<screen>
+				</screen>
+				<para>区块数据保存在 ~/.local/share/eosio/nodeos/data</para>
+				<screen>
 			<![CDATA[
 [root@netkiller ~]# find ~/.local/share/eosio/nodeos/data
 /root/.local/share/eosio/nodeos/data
@@ -250,20 +250,20 @@ nodeos -e -p eosio --plugin eosio::chain_api_plugin --plugin eosio::history_api_
 /root/.local/share/eosio/nodeos/data/state/shared_memory.meta
 /root/.local/share/eosio/nodeos/data/state/shared_memory.bin			
 			]]>
-			</screen>
-			<para>本地私链会提示 warning: transaction executed locally, but may not be confirmed by the network yet. </para>
-		</section>
+				</screen>
+				<para>本地私链会提示 warning: transaction executed locally, but may not be confirmed by the network yet. </para>
+			</section>
 
-		<section id="">
-			<title>单机多节点</title>
-			<para>https://github.com/EOSIO/eos/wiki/Testnet-Single-Host-Multinode</para>
-			<para>EOS 有三个模块组成分别是nodeos，keosd，和cleos。nodeos 是节点进程，keosd 是钱包服务，cleos 是命令行接口。实现单机多节点主要工作在于怎样配置 nodeos 进程，使其端口不冲突。</para>
+			<section id="">
+				<title>单机多节点</title>
+				<para>https://github.com/EOSIO/eos/wiki/Testnet-Single-Host-Multinode</para>
+				<para>EOS 有三个模块组成分别是nodeos，keosd，和cleos。nodeos 是节点进程，keosd 是钱包服务，cleos 是命令行接口。实现单机多节点主要工作在于怎样配置 nodeos 进程，使其端口不冲突。</para>
 
-		</section>
-		<section id="">
-			<title>多机多节点</title>
-			<para>多级多节点配置只需要将其他节点的IP加入到 p2p-peer-address 池中即可，配置项涉及一下：</para>
-			<screen>
+			</section>
+			<section id="">
+				<title>多机多节点</title>
+				<para>多级多节点配置只需要将其他节点的IP加入到 p2p-peer-address 池中即可，配置项涉及一下：</para>
+				<screen>
 			<![CDATA[
 [root@iZj6c39y62jl5b1wmfv6u8Z config]# grep -v "^#" ~/.local/share/eosio/nodeos/config/config.ini | grep -v "^$"
 
@@ -276,17 +276,17 @@ producer-name: 节点账户名(12位[12345a-z]字符串).
 signature-provider: 你的密钥对.
 		
 			]]>
-			</screen>
-			<para>准备几台服务器或者云主机</para>
-			<screen>
+				</screen>
+				<para>准备几台服务器或者云主机</para>
+				<screen>
 			<![CDATA[
 Node1 172.16.0.10
 Node2 172.16.0.20
 Node3 172.16.0.30			
 			]]>
-			</screen>
-			<para>创世区块 genesis.json</para>
-			<screen>
+				</screen>
+				<para>创世区块 genesis.json</para>
+				<screen>
 			<![CDATA[
 {
   "initial_timestamp": "2018-06-01T00:00:00.000",
@@ -314,11 +314,11 @@ Node3 172.16.0.30
   "initial_chain_id": "0000000000000000000000000000000000000000000000000000000000000000"
 }
 			]]>
-			</screen>
-			<section id="">
-				<title>节点一</title>
-				<para>编辑配置文件 ~/.local/share/eosio/nodeos/config/config.ini</para>
-				<screen>
+				</screen>
+				<section id="">
+					<title>节点一</title>
+					<para>编辑配置文件 ~/.local/share/eosio/nodeos/config/config.ini</para>
+					<screen>
 				<![CDATA[
 p2p-peer-address = 172.16.0.20:9876
 p2p-peer-address = 172.16.0.30:9876
@@ -326,18 +326,18 @@ agent-name = "EOS Test Agent - Node 1"
 producer-name = eosio
 signature-provider = EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV=KEY:5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
 				]]>
-				</screen>
-				<para>启动 nodeos 进程</para>
-				<screen>
+					</screen>
+					<para>启动 nodeos 进程</para>
+					<screen>
 				<![CDATA[
 nodeos --genesis-json genesis.json	
 				]]>
-				</screen>
-			</section>
-			<section id="">
-				<title>节点二</title>
-				<para>编辑配置文件 ~/.local/share/eosio/nodeos/config/config.ini</para>
-				<screen>
+					</screen>
+				</section>
+				<section id="">
+					<title>节点二</title>
+					<para>编辑配置文件 ~/.local/share/eosio/nodeos/config/config.ini</para>
+					<screen>
 				<![CDATA[
 p2p-peer-address = 172.16.0.10:9876
 p2p-peer-address = 172.16.0.30:9876
@@ -345,13 +345,13 @@ agent-name = "EOS Test Agent - Node 2"
 producer-name = eosio
 signature-provider = EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV=KEY:5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
 				]]>
-				</screen>
-				<para>启动 nodeos 进程</para>
-			</section>
-			<section id="">
-				<title>节点三</title>
-				<para>编辑配置文件 ~/.local/share/eosio/nodeos/config/config.ini</para>
-				<screen>
+					</screen>
+					<para>启动 nodeos 进程</para>
+				</section>
+				<section id="">
+					<title>节点三</title>
+					<para>编辑配置文件 ~/.local/share/eosio/nodeos/config/config.ini</para>
+					<screen>
 				<![CDATA[
 p2p-peer-address = 172.16.0.10:9876
 p2p-peer-address = 172.16.0.20:9876
@@ -359,12 +359,12 @@ agent-name = "EOS Test Agent - Node 3"
 producer-name = eosio
 signature-provider = EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV=KEY:5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
 				]]>
-				</screen>
-				<para>启动 nodeos 进程</para>
-			</section>
-			<section id="">
-				<title>进入 Node 1 创建钱包和部署合约</title>
-				<screen>
+					</screen>
+					<para>启动 nodeos 进程</para>
+				</section>
+				<section id="">
+					<title>进入 Node 1 创建钱包和部署合约</title>
+					<screen>
 				<![CDATA[
 cleos wallet create
 cleos wallet unlock
@@ -406,18 +406,18 @@ cleos system delegatebw test test '25000000.0000 EOS' '25000000.0000 EOS' --tran
 # 给出块节点投票
 cleos system voteproducer prods test test
 				]]>
-				</screen>
+					</screen>
+				</section>
 			</section>
 		</section>
-	</section>
-	<section id="eos.testnet">
-		<title>测试网</title>
-		<section id="eos.testnet.endpoints">
-			<title>Public Testnet Endpoints（公共测试网络的接入点）</title>
-			<section id="">
-				<title>testnet1.eos.io</title>
-				<para></para>
-				<screen>
+		<section id="eos.testnet">
+			<title>测试网</title>
+			<section id="eos.testnet.endpoints">
+				<title>Public Testnet Endpoints（公共测试网络的接入点）</title>
+				<section id="">
+					<title>testnet1.eos.io</title>
+					<para></para>
+					<screen>
 				<![CDATA[
 HTTP Endpoint: testnet1.eos.io
 P2P Endpoint: p2p-testnet1.eos.io:9876
@@ -425,58 +425,58 @@ Web Wallet Endpoint: t1wallet.eos.io, t1api.eos.io, t1readonly.eos.io
 
 $ curl testnet1.eos.io/v1/chain/get_info		
 				]]>
-				</screen>
-			</section>
-			<section id="">
-				<title>http://testnet.eoswtz.com</title>
-				<para>http://www.eoswtz.com</para>
-				<screen>
+					</screen>
+				</section>
+				<section id="">
+					<title>http://testnet.eoswtz.com</title>
+					<para>http://www.eoswtz.com</para>
+					<screen>
 				<![CDATA[
 
 				]]>
-				</screen>
-				<para></para>
+					</screen>
+					<para></para>
+				</section>
 			</section>
-		</section>
 
-		<section id="">
-			<title>本地连接到测试网</title>
-			<para>修改config.ini文件</para>
-			<screen>
+			<section id="">
+				<title>本地连接到测试网</title>
+				<para>修改config.ini文件</para>
+				<screen>
 			<![CDATA[
 p2p-peer-address = p2p-testnet1.eos.io
 block-interval-seconds = 2
 			]]>
-			</screen>
-		</section>
+				</screen>
+			</section>
 
-		<section id="">
-			<title>EOS (testnet) Explorer (Dawn 2.0)</title>
-			<para>http://eosmonitor.info</para>
+			<section id="">
+				<title>EOS (testnet) Explorer (Dawn 2.0)</title>
+				<para>http://eosmonitor.info</para>
+			</section>
+			<section id="">
+				<title>EOS Jungle Testnet Monitor (Dawn 4.0)</title>
+				<para>
+					<ulink url="http://dev.cryptolions.io" />
+				</para>
+			</section>
 		</section>
-		<section id="">
-			<title>EOS Jungle Testnet Monitor (Dawn 4.0)</title>
-			<para>
-				<ulink url="http://dev.cryptolions.io" />
-			</para>
-		</section>
-	</section>
-	<section id="eos.mainnet">
-		<title>主网</title>
-		<section id="">
-			<title>创世区块</title>
-			<screen>
+		<section id="eos.mainnet">
+			<title>主网</title>
+			<section id="">
+				<title>创世区块</title>
+				<screen>
 			<![CDATA[
 https://github.com/EOS-Mainnet/eos/blob/mainnet-1.0.7/mainnet-genesis.json			
 			]]>
-			</screen>
+				</screen>
 
-		</section>
+			</section>
 
-		<section id="">
-			<title>eosnodes.privex.io</title>
-			<para>https://eosnodes.privex.io</para>
-			<screen>
+			<section id="">
+				<title>eosnodes.privex.io</title>
+				<para>https://eosnodes.privex.io</para>
+				<screen>
 		<![CDATA[
 [root@netkiller build]# cleos -u http://api.eosnewyork.io get info 
 {
@@ -494,11 +494,11 @@ https://github.com/EOS-Mainnet/eos/blob/mainnet-1.0.7/mainnet-genesis.json
   "block_net_limit": 1048304
 }
 		]]>
-			</screen>
-			<section id="">
-				<title>创世区块</title>
-				<para>https://eosnodes.privex.io/static/genesis.json</para>
-				<screen>
+				</screen>
+				<section id="">
+					<title>创世区块</title>
+					<para>https://eosnodes.privex.io/static/genesis.json</para>
+					<screen>
 		<![CDATA[
 {
   "initial_timestamp": "2018-06-08T08:08:08.888",
@@ -524,9 +524,9 @@ https://github.com/EOS-Mainnet/eos/blob/mainnet-1.0.7/mainnet-genesis.json
   }
 }		
 		]]>
-				</screen>
-				<para>检查创世区块配置是否正确</para>
-				<screen>
+					</screen>
+					<para>检查创世区块配置是否正确</para>
+					<screen>
 			<![CDATA[
 [root@netkiller build]# cleos -u http://api.eosnewyork.io get info 
 {
@@ -559,13 +559,13 @@ https://github.com/EOS-Mainnet/eos/blob/mainnet-1.0.7/mainnet-genesis.json
   "block_net_limit": 1048576
 }			
 			]]>
-				</screen>
-				<para>对比两次 chain_id 是否一致，一致表示配置正确。</para>
-			</section>
-			<section id="">
-				<title>主网超级节点</title>
-				<para>https://eosnodes.privex.io/?config=1</para>
-				<screen>
+					</screen>
+					<para>对比两次 chain_id 是否一致，一致表示配置正确。</para>
+				</section>
+				<section id="">
+					<title>主网超级节点</title>
+					<para>https://eosnodes.privex.io/?config=1</para>
+					<screen>
 			<![CDATA[
 p2p-peer-address = 106.10.42.238:9876
 p2p-peer-address = 123.59.116.52:49876
@@ -666,12 +666,12 @@ p2p-peer-address = publicnode.cypherglass.com:9876
 p2p-peer-address = seed1.greymass.com:9876
 p2p-peer-address = seed2.greymass.com:9876			
 			]]>
-				</screen>
+					</screen>
+				</section>
 			</section>
-		</section>
-		<section id="">
-			<title>mainnet.genereos.io</title>
-			<screen>
+			<section id="">
+				<title>mainnet.genereos.io</title>
+				<screen>
 			<![CDATA[
 [root@netkiller ~]# cleos --url=http://mainnet.genereos.io get info
 {
@@ -689,12 +689,12 @@ p2p-peer-address = seed2.greymass.com:9876
   "block_net_limit": 1048576
 }
 			]]>
-			</screen>
-		</section>
-		<!-- <section id=""> <title>https://eosauthority.com</title> </section> -->
-		<section id="mainnet.eoswz.com">
-			<title>mainnet.eoswz.com</title>
-			<screen>
+				</screen>
+			</section>
+			<!-- <section id=""> <title>https://eosauthority.com</title> </section> -->
+			<section id="mainnet.eoswz.com">
+				<title>mainnet.eoswz.com</title>
+				<screen>
 			<![CDATA[
 [root@netkiller ~]# cleos -u http://mainnet.eoswz.com get info
 {
@@ -712,21 +712,22 @@ p2p-peer-address = seed2.greymass.com:9876
   "block_net_limit": 1048576
 }			
 			]]>
-			</screen>
+				</screen>
+			</section>
 		</section>
 	</section>
-</section>
-<section id="eos.config.ini">
-	<title>config.ini 配置文件</title>
-	<section id="">
-		<title>插件配置</title>
-		<screen>
+	<section id="eos.config.ini">
+		<title>config.ini 配置文件</title>
+		<section id="">
+			<title>插件配置</title>
+			<screen>
 		<![CDATA[
 plugin = eosio::producer_plugin
 plugin = eosio::wallet_api_plugin
 plugin = eosio::chain_api_plugin
 plugin = eosio::http_plugin		
 		]]>
-		</screen>
+			</screen>
+		</section>
 	</section>
-</section>
+</chapter>
