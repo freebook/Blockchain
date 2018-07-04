@@ -62,7 +62,7 @@
 <!-- =========================================================================== -->
 	&chapter.blockchain.xml;
 	&chapter.solution.xml;
-	&chapter.eos.xml;
+	&part.eos.xml;
 	&part.ethereum.xml;
 	&part.hyperledger.xml;
 	&chapter.ipfs.xml;
