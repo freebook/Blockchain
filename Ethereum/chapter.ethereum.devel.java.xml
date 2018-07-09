@@ -171,6 +171,29 @@ public class Test {
 			]]>
 			</programlisting>
 		</section>
+		<section id="">
+			<title>默认 gaslimit gasprice</title>
+			<para>已经废弃</para>
+			<programlisting>
+			<![CDATA[
+BigInteger gasLimit = Contract.GAS_LIMIT;
+BigInteger gasPrice = Contract.GAS_PRICE;			
+			]]>
+			</programlisting>
+			<para>推荐使用</para>
+			<programlisting>
+			<![CDATA[
+			BigInteger gasPrice = BigInteger.ZERO;
+			BigInteger gasLimit = BigInteger.ZERO;
+
+			gasPrice = DefaultGasProvider.GAS_PRICE;
+			gasLimit = DefaultGasProvider.GAS_LIMIT;
+
+			System.out.println("gasPrice: " + gasPrice.toString());
+			System.out.println("gasLimit: " + gasLimit.toString());			
+			]]>
+			</programlisting>
+		</section>
 	</section>
 	<section id="web3j.connect">
 		<title>连接到服务器获取版本号</title>

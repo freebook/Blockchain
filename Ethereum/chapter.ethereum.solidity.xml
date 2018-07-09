@@ -1328,6 +1328,40 @@ contract mortal is owned {
 			</programlisting>
 		</section>
 	</section>
+	<section id="">
+		<title>合约调用</title>
+		<programlisting>
+		<![CDATA[
+address token = 0xdC7c2ab64Bc6861852C0Cd60B79564164eD890CF;
+token.call(bytes4(sha3("fun(uint256)")), a);		
+		]]>
+		</programlisting>
+		<programlisting>
+		<![CDATA[
+Function: transfer(address _to, uint256 _value)
+MethodID: 0xa9059cbb		
+
+token.call('0xa9059cbb', _to, _value);
+
+
+pragma solidity ^0.4.24;
+
+contract Test{
+    address public token;
+    
+    constructor(address _contractAddress) public {
+        token = _contractAddress; 
+    }
+    function transfer(address _to, uint256 _value) public returns (bool success){
+        if(token.call(bytes4(keccak256("fun(address, uint256)")), _to, _value)){
+            return false;
+        }
+        return true;
+    }
+}
+		]]>
+		</programlisting>
+	</section>
 	<section id="solidity.sectury">
 		<title>Solidity 安全问题</title>
 		<section>

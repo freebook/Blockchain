@@ -26,9 +26,11 @@
 	<section id="kline">
 		<title>K-Line 开发库</title>
 		<ulink url="https://www.tradingview.com">https://www.tradingview.com</ulink>
+		<para><ulink url="https://cn.tradingview.com" /></para>
 	</section>
-	<section id="">
+	<section id="coinmarketcap.com">
 		<title>数字货币行情</title>
+		<para>https://coinmarketcap.com</para>
 		<para>https://coinmarketcap.com/currencies/eos/</para>
 	</section>
 </chapter>
