@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="eos.contract">
 	<title>智能合约开发</title>
+
+
+	<section id="WebAssembly">
+		<title>WebAssembly</title>
+		<para>EOS 的块链使用的是WebAssembly(http://webassembly.org/) 技术，编译后的 (WASM) 执行用户编写的智能合约。WASM是一种新兴的Web标准，广泛支持于谷歌、微软、苹果等。WASM标准的智能合约使用C/C++语言编写，使用clang/llvm(https://clang.llvm.org/) 编译。</para>
+
+	</section>
+	<section id="eos.contract.file">
+		<title>只能合约文件</title>
+		<para>创建智能合约</para>
+		<screen>
+		<![CDATA[
+$ eosiocpp -n ${contract}		
+		]]>
+		</screen>
+		<para>运行上面的命令会在./${project}目录下创建一个空的项目，它包含3个文件。</para>
+		<screen>
+		<![CDATA[
+${contract}.abi ${contract}.hpp ${contract}.cpp		
+		]]>
+		</screen>
+		<para>有些情况我们发现没有 hpp 文件，所以 hpp 是可有可无的。</para>
+		<section>
+			<title>hpp 头文件</title>
+			<para>${contract}.hpp 这是合约的头文件，可以包含一些变量，常量和函数的声明。</para>
+		</section>
+		<section>
+			<title>cpp 合约代码文件</title>
+			<para>${contract}.cpp 这是合约的源码文件，包含合约的具体实现。</para>
+		</section>
+		<section>
+			<title>abi 文件</title>
+			<para>作用类似以太坊的 ABI 文件。 ABI（ Application Binary Interface）文件是一个JSON格式的描述文件，说明了如何在他们的JSON和二进制之间转化用户的action。</para>
+			<para>ABI文件也同时说明了如何转换数据库的状态。一旦你用了ABI描述了你的合约，开发人员就和用户就可以和你的合约通过JSON进行交互。</para>
+			<para>ABI文件可以通过eosiocpp命令使用.hpp文件生成。</para>
+			<screen>
+			<![CDATA[
+$ eosiocpp -g ${contract}.abi ${contract}.hpp			
+			]]>
+			</screen>
+		</section>
+	</section>
 	<section id="eosiocpp">
 		<title>eosiocpp 命令</title>
-		<section id="">
+		<section>
 			<title>创建新合约</title>
 			<para></para>
 			<screen>
@@ -23,7 +65,7 @@ hello/hello.cpp
 			]]>
 			</programlisting>
 		</section>
-		<section id="">
+		<section>
 			<title>编译 WAST 文件</title>
 			<screen>
 			<![CDATA[
@@ -31,7 +73,7 @@ eosiocpp -o output.wast contract.cpp
 			]]>
 			</screen>
 		</section>
-		<section id="">
+		<section>
 			<title>编译 ABI 文件</title>
 			<screen>
 			<![CDATA[
@@ -146,7 +188,10 @@ warning: transaction executed locally, but may not be confirmed by the network y
 		]]>
 		</screen>
 	</section>
-	<section id="">
+	<section id="contract.dice">
+		<title>dice</title>
+	</section>
+	<section>
 		<title>智能合约数据库操作 CURD</title>
 		<!-- https://eosfans.io/topics/484 -->
 		<para></para>
@@ -247,7 +292,7 @@ EOSIO_ABI(eosio::netkiller, (create)(change)(delete)(find))
 
 		]]>
 		</programlisting>
-		<section id="">
+		<section>
 			<title>创建</title>
 			<programlisting>
 			<![CDATA[
