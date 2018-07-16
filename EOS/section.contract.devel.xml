@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="contract.devel">
+	<title>智能合约开发</title>
+	<section id="">
+		<title>数据类型</title>
+	</section>
+	<section id="">
+		<title>创建结构体</title>
+		<programlisting>
+		<![CDATA[
+		
+		]]>
+		</programlisting>
+	</section>
+</section>

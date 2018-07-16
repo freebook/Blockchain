@@ -7,7 +7,7 @@
 		<title>Error 3090003: provided keys, permissions, and delays do not satisfy declared authorizations</title>
 		<screen>
 			<![CDATA[
-[root@iZj6c39y62jl5b1wmfv6u8Z ~]# cleos create account eosio netkiller EOS7fcRYssRt5SXVnsPpRNzj86E9h5g62hBgKwr1NSzRmSpH9byZr EOS7fcRYssRt5SXVnsPpRNzj86E9h5g62hBgKwr1NSzRmSpH9byZr
+[root@netkiller ~]# cleos create account eosio netkiller EOS7fcRYssRt5SXVnsPpRNzj86E9h5g62hBgKwr1NSzRmSpH9byZr EOS7fcRYssRt5SXVnsPpRNzj86E9h5g62hBgKwr1NSzRmSpH9byZr
 Error 3090003: provided keys, permissions, and delays do not satisfy declared authorizations
 Ensure that you have the related private keys inside your wallet and your wallet is unlocked.
 			]]>
@@ -32,6 +32,18 @@ deadline exceeded
 		<screen>
 		<![CDATA[
 nodeos -e -p eosio --max-transaction-time=1000		
+		]]>
+		</screen>
+	</section>
+	<section id="error.eosio::print">
+		<title>不显示合约中的 eosio::print() 输出</title>
+		<para>找到config.ini中的配置项contracts-console = false 改为 true</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# vim ~/.local/share/eosio/nodeos/config/config.ini
+
+# print contract's output to console (eosio::chain_plugin)
+contracts-console = true
 		]]>
 		</screen>
 	</section>

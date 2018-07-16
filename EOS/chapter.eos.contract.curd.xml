@@ -2,7 +2,17 @@
 <section>
 	<title>智能合约数据库操作 CURD</title>
 	<!-- https://eosfans.io/topics/484 -->
-	<para></para>
+	<para>为了方便调试合约</para>
+	<para>找到config.ini中的配置项contracts-console = false 改为 true</para>
+	<screen>
+		<![CDATA[
+[root@netkiller ~]# vim ~/.local/share/eosio/nodeos/config/config.ini
+
+# print contract's output to console (eosio::chain_plugin)
+contracts-console = true
+		]]>
+	</screen>
+	<para>这样 eosio::print() 输出的内容才会显示在控制台上。</para>
 	<programlisting>
 		<![CDATA[
 #include <eosiolib/eosio.hpp>
@@ -14,10 +24,10 @@ using std::string;
      public:
            netkiller( account_name self ):contract(self){}
 
-           void create(account_name user, string title, string content);
-           void change(account_name user, uint64_t post_id, string title, string content);
-           void remove(account_name user, uint64_t post_id);
-           void find(uint64_t post_id, account_name user);
+           void create(account_name author, string title, string content);
+           void change(account_name author, uint64_t post_id, string title, string content);
+           void remove(account_name author, uint64_t post_id);
+           void find(uint64_t post_id, account_name author);
 
      private:
 
@@ -44,25 +54,25 @@ using std::string;
 
 namespace eosio {
 
-    void netkiller::create(account_name user, string title, string content)
+    void netkiller::create(account_name author, string title, string content)
     {
-        require_auth( user );
+        require_auth( author );
         article datable( _self, _self);
-        datable.emplace(user, [&]( da & d){
+        datable.emplace(author, [&]( da & d){
             d.title = title;
             d.content = content;
             d.post_id = datable.available_primary_key();
-            d.poster = user;
+            d.poster = author;
         });
     }
 
-    void netkiller::change(account_name user, uint64_t post_id, string title, string content)
+    void netkiller::change(account_name author, uint64_t post_id, string title, string content)
     {
-        require_auth(user);
-        article datable( _self, user);
+        require_auth(author);
+        article datable( _self, author);
         auto post = datable.find(post_id);
-        eosio_assert(post->poster == user, "netkiller");
-        datable.modify(post, user, [&](auto& p){
+        eosio_assert(post->poster == author, "netkiller");
+        datable.modify(post, author, [&](auto& p){
             if (title != "")
                 p.title = title;
             if (content != "")
@@ -70,24 +80,24 @@ namespace eosio {
         });
     }
 
-    void netkiller::remove(account_name user, uint64_t post_id)
+    void netkiller::remove(account_name author, uint64_t post_id)
     {
-        require_auth(user);
-        article datable( _self, user);
+        require_auth(author);
+        article datable( _self, author);
         auto post = datable.find(post_id);
         eosio::print(post->title.c_str());
 
-        eosio_assert(post->poster == user, "The user is invlide");
+        eosio_assert(post->poster == author, "The author is invlide");
         datable.erase(post);
     }
 
-    void netkiller::find(uint64_t post_id, account_name user){
+    void netkiller::find(uint64_t post_id, account_name author){
         article datable(_self, _self);
         auto post_da = datable.find( post_id);
         eosio::print("Post_id: ", post_da->post_id, "  Post_Tile: ", post_da->title.c_str(), " Content: ", post_da->content.c_str());
 
         auto poster_index = datable.template get_index<N(byposter)>();
-        auto pos = poster_index.find( user );
+        auto pos = poster_index.find( author );
 
         for (; pos != poster_index.end(); pos++)
         {
@@ -176,20 +186,20 @@ warning: transaction executed locally, but may not be confirmed by the network y
 
 		<screen>
 		<![CDATA[
-cleos push action contract.art create '{"user":"contract.art","title":"hello","content":"helloworld!!!"}' -p contract.art
+cleos push action contract.art create '{"author":"contract.art","title":"hello","content":"helloworld!!!"}' -p contract.art
 
-[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos push action contract.art create '{"user":"contract.art","title":"hello","content":"helloworld!!!"}' -p contract.art
+[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos push action contract.art create '{"author":"contract.art","title":"hello","content":"helloworld!!!"}' -p contract.art
 executed transaction: b6cab608fb4e7fa17a7f893848f3516e1bfd231769ad7d7226b0a099f309a771  120 bytes  899 us
-#  contract.art <= contract.art::create         {"user":"contract.art","title":"hello","content":"helloworld!!!"}
+#  contract.art <= contract.art::create         {"author":"contract.art","title":"hello","content":"helloworld!!!"}
 warning: transaction executed locally, but may not be confirmed by the network yet
 		]]>
 		</screen>
 
 		<screen>
 			<![CDATA[
-[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos push action contract.art create '{"user":"neo","title":"hello","content":"helloworld!!!"}' -p neo
+[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos push action contract.art create '{"author":"neo","title":"hello","content":"helloworld!!!"}' -p neo
 executed transaction: 90cb81b11386514b450e1a609f0e1e2633f6a4e40d453c127811e5cd33b46a5a  120 bytes  755 us
-#  contract.art <= contract.art::create         {"user":"neo","title":"hello","content":"helloworld!!!"}
+#  contract.art <= contract.art::create         {"author":"neo","title":"hello","content":"helloworld!!!"}
 warning: transaction executed locally, but may not be confirmed by the network yet		
 			]]>
 		</screen>
@@ -205,7 +215,10 @@ warning: transaction executed locally, but may not be confirmed by the network y
 		<para></para>
 		<screen>
 		<![CDATA[
-cleos push action contract.art find '{"user":"neo", "post_id":1}' -p neo
+[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos push action contract.art find '{"author":"neo", "post_id":1}' -p neo
+executed transaction: 41f916b1d454f27f06188b18449f3cb226b1ba002f9e759025d9ba1c1bc5c34b  112 bytes  805 us
+#  contract.art <= contract.art::find           {"author":"neo","post_id":1}
+warning: transaction executed locally, but may not be confirmed by the network yet
 		]]>
 		</screen>
 	</section>
@@ -213,7 +226,7 @@ cleos push action contract.art find '{"user":"neo", "post_id":1}' -p neo
 		<title>修改</title>
 		<screen>
 		<![CDATA[
-cleos push action contract.art change '{"user":"neo","post_id":1,"title":"change","content":"change action"}' -p neo		
+cleos push action contract.art change '{"author":"neo","post_id":1,"title":"word","content":"china"}' -p neo		
 		]]>
 		</screen>
 	</section>
@@ -221,7 +234,7 @@ cleos push action contract.art change '{"user":"neo","post_id":1,"title":"change
 		<title>删除</title>
 		<screen>
 		<![CDATA[
-cleos push action contract.art remove '{"user":"neo","post_id":1}' -p neo		
+cleos push action contract.art remove '{"author":"neo","post_id":1}' -p neo		
 		]]>
 		</screen>
 	</section>

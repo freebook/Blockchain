@@ -119,6 +119,15 @@ void token::transfer( account_name from,
 	<section id="contract.hello">
 		<title>编译运行 hello 智能合约</title>
 		<para>hello 智能合约是官方提供的一个智能合约例子</para>
+		<para>找到config.ini中的配置项contracts-console = false 改为 true</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# vim ~/.local/share/eosio/nodeos/config/config.ini
+
+# print contract's output to console (eosio::chain_plugin)
+contracts-console = true
+		]]>
+		</screen>
 		<para>源码</para>
 		<programlisting>
 		<![CDATA[
