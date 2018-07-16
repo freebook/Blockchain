@@ -154,7 +154,23 @@ warning: transaction executed locally, but may not be confirmed by the network y
 				]]>
 			</screen>
 		</section>
-		
+
+	</section>
+	<section id="cleos.set">
+		<title>set 命令</title>
+		<section id="set.abi">
+			<title>abi</title>
+			<para>当你的abi文件有变动需要更新时使用下面方法更新abi文件。</para>
+			<screen>
+			<![CDATA[
+[root@netkiller eos]# cleos set abi contract.art art/art.abi 
+Setting ABI...
+executed transaction: 32b9b9dc55e52eb424f7165b02bd1ca904b8e3aa42d8df7d4fa4a372291b1eab  240 bytes  409 us
+#         eosio <= eosio::setabi                "90af0119999b274583020e656f73696f3a3a6162692f312e3000040663726561746500030475736572046e616d650574697...
+warning: transaction executed locally, but may not be confirmed by the network yet		
+			]]>
+			</screen>
+		</section>
 	</section>
 
 	<section id="cleos.get">
@@ -253,6 +269,102 @@ cpu bandwidth:
   ]
 }				
 				]]>
+			</screen>
+		</section>
+		<section id="get.code">
+			<title>从区块链上获取 abi 文件</title>
+			<screen>
+			<![CDATA[
+[root@netkiller eos]# cleos get code contract.art  -a art.abi
+code hash: 37636dd268e72e75d0559f3c8acdce07feae20dd682bc4b859e7f62517f4bc5f
+saving abi to art.abi			
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[
+[root@netkiller eos]# cat art.abi 
+{
+  "version": "eosio::abi/1.0",
+  "types": [],
+  "structs": [{
+      "name": "create",
+      "base": "",
+      "fields": [{
+          "name": "user",
+          "type": "name"
+        },{
+          "name": "title",
+          "type": "string"
+        },{
+          "name": "content",
+          "type": "string"
+        }
+      ]
+    },{
+      "name": "change",
+      "base": "",
+      "fields": [{
+          "name": "user",
+          "type": "name"
+        },{
+          "name": "post_id",
+          "type": "uint64"
+        },{
+          "name": "title",
+          "type": "string"
+        },{
+          "name": "content",
+          "type": "string"
+        }
+      ]
+    },{
+      "name": "remove",
+      "base": "",
+      "fields": [{
+          "name": "user",
+          "type": "name"
+        },{
+          "name": "post_id",
+          "type": "uint64"
+        }
+      ]
+    },{
+      "name": "find",
+      "base": "",
+      "fields": [{
+          "name": "post_id",
+          "type": "uint64"
+        },{
+          "name": "user",
+          "type": "name"
+        }
+      ]
+    }
+  ],
+  "actions": [{
+      "name": "create",
+      "type": "create",
+      "ricardian_contract": ""
+    },{
+      "name": "change",
+      "type": "change",
+      "ricardian_contract": ""
+    },{
+      "name": "remove",
+      "type": "remove",
+      "ricardian_contract": ""
+    },{
+      "name": "find",
+      "type": "find",
+      "ricardian_contract": ""
+    }
+  ],
+  "tables": [],
+  "ricardian_clauses": [],
+  "error_messages": [],
+  "abi_extensions": []
+}			
+			]]>
 			</screen>
 		</section>
 	</section>

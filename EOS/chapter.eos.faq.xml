@@ -14,4 +14,25 @@ Ensure that you have the related private keys inside your wallet and your wallet
 		</screen>
 		<para>eosio 私钥没有导入到钱包</para>
 	</section>
+	<section id="Error.3080006">
+		<title>Error 3080006: transaction took too long</title>
+		<screen>
+		<![CDATA[
+# cleos set contract eosio eosio.system
+
+Reading WAST/WASM from eosio.system/eosio.system.wasm...
+Using already assembled WASM...
+Publishing contract...
+Error 3080006: transaction took too long
+Error Details:
+deadline exceeded
+		]]>
+		</screen>
+		<para>nodeos程序启动时添加max-transaction-time即可解决这个问题</para>
+		<screen>
+		<![CDATA[
+nodeos -e -p eosio --max-transaction-time=1000		
+		]]>
+		</screen>
+	</section>
 </chapter>

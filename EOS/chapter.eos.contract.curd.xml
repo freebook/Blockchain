@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section>
+	<title>智能合约数据库操作 CURD</title>
+	<!-- https://eosfans.io/topics/484 -->
+	<para></para>
+	<programlisting>
+		<![CDATA[
+#include <eosiolib/eosio.hpp>
+#include <string>
+
+namespace eosio {
+using std::string;
+  class netkiller : public contract {
+     public:
+           netkiller( account_name self ):contract(self){}
+
+           void create(account_name user, string title, string content);
+           void change(account_name user, uint64_t post_id, string title, string content);
+           void remove(account_name user, uint64_t post_id);
+           void find(uint64_t post_id, account_name user);
+
+     private:
+
+           struct da {
+                 uint64_t     post_id;
+                 account_name poster;
+                 string       title;
+                 string       content;
+
+                 uint64_t primary_key()const { return post_id; }
+                 account_name get_poster() const { return poster; }
+
+                 EOSLIB_SERIALIZE(da, (post_id)(poster)(title)(content))
+           };
+           typedef eosio::multi_index<N(data), da, indexed_by<N(byposter), const_mem_fun<da, account_name, &da::get_poster>> > article;
+  };
+}
+		
+		]]>
+	</programlisting>
+	<programlisting>
+		<![CDATA[
+#include "netkiller.hpp"
+
+namespace eosio {
+
+    void netkiller::create(account_name user, string title, string content)
+    {
+        require_auth( user );
+        article datable( _self, _self);
+        datable.emplace(user, [&]( da & d){
+            d.title = title;
+            d.content = content;
+            d.post_id = datable.available_primary_key();
+            d.poster = user;
+        });
+    }
+
+    void netkiller::change(account_name user, uint64_t post_id, string title, string content)
+    {
+        require_auth(user);
+        article datable( _self, user);
+        auto post = datable.find(post_id);
+        eosio_assert(post->poster == user, "netkiller");
+        datable.modify(post, user, [&](auto& p){
+            if (title != "")
+                p.title = title;
+            if (content != "")
+                p.content = content;
+        });
+    }
+
+    void netkiller::remove(account_name user, uint64_t post_id)
+    {
+        require_auth(user);
+        article datable( _self, user);
+        auto post = datable.find(post_id);
+        eosio::print(post->title.c_str());
+
+        eosio_assert(post->poster == user, "The user is invlide");
+        datable.erase(post);
+    }
+
+    void netkiller::find(uint64_t post_id, account_name user){
+        article datable(_self, _self);
+        auto post_da = datable.find( post_id);
+        eosio::print("Post_id: ", post_da->post_id, "  Post_Tile: ", post_da->title.c_str(), " Content: ", post_da->content.c_str());
+
+        auto poster_index = datable.template get_index<N(byposter)>();
+        auto pos = poster_index.find( user );
+
+        for (; pos != poster_index.end(); pos++)
+        {
+            eosio::print("content:", pos->content.c_str(), " post_id:", pos->post_id, " title:", pos->title.c_str());
+        }
+    }
+
+}
+EOSIO_ABI(eosio::netkiller, (create)(change)(remove)(find))
+
+		]]>
+	</programlisting>
+	<section>
+		<title>编译</title>
+		<programlisting>
+		<![CDATA[
+eosiocpp -o art.wast art.cpp	
+eosiocpp -g art.abi art.cpp
+		]]>
+		</programlisting>
+	</section>
+	<section>
+		<title>启动EOS私链开发环境</title>
+		<screen>
+		<![CDATA[
+nodeos -e -p eosio --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --plugin eosio::wallet_api_plugin		
+		]]>
+		</screen>
+	</section>
+
+	<section>
+		<title>创建合约账号</title>
+		<para>这里我们创建一个账号，用这个账号部署合约，该账号是合约所有者。</para>
+		<para>创建秘钥对</para>
+		<screen>
+				<![CDATA[
+[root@netkiller ~]# cleos create key
+Private key: 5HxCWNbTEADKbvdRBgeENXhxReHMQbVuPL5mumDqGCzmkPo5yy3
+Public key: EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4
+				]]>
+		</screen>
+		<para>导入私钥</para>
+		<screen>
+				<![CDATA[
+[root@netkiller ~]# cleos wallet import 5HxCWNbTEADKbvdRBgeENXhxReHMQbVuPL5mumDqGCzmkPo5yy3
+imported private key for: EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4		
+	
+[root@netkiller ~]# cleos wallet keys | grep EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4
+  "EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4",	
+				]]>
+		</screen>
+		<para>创建账号 neo</para>
+		<screen>
+				<![CDATA[
+[root@netkiller ~]# cleos wallet unlock		
+[root@netkiller ~]# cleos create account eosio contract.art EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4 EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4
+executed transaction: f04ba09f633dffbf97321c6d2e021192082383908fa690dc40032cd98a1bfd89  200 bytes  390 us
+#         eosio <= eosio::newaccount            "0000000000ea305590af0119999b274501000000010003588ecdc868696f500c7782dbf0da3b298830e67ea9b810469819d...
+warning: transaction executed locally, but may not be confirmed by the network yet
+				]]>
+		</screen>
+		<para>contract.art 就是我们合约账号，我们使用 contract 前缀来区分他是合约账号。</para>
+	</section>
+	<section>
+		<title>部署合约</title>
+
+		<para></para>
+		<screen>
+		<![CDATA[
+[root@netkiller eos]# cleos wallet unlock
+password: Unlocked: default
+
+[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos set contract contract.art art
+Reading WAST/WASM from art/art.wasm...
+Using already assembled WASM...
+Publishing contract...
+executed transaction: f3a5e29f44056ddfcbb448e75b98dcfdfc4de0f1092774c6f07e993573a06779  6784 bytes  1187 us
+#         eosio <= eosio::setcode               "90af0119999b27450000c2710061736d0100000001ad011a60037f7e7e0060057f7e7e7f7f0060047f7e7f7f00600000600...
+#         eosio <= eosio::setabi                "90af0119999b2745160e656f73696f3a3a6162692f312e3000000000000000"
+warning: transaction executed locally, but may not be confirmed by the network yet
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>创建</title>
+
+		<screen>
+		<![CDATA[
+cleos push action contract.art create '{"user":"contract.art","title":"hello","content":"helloworld!!!"}' -p contract.art
+
+[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos push action contract.art create '{"user":"contract.art","title":"hello","content":"helloworld!!!"}' -p contract.art
+executed transaction: b6cab608fb4e7fa17a7f893848f3516e1bfd231769ad7d7226b0a099f309a771  120 bytes  899 us
+#  contract.art <= contract.art::create         {"user":"contract.art","title":"hello","content":"helloworld!!!"}
+warning: transaction executed locally, but may not be confirmed by the network yet
+		]]>
+		</screen>
+
+		<screen>
+			<![CDATA[
+[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos push action contract.art create '{"user":"neo","title":"hello","content":"helloworld!!!"}' -p neo
+executed transaction: 90cb81b11386514b450e1a609f0e1e2633f6a4e40d453c127811e5cd33b46a5a  120 bytes  755 us
+#  contract.art <= contract.art::create         {"user":"neo","title":"hello","content":"helloworld!!!"}
+warning: transaction executed locally, but may not be confirmed by the network yet		
+			]]>
+		</screen>
+		<para>下面我们来查询一下刚刚插入的数据：</para>
+		<screen>
+		<![CDATA[
+
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>查找</title>
+		<para></para>
+		<screen>
+		<![CDATA[
+cleos push action contract.art find '{"user":"neo", "post_id":1}' -p neo
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>修改</title>
+		<screen>
+		<![CDATA[
+cleos push action contract.art change '{"user":"neo","post_id":1,"title":"change","content":"change action"}' -p neo		
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>删除</title>
+		<screen>
+		<![CDATA[
+cleos push action contract.art remove '{"user":"neo","post_id":1}' -p neo		
+		]]>
+		</screen>
+	</section>
+
+</section>
