@@ -13,7 +13,97 @@ contracts-console = true
 		]]>
 	</screen>
 	<para>这样 eosio::print() 输出的内容才会显示在控制台上。</para>
-	<programlisting>
+
+	<section id="">
+		<title>创建一个新项目</title>
+		<screen>
+		<![CDATA[
+eosiocpp -n project		
+		]]>
+		</screen>
+
+	</section>
+
+	<section id="">
+		<title>创建结构体</title>
+		<para>例如我们需要这样一个数据结构</para>
+		<screen>
+		<![CDATA[
+{
+	id,
+	description,
+	completed
+}		
+		]]>
+		</screen>
+		<para>结构体定义如下</para>
+		<programlisting>
+		<![CDATA[
+struct todo {
+	uint64_t id;
+	std::string description;
+	uint64_t completed;
+
+	uint64_t primary_key() const { return id; }
+	EOSLIB_SERIALIZE(todo, (id)(description)(completed))
+};		
+		]]>
+		</programlisting>
+		<para>primary_key() 相当与数据中的主键。</para>
+		<para>定义一个表</para>
+		<programlisting>
+		<![CDATA[
+typedef eosio::multi_index<N(todos), todo> todo_table;
+todo_table todos;	
+		]]>
+		</programlisting>
+	</section>
+	<section id="">
+		<title>插入数据操作</title>
+		<programlisting>
+		<![CDATA[
+void create(account_name author, const uint32_t id, const std::string& description) {
+	todos.emplace(author, [&](auto& new_todo) {
+		new_todo.id  = id;
+		new_todo.description = description;
+		new_todo.completed = 0;
+	});		
+		]]>
+		</programlisting>
+	</section>
+	<section id="">
+		<title>修改数据操作</title>
+		<programlisting>
+		<![CDATA[
+void complete(account_name author, const uint32_t id) {
+      auto todo_lookup = todos.find(id);
+      eosio_assert(todo_lookup != todos.end(), "Todo does not exist");
+
+      todos.modify(todo_lookup, author, [&](auto& modifiable_todo) {
+        modifiable_todo.completed = 1;
+      });
+
+      eosio::print("todo#", id, " marked as complete");
+    }		
+		]]>
+		</programlisting>
+	</section>
+	<section id="">
+		<title>删除数据操作</title>
+		<programlisting>
+		<![CDATA[
+void destroy(account_name author, const uint32_t id) {
+	auto todo_lookup = todos.find(id);
+	todos.erase(todo_lookup);
+
+	eosio::print("todo#", id, " destroyed");
+}		
+		]]>
+		</programlisting>
+	</section>
+	<section id="">
+		<title>完整的合约例子</title>
+		<programlisting>
 		<![CDATA[
 #include <eosiolib/eosio.hpp>
 #include <string>
@@ -47,8 +137,8 @@ using std::string;
 }
 		
 		]]>
-	</programlisting>
-	<programlisting>
+		</programlisting>
+		<programlisting>
 		<![CDATA[
 #include "netkiller.hpp"
 
@@ -109,38 +199,43 @@ namespace eosio {
 EOSIO_ABI(eosio::netkiller, (create)(change)(remove)(find))
 
 		]]>
-	</programlisting>
-	<section>
-		<title>编译</title>
-		<programlisting>
-		<![CDATA[
-eosiocpp -o art.wast art.cpp	
-eosiocpp -g art.abi art.cpp
-		]]>
 		</programlisting>
-	</section>
-	<section>
-		<title>启动EOS私链开发环境</title>
-		<screen>
+		<programlisting>
+		<![CDATA[]]>
+		</programlisting>
+		<section>
+			<title>编译</title>
+			<programlisting>
+			<![CDATA[
+eosiocpp -o cms.wast cms.cpp	
+eosiocpp -g cms.abi cms.cpp
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>启动EOS私链开发环境</title>
+			<screen>
 		<![CDATA[
 nodeos -e -p eosio --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --plugin eosio::wallet_api_plugin		
 		]]>
-		</screen>
-	</section>
+			</screen>
+		</section>
 
-	<section>
-		<title>创建合约账号</title>
-		<para>这里我们创建一个账号，用这个账号部署合约，该账号是合约所有者。</para>
-		<para>创建秘钥对</para>
-		<screen>
+		<section>
+			<title>创建合约账号</title>
+			<para>这里我们创建一个账号，用这个账号部署合约，该账号是合约所有者。</para>
+			<para>创建秘钥对</para>
+			<screen>
 				<![CDATA[
+[root@netkiller ~]# cleos wallet unlock		
+				
 [root@netkiller ~]# cleos create key
 Private key: 5HxCWNbTEADKbvdRBgeENXhxReHMQbVuPL5mumDqGCzmkPo5yy3
 Public key: EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4
 				]]>
-		</screen>
-		<para>导入私钥</para>
-		<screen>
+			</screen>
+			<para>导入私钥</para>
+			<screen>
 				<![CDATA[
 [root@netkiller ~]# cleos wallet import 5HxCWNbTEADKbvdRBgeENXhxReHMQbVuPL5mumDqGCzmkPo5yy3
 imported private key for: EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4		
@@ -148,95 +243,125 @@ imported private key for: EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4
 [root@netkiller ~]# cleos wallet keys | grep EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4
   "EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4",	
 				]]>
-		</screen>
-		<para>创建账号 neo</para>
-		<screen>
+			</screen>
+			<para>创建账号 neo</para>
+			<screen>
 				<![CDATA[
-[root@netkiller ~]# cleos wallet unlock		
-[root@netkiller ~]# cleos create account eosio contract.art EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4 EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4
+[root@netkiller ~]# cleos create account eosio contract.cms EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4 EOS7WEcxxHcmM7w7DHB56N6qQ2toMrdudYjeDTZb6LtL9g77MXzR4
 executed transaction: f04ba09f633dffbf97321c6d2e021192082383908fa690dc40032cd98a1bfd89  200 bytes  390 us
 #         eosio <= eosio::newaccount            "0000000000ea305590af0119999b274501000000010003588ecdc868696f500c7782dbf0da3b298830e67ea9b810469819d...
 warning: transaction executed locally, but may not be confirmed by the network yet
 				]]>
-		</screen>
-		<para>contract.art 就是我们合约账号，我们使用 contract 前缀来区分他是合约账号。</para>
-	</section>
-	<section>
-		<title>部署合约</title>
-
-		<para></para>
-		<screen>
+			</screen>
+			<para>contract.art 就是我们合约账号，我们使用 contract 前缀来区分他是合约账号。</para>
+		</section>
+		<section>
+			<title>部署合约</title>
+			<para></para>
+			<screen>
 		<![CDATA[
 [root@netkiller eos]# cleos wallet unlock
 password: Unlocked: default
 
-[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos set contract contract.art art
-Reading WAST/WASM from art/art.wasm...
+[root@netkiller eos]# cleos set contract contract.cms cms
+Reading WAST/WASM from cms/cms.wasm...
 Using already assembled WASM...
 Publishing contract...
-executed transaction: f3a5e29f44056ddfcbb448e75b98dcfdfc4de0f1092774c6f07e993573a06779  6784 bytes  1187 us
-#         eosio <= eosio::setcode               "90af0119999b27450000c2710061736d0100000001ad011a60037f7e7e0060057f7e7e7f7f0060047f7e7f7f00600000600...
-#         eosio <= eosio::setabi                "90af0119999b2745160e656f73696f3a3a6162692f312e3000000000000000"
+executed transaction: 8a72e29389e170807daaf41e9c9e70ac4eff2f2f129ca22ef55ca9443768dedf  7176 bytes  1311 us
+#         eosio <= eosio::setcode               "80250219999b27450000c3770061736d0100000001b2011b60037f7e7e0060027f7e0060057f7e7e7f7f0060047f7e7f7f0...
+#         eosio <= eosio::setabi                "80250219999b27459d020e656f73696f3a3a6162692f312e30000506637265617465000306617574686f72046e616d65057...
 warning: transaction executed locally, but may not be confirmed by the network yet
 		]]>
-		</screen>
-	</section>
-	<section>
-		<title>创建</title>
-
-		<screen>
+			</screen>
+		</section>
+		<section>
+			<title>创建</title>
+			<screen>
 		<![CDATA[
-cleos push action contract.art create '{"author":"contract.art","title":"hello","content":"helloworld!!!"}' -p contract.art
+cleos push action contract.cms create '{"author":"contract.cms","title":"hello","content":"helloworld!!!"}' -p contract.cms
 
-[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos push action contract.art create '{"author":"contract.art","title":"hello","content":"helloworld!!!"}' -p contract.art
+[root@netkiller eos]# cleos push action contract.art create '{"author":"contract.art","title":"hello","content":"helloworld!!!"}' -p contract.art
 executed transaction: b6cab608fb4e7fa17a7f893848f3516e1bfd231769ad7d7226b0a099f309a771  120 bytes  899 us
-#  contract.art <= contract.art::create         {"author":"contract.art","title":"hello","content":"helloworld!!!"}
+#  contract.art <= contract.art::create         {"author":"contract.cms","title":"hello","content":"helloworld!!!"}
 warning: transaction executed locally, but may not be confirmed by the network yet
 		]]>
-		</screen>
+			</screen>
 
-		<screen>
+			<screen>
 			<![CDATA[
-[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos push action contract.art create '{"author":"neo","title":"hello","content":"helloworld!!!"}' -p neo
+[root@netkiller eos]# cleos push action contract.cms create '{"author":"neo","title":"hello","content":"helloworld!!!"}' -p neo
 executed transaction: 90cb81b11386514b450e1a609f0e1e2633f6a4e40d453c127811e5cd33b46a5a  120 bytes  755 us
 #  contract.art <= contract.art::create         {"author":"neo","title":"hello","content":"helloworld!!!"}
 warning: transaction executed locally, but may not be confirmed by the network yet		
 			]]>
-		</screen>
-		<para>下面我们来查询一下刚刚插入的数据：</para>
-		<screen>
+			</screen>
+			<para>下面我们来查询一下刚刚插入的数据：</para>
+			<screen>
 		<![CDATA[
 
 		]]>
-		</screen>
+			</screen>
+		</section>
+		<section>
+			<title>查找</title>
+			<para>find</para>
+			<screen>
+			<![CDATA[
+[root@netkiller eos]# cleos push action contract.cms find '{"id":0}' -p contract.cms
+executed transaction: b3cba4d001fcb49a88926be208fa7bee59d557b0ed8a2bd12e65bdd3ff69c61e  104 bytes  486 us
+#  contract.cms <= contract.cms::find           {"id":0}
+>> id: 0 Tile: hello Content: helloworld!!!			
+			]]>
+			</screen>
+			<para>query</para>
+			<screen>
+			<![CDATA[
+[root@netkiller eos]# cleos push action contract.cms query '{"author":"contract.cms", "id":0}' -p contract.cms 
+executed transaction: c81a0d21634f4942f7d65dd49efcf5cf7cd739a049968b5f9b0eaad7de4c688c  112 bytes  583 us
+#  contract.cms <= contract.cms::query          {"author":"contract.cms","id":0}
+>> Post_id: 0  Post_Tile: hello Content: helloworld!!!content:helloworld!!! id:0 title:hello
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>修改</title>
+			<para>修改表中的数据</para>
+			<screen>
+			<![CDATA[
+[root@netkiller eos]# cleos push action contract.cms change '{"author":"contract.cms","id":0,"title":"word","content":"china"}' -p contract.cms
+executed transaction: 073205e4e3e30699a81394ee622aa84d568958919801b364d809ff34f4ca8412  120 bytes  553 us
+#  contract.cms <= contract.cms::change         {"author":"contract.cms","id":0,"title":"word","content":"china"}
+			]]>
+			</screen>
+			<para>检查数据修改情况</para>
+			<screen>
+			<![CDATA[
+[root@netkiller eos]# cleos push action contract.cms find '{"id":0}' -p contract.cms
+executed transaction: 300fe2c93cf2cfebcdd0524e0629a96b3011b0592be2119d001f38807c1c378b  104 bytes  498 us
+#  contract.cms <= contract.cms::find           {"id":0}
+>> id: 0 Tile: word Content: china			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>删除</title>
+			<screen>
+			<![CDATA[
+[root@netkiller eos]# cleos push action contract.cms remove '{"author":"contract.cms","id":0}' -p contract.cms
+executed transaction: eeee8ff799c58d5e3a246ccec8d80c47599ad947d4581611d9a668abee53c0b5  112 bytes  770 us
+#  contract.cms <= contract.cms::remove         {"author":"contract.cms","id":0}
+>> word		
+			]]>
+			</screen>
+			<para>检查被删除的数据，提示 Error 3070002: Runtime Error Processing WASM 表示找不到该记录。</para>
+			<screen>
+			<![CDATA[
+[root@netkiller eos]# cleos push action contract.cms find '{"id":0}' -p contract.cms
+Error 3070002: Runtime Error Processing WASM			
+			]]>
+			</screen>
+		</section>
 	</section>
-	<section>
-		<title>查找</title>
-		<para></para>
-		<screen>
-		<![CDATA[
-[root@iZj6c39y62jl5b1wmfv6u8Z eos]# cleos push action contract.art find '{"author":"neo", "post_id":1}' -p neo
-executed transaction: 41f916b1d454f27f06188b18449f3cb226b1ba002f9e759025d9ba1c1bc5c34b  112 bytes  805 us
-#  contract.art <= contract.art::find           {"author":"neo","post_id":1}
-warning: transaction executed locally, but may not be confirmed by the network yet
-		]]>
-		</screen>
-	</section>
-	<section>
-		<title>修改</title>
-		<screen>
-		<![CDATA[
-cleos push action contract.art change '{"author":"neo","post_id":1,"title":"word","content":"china"}' -p neo		
-		]]>
-		</screen>
-	</section>
-	<section>
-		<title>删除</title>
-		<screen>
-		<![CDATA[
-cleos push action contract.art remove '{"author":"neo","post_id":1}' -p neo		
-		]]>
-		</screen>
-	</section>
+
 
 </section>

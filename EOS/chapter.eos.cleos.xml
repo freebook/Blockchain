@@ -267,7 +267,14 @@ cpu bandwidth:
   "account_names": [
     "neo"
   ]
-}				
+}	
+
+[root@netkiller ~]# cleos get accounts EOS5xfs4X3wNB5cdhzUAebBmaVN3eTsQspGpKrr7FgvEMcZV5kvn3
+{
+  "account_names": [
+    "contract.cms"
+  ]
+}			
 				]]>
 			</screen>
 		</section>

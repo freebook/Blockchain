@@ -5,11 +5,18 @@
 		<title>数据类型</title>
 	</section>
 	<section id="">
-		<title>创建结构体</title>
-		<programlisting>
-		<![CDATA[
-		
-		]]>
-		</programlisting>
+		<title>怎样调试智能合约</title>
+		<section id="">
+			<title>如何升级 abi</title>
+			<screen>
+			<![CDATA[
+[root@netkiller eos]# cleos set abi contract.cms cms/cms.abi 
+Setting ABI...
+executed transaction: 32b9b9dc55e52eb424f7165b02bd1ca904b8e3aa42d8df7d4fa4a372291b1eab  240 bytes  409 us
+#         eosio <= eosio::setabi                "90af0119999b274583020e656f73696f3a3a6162692f312e3000040663726561746500030475736572046e616d650574697...
+warning: transaction executed locally, but may not be confirmed by the network yet				
+			]]>
+			</screen>
+		</section>
 	</section>
 </section>
