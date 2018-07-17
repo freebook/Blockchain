@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="index"><?dbhtml dir="baas" ?>
+	<title>BaaS (Blockchain as a Service) 平台</title>
+	
+	<section id="">
+		<title>Huawei BCS</title>
+		<para>华为的 Hyperledger Fabric BaaS 尚处在测试阶段，申请地址是 https://www.huaweicloud.com/product/bcs.html 服务可以免费申请，但是需要</para>
+		<section id="">
+			<title>创建 BCS 服务</title>
+			<para>打开网址 <ulink url="https://www.huaweicloud.com/product/bcs.html" /></para>
+			<graphic format="png" fileref="../../images/baas/huawei/bcs-1.png" width="1024" srccredit="netkiller" />
+			<para>点击按钮 “立即体验”</para>
+			<graphic format="png" fileref="../../images/baas/huawei/bcs-2.png" width="1024" srccredit="netkiller" />
+			<para>点击“购买区块链服务”按钮</para>
+			<graphic format="png" fileref="../../images/baas/huawei/bcs-3.png" width="1024" srccredit="netkiller" />
+			<para>共识策略选择 Kafka(CFT), 输入链代码初始管理密码。</para>
+			<graphic format="png" fileref="../../images/baas/huawei/bcs-4.png" width="1024" srccredit="netkiller" />
+			<para>这里可以创建通道，也可以略过，后面可以创建。</para>
+			<graphic format="png" fileref="../../images/baas/huawei/bcs-5.png" width="1024" srccredit="netkiller" />
+			<para>经过一段时间初始化云主机，最终完成 BCS 创建。</para>
+			
+		</section>
+		<section id="">
+			<title>管理通道</title>
+			<graphic format="png" fileref="../../images/baas/huawei/bcs-6.png" width="1024" srccredit="netkiller" />
+			<para>创建通道，输入通道名称和描述，点击确定按钮。</para>
+			<graphic format="png" fileref="../../images/baas/huawei/bcs-7.png" width="1024" srccredit="netkiller" />
+			<para>创建好的通道，会显示“暂无节点加入”，点击右边 “加入节点” 连接</para>
+			<graphic format="png" fileref="../../images/baas/huawei/bcs-8.png" width="1024" srccredit="netkiller" />
+			<para>选择加入组织的数量</para>
+			<graphic format="png" fileref="../../images/baas/huawei/bcs-9.png" width="1024" srccredit="netkiller" />
+			<para>节点添加完毕</para>
+			<graphic format="png" fileref="../../images/baas/huawei/bcs-10.png" width="1024" srccredit="netkiller" />
+		</section>
+		<section id="">
+			<title>安装链码</title>
+			<para>首先将 chaincode 源码压缩成 zip 文件</para>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~/chaincode % zip token.zip token.go
+  adding: token.go (deflated 82%)
+  
+neo@MacBook-Pro ~/chaincode % ls token.*
+token.go  token.zip			
+			]]>
+			</screen>
+			<graphic format="png" fileref="../../images/baas/huawei/bcs-5.png" width="1024" srccredit="netkiller" />
+			<para>点击右边 “链代码管理” 按钮</para>
+			<graphic format="png" fileref="../../images/baas/huawei/chaincode-1.png" width="1024" srccredit="netkiller" />
+			<para>进入链码管理界面</para>
+			<graphic format="png" fileref="../../images/baas/huawei/chaincode-2.png" width="1024" srccredit="netkiller" />
+			<para>Organization 选择组织， Peer 选择节点，点击 “Install Chaincode” 按钮。</para>
+			<graphic format="png" fileref="../../images/baas/huawei/chaincode-3.png" width="1024" srccredit="netkiller" />
+			<para>输入连码名称、版本、并上传 链码对应的 zip 文件。</para>
+			<graphic format="png" fileref="../../images/baas/huawei/chaincode-4.png" width="1024" srccredit="netkiller" />
+			<para>链码安装成功</para>
+			<graphic format="png" fileref="../../images/baas/huawei/chaincode-5.png" width="1024" srccredit="netkiller" />
+			<para>实例化链码</para>
+			<graphic format="png" fileref="../../images/baas/huawei/chaincode-6.png" width="1024" srccredit="netkiller" />
+			<para>输入调用的函数，和传递的参数，点击 OK 按钮</para>
+			<graphic format="png" fileref="../../images/baas/huawei/chaincode-7.png" width="1024" srccredit="netkiller" />
+			<para>执行成功</para>
+		</section>
+	</section>
+</chapter>

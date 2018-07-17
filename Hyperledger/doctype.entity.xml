@@ -11,3 +11,4 @@
 <!ENTITY chapter.hyperledger.case.xml		SYSTEM "chapter.hyperledger.case.xml">
 <!ENTITY section.fabric.command.xml			SYSTEM "section.fabric.command.xml">
 <!ENTITY chapter.fabric.faq.xml				SYSTEM "chapter.fabric.faq.xml">
+<!ENTITY chapter.baas.xml					SYSTEM "chapter.baas.xml">

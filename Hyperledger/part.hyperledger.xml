@@ -2,4 +2,5 @@
 <part id="index"><?dbhtml dir="hyperledger" ?>
 	<title>Hyperledger</title>
 	&chapter.hyperledger.xml;
+	&chapter.baas.xml;
 </part>
