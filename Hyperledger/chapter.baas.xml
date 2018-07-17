@@ -68,10 +68,13 @@ token.go  token.zip
 			<title>下载 SDK 配置</title>
 			<graphic format="png" fileref="../../images/baas/huawei/sdk-1.png" width="1024" srccredit="netkiller" />
 			<graphic format="png" fileref="../../images/baas/huawei/sdk-2.png" width="1024" srccredit="netkiller" />
+			<para>选择 “下载 SDK 配置”</para>
+			<graphic format="png" fileref="../../images/baas/huawei/sdk-3.png" width="1024" srccredit="netkiller" />
 			<para>链代码名称是之前安装链码时输入的名称</para>
 			<para>链代码版本是当前的链码版本</para>
 			<para>证书存放根路径填写: /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto</para>
 			<para>点击下载按钮后得到一个 bcs-itetze-sdk-config.zip 文件，解压开 bcs-itetze-sdk-config.yaml</para>
+			<graphic format="png" fileref="../../images/baas/huawei/sdk-4.png" width="1024" srccredit="netkiller" />
 			<screen>
 			<![CDATA[
 name: "global-trade-network"
