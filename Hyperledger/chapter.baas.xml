@@ -72,9 +72,29 @@ token.go  token.zip
 			<graphic format="png" fileref="../../images/baas/huawei/sdk-3.png" width="1024" srccredit="netkiller" />
 			<para>链代码名称是之前安装链码时输入的名称</para>
 			<para>链代码版本是当前的链码版本</para>
-			<para>证书存放根路径填写: /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto</para>
+			<para>证书存放根路径填写: /Users/neo/fabric/crypto (这里是本地证书路径，java / golang sdk 程序会访问这些证书。)</para>
 			<para>点击下载按钮后得到一个 bcs-itetze-sdk-config.zip 文件，解压开 bcs-itetze-sdk-config.yaml</para>
 			<graphic format="png" fileref="../../images/baas/huawei/sdk-4.png" width="1024" srccredit="netkiller" />
+
+		</section>
+		<section id="">
+			<title>配置 SDK 文件</title>
+			<para>准备证书，下载 bcs-itetze-orderer-admin.zip 和 organization-admin.zip 两个证书压缩包。</para>
+			<para>bcs-itetze-orderer-admin.zip 文件解压后放置到 /Users/neo/fabric/crypto/ 目录中</para>
+			<para>organization-admin.zip 解压放置到 /Users/neo/fabric/crypto/ 目录</para>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~ % cd fabric/crypto 
+
+neo@MacBook-Pro ~/fabric/crypto % pwd
+/Users/neo/fabric/crypto
+
+neo@MacBook-Pro ~/fabric/crypto % ls 
+266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local
+7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local
+			]]>
+			</screen>
+			<para>打开 bcs-itetze-sdk-config.yaml 文件，下面是 SDK 配置文件的内容。</para>
 			<screen>
 			<![CDATA[
 name: "global-trade-network"
@@ -130,7 +150,7 @@ client:
 
 channels:
   
-  netkiller:
+  example:
     orderers:
       
       - orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-0.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local
@@ -145,27 +165,27 @@ channels:
       
     peers:
       
-      peer-266d0f487933503a48f0ab728b85d5b469cb2b79-0.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local:
+      peer-266d0f487933503a48f0ab728b85d5b469cb2b79-3.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
         eventSource: true
       
     chaincodes:
-      - netkiller:1.0.0
+      - example02:1.0
   
 organizations:
   
   266d0f487933503a48f0ab728b85d5b469cb2b79:
     mspid: 266d0f487933503a48f0ab728b85d5b469cb2b79MSP
 
-    cryptoPath:  /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto/266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local/msp
-    tlsCryptoKeyPath: /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto/266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local/tls/server.key
-    tlsCryptoCertPath: /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto/266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local/tls/server.crt
+    cryptoPath:  /Users/neo/fabric/crypto/266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local/msp
+    tlsCryptoKeyPath: /Users/neo/fabric/crypto/266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local/tls/server.key
+    tlsCryptoCertPath: /Users/neo/fabric/crypto/266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local/tls/server.crt
 
     peers:
       
-      - peer-266d0f487933503a48f0ab728b85d5b469cb2b79-0.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local
+      - peer-266d0f487933503a48f0ab728b85d5b469cb2b79-3.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local
       
     certificateAuthorities:
       - ca-org1
@@ -178,7 +198,7 @@ organizations:
   ordererorg:
       mspID: "7d8abfe15c3f1389f0468d90e27a382d0bd90b3fMSP"
 
-      cryptoPath: /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp
+      cryptoPath: /Users/neo/fabric/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp
 #orderer eip: 49.4.85.126
 orderers:
   
@@ -190,7 +210,7 @@ orderers:
       grpc-max-send-message-length: 15
 
     tlsCACerts:
-      path: /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp/tlscacerts/tlsca.7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-cert.pem
+      path: /Users/neo/fabric/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp/tlscacerts/tlsca.7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-cert.pem
   
   orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-1.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local:
     url: grpcs://orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-1.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local:30806
@@ -200,7 +220,7 @@ orderers:
       grpc-max-send-message-length: 15
 
     tlsCACerts:
-      path: /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp/tlscacerts/tlsca.7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-cert.pem
+      path: /Users/neo/fabric/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp/tlscacerts/tlsca.7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-cert.pem
   
   orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-2.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local:
     url: grpcs://orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-2.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local:30807
@@ -210,7 +230,7 @@ orderers:
       grpc-max-send-message-length: 15
 
     tlsCACerts:
-      path: /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp/tlscacerts/tlsca.7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-cert.pem
+      path: /Users/neo/fabric/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp/tlscacerts/tlsca.7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-cert.pem
   
   orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-3.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local:
     url: grpcs://orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-3.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local:30808
@@ -220,7 +240,7 @@ orderers:
       grpc-max-send-message-length: 15
 
     tlsCACerts:
-      path: /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp/tlscacerts/tlsca.7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-cert.pem
+      path: /Users/neo/fabric/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp/tlscacerts/tlsca.7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-cert.pem
   
   orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-4.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local:
     url: grpcs://orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-4.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local:30809
@@ -230,22 +250,22 @@ orderers:
       grpc-max-send-message-length: 15
 
     tlsCACerts:
-      path: /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp/tlscacerts/tlsca.7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-cert.pem
+      path: /Users/neo/fabric/crypto/7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local/msp/tlscacerts/tlsca.7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-cert.pem
   
 #peer eip: 49.4.85.126
 peers:
   
-  peer-266d0f487933503a48f0ab728b85d5b469cb2b79-0.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local:
-    url: grpcs://peer-266d0f487933503a48f0ab728b85d5b469cb2b79-0.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local:30605
+  peer-266d0f487933503a48f0ab728b85d5b469cb2b79-3.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local:
+    url: grpcs://peer-266d0f487933503a48f0ab728b85d5b469cb2b79-3.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local:30608
 
-    eventUrl: grpcs://peer-266d0f487933503a48f0ab728b85d5b469cb2b79-0.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local:30705
+    eventUrl: grpcs://peer-266d0f487933503a48f0ab728b85d5b469cb2b79-3.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local:30708
 
     grpcOptions:
-      ssl-target-name-override: peer-266d0f487933503a48f0ab728b85d5b469cb2b79-0.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local
+      ssl-target-name-override: peer-266d0f487933503a48f0ab728b85d5b469cb2b79-3.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local
       grpc.http2.keepalive_time: 15
 
     tlsCACerts:
-      path: /opt/gopath/src/github.com/hyperledger/api-server/conf/crypto/266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local/msp/tlscacerts/tlsca.266d0f487933503a48f0ab728b85d5b469cb2b79-cert.pem
+      path: /Users/neo/fabric/crypto/266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local/msp/tlscacerts/tlsca.266d0f487933503a48f0ab728b85d5b469cb2b79-cert.pem
   
 certificateAuthorities:
   ca-org1:
@@ -262,6 +282,42 @@ certificateAuthorities:
       enrollId: admin
       enrollSecret: adminpw
     caName: ca-org1
+			]]>
+			</screen>
+			<para>配置 organizations 证书</para>
+			<screen>
+			<![CDATA[
+    adminPrivateKey:
+      pem: "-----BEGIN PRIVATE KEY----- <etc>"
+      path: "/Users/neo/fabric/crypto/266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local/msp/keystore"
+    signedCert:
+      path: "/Users/neo/fabric/crypto/266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local/msp/signcerts/Admin@266d0f487933503a48f0ab728b85d5b469cb2b79.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local-cert.pem"
+			]]>
+			</screen>
+			<para>找到 peers 和 orderers 的主机名</para>
+			<screen>
+			<![CDATA[
+#peer eip: 49.4.85.126
+peers:
+  
+  peer-266d0f487933503a48f0ab728b85d5b469cb2b79-3.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local:
+  
+#orderer eip: 49.4.85.126
+orderers:
+  
+  orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-0.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local:			
+			]]>
+			</screen>
+			<para>打开 /etc/hosts 文件，添加主机解析地址</para>
+			<screen>
+			<![CDATA[
+49.4.85.126     peer-266d0f487933503a48f0ab728b85d5b469cb2b79-3.peer-266d0f487933503a48f0ab728b85d5b469cb2b79.default.svc.cluster.local
+
+49.4.85.126     orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-0.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local
+49.4.85.126     orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-1.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local
+49.4.85.126     orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-2.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local
+49.4.85.126     orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-3.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local
+49.4.85.126     orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f-4.orderer-7d8abfe15c3f1389f0468d90e27a382d0bd90b3f.default.svc.cluster.local
 			]]>
 			</screen>
 		</section>

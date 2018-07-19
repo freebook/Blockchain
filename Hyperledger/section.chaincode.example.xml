@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section id="chaincode.example">
-	<title></title>
+	<title>链码案例</title>
 	<section id="chaincode.token">
-		<title>模仿以太坊 ERC20 规范的 Hyperledger Fabric 实现</title>
+		<title>模仿以太坊 ERC20 规范的 Hyperledger Fabric 实现 Token 通证</title>
 		<para>借用以太坊思维，将以太坊代币合约搬到 hyperledger 上，一样可以实现代币的功能，这个代币除了不能上交易所，基本满足我们替代积分系统的需求，下面是我写了这样一个合约，在超级账本上实现类似以太坊的代币转账功能。</para>
 		<para>合约实现代币转账，额度查询，增发代币，冻结账号，锁仓等等服务器，功能与 ERC20 Token 相仿。</para>
 		<para>合约实例化所有代币打入了 coinbase 账号，分发代币需要使用转账功能从 coinbase 想普通账号转账</para>
@@ -229,5 +229,145 @@ peer chaincode invoke -C myc -n token -c '{"function":"transferToken","Args":["T
 		</screen>
 		<para>以太坊和超级账本各有优势，虽然超级账本的Token功能无法和以太坊相比，但是使用超级账本实现的Token交易不用矿工费。同事超级账本还有一个优势，就是可以在合约中调用另一个合约，这样一来可以做出很多复杂的需求</para>
 		<para>例如我们在订票的合约中，就可以直接从Token合约中直接扣款。</para>
+	</section>
+	<section id="chaincode.general">
+		<title>万能的通用合约</title>
+		<para>我们一般会在合约中定义结构体，然后序列化后存入 state 数据库中。一旦数据结构变化，就需要升级 chaincode。</para>
+		<para>下面我们只实现了 create, find, update, delete 四个方法，没有数据结构，用户自行提交 json 格式或者其他序列化后的字符串数据。</para>
+		<programlisting>
+		<![CDATA[
+package main
+
+import (
+	"fmt"
+	"github.com/hyperledger/fabric/core/chaincode/shim"
+	pb "github.com/hyperledger/fabric/protos/peer"
+)
+
+type SmartContract struct {}
+
+func (s *SmartContract) Init(stub shim.ChaincodeStubInterface) pb.Response {
+	return shim.Success(nil)
+}
+
+func (s *SmartContract) Query(stub shim.ChaincodeStubInterface) pb.Response {
+	return shim.Success(nil)
+}
+
+func (s *SmartContract) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
+
+	// Retrieve the requested Smart Contract function and arguments
+	function, args := stub.GetFunctionAndParameters()
+	// Route to the appropriate handler function to interact with the ledger appropriately
+	if function == "create" {
+		return s.create(stub, args)
+	} else if function == "find" {
+		return s.find(stub, args)
+	} else if function == "update" {
+		return s.update(stub, args)
+	} else if function == "delete" {
+		return s.delete(stub, args)
+	}
+
+	return shim.Error("Invalid Smart Contract function name.")
+}
+
+func (s *SmartContract) create(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	_key  	:= args[0]
+	_data	:= args[1]
+
+	if(_data == ""){
+		return shim.Error("Incorrect string of data")
+	}
+
+	existAsBytes,err := stub.GetState(_key)
+	if string(existAsBytes) != "" {
+		fmt.Println("Failed to create account, Duplicate key.")
+		return shim.Error("Failed to create account, Duplicate key.")
+	}
+
+	err = stub.PutState(_key, []byte(_data))
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	fmt.Printf("create %s %s \n", _key, string(_data))
+
+	return shim.Success([]byte(_data))
+}
+
+func (s *SmartContract) find(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	_key  	:= args[0]
+	_data, err := stub.GetState(_key)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	if string(_data) == "" {
+		return shim.Error("The key isn't exist.")
+	}else{
+		fmt.Printf("query %s %s \n", _key, string(_data))
+	}
+
+	return shim.Success(_data)
+}
+
+func (s *SmartContract) update(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	_key  	:= args[0]
+	_data	:= args[1]
+
+	if(_data == ""){
+		return shim.Error("Incorrect string of data")
+	}
+
+	err := stub.PutState(_key, []byte(_data))
+	if err != nil {
+		return shim.Error(err.Error())
+	}else{
+		fmt.Printf("update %s %s \n", _key, string(_data))
+	}
+	
+	return shim.Success([]byte(_data))
+}
+
+// Deletes an entity from state
+func (t *SmartContract) delete(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	_key := args[0]
+
+	// Delete the key from the state in ledger
+	err := stub.DelState(_key)
+	if err != nil {
+		return shim.Error("Failed to delete state")
+	}
+
+	return shim.Success(nil)
+}
+
+func main() {
+
+	err := shim.Start(new(SmartContract))
+	if err != nil {
+		fmt.Printf("Error creating new Smart Contract: %s", err)
+	}
+}
+		]]>
+		</programlisting>
 	</section>
 </section>

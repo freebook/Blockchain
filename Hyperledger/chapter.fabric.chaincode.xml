@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="chaincode" ?>
-	<title>Chaincode 开发</title>
+	<title>Chaincode 链码（智能合约）</title>
 	<section id="chaincode.dev">
-		<title>开发环境</title>
-		<screen>
+		<title>链码开发与测试</title>
+		<section id="">
+			<title>Docker 开发环境</title>
+
+			<para>环境安装</para>
+			<screen>
 		<![CDATA[
 [root@localhost ~]# cd fabric-samples/chaincode-docker-devmode/
 [root@localhost chaincode-docker-devmode]# mkdir chaincode
 [root@localhost chaincode-docker-devmode]# cp docker-compose-simple.yaml docker-compose.yaml
 [root@localhost chaincode-docker-devmode]# sed -i "s|./../chaincode|./chaincode|g" docker-compose.yaml
 		]]>
-		</screen>
-		<para>chaincode 目录是开发目录</para>
-		<para>清理镜像和容器</para>
-		<screen>
+			</screen>
+			<para>chaincode 目录是开发目录</para>
+			<para>清理镜像和容器</para>
+			<screen>
 		<![CDATA[
 docker rm -f $(docker ps -q -a)
 docker rmi -f $(docker images -q)
 		]]>
-		</screen>
-		<para>安装所需镜像</para>
-		<screen>
+			</screen>
+			<para>安装所需镜像</para>
+			<screen>
 		<![CDATA[
 [root@localhost chaincode-docker-devmode]# curl -s https://raw.githubusercontent.com/oscm/shell/master/blockchain/hyperledger/fabric/1.1.0/all-in-one.sh | bash		
 
@@ -39,11 +43,12 @@ hyperledger/fabric-ccenv     x86_64-1.1.0        33feadb8f7a6        2 months ag
 hyperledger/fabric-ca        latest              002c9089e464        2 months ago        238MB
 hyperledger/fabric-ca        x86_64-1.1.0        002c9089e464        2 months ago        238MB		
 		]]>
-		</screen>
-	</section>
-	<section id="chaincode.code">
-		<title>chaincode 代码</title>
-		<programlisting>
+			</screen>
+		</section>
+
+		<section id="chaincode.code">
+			<title>chaincode 代码</title>
+			<programlisting>
 		<![CDATA[
 [root@localhost chaincode-docker-devmode]# cat chaincode/chaincode_example02.go 
 /*
@@ -246,33 +251,33 @@ func main() {
 	}
 }
 		]]>
-		</programlisting>
-	</section>
-	<section id="chaincode.docker">
-		<title>启动容器部署chaincode</title>
-		<screen>
+			</programlisting>
+		</section>
+		<section id="chaincode.docker">
+			<title>启动容器部署chaincode</title>
+			<screen>
 		<![CDATA[
 [root@localhost chaincode-docker-devmode]# docker-compose up -d
 		]]>
-		</screen>
-		<para>进入容器</para>
-		<screen>
+			</screen>
+			<para>进入容器</para>
+			<screen>
 		<![CDATA[
 [root@localhost ~]# docker exec -it chaincode bash
 root@78d23b3b2b37:/opt/gopath/src/chaincode# 		
 		]]>
-		</screen>
-		<para>编译并部署chaincode</para>
-		<screen>
+			</screen>
+			<para>编译并部署chaincode</para>
+			<screen>
 		<![CDATA[
 root@78d23b3b2b37:/opt/gopath/src/chaincode# ls
 chaincode_example02.go
 root@78d23b3b2b37:/opt/gopath/src/chaincode# go build chaincode_example02.go 
 root@78d23b3b2b37:/opt/gopath/src/chaincode# 		
 		]]>
-		</screen>
-		<para>进入 chaincode 容器启动 chaincode 程序。</para>
-		<screen>
+			</screen>
+			<para>进入 chaincode 容器启动 chaincode 程序。</para>
+			<screen>
 		<![CDATA[
 [root@localhost ~]# docker exec -it chaincode bash
 root@78d23b3b2b37:/opt/gopath/src/chaincode# ls
@@ -282,20 +287,20 @@ root@78d23b3b2b37:/opt/gopath/src/chaincode# CORE_PEER_ADDRESS=peer:7051 CORE_CH
 2018-02-17 04:07:31.156 UTC [shim] SetupChaincodeLogging -> INFO 001 Chaincode log level not provided; defaulting to: INFO
 2018-02-17 04:07:31.156 UTC [shim] SetupChaincodeLogging -> INFO 002 Chaincode (build level: ) starting up ...		
 		]]>
-		</screen>
-		<para>CORE_CHAINCODE_ID_NAME=chaincode_example02:1.0 记住这里的配置，下面会用到
-		</para>
-	</section>
-	<section id="chaincode.test ">
-		<title>测试</title>
-		<para>进入 cli 容器</para>
-		<screen>
+			</screen>
+			<para>CORE_CHAINCODE_ID_NAME=chaincode_example02:1.0 记住这里的配置，下面会用到
+			</para>
+		</section>
+		<section id="chaincode.test ">
+			<title>测试</title>
+			<para>进入 cli 容器</para>
+			<screen>
 		<![CDATA[
 [root@localhost ~]# docker exec -it cli bash
 root@33dcacfb6f81:/opt/gopath/src/chaincodedev#		
 		]]>
-		</screen>
-		<screen>
+			</screen>
+			<screen>
 		<![CDATA[
 root@33dcacfb6f81:/opt/gopath/src/chaincodedev# peer chaincode install -v 1.0 -n chaincode_example02 -p chaincodedev/chaincode	
 2018-02-17 04:46:23.871 UTC [msp] GetLocalMSP -> DEBU 001 Returning existing local MSP
@@ -313,8 +318,8 @@ root@33dcacfb6f81:/opt/gopath/src/chaincodedev# peer chaincode install -v 1.0 -n
 2018-02-17 04:46:24.299 UTC [chaincodeCmd] install -> DEBU 00d Installed remotely response:<status:200 payload:"OK" > 
 2018-02-17 04:46:24.299 UTC [main] main -> INFO 00e Exiting.....		
 		]]>
-		</screen>
-		<screen>
+			</screen>
+			<screen>
 		<![CDATA[
 root@33dcacfb6f81:/opt/gopath/src/chaincodedev# peer chaincode instantiate -C myc -n chaincode_example02 -v 1.0 -c '{"Args":["init","a","100","b","200"]}'  
 2018-02-17 04:52:42.395 UTC [msp] GetLocalMSP -> DEBU 001 Returning existing local MSP
@@ -573,24 +578,24 @@ SM49BAMCA0gAMEUCIDf9Hbl4xn3z4EwNKmilM9lX2Fq4jWpAaRVB97OmVEeyAiEA
 2018-02-17 04:52:42.477 UTC [msp/identity] Sign -> DEBU 0a6 Sign: digest: 17F14535D40E75D42A20AAD7A3BA9C93796FCB89AA50F80ADCDFAC77BECA0F65 
 2018-02-17 04:52:42.483 UTC [main] main -> INFO 0a7 Exiting.....
 		]]>
-		</screen>
-		<para>查看 a,b 两个账号的余额</para>
-		<screen>
+			</screen>
+			<para>查看 a,b 两个账号的余额</para>
+			<screen>
 		<![CDATA[
 peer chaincode query -C myc -n chaincode_example02 -c '{"Args":["query","a"]}'
 peer chaincode query -C myc -n chaincode_example02 -c '{"Args":["query","b"]}'		
 		]]>
-		</screen>
-		<para>a 向 b 转账 50</para>
-		<screen>
+			</screen>
+			<para>a 向 b 转账 50</para>
+			<screen>
 		<![CDATA[
 peer chaincode invoke -C myc -n chaincode_example02 -c '{"Args":["invoke","a","b","50"]}'
 peer chaincode query -C myc -n chaincode_example02 -c '{"Args":["query","a"]}'
 peer chaincode query -C myc -n chaincode_example02 -c '{"Args":["query","b"]}'
 		]]>
-		</screen>
-		<para>这是再查看 a, b 两个掌控的余额应该是 a: 50 , B: 250</para>
-		<screen>
+			</screen>
+			<para>这是再查看 a, b 两个掌控的余额应该是 a: 50 , B: 250</para>
+			<screen>
 		<![CDATA[
 root@33dcacfb6f81:/opt/gopath/src/chaincodedev# peer chaincode query -C myc -n chaincode_example02 -c '{"Args":["query","a"]}'
 2018-02-17 04:56:46.870 UTC [msp] GetLocalMSP -> DEBU 001 Returning existing local MSP
@@ -612,9 +617,9 @@ root@33dcacfb6f81:/opt/gopath/src/chaincodedev# peer chaincode query -C myc -n c
 Query Result: 250
 2018-02-17 04:55:29.823 UTC [main] main -> INFO 007 Exiting.....
 		]]>
-		</screen>
-		<para>chaincode 终端也会显示下面内容。</para>
-		<screen>
+			</screen>
+			<para>chaincode 终端也会显示下面内容。</para>
+			<screen>
 		<![CDATA[
 root@78d23b3b2b37:/opt/gopath/src/chaincode# CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=chaincode_example02:1.0 ./chaincode_example02 
 2018-02-17 04:51:25.481 UTC [shim] SetupChaincodeLogging -> INFO 001 Chaincode log level not provided; defaulting to: INFO
@@ -632,24 +637,21 @@ Query Response:{"Name":"b","Amount":"250"}
 ex02 Invoke
 Query Response:{"Name":"a","Amount":"50"}		
 		]]>
-		</screen>
-	</section>
-	
-	&section.chaincode.shim.xml;
-	&section.chaincode.example.xml;
+			</screen>
+		</section>
 
-	<section id="chaincode.build">
-		<title>在宿主主机上编译合约</title>
-		<para>编译 chaincode 可以在 docker 容器中进行，也可以在 docker 外面进行。方法如下：</para>
-		<para>安装依赖的库文件</para>
-		<screen>
+		<section id="chaincode.build">
+			<title>在宿主主机上编译合约</title>
+			<para>编译 chaincode 可以在 docker 容器中进行，也可以在 docker 外面进行。方法如下：</para>
+			<para>安装依赖的库文件</para>
+			<screen>
 			<![CDATA[
 yum install libtool-ltdl-devel
 go get github.com/hyperledger/fabric		
 			]]>
-		</screen>
-		<para>编译合约文件</para>
-		<screen>
+			</screen>
+			<para>编译合约文件</para>
+			<screen>
 			<![CDATA[
 [root@localhost ~]# cd ~/netkiller/chaincode/chaincode_example02/
 [root@localhost chaincode_example02]#
@@ -659,22 +661,22 @@ go get github.com/hyperledger/fabric
 [root@localhost chaincode_example02]# ls
 chaincode_example02  chaincode_example02.go  chaincode_example02_test.go 
 			]]>
-		</screen>
-		<tip>
-			<para>由于 docker 容器中没有 vim/nano 命令，无法编译 .go 文件，所以在宿主主机编译更为方便。</para>
-		</tip>
-	</section>
+			</screen>
+			<tip>
+				<para>由于 docker 容器中没有 vim/nano 命令，无法编译 .go 文件，所以在宿主主机编译更为方便。</para>
+			</tip>
+		</section>
 
-	<section id="chaincode.upgrade">
-		<title>链码升级</title>
-		<para>已经实例化的链码如果需要更新，可以通过 upgrade 升级。</para>
-		<screen>
+		<section id="chaincode.upgrade">
+			<title>链码升级</title>
+			<para>已经实例化的链码如果需要更新，可以通过 upgrade 升级。</para>
+			<screen>
 		<![CDATA[
 peer chaincode upgrade -o orderer.example.com:7050 -C mychannel -n token4 -v 1.1 -c '{"Args":[""]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
 		]]>
-		</screen>
-		<para>操作演示</para>
-		<screen>
+			</screen>
+			<para>操作演示</para>
+			<screen>
 		<![CDATA[
 [root@localhost token]# docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode upgrade -o orderer.example.com:7050 -C mychannel -n token4 -v 1.1 -c '{"Args":[""]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
 2018-03-21 05:45:57.825 UTC [msp] GetLocalMSP -> DEBU 001 Returning existing local MSP
@@ -690,7 +692,10 @@ peer chaincode upgrade -o orderer.example.com:7050 -C mychannel -n token4 -v 1.1
 2018-03-21 05:46:43.167 UTC [chaincodeCmd] upgrade -> DEBU 00b Get Signed envelope
 2018-03-21 05:46:43.167 UTC [chaincodeCmd] chaincodeUpgrade -> DEBU 00c Send signed envelope to orderer
 2018-03-21 05:46:43.179 UTC [main] main -> INFO 00d Exiting.....
-		]]>	
-		</screen>
+		]]>
+			</screen>
+		</section>
 	</section>
+	&section.chaincode.shim.xml;
+	&section.chaincode.example.xml;
 </chapter>
