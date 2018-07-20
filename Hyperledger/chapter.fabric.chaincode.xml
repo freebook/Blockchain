@@ -7,13 +7,22 @@
 			<title>Docker 开发环境</title>
 
 			<para>环境安装</para>
+
+			<para>安装 fabric-samples</para>
 			<screen>
-		<![CDATA[
+			<![CDATA[
+git clone https://github.com/hyperledger/fabric-samples.git
+cd fabric-samples
+			]]>
+			</screen>
+
+			<screen>
+			<![CDATA[
 [root@localhost ~]# cd fabric-samples/chaincode-docker-devmode/
 [root@localhost chaincode-docker-devmode]# mkdir chaincode
 [root@localhost chaincode-docker-devmode]# cp docker-compose-simple.yaml docker-compose.yaml
 [root@localhost chaincode-docker-devmode]# sed -i "s|./../chaincode|./chaincode|g" docker-compose.yaml
-		]]>
+			]]>
 			</screen>
 			<para>chaincode 目录是开发目录</para>
 			<para>清理镜像和容器</para>
