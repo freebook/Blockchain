@@ -1328,7 +1328,7 @@ contract mortal is owned {
 			</programlisting>
 		</section>
 	</section>
-	<section id="">
+	<section id="solidity.call">
 		<title>合约调用</title>
 		<programlisting>
 		<![CDATA[
@@ -1361,6 +1361,154 @@ contract Test{
 }
 		]]>
 		</programlisting>
+	</section>
+	<section id="solidity.payable">
+		<title>合约接收 ETH</title>
+		<para>首先你需要在智能合约中定义这个函数 function () payable public {}，这时这个合约地址就可以接收ETH了。</para>
+
+		<para>测试方法，向合约地址发送ETH即可。</para>
+		<section id="">
+			<title>调用 selfdestruct(msg.sender); 取出合约中的 ETH</title>
+			<programlisting>
+			<![CDATA[
+			
+			
+			]]>
+			</programlisting>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.24;
+
+contract NetkillerCashier {
+
+    function () payable public {}
+
+    function claim() public {
+        selfdestruct(msg.sender);
+    }
+}
+			]]>
+			</programlisting>
+			<para>https://ropsten.etherscan.io/tx/0x6504df0e18416c3c319f1f11f84ffa40a752b47c257faee58a7ef2c8ef78cc45</para>
+			<screen>
+			<![CDATA[
+ Contract 0x0896827f5e3d2683763321bdf780bde1824f6137  
+ TRANSFER  0.03 Ether from 0x0896827f5e3d2683763321bdf780bde1824f6137 to  0x22c57f0537414fd95b9f0f08f1e51d8b96f14029
+ SELF-DESTRUCT Contract 0x0896827f5e3d2683763321bdf780bde1824f6137			
+			]]>
+			</screen>
+			<para>查看 Code https://ropsten.etherscan.io/address/0x0896827f5e3d2683763321bdf780bde1824f6137#code 显示</para>
+			<screen>
+			<![CDATA[
+Contract SelfDestruct called at TxHash 0x6504df0e18416c3c319f1f11f84ffa40a752b47c257faee58a7ef2c8ef78cc45			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>自动退款合约</title>
+			<para>本合约只收取 1 ETH 多余 ETH 将退给用户</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.24;
+
+// Author: netkiller@msn.com
+// Website: http://www.netkiller.cn
+
+contract Refund {
+    
+    address owner = 0x0;
+  
+    uint256 ticket = 1 ether;
+    
+    constructor() public payable {
+        owner = msg.sender;
+    }
+
+    function () public payable {
+        require(msg.value >= ticket);
+        if (msg.value > ticket) {
+            uint refundFee = msg.value - ticket;
+            msg.sender.transfer(refundFee);
+        }
+    }
+}
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>收款合约自动转账</title>
+			<para>合约收到ETH后自动转到 owner 账号中。</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.24;
+
+contract NetkillerCashier {
+    
+    address public owner;
+
+    constructor() public payable {
+        owner = msg.sender;
+    }
+    function () payable public {
+        owner.transfer(msg.value);
+    }
+
+}			
+			]]>
+			</programlisting>
+		</section>
+		<section id="">
+			<title>指定账号提取 ETH</title>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.24;
+
+contract NetkillerCashier {
+
+    address public owner;
+    uint public amount;
+    
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
+    
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    function () public payable {
+        amount += msg.value;
+    }
+
+	function transferOwnership(address newOwner) onlyOwner public {
+        if (newOwner != address(0)) {
+            owner = newOwner;
+        }
+    }
+
+    function withdraw() onlyOwner public {
+        msg.sender.transfer(amount);
+        amount = 0;
+    }
+
+}			
+			]]>
+			</programlisting>
+			<screen>
+			<![CDATA[
+function transferOwnership(address newOwner) 可以修改指定账号提取 ETH
+function withdraw()	提取 ETH 的函数
+			]]>
+			</screen>
+			<para>https://ropsten.etherscan.io/tx/0xadad8c4cd7649d825fb8c362e97f80c4821b07c97d423050289986bd75703b78</para>
+			<screen>
+			<![CDATA[
+ Contract 0xb31fb5297340a06e1af3e21c1780b7001db6890a  
+ TRANSFER  0.05 Ether from 0xb31fb5297340a06e1af3e21c1780b7001db6890a to  0x22c57f0537414fd95b9f0f08f1e51d8b96f14029			
+			]]>
+			</screen>
+		</section>
 	</section>
 	<section id="solidity.sectury">
 		<title>Solidity 安全问题</title>
