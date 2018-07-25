@@ -1510,6 +1510,73 @@ function withdraw()	提取 ETH 的函数
 			</screen>
 		</section>
 	</section>
+	<section id="solidity.contract.interface">
+		<title>合约中实例化一个接口</title>
+		<para>在合约中调用一个已经存在的合约。</para>
+		<programlisting>
+		<![CDATA[
+pragma solidity ^0.4.24;
+
+/******************************************/
+/*      Netkiller Crowdsale Contract      */
+/******************************************/
+/* Author netkiller <netkiller@msn.com>   */
+/* Home http://www.netkiller.cn           */
+/* Version 2018-06-07 - Solc ver: 0.4.24  */
+/******************************************/
+
+interface token {
+	function balanceOf(address _address) constant external returns (uint256);
+    function transfer(address receiver, uint amount) external;
+}
+
+contract Netkiller {
+    
+    token public tokenContract;
+
+    constructor(address addressOfToken) public {
+        tokenContract = token(addressOfToken);
+    }
+	function getBalance(address _address) view public returns (uint256){
+        return tokenContract.balanceOf(_address);
+    }
+    function transfer(address _to, uint256 _value) payable public{
+        tokenContract.transfer(_to, _value);
+    }
+
+    
+}
+		]]>
+		</programlisting>
+		
+	</section>
+	<section id="solidity.contract.new">
+		<title>合约中实例化另一个合约</title>
+		<para>当合约已经部署到链上，如需扩展合约的功能可以采用此种方法。</para>
+		<programlisting>
+		<![CDATA[
+pragma solidity ^0.4.24;
+
+contract ERC20 {
+    uint256 public totalSupply;
+    uint public decimals;
+    function balanceOf(address _address) constant public returns (uint256);
+    function transfer(address _to, uint256 _value) public returns (bool success);
+}
+contract NetkillerBatchTransfer {
+
+    ERC20 public token;
+    
+    constructor(address _contractAddress) public {
+        token = ERC20(_contractAddress);
+    }
+    function getBalance(address _address) view public returns (uint256){
+        return token.balanceOf(_address);
+    }
+}		
+		]]>
+		</programlisting>
+	</section>
 	<section id="solidity.sectury">
 		<title>Solidity 安全问题</title>
 		<section>
