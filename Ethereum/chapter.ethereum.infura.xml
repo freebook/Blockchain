@@ -6,57 +6,33 @@
 	</para>
 	<para>SCALABLE BLOCKCHAIN INFRASTRUCTURE</para>
 	<para>We provide secure, reliable, and scalable access to Ethereum and IPFS. </para>
-	<section id="infura.signup">
-		<title>注册账号</title>
-		<para></para>
-		<para>
-			<ulink url="https://infura.io/signup" />
-		</para>
-		<para>输入用户名和邮箱即可注册</para>
-		<graphic format="png" fileref="../../images/ethereum/infura/signup.png" width="1024" srccredit="netkiller" />
-		<para>这些地址你需要牢记</para>
-		<graphic format="png" fileref="../../images/ethereum/infura/network.png" width="1024" srccredit="netkiller" />
-
-		<literallayout>
-			<![CDATA[
-NETWORK		DESCRIPTION			URL
-Mainnet		production network		https://mainnet.infura.io/CsS9shwaAab0z7B4LP2d
-Ropsten		test network			https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d
-INFURAnet	test network			https://infuranet.infura.io/CsS9shwaAab0z7B4LP2d
-Kovan		test network			https://kovan.infura.io/CsS9shwaAab0z7B4LP2d
-Rinkeby		test network			https://rinkeby.infura.io/CsS9shwaAab0z7B4LP2d
-IPFS			gateway				https://ipfs.infura.io			
-			]]>
-		</literallayout>
-		<para>这是你的 api key CsS9shwaAab0z7B4LP2d 请保存好</para>
-		<para>Mainnet 是以太坊主网</para>
-		<para>IPFS 是一个分布式区中心化的文件系统。</para>
+	<section id="infura.3">
+		<title>Infura 3.0</title>
+		<para>注册 Infura 3.0</para>
+		<graphic format="png" fileref="../../images/ethereum/infura/infura-1.png" width="1024" srccredit="netkiller" />
+		<para>邮件确认</para>
+		<graphic format="png" fileref="../../images/ethereum/infura/infura-2.png" width="1024" srccredit="netkiller" />
+		<para>登录</para>
+		<graphic format="png" fileref="../../images/ethereum/infura/infura-3.png" width="1024" srccredit="netkiller" />
+		<para>点击 SKIP 按钮，跳过教学模式</para>
+		<graphic format="png" fileref="../../images/ethereum/infura/infura-4.png" width="1024" srccredit="netkiller" />
+		<para>创建项目</para>
+		<graphic format="png" fileref="../../images/ethereum/infura/infura-5.png" width="1024" srccredit="netkiller" />
+		<para>输入项目名称</para>
+		<graphic format="png" fileref="../../images/ethereum/infura/infura-6.png" width="1024" srccredit="netkiller" />
+		<para>添加合约到白名单</para>
+		<graphic format="png" fileref="../../images/ethereum/infura/infura-7.png" width="1024" srccredit="netkiller" />
+		<para>添加完成</para>
+		<graphic format="png" fileref="../../images/ethereum/infura/infura-8.png" width="1024" srccredit="netkiller" />
+		<para>复制 Infura 地址: </para>
+		<screen>
+		<![CDATA[
+https://mainnet.infura.io/v3/ee07e33cb6414781a72deaf3b303ca3b
+https://ropsten.infura.io/v3/ee07e33cb6414781a72deaf3b303ca3b
+		]]>
+		</screen>
 	</section>
-	<section id="infura.api">
-		<title>infura 接口</title>
-		<section>
-			<title>jsonrpc</title>
-			<para>
-				JSONRPC 文档
-				<ulink url="https://github.com/INFURA/infura/blob/master/docs/source/index.html.md#choosing-a-client-to-handle-your-request" />
-			</para>
-			<screen>
-				<![CDATA[
-$ curl -X POST -H "Content-Type: application/json" \
-  --data '{"jsonrpc": "2.0", "id": 1, "method": "eth_blockNumber", "params": []}' \
-  "https://mainnet.infura.io/CsS9shwaAab0z7B4LP2d"
-				]]>
-			</screen>
-		</section>
-		<section>
-			<title>INFURA API</title>
-			<screen>
-				<![CDATA[
-https://api.infura.io/v1/jsonrpc/mainnet/eth_blockNumber?token=CsS9shwaAab0z7B4LP2d				
-				]]>
-			</screen>
-		</section>
-	</section>
+	
 	<section id="infura.websocket">
 		<title>websocket</title>
 		<screen>
@@ -409,4 +385,60 @@ web3.eth.getGasPrice().then(function(gasPrice){
 			</programlisting>
 		</section>
 	</section>
+	
+	<section id="infura.2">
+		<title>Infura 2.0 (已经废弃)</title>
+		<section id="infura.signup">
+			<title>注册账号</title>
+			<para></para>
+			<para>
+				<ulink url="https://infura.io/signup" />
+			</para>
+			<para>输入用户名和邮箱即可注册</para>
+			<graphic format="png" fileref="../../images/ethereum/infura/signup.png" width="1024" srccredit="netkiller" />
+			<para>这些地址你需要牢记</para>
+			<graphic format="png" fileref="../../images/ethereum/infura/network.png" width="1024" srccredit="netkiller" />
+
+			<literallayout>
+			<![CDATA[
+NETWORK		DESCRIPTION			URL
+Mainnet		production network		https://mainnet.infura.io/CsS9shwaAab0z7B4LP2d
+Ropsten		test network			https://ropsten.infura.io/CsS9shwaAab0z7B4LP2d
+INFURAnet	test network			https://infuranet.infura.io/CsS9shwaAab0z7B4LP2d
+Kovan		test network			https://kovan.infura.io/CsS9shwaAab0z7B4LP2d
+Rinkeby		test network			https://rinkeby.infura.io/CsS9shwaAab0z7B4LP2d
+IPFS			gateway				https://ipfs.infura.io			
+			]]>
+			</literallayout>
+			<para>这是你的 api key CsS9shwaAab0z7B4LP2d 请保存好</para>
+			<para>Mainnet 是以太坊主网</para>
+			<para>IPFS 是一个分布式区中心化的文件系统。</para>
+		</section>
+		<section id="infura.api">
+			<title>infura 接口</title>
+			<section>
+				<title>jsonrpc</title>
+				<para>
+					JSONRPC 文档
+					<ulink url="https://github.com/INFURA/infura/blob/master/docs/source/index.html.md#choosing-a-client-to-handle-your-request" />
+				</para>
+				<screen>
+				<![CDATA[
+$ curl -X POST -H "Content-Type: application/json" \
+  --data '{"jsonrpc": "2.0", "id": 1, "method": "eth_blockNumber", "params": []}' \
+  "https://mainnet.infura.io/CsS9shwaAab0z7B4LP2d"
+				]]>
+				</screen>
+			</section>
+			<section>
+				<title>INFURA API</title>
+				<screen>
+				<![CDATA[
+https://api.infura.io/v1/jsonrpc/mainnet/eth_blockNumber?token=CsS9shwaAab0z7B4LP2d				
+				]]>
+				</screen>
+			</section>
+		</section>
+	</section>
+	
 </chapter>
