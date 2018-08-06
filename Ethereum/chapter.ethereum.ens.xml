@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="index"><?dbhtml dir="ens" ?>
+	<title>ENS (Ethereum Name Service)</title>
+	<para><ulink url="http://ens.readthedocs.io/en/latest/index.html" /></para>
+	<section id="">
+		<title>什么是ENS域名</title>
+		<para>ENS 是一个去中心化的分布式以太坊域名解析服务。对于DNS你并不陌生他的功能是解析域名到指定的IP地址。那么 ENS呢？ ENS负责解析太坊钱包地址或Swarm文件的哈希地址例如：</para>
+		<screen>
+		<![CDATA[
+netkiller.eth => 0x3e827461Cc53ed7c75A29187CfF39629FCAE3661
+		]]>
+		</screen>
+		<para>注册 ENS 有四个阶段，分别对应调用下面合约函数。智能合约地址是：<ulink url="https://etherscan.io/address/0x314159265dd8dbb310642f98f50c066173c1259b" /></para>
+		<screen>
+		<![CDATA[
+startAuctions	-> unsealBid	-> finalizeAuction	->	setResolver
+		]]>
+		</screen>
+	</section>
+	<section id="">
+		<title>查找/解析 ENS</title>
+		<para><ulink url="https://etherscan.io/enslookup" /></para>
+	</section>
+</chapter>

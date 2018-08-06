@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="eos.contract.type">
+	<title>数据类型</title>
+	<section id="eos.std.string">
+		<title>std::string</title>
+		<programlisting>
+		<![CDATA[
+void tstring (std::string str) {
+eosio::print("tstring:",str.c_str(),"\n"); 
+}		
+		]]>
+		</programlisting>
+		<screen>
+		<![CDATA[
+cleos push action user tstring '["Helloworld!!!"]' -p user		
+		]]>
+		</screen>
+	</section>
+	<section id="eos.public_key">
+		<title>public_key</title>
+		<programlisting>
+		<![CDATA[
+void publickey (public_key key) {
+	eosio::print("public key test\n");
+}		
+		]]>
+		</programlisting>
+		<screen>
+		<![CDATA[
+cleos push action user publickey '["EOS69EZcBVwgRz3AbHheR3ZpeHtaoHAPyLXfvmsiqYMAtazN3WdiL"]' -p user
+		]]>
+		</screen>
+
+	</section>
+	<section id="eos.std.vector">
+		<title>std::vector</title>
+		<programlisting>
+		<![CDATA[
+void tvector (std::vector<public_key> keyarr) {
+	eosio::print("vector test\n");
+}		
+		]]>
+		</programlisting>
+		<para></para>
+		<screen>
+		<![CDATA[
+cleos push action user tvector '[["EOS69EZcBVwgRz3AbHheR3ZpeHtaoHAPyLXfvmsiqYMAtazN3WdiL"]]' -p user		
+		]]>
+		</screen>
+		<programlisting>
+		<![CDATA[
+void tstringvector (std::vector<std::string> args) {
+	eosio::print("tstringvector:\n"); 
+	for (auto &arg:args){
+		eosio::print(arg.c_str(),"\n");
+	}
+}
+
+cleos push action user tstringvector '[["Neo","Netkiller"]]' -p user		
+		]]>
+		</programlisting>
+
+		<programlisting>
+		<![CDATA[
+void tsgarr(std::vector<signature> args) {
+	for (auto &arg:args){
+		eosio::print(arg,"\n");
+	}
+}
+
+cleos push action user tsgarr '[["EOSJzdpi5RCzHLGsQbpGhndXBzcFs8vT5LHAtWLMxPzBdwRHSmJkcCdVu6oqPUQn1hbGUdErHvxtdSTS1YA73BThQFwT77X1U","EOSJzdpi5RCzHLGsQbpGhndXBzcFs8vT5LHAtWLMxPzBdwRHSmJkcCdVu6oqPUQn1hbGUdErHvxtdSTS1YA73BThQFwT77X1U"]]' -p user		
+		]]>
+		</programlisting>
+	</section>
+	<section id="eos.asset">
+		<title>asset</title>
+		<programlisting>
+		<![CDATA[
+void tasset (asset arg) {
+	eosio::print("tasset:",arg,"\n");
+}
+		]]>
+		</programlisting>
+		<para></para>
+		<screen>
+		<![CDATA[
+cleos push action user tasset '["100.0000 EOS"]' -p user		
+		]]>
+		</screen>
+	</section>
+	
+	<section id="eos.signature">
+		<title>signature</title>
+		<programlisting>
+		<![CDATA[
+void tsignature(signature arg){
+	//eosio::print("tsignature:",arg,"\n");
+	eosio::print("signature test\n");
+}
+
+cleos push action user tsignature '["EOSJzdpi5RCzHMxPzBdwRHSmJkcCdVu6oqPUQn1hvT5LHAtWLdErHvxtdSTS1YA7bGULGsQbpGhndXBzcFs83BThQFwT77X1U"]' -p user
+		]]>
+		</programlisting>
+	</section>
+	<section id="eos.checksum256">
+		<title>checksum256</title>
+		<programlisting>
+		<![CDATA[
+void tchecksum(checksum256 arg){
+	eosio::print("tchecksum:",arg,"\n");
+}
+
+cleos push action user tchecksum '["badae2223b7816bf8f01ca9cb410ff61f20015adfea414140de500361a396177"]' -p user		
+		]]>
+		</programlisting>
+	</section>
+	<section id="eos.fixed_string16">
+		<title>fixed_string16</title>
+		<programlisting>
+		<![CDATA[
+void tfixedstring(fixed_string16 arg) {
+//eosio::print("tfixedstring16:",arg,"\n");
+}
+
+cleos push action user tfixedstring '["1234567890abcdef"]' -p user
+		]]>
+		</programlisting>
+	</section><section id="eos.fixed_string32">
+		<title>fixed_string32</title>
+		<programlisting>
+		<![CDATA[
+void tfixedstr32(fixed_string32 arg) {
+//eosio::print("tfixedstring32:",arg,"\n");
+}
+
+cleos push action user tfixedstr32 '["1234567890abcdef1234567890abcdef"]' -p user		
+		]]>
+		</programlisting>
+	</section>
+	
+	<section id="eos.bytes">
+		<title>bytes</title>
+		<programlisting>
+		<![CDATA[
+void tbytes (bytes arg) {
+// eosio::print("tbytes:",arg,"\n");
+}
+
+cleos push action user tbytes '["010203"]' -p user		
+		]]>
+		</programlisting>
+	</section>
+	<section id="eos.name">
+		<title>name</title>
+		<programlisting>
+		<![CDATA[
+void tname(name arg) {
+	eosio::print("tname:",arg,"\n");
+}
+
+cleos push action user tname '["user"]' -p user		
+		]]>
+		</programlisting>
+	</section>
+	<section id="eos.action">
+		<title>action</title>
+		<programlisting>
+		<![CDATA[
+void taction(action arg) {
+//eosio::print("taction:",arg,"\n"); 
+}
+
+cleos push action user taction '[{"account":"acc1", "name":"actionname1", "authorization":[{"actor":"acc1","permission":"permname1"}], "data":"445566"}]' -p user		
+		]]>
+		</programlisting>
+	</section><section id="eos.action_name">
+		<title>action_name</title>
+		<programlisting>
+		<![CDATA[
+void tactionname(action_name arg){
+eosio::print("tactionname:",arg,"\n"); 
+}
+
+cleos push action user tactionname '["active"]' -p user		
+		]]>
+		</programlisting>
+	</section><section id="scope_name">
+		<title>scope_name</title>
+		<programlisting>
+		<![CDATA[
+void tscopename(scope_name arg) {
+eosio::print("tscopename:",arg,"\n"); 
+}
+
+cleos push action user tscopename '["scope"]' -p user		
+		]]>
+		</programlisting>
+	</section>
+	<section id="eos.account_name">
+		<title>account_name</title>
+		<programlisting>
+		<![CDATA[
+void taccountname(account_name arg) {
+	eosio::print("taccountname:",arg,"\n");
+}
+
+cleos push action user taccountname '["user"]' -p user		
+		]]>
+		</programlisting>
+	</section><section id="eos.authority">
+		<title>authority</title>
+		<programlisting>
+		<![CDATA[
+void tauthority(authority arg) {
+
+}
+
+cleos push action user tauthority '[{"threshold":"10","keys":[{"key":"EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", "weight":100},{"key":"EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", "weight":200}],"accounts":[{"permission":{"actor":"acc1","permission":"permname1"},"weight":"1"},{"permission":{"actor":"acc2","permission":"permname2"},"weight":"2"}]}]' -p user		
+		]]>
+		</programlisting>
+	</section><section id="eos.permission_name">
+		<title>permission_name</title>
+		<programlisting>
+		<![CDATA[
+void tpermname(permission_name arg) {
+eosio::print("tpermname:",arg,"\n");
+}
+
+cleos push action user tpermname '["active"]' -p user		
+		]]>
+		</programlisting>
+		<para></para>
+	</section>
+	<section id="eos.permission_level_weight">
+		<title>permission_level_weight</title>
+		<programlisting>
+		<![CDATA[
+void tpermlvlwgt(eosiosystem::permission_level_weight arg){
+//eosio::print("taction:",arg,"\n"); 
+}
+
+cleos push action user tpermlvlwgt '[{"permission":{"actor":"acc1","permission":"permname1"},"weight":"1"}]' -p user		
+		]]>
+		</programlisting>
+	</section><section id="eos.permission_level">
+		<title>permission_level</title>
+		<programlisting>
+		<![CDATA[
+void tpermlvl(permission_level arg) {
+	//eosio::print("tpermlvl:",arg,"\n"); 
+}
+
+cleos push action user tpermlvl '[{"account":"acc1", "name":"actionname1", "authorization":[{"actor":"acc1","permission":"permname1"}], "data":"445566"},]' -p user		
+		]]>
+		</programlisting>
+	</section>
+	
+	
+	
+	
+	<section id="eos.transaction">
+		<title>transaction</title>
+		<programlisting>
+		<![CDATA[
+void ttransaction(transaction arg) {
+
+}
+
+cleos push action user ttransaction '[{"ref_block_num":"1","ref_block_prefix":"2","expiration":"2021-12-20T15:30","region": "1","context_free_actions":[{"account":"contextfree1", "name":"cfactionname1", "authorization":[{"actor":"cfacc1","permission":"cfpermname1"}], "data":"778899"}],"actions":[{"account":"accountname1", "name":"actionname1", "authorization":[{"actor":"acc1","permission":"permname1"}], "data":"445566"}],"net_usage_words":15,"kcpu_usage":43,"delay_sec":0}]' -p user		
+		]]>
+		</programlisting>
+	</section>
+	<section id="eos.key_weight">
+		<title>key_weight</title>
+		<programlisting>
+		<![CDATA[
+void tkeyweight(key_weight arg) {
+
+}
+
+cleos push action user tkeyweight '[{"key":"EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", "weight":"100"}]' -p user		
+		]]>
+		</programlisting>
+	</section>
+	<!-- 
+	<![CDATA[
+#include <utility>
+#include <vector>
+#include <string>
+#include <eosiolib/eosio.hpp>
+#include <eosiolib/asset.hpp>
+#include <eosiolib/contract.hpp>
+#include <eosiolib/crypto.h>
+#include <eosiolib/transaction.hpp>
+
+using eosio::permission_level;
+
+#include <eosio.system/native.hpp>
+
+
+using eosio::key256;
+using eosio::indexed_by;
+using eosio::const_mem_fun;
+using eosio::asset;
+using eosio::bytes;
+using eosio::action;
+using eosio::print;
+using eosio::name;
+using eosio::transaction;
+using eosiosystem::key_weight;
+using eosiosystem::authority;
+
+
+
+class hello : public eosio::contract { 
+    public:
+         hello(account_name self)
+        :eosio::contract(self)
+        {}
+
+        // @abi action
+        void tpublickey (public_key key) {
+            eosio::print("tpubckey:\n");
+        }
+
+        // @abi action
+        void tpkarr (std::vector<public_key> keyarr) {
+            eosio::print("tpkarr:\n");
+        }
+
+        // @abi action
+        void tasset (asset arg) {
+            eosio::print("tasset:",arg,"\n");
+        }
+
+        // @abi action
+        void tassetarr(std::vector<asset> args) {
+            eosio::print("tassetarr:\n");   
+            for (auto &arg :args)
+            {
+                eosio::print(arg,"\n");
+            }
+        }
+
+        // @abi action
+        void tstring (std::string str) {
+            eosio::print("tstring:",str.c_str(),"\n");  
+        }
+
+        // // @abi action
+        void tstringarr (std::vector<std::string> args) {
+            eosio::print("tstringarr:\n");  
+            for (auto &arg:args)
+            {
+                eosio::print(arg.c_str(),"\n");
+            }
+        }
+
+        // @abi action
+        void tsignature(signature arg){
+            //eosio::print("tsignature:",arg,"\n");
+
+        }
+
+        // @abi action
+        void tsgarr(std::vector<signature> args) {
+            // eosio::print("tsgarr:",args,"\n");
+            // for (auto &arg:args)
+            // {
+            //  eosio::print(arg,"\n");
+            // }
+        }
+
+        // @abi action
+        void tchecksum(checksum256 arg){
+            //eosio::print("tchecksum:",arg,"\n");
+        }
+
+        // @abi action
+        void tchecksumarr(std::vector<checksum256> args) {
+            eosio::print("tchecksumarr:\n");    
+        }
+
+        //error
+        // @abi action
+        void tfieldname (field_name arg) {
+            //eosio::print("tfieldname:",arg,"\n");
+        }
+
+        // @abi action
+        void tfixedstr32(fixed_string32 arg) {
+            //eosio::print("tfixedstring32:",arg,"\n");
+        }
+
+        //fixedstring16
+        //@abi action
+        void tfixedstring(fixed_string16 arg) {
+            //eosio::print("tfixedstring16:",arg,"\n");
+        }
+
+        // @abi action
+        void ttypename(type_name arg) {
+            //eosio::print("ttypename:",arg,"\n");
+        }
+
+        // @abi action
+        void tbytes (bytes arg) {
+            // eosio::print("tbytes:",arg,"\n");
+        }
+
+        // @abi action
+        void tname(name arg) {
+            eosio::print("tname:",arg,"\n");
+        }
+
+        // @abi action
+        void taccountname(account_name arg) {
+            eosio::print("taccountname:",arg,"\n");
+        }
+
+        // @abi action
+        void tpermname(permission_name arg) {
+            eosio::print("tpermname:",arg,"\n");
+        }
+
+        // @abi action
+        void tactionname(action_name arg){
+            eosio::print("tactionname:",arg,"\n");  
+        }
+
+        // @abi action
+        void tscopename(scope_name arg) {
+            eosio::print("tscopename:",arg,"\n");   
+        }
+
+        // @abi action
+        void tpermlvl(permission_level arg) {
+            //eosio::print("tpermlvl:",arg,"\n");   
+        }
+
+        // @abi action
+        void taction(action arg) {
+            //eosio::print("taction:",arg,"\n");    
+        }
+
+        // @abi action
+        void tpermlvlwgt(eosiosystem::permission_level_weight arg){
+            //eosio::print("taction:",arg,"\n");    
+        }
+
+        // @abi action
+        void ttransaction(transaction arg) {
+
+        }
+
+        // @abi action
+        void tkeyweight(key_weight arg) {
+
+        }
+
+        // @abi action
+        void tauthority(authority arg) {
+
+        }
+
+        //
+        // field fields
+        // signed_transaction
+        // type_def action_def table_def abi_def  types  
+
+};
+
+EOSIO_ABI( hello, (tpublickey)(tpkarr)(tasset)(tassetarr)(tstring) (tstringarr)(tsignature)(tsgarr)(tchecksum)(tchecksumarr)(tfieldname)(tfixedstr32)(tfixedstring)(ttypename)(tbytes)(tname)(taccountname)(tpermname)(tactionname)(tscopename)(tpermlvl)(taction)(tpermlvlwgt)(ttransaction)(tkeyweight)(tauthority)
+    )	
+	]]>
+	 -->
+</section>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="eos.contract">
 	<title>智能合约开发</title>
-
-
 	<section id="WebAssembly">
 		<title>WebAssembly</title>
 		<para>EOS 的块链使用的是WebAssembly(http://webassembly.org/) 技术，编译后的 (WASM) 执行用户编写的智能合约。WASM是一种新兴的Web标准，广泛支持于谷歌、微软、苹果等。WASM标准的智能合约使用C/C++语言编写，使用clang/llvm(https://clang.llvm.org/) 编译。</para>
