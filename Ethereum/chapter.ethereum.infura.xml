@@ -32,7 +32,7 @@ https://ropsten.infura.io/v3/ee07e33cb6414781a72deaf3b303ca3b
 		]]>
 		</screen>
 	</section>
-	
+
 	<section id="infura.websocket">
 		<title>websocket</title>
 		<screen>
@@ -385,7 +385,47 @@ web3.eth.getGasPrice().then(function(gasPrice){
 			</programlisting>
 		</section>
 	</section>
-	
+	<section id="infura.ipfs">
+		<title>Infura IPFS</title>
+		<section>
+			<title>上传文件</title>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro /tmp % cat hello.txt 
+http://www.netkiller.cn
+
+neo@MacBook-Pro /tmp % curl "https://ipfs.infura.io:5001/api/v0/add?pin=false" \
+    -X POST \
+    -H "Content-Type: multipart/form-data" \
+    -F file=@"hello.txt"          
+{"Name":"hello.txt","Hash":"QmToi4pgQH4LQX8wGMt5H8EV2dA7hD8S2EccRpd8YGUgac","Size":"32"}
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>查看文件</title>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro /tmp % curl "https://ipfs.infura.io:5001/api/v0/cat?arg=QmToi4pgQH4LQX8wGMt5H8EV2dA7hD8S2EccRpd8YGUgac" 
+http://www.netkiller.cn
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>下载文件</title>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro /tmp % curl -s "https://ipfs.infura.io:5001/api/v0/get?arg=QmToi4pgQH4LQX8wGMt5H8EV2dA7hD8S2EccRpd8YGUgac&archive=true" -o hello.tgz
+
+neo@MacBook-Pro /tmp % tar zxvf hello.tgz 
+x QmToi4pgQH4LQX8wGMt5H8EV2dA7hD8S2EccRpd8YGUgac
+
+neo@MacBook-Pro /tmp % cat QmToi4pgQH4LQX8wGMt5H8EV2dA7hD8S2EccRpd8YGUgac
+http://www.netkiller.cn			
+			]]>
+			</screen>
+		</section>
+	</section>
 	<section id="infura.2">
 		<title>Infura 2.0 (已经废弃)</title>
 		<section id="infura.signup">
@@ -440,5 +480,5 @@ https://api.infura.io/v1/jsonrpc/mainnet/eth_blockNumber?token=CsS9shwaAab0z7B4L
 			</section>
 		</section>
 	</section>
-	
+
 </chapter>

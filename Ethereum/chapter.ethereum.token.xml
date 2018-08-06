@@ -175,7 +175,7 @@ contract NetkillerToken {
 		<title>Netkiller Crowdsale Contract</title>
 		<section>
 			<title>Solidity 0.4.24</title>
-		
+
 			<programlisting>
 			<![CDATA[
 pragma solidity ^0.4.24;
@@ -400,19 +400,36 @@ contract Crowdsale {
 		</section>
 	</section>
 	<section id="token.sample">
-		<title>参考案例</title>
+		<title>经典参考案例</title>
 		<para>一下是作者发布的合约，供读者参考</para>
 		<section>
 			<title>Enterprise Token Ecosystem (ETE)</title>
-			<para>合约地址 <ulink url="https://etherscan.io/address/0x6333050c7a025027b51a8039cbafd2584933299d#code" /></para>
+			<para>
+				合约地址
+				<ulink url="https://etherscan.io/address/0x6333050c7a025027b51a8039cbafd2584933299d#code" />
+			</para>
 		</section>
 		<section>
 			<title>积分链 (PE Chain)</title>
-			<para>合约地址 <ulink url="https://etherscan.io/address/0x9bcf2ea3a9e18e550eba88c97a8bb6b7ea4f58b7#code"/></para>
+			<para>
+				合约地址
+				<ulink url="https://etherscan.io/address/0x9bcf2ea3a9e18e550eba88c97a8bb6b7ea4f58b7#code" />
+			</para>
 		</section>
 		<section>
 			<title>Global star league chain (GSLC)</title>
-			<para>合约地址 <ulink url="https://etherscan.io/token/0x7ffdcccc3e7e33c6163393195a947a6d45f25814"/></para>
+			<para>
+				合约地址
+				<ulink url="https://etherscan.io/token/0x7ffdcccc3e7e33c6163393195a947a6d45f25814" />
+			</para>
+		</section>
+		<section id="Kyber.Network">
+			<title>Kyber Network</title>
+			<para>
+				合约地址
+				<ulink url="https://etherscan.io/address/0xC14f34233071543E979F6A79AA272b0AB1B4947D#code" />
+			</para>
+			<para>该合约可以实现币币兑换</para>
 		</section>
 	</section>
 	<section id="token.doc">
@@ -2148,12 +2165,18 @@ contract ERC223Token is ERC223Interface {
 		</section>
 		<section id="ERC875">
 			<title>ERC875 for non fungible tokens and simple atomic swaps</title>
-			<para><ulink url="https://github.com/ethereum/EIPs/issues/875" /></para>
-			<para><ulink url="https://github.com/alpha-wallet/ERC875-Example" /></para>
+			<para>
+				<ulink url="https://github.com/ethereum/EIPs/issues/875" />
+			</para>
+			<para>
+				<ulink url="https://github.com/alpha-wallet/ERC875-Example" />
+			</para>
 		</section>
 		<section>
 			<title>ERC: Standard URI scheme with metadata, value and byte code</title>
-			<para><ulink url="https://gist.github.com/netkiller/427c196eb256ed43c7be08ac875d34a7"/></para>
+			<para>
+				<ulink url="https://gist.github.com/netkiller/427c196eb256ed43c7be08ac875d34a7" />
+			</para>
 		</section>
 	</section>
 </chapter>
