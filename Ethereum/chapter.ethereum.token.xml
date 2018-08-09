@@ -5,6 +5,7 @@
 	&chapter.ethereum.coin.xml;
 	<section id="token.solidity.0.4.24">
 		<title>ERC20 Token Solidity 0.4.24</title>
+		<para><ulink url="https://theethereum.wiki/w/index.php/ERC20_Token_Standard" /></para>
 		<para>ERC20 “描述了实现代币合约的标准功能”，ERC20 是各个代币的标准接口。ERC20 代币仅仅是以太坊代币的子集。为了充分兼容 ERC20，开发者需要将一组特定的函数集成到他们的智能合约中，以便在高层面能够执行以下操作：</para>
 		<itemizedlist>
 			<title>ERC20 提供的方法</title>

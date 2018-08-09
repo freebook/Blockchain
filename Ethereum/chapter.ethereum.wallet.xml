@@ -554,6 +554,20 @@ contract NetkillerMiniToken {
 				<para>合约的管理者拥有上面所有权限，如果你想转移给其他账号，使用下面方法操作即可。</para>
 				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/transferOwnership.png" width="800" srccredit="netkiller" />
 			</section>
+			<section>
+				<title>设置兑换比例</title>
+				<para>将 ETH 发送到合约知道，返回 ETH * buyPrice 数量的 Token</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/setPrices.png" width="800" srccredit="netkiller" />
+			</section>
+			<section>
+				<title>空投设置</title>
+				<para>设置空投总量</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/setAirdropTotalSupply.png" width="800" srccredit="netkiller" />
+				<para>换算 ETH 到 WEI <ulink url="https://etherconverter.online/" /> 例如你需要空投 1.5 个Token，请在下面填写 1500000000000000000</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/eth2wei.png" width="800" srccredit="netkiller" />
+				<para>设置空投数量</para>
+				<graphic format="png" fileref="../../images/ethereum/myetherwallet/contact/setAirdropAmount.png" width="800" srccredit="netkiller" />
+			</section>
 		</section>
 	</section>
 	<section id="MyCrypto">

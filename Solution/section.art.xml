@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="">
+	<title></title>
+	<section id="">
+		<title>防伪技术</title>
+		<section id="">
+			<title>RFID/NFC</title>
+			<para>NFC基本概念：  </para>
+			<para>NFC(Near Field Communication)缩写，即近距离无线通讯技术。由飞利浦公司和索尼公司共同开发的一项无线技术。NFC由非接触式射频识别及互联互通技术整合演变而来，可以在移动设备、消费类电子产品、PC和智能控件工具间进行近距离无线通信。NFC提供了一种简单、触控式的解决方案，可以让消费者简单直观地交换信息、访问内容与服务。  NFC技术特点：  1、 在13.56MHz频率运行距离在20公分内；  2、 传输速度可分106Kbits/sec，212 Kbits/sec，424 Kbits/sec；  3、 运作可分主动与被动模式。主动模式需使用电池，也需要独立发射模组；被动模式不需使用电池，但无法独立发射讯号；  4、 已成为ISO/IEC IS 18092国家标准、ETSI TS 102 190标准、EMCA-340标准。</para>
+
+			<para>RFID基本概念：</para>
+			<para>RFID(Radio Frequency Identification)的缩写，即射频识别，俗称电子标签。  RFID射频识别是一种非接触式的自动识别技术，它通过射频信号自动识别目标对象并获取相关数据，识别工作无须人工干预，可工作于各种恶劣环境。  RFID是一种简单的无线系统，只有两个基本器件，该系统用于控制、检测和跟踪物体。系统由一个询问器(或阅读器)和很多应答器(或标签)组成。 </para>
+			<para>RFID包括：  低频125KHz  主要是动物管理  中频 一般指433MHz（这个频段一般也是有源的 也有做高速收费）  高频13.56MHz 公交卡 身份证都是这个频段。  超高频860-960MHz 主要用在物流和停车场管理。 微波2.45GHz  ETC用这个频段的多</para>
+
+			<itemizedlist>
+				<title>RFID/NFC 比较</title>
+				<listitem>
+					距离，RFID远，NFC进
+				</listitem>
+				<listitem>
+					RIFD由读卡器和标签组成，读卡器只能读取标签上的数据。NFC既可以做读卡器，也能提供标签服务，还能实现P2P点对点传输数据。
+				</listitem>
+				<listitem>修改，RFID是只读的，NFC上的数据可以修改，例如公交卡</listitem>
+				<listitem></listitem>
+			</itemizedlist>
+			<para>NFC 标签可以使用易碎纸粘贴在艺术品上，缺点是寿命较短。使用PVC材料又容易撕下。</para>
+		</section>
+		<section id="">
+			<title>荧光防伪油墨</title>
+			<para>使用荧光油墨印刷技术，在特定波长的紫外线下才能看到。</para>
+			<para>荧光二维码</para>
+			<para>荧光印章</para>
+			<para>荧光指纹</para>
+			<para>荧光暗记</para>
+		</section>
+		<section id="">
+			<title>DNA防伪</title>
+			<para>将艺术家的血液滴在书画上或者头发夹在宣纸中间。</para>
+		</section>
+		<section id="">
+			<title>我品细节，文理</title>
+			<para>使用电子显微镜平射纸文理，画面局部等等。</para>
+			<para>油画还可以拍摄X光片</para>
+		</section>
+	</section>
+	<section id="">
+		<title>协议</title>
+		<section id="">
+			<title>艺术家</title>
+			<screen>
+			<![CDATA[
+姓名：
+性别：
+肖像：
+简介：
+作品集：			
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>艺术品</title>
+
+			<para>艺术品数字身份证</para>
+			<para>ID</para>
+			<screen>
+			<![CDATA[
+RFID/NFC 
+隐形二维码
+图形二维码
+区块链地址
+			]]>
+			</screen>
+			<para>艺术品信息</para>
+			<screen>
+			<![CDATA[
+
+名称
+作者
+类别
+尺寸
+风格
+年代
+登记时间
+
+登记者
+鉴定机构
+鉴定者
+
+状态：收藏，在售，展出
+{
+	:""
+}		
+		
+			]]>
+			</screen>
+			<para>所有者</para>
+			<screen>
+			<![CDATA[
+姓名：		
+			]]>
+			</screen>
+			<para>历史记录</para>
+			<screen>
+			<![CDATA[
+日期
+事件
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>鉴定机构</title>
+			<screen>
+			<![CDATA[
+机构名称
+机构资质
+负责人
+上传文件			
+			]]>
+			</screen>
+		</section>
+	</section>
+</section>
