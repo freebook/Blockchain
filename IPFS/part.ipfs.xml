@@ -2,5 +2,6 @@
 <part id="index"><?dbhtml dir="ipfs" ?>
 	<title>IPFS（InterPlanetary File System 星际文件系统）</title>
 	&chapter.ipfs.xml;
-	&chapter.java-ipfs-api.xml;
+	&chapter.ipfs.command.xml;
+	&chapter.devel.xml;
 </part>
