@@ -29,6 +29,9 @@
 	<!ENTITY % eos.doctype.entity.xml 			SYSTEM "EOS/doctype.entity.xml">
 	%eos.doctype.entity.xml;
 	
+	<!ENTITY % ipfs.doctype.entity.xml 			SYSTEM "IPFS/doctype.entity.xml">
+	%ipfs.doctype.entity.xml;
+	
 ]>
 <book xml:base="http://netkiller.sourceforge.net/linux/www"
 	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
@@ -65,7 +68,7 @@
 	&part.eos.xml;
 	&part.ethereum.xml;
 	&part.hyperledger.xml;
-	&chapter.ipfs.xml;
+	&part.ipfs.xml;
 	&chapter.bitcoin.xml;
 	&chapter.other.xml;
 <!-- =========================================================================== -->

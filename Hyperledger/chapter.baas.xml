@@ -4,7 +4,7 @@
 
 	<section id="huawei">
 		<title>Huawei BCS</title>
-		<para>华为的 Hyperledger Fabric BaaS 尚处在测试阶段，申请地址是 https://www.huaweicloud.com/product/bcs.html 服务可以免费申请，但是需要</para>
+		<para>华为的 Hyperledger Fabric BaaS 尚处在测试阶段，申请地址是 <ulink url="https://www.huaweicloud.com/product/bcs.html" /> 服务可以免费申请，但是需要</para>
 		<section>
 			<title>创建 BCS 服务</title>
 			<para>

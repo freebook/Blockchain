@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="index"><?dbhtml dir="devel" ?>
+	<title>IPFS API</title>
+	&section.devel.java.xml;
+	<section id="ipfs-api">
+		<title>ipfs-api</title>
+		<screen>
+		<![CDATA[
+npm install --save ipfs-api
+		]]>
+		</screen>
+		<programlisting>
+		<![CDATA[
+const ipfsAPI = require('ipfs-api');
+const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});		
+		]]>
+		</programlisting>
+	</section>
+</chapter>

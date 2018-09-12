@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY part.ipfs.xml		 	    	SYSTEM "part.ipfs.xml">
+<!ENTITY chapter.ipfs.xml	 	    	SYSTEM "chapter.ipfs.xml">
+<!ENTITY chapter.devel.xml		    	SYSTEM "chapter.devel.xml">
+<!ENTITY section.devel.java.xml 	   	SYSTEM "section.devel.java.xml">

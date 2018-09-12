@@ -24,14 +24,20 @@
 				<listitem></listitem>
 			</itemizedlist>
 			<para>NFC 标签可以使用易碎纸粘贴在艺术品上，缺点是寿命较短。使用PVC材料又容易撕下。</para>
+			<section id="">
+				<title>手机NFC功能</title>
+				<para>NFC是近场通信，支持13.56MHz，因此用手机的NFC来读取13.56MHz的RFID电子标签，在硬件上是没有问题的.</para>
+			</section>
 		</section>
 		<section id="">
 			<title>荧光防伪油墨</title>
-			<para>使用荧光油墨印刷技术，在特定波长的紫外线下才能看到。</para>
+			<para>使用荧光油墨印刷技术，在特定波长的紫外线或者红外线下才能看到。</para>
 			<para>荧光二维码</para>
 			<para>荧光印章</para>
 			<para>荧光指纹</para>
 			<para>荧光暗记</para>
+			<para>布满整个宣纸的荧光图案</para>
+			<para>我们可以为每个艺术家定制带有荧光图案的专属纸张</para>
 		</section>
 		<section id="">
 			<title>DNA防伪</title>
@@ -41,6 +47,11 @@
 			<title>我品细节，文理</title>
 			<para>使用电子显微镜平射纸文理，画面局部等等。</para>
 			<para>油画还可以拍摄X光片</para>
+		</section>
+		<section id="">
+			<title>纸纹（PaperPrint）</title>
+			<!-- https://www.sinosun.com.cn/paperprint/ -->
+			<para>纸纹防伪，即纸纹防伪技术。它是一种基于提取和识别每张纸与生俱来的、独一无二且无法仿造、克隆的自然纤维纹理作为防伪特征（即纸纹）来实现防伪的新型防伪技术。</para>
 		</section>
 	</section>
 	<section id="">

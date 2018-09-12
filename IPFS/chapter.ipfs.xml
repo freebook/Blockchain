@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="index"><?dbhtml dir="ipfs" ?>
+<chapter id="ipfs">
 	<title>IPFS（InterPlanetary File System，星际文件系统）</title>
 	<!-- https://flyingzumwalt.gitbooks.io/decentralized-web-primer/ -->
 	<section>
@@ -60,16 +60,35 @@ neo@netkiller ~ % sudo apt install golang1.9
 			]]>
 			</screen>
 		</section>
-		<section id="">
+		<section id="netkiller.oscm.ipfs">
 			<title>Netkiller OSCM</title>
-			<screen>
-			<![CDATA[
+			<section id="oscm.source">
+				<title>源码安装</title>
+				<screen>
+				<![CDATA[		
 curl -s https://raw.githubusercontent.com/oscm/shell/master/distributed/ipfs/go-ipfs-0.4.14.sh | bash
 curl -s https://raw.githubusercontent.com/oscm/shell/master/distributed/ipfs/ipfs-update-1.5.2.sh | bash
-			]]>
-			</screen>
+				]]>
+				</screen>
+			</section>
+			<section id="oscm.ipfs-update">
+				<title>ipfs-update</title>
+				<screen>
+				<![CDATA[
+[root@netkiller ~]# curl -s https://raw.githubusercontent.com/oscm/shell/master/lang/golang/golang-1.11.sh | bash					
+[root@netkiller ~]# curl -s https://raw.githubusercontent.com/oscm/shell/master/distributed/ipfs/ipfs-update.sh | bash
+
+[root@netkiller ~]# ./go/bin/ipfs-update versions
+[root@netkiller ~]# ./go/bin/ipfs-update install latest				
+				]]>
+				</screen>
+			</section>
 		</section>
 	</section>
+</chapter>
+<chapter id="ipfs.command">
+	<title>IPFS 命令</title>
+
 	<section id="ipfs.command">
 		<title>ipfs 命令</title>
 		<para>创建 ipfs 用户</para>
@@ -901,8 +920,7 @@ CentOS Linux release 7.4.1708 (Core)
 			</screen>
 			<para>使用浏览器访问文件</para>
 			<para>
-				<ulink
-					url="http://localhost/ipfs/QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn" />
+				<ulink url="http://localhost/ipfs/QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn" />
 			</para>
 		</section>
 
@@ -931,7 +949,7 @@ CentOS Linux release 7.4.1708 (Core)
 "Gateway": "/ip4/你的IP地址/tcp/8080"
 			]]>
 			</screen>
-			
+
 		</section>
 	</section>
 	<section id="ipfs.webui">
@@ -1033,27 +1051,6 @@ TXT			ipfs		dnslink=/ipns/QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv
 		<![CDATA[
 [root@netkiller ~]# ipfs cat /ipns/ipfs.netkiller.cn/readme
 		]]>
-		</screen>
-	</section>
-	<section id="ipfs-api">
-		<title>ipfs-api</title>
-		<screen>
-		<![CDATA[
-npm install --save ipfs-api
-		]]>
-		</screen>
-		<programlisting>
-		<![CDATA[
-const ipfsAPI = require('ipfs-api');
-const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});		
-		]]>
-		</programlisting>
-	</section>
-
-	<section>
-		<title></title>
-		<screen>
-			<![CDATA[]]>
 		</screen>
 	</section>
 </chapter>
