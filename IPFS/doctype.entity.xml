@@ -4,3 +4,4 @@
 <!ENTITY chapter.ipfs.command.xml    	SYSTEM "chapter.ipfs.command.xml">
 <!ENTITY chapter.devel.xml		    	SYSTEM "chapter.devel.xml">
 <!ENTITY section.devel.java.xml 	   	SYSTEM "section.devel.java.xml">
+<!ENTITY section.devel.js.xml	 	   	SYSTEM "section.devel.js.xml">

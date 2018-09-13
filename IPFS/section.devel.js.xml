@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="js-ipfs-api">
+	<title>js-ipfs-api</title>
+	<section>
+		<title>开发环境</title>
+		<screen>
+		<![CDATA[
+mkdir projectdir
+cd projectdir
+
+npm install --save ipfs-api
+		]]>
+		</screen>
+	</section>
+	<section id="">
+		<title>链接到 IPFS</title>
+		<programlisting>
+		<![CDATA[
+const ipfsAPI = require('ipfs-api');
+const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});		
+		]]>
+		</programlisting>
+	</section>
+
+</section>

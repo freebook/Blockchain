@@ -12,22 +12,125 @@
     </repository>
   </repositories>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.github.ipfs</groupId>
-      <artifactId>java-ipfs-api</artifactId>
-      <version>1.2.1</version>
-    </dependency>
-  </dependencies>		
+	<dependencies>
+		<dependency>
+			<groupId>com.github.ipfs</groupId>
+			<artifactId>java-ipfs-api</artifactId>
+			<version>v1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.multiformats</groupId>
+			<artifactId>java-multibase</artifactId>
+			<version>v1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.multiformats</groupId>
+			<artifactId>java-multiaddr</artifactId>
+			<version>v1.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.multiformats</groupId>
+			<artifactId>java-multihash</artifactId>
+			<version>v1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.ipld</groupId>
+			<artifactId>java-cid</artifactId>
+			<version>v1.1.1</version>
+		</dependency>
+	</dependencies>		
 		]]>
 		</screen>
 	</section>
 
-	<section>
-		<title></title>
+	<section id="ipfs.java.version">
+		<title>查看版本号</title>
 		<screen>
-			<![CDATA[]]>
+		<![CDATA[
+package cn.netkiller.ipfs;
+
+import io.ipfs.api.IPFS;
+
+public class Demo {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			IPFS ipfs = new IPFS("/ip4/127.0.0.1/tcp/5001");
+			System.out.println(ipfs.version());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}
+		]]>
 		</screen>
+		<para>运行后显示 ipfs 版本号表示链接成功</para>
+	</section>
+	<section id="ipfs.java.add">
+		<title>添加文件到 IPFS</title>
+		<para>首先创建一个测试文件</para>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~ % echo "Helloworld" >  /tmp/hello.txt
+neo@MacBook-Pro ~ % cat /tmp/hello.txt                 
+Helloworld
+		]]>
+		</screen>
+		<para>添加本地文件到IPFS</para>
+		<programlisting>
+		<![CDATA[
+	NamedStreamable.FileWrapper file = new NamedStreamable.FileWrapper(new File("/tmp/hello.txt"));
+	System.out.println(ipfs.add(file).get(0).toJSON());
+		]]>
+		</programlisting>
+		<para>输出结果</para>
+		<screen>
+		<![CDATA[
+{Hash=QmS8R3nSbDHjQ7WRTjtX1pkiQ6BUpti9qTjweZkBgGPKiN, Links=[], Name=hello.txt, Size=19}
+		]]>
+		</screen>
+		<para>输出字符串 toJSONString()</para>
+		<programlisting>
+		<![CDATA[
+		NamedStreamable.FileWrapper file = new NamedStreamable.FileWrapper(new File("/tmp/hello.txt"));		
+		MerkleNode addResult = ipfs.add(file).get(0);
+		System.out.println(addResult.toJSONString());		
+		]]>
+		</programlisting>
+		<screen>
+		<![CDATA[
+{"Hash":"QmS8R3nSbDHjQ7WRTjtX1pkiQ6BUpti9qTjweZkBgGPKiN","Links":[],"Name":"hello.txt","Size":"19"}		
+		]]>
+		</screen>
+		<tip>
+			<para>注意：文件名不会影响 Hash 值得变化</para>
+		</tip>
+	</section>
+	<section id="ipfs.java.add.text">
+		<title>添加文本到 IPFS</title>
+		<programlisting>
+		<![CDATA[
+	public Object put() throws IOException {
+		NamedStreamable.ByteArrayWrapper text = new NamedStreamable.ByteArrayWrapper("url.txt", "http://www.netkiller.cn".getBytes());
+		MerkleNode addResult = ipfs.add(text).get(0);
+		return addResult.toJSON();
+	}		
+		]]>
+		</programlisting>
+		<para>返回结果</para>
+		<screen>
+		<![CDATA[
+{Hash=QmY1ZUDzCH7J2QcVPLWT6FKwhaVvnkFRY89GMvbD27Eyde, Links=[], Name=url.txt, Size=31}
+		]]>
+		</screen>
+		<tip>
+			<para>注意：文件名不会影响 Hash 值得变化</para>
+		</tip>
+	</section>
+	<section id="ipfs.java.get">
+		<title></title>
 	</section>
 
 </section>

@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="devel" ?>
 	<title>IPFS API</title>
-	&section.devel.java.xml;
-	<section id="ipfs-api">
-		<title>ipfs-api</title>
+	<section id="">
+		<title>启动 IPFS API</title>
+		<para>查看 api 监听地址，默认只能链接 /ip4/127.0.0.1/tcp/5001</para>
 		<screen>
 		<![CDATA[
-npm install --save ipfs-api
+[ipfs@netkiller ~]$ ipfs config Addresses.API
+/ip4/127.0.0.1/tcp/5001
 		]]>
 		</screen>
-		<programlisting>
+		<para>修改配置，如果你的开发机需要远程链接，请设置为 /ip4/0.0.0.0/tcp/5001</para>
+		<screen>
 		<![CDATA[
-const ipfsAPI = require('ipfs-api');
-const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});		
+[ipfs@netkiller ~]$ ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001				
 		]]>
-		</programlisting>
+		</screen>
+		<para>启动 IPFS</para>
+		<screen>
+		<![CDATA[
+[ipfs@netkiller ~]$ ipfs daemon
+		]]>
+		</screen>
 	</section>
+	&section.devel.java.xml;
+	&section.devel.js.xml;
 </chapter>

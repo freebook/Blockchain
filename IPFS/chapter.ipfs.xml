@@ -84,5 +84,13 @@ curl -s https://raw.githubusercontent.com/oscm/shell/master/distributed/ipfs/ipf
 				</screen>
 			</section>
 		</section>
+		<section id="ipfs.mac">
+			<title>Mac OS</title>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~ % brew install ipfs			
+			]]>
+			</screen>
+		</section>
 	</section>
 </chapter>
