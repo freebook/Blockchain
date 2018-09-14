@@ -188,8 +188,10 @@ blocks  config  datastore  datastore_spec  keystore  version
 			</screen>
 		</section>
 		<section id="ipfs.add">
-			<title>添加文件</title>
-			<screen>
+			<title>添加文件或文本到 IPFS</title>
+			<section>
+				<title>添加文件</title>
+				<screen>
 				<![CDATA[
 [ipfs@netkiller ~]$ echo Helloworld > helloworld.txt
 [ipfs@netkiller ~]$ ipfs add helloworld.txt
@@ -202,9 +204,13 @@ Helloworld
 Helloworld
 
 				]]>
-			</screen>
-			<para>添加文本</para>
-			<screen>
+				</screen>
+			</section>
+			<section>
+				<title>添加文本</title>
+
+				<para>添加一段字符串到 IPFS</para>
+				<screen>
 				<![CDATA[
 [ipfs@netkiller ~]$ echo 'Look! Things have changed!' | ipfs add
 added QmSb8DSVmu4Qip56jcqPVz1Cx9RJ3vTf3d1Gf9ixaG2tWg QmSb8DSVmu4Qip56jcqPVz1Cx9RJ3vTf3d1Gf9ixaG2tWg
@@ -213,9 +219,22 @@ added QmSb8DSVmu4Qip56jcqPVz1Cx9RJ3vTf3d1Gf9ixaG2tWg QmSb8DSVmu4Qip56jcqPVz1Cx9R
 Look! Things have changed!
 
 				]]>
-			</screen>
-			<para>修改内容</para>
-			<screen>
+				</screen>
+			</section>
+			<section>
+				<title>安静模式，仅返回 Hash</title>
+				<para>安静模式</para>
+				<screen>
+				<![CDATA[
+[ipfs@netkiller ~]$ ipfs add -q /tmp/1536896811406807.mp4 
+QmcA1Fsrt6jGTVqAUNZBqaprMEdFaFkmkzA5s2M6mF85UC			
+				]]>
+				</screen>
+			</section>
+			<section>
+				<title>尝试修改内容</title>
+				<para>修改内容后 Hash 变化</para>
+				<screen>
 				<![CDATA[
 [root@netkiller ~]# echo "version 1 of my text" | ipfs add
 added QmZtmD2qt6fJot32nabSP3CUjicnypEBz7bHVDhPQt9aAy QmZtmD2qt6fJot32nabSP3CUjicnypEBz7bHVDhPQt9aAy
@@ -244,7 +263,43 @@ version 1
 [root@netkiller ~]# ipfs cat QmWzK72EZJJhW96x1tgaz8yU3G6okJ9MfMxbLianzFLhY2
 version 2
 				]]>
-			</screen>
+				</screen>
+			</section>
+			<section>
+				<title>递归添加一个目录</title>
+				<screen>
+				<![CDATA[
+[ipfs@netkiller ~]$ ipfs add -r /etc/nginx/
+added QmTa5RvPS9GEgbR8KUy36Fkx7y8Z7LpFM47pbAWJ89tUoi nginx/conf.d/default.conf
+added QmSGZtdGvLd64eYqXNyDraegz5Tm5evyTrX7GMAhE4L1KB nginx/conf.d/default.conf.backup
+added Qmbh35NHRNYfpaXaj1bQF4gcVYKRjjBvD7eys4dK4iwNrY nginx/fastcgi_params
+added QmaHUhxr4NPTsxc2iubLAVGAvJ6hRKfZsbDPYZDT6Bdcb1 nginx/koi-utf
+added QmRpsaigHjE4udpVDXZ8T4YtA477M7YTox6xxxkbYjisgN nginx/koi-win
+added QmbJThNSiHPy1bDTkLq2Rp8uU4cDLbX8Nzgxrf79ujQ6D9 nginx/mime.types
+added QmWDHS75NyRXZZxe3ZYAaETE4Z4mPx1htahBZBYx4cAYEM nginx/modules
+added QmNjAKtPe3AoUSSiLF1onA8fVbogcQ4cJHD2bvj38udpJQ nginx/nginx.conf
+added QmPXqmW4jpg5HbqqToJnzpqamSSNwHEkSxcGqiGmE9UaGM nginx/nginx.conf.original
+added QmTiu69XGzh1iqK6JuJNzoTiQ4SJEeQSso3uCHRwbXFba8 nginx/scgi_params
+added QmW2nvZqf6fwmcgBeeUEv2UyePizsFjjkNCubqRjmCZHNV nginx/uwsgi_params
+added Qmen15DKJhF5ngxiBEzmpMyPA3HpMfXNqgogeyeati2sEx nginx/win-utf
+added QmZ1cs8uxMSRcd2UX6ei4a2DYanQSBNV8PieRWcKzXbKXY nginx/conf.d
+added Qmbw5SZyAKkccUTq5N5jLTXzRk21jZThmmMGsX5Fh2BPic nginx
+ 19.35 KiB / 27.35 KiB [======================================================>-----------]  70.75%				
+				]]>
+				</screen>
+				<para>注意最后面的 nginx 是目录 Hash，我们可以使用这个 Hash 访问文件</para>
+				<screen>
+				<![CDATA[
+http://ipfs.netkiller.cn/ipfs/Qmbw5SZyAKkccUTq5N5jLTXzRk21jZThmmMGsX5Fh2BPic/conf.d/default.conf				
+				]]>
+				</screen>
+				<para>你也可以直接访问 Hash 值</para>
+				<screen>
+				<![CDATA[
+http://ipfs.netkiller.cn/ipfs/QmSGZtdGvLd64eYqXNyDraegz5Tm5evyTrX7GMAhE4L1KB				
+				]]>
+				</screen>
+			</section>
 		</section>
 		<section id="ipfs.cat">
 			<title>查看文件</title>
@@ -410,11 +465,37 @@ QmeDfRGHoLuSTZqk4zcwGKJQ1NUk9VhEYxFy1HC5d9hKxH 7304  network
 		<title>数据结构命令</title>
 		<section>
 			<title>块</title>
-			<screen>
-					<![CDATA[
-					
-					]]>
-			</screen>
+			<section>
+				<title>写入块</title>
+				<screen>
+				<![CDATA[
+[ipfs@netkiller ~]$ echo "hello world" | ipfs block put
+QmZjTnYw2TFhn9Nn7tjmPSoTBoY7YRkwPzwSrSbabY24Kp				
+				]]>
+				</screen>
+			</section>
+			<section>
+				<title>读取块</title>
+				<screen>
+				<![CDATA[
+
+[ipfs@netkiller ~]$ ipfs block get QmZjTnYw2TFhn9Nn7tjmPSoTBoY7YRkwPzwSrSbabY24Kp
+hello world
+				
+				]]>
+				</screen>
+			</section>
+			<section>
+				<title>块状态</title>
+				<screen>
+				<![CDATA[
+[ipfs@netkiller ~]$ ipfs block stat QmZjTnYw2TFhn9Nn7tjmPSoTBoY7YRkwPzwSrSbabY24Kp
+Key: QmZjTnYw2TFhn9Nn7tjmPSoTBoY7YRkwPzwSrSbabY24Kp
+Size: 12				
+				]]>
+				</screen>
+			</section>
+
 		</section>
 		<section>
 			<title>对象</title>
@@ -787,15 +868,16 @@ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POS
 				]]>
 			</screen>
 		</section>
-		<section id="">
-			<title></title>
+		<section>
+			<title>配置 API 网关</title>
+			<para>默认 API 网关是 127.0.0.1 8080 端口</para>
 			<screen>
 			<![CDATA[
 [ipfs@netkiller ~]$ ipfs config Addresses.Gateway
 /ip4/127.0.0.1/tcp/8080
 			]]>
 			</screen>
-			<para></para>
+			<para>如需远程访问设置为 0.0.0.0</para>
 			<screen>
 			<![CDATA[
 [ipfs@netkiller ~]$ ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
@@ -805,20 +887,62 @@ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POS
 			</screen>
 		</section>
 	</section>
-	<section id="ipfs.tool">
-		<title>工具命令</title>
-
-
-
+	<section id="ipfs.mount">
+		<title>ipfs mount</title>
+		<para>挂载前提是必须安装 fusermount</para>
+		<screen>
+		<![CDATA[
+[root@netkiller test]# yum install fuse		
+		]]>
+		</screen>
+		<para>如果没有安装 fusermount 会出如下提示</para>
+		<screen>
+		<![CDATA[
+17:35:29.129 ERROR       node: error mounting: fusermount: exec: "fusermount": executable file not found in $PATH mount_unix.go:89		
+		]]>
+		</screen>
+		<para>将 ipfs 挂在到本地文件系统，默认目录 /ipfs 和 /ipns。</para>
+		<screen>
+		<![CDATA[
+> mkdir /ipfs /ipns
+> sudo chown `whoami` /ipfs /ipns
+> ipfs daemon &
+> ipfs mount
+		]]>
+		</screen>
+		<para>挂载到指定目录</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# mkdir test
+[root@netkiller test]# cd test
+[root@netkiller test]# mkdir ipfs ipns
+[root@netkiller test]# ipfs mount -f ipfs -n ipns
+IPFS mounted at: ipfs
+IPNS mounted at: ipns
+		]]>
+		</screen>
+		<para>检查挂载情况</para>
+		<screen>
+		<![CDATA[
+[root@netkiller test]# mount | grep fuse
+fusectl on /sys/fs/fuse/connections type fusectl (rw,relatime)
+/dev/fuse on /root/test/ipfs type fuse (rw,nosuid,nodev,relatime,user_id=0,group_id=0)
+/dev/fuse on /root/test/ipns type fuse (rw,nosuid,nodev,relatime,user_id=0,group_id=0)		
+		]]>
+		</screen>
+		<para>卸载</para>
+		<screen>
+		<![CDATA[
+umount /ipfs
+umount /ipns
+		]]>
+		</screen>
 	</section>
-
 	<section id="ipfs.daemon">
-		<title>HTTP 网关</title>
-		<para>默认 IPFS 监听 127.0.0.1 使用下面命令启动IPFS守护进程，然后使用 nginx 代理 127.0.0.1</para>
-		<section>
-			<title>命令列表</title>
-			<screen>
-			<![CDATA[
+		<title>守护进程</title>
+		<para>启动守护进程</para>
+		<screen>
+		<![CDATA[
 [ipfs@netkiller ~]$ ipfs daemon
 Initializing daemon...
 Swarm listening on /ip4/127.0.0.1/tcp/4001
@@ -829,124 +953,10 @@ Swarm announcing /ip4/172.31.180.30/tcp/4001
 API server listening on /ip4/127.0.0.1/tcp/5001
 Gateway (readonly) server listening on /ip4/127.0.0.1/tcp/8080
 Daemon is ready
-			]]>
-			</screen>
-		</section>
-		<section>
-			<title>访问文件</title>
-			<screen>
-			<![CDATA[
-[root@netkiller ~]# hash=$(cat /etc/centos-release | ipfs add -q)
-[root@netkiller ~]# curl "http://127.0.0.1:8080/ipfs/$hash"
-CentOS Linux release 7.4.1708 (Core)
-			]]>
-			</screen>
-		</section>
-		<section>
-			<title>配置代理服务器</title>
-			<para>Nginx 配置</para>
-			<screen>
-			<![CDATA[
-    server {
-        listen       80 default_server;
-        listen       [::]:80 default_server;
-        server_name  _;
-
-        # Load configuration files for the default server block.
-        include /etc/nginx/default.d/*.conf;
-
-        location / {
-			proxy_pass      http://127.0.0.1:8080;
-        }
-
-        error_page 404 /404.html;
-            location = /40x.html {
-        }
-
-        error_page 500 502 503 504 /50x.html;
-            location = /50x.html {
-        }
-    }
-			]]>
-			</screen>
-			<screen>
-			<![CDATA[
-[root@netkiller ~]# hash=$(cat /etc/centos-release | ipfs add -q)
-[root@netkiller ~]# curl "http://localhost/ipfs/$hash"
-CentOS Linux release 7.4.1708 (Core)
-			]]>
-			</screen>
-			<para>使用浏览器访问文件</para>
-			<para>
-				<ulink url="http://localhost/ipfs/QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn" />
-			</para>
-		</section>
-
-		<section>
-			<screen>ipfs.io 节点</screen>
-			<screen>
-			<![CDATA[
-[root@netkiller ~]# hash=$(cat /etc/centos-release | ipfs add -q)
-[root@netkiller ~]# curl "https://ipfs.io/ipfs/$hash"
-CentOS Linux release 7.4.1708 (Core)
-			]]>
-			</screen>
-		</section>
-		<section>
-			<title>监听地址</title>
-			<para>或者修改配置文件直接暴漏地址出去</para>
-			<screen>
-			<![CDATA[
-[ipfs@netkiller ~]$ export EDITOR=/usr/bin/vim
-[ipfs@netkiller ~]$ ipfs config edit
-
-"API": "/ip4/127.0.0.1/tcp/5001",
-"Gateway": "/ip4/127.0.0.1/tcp/8080"
-
-"API": "/ip4/你的IP地址/tcp/5001",
-"Gateway": "/ip4/你的IP地址/tcp/8080"
-			]]>
-			</screen>
-
-		</section>
-	</section>
-	<section id="ipfs.webui">
-		<title>WebUI</title>
-		<para>如果你远程访问 webui 会议都 403 问题,需要配置 IPFS 然后重启 ipfs daemon</para>
-		<screen>
-		<![CDATA[
-ipfs config show
-ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST", "OPTIONS"]'
-ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
-ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials '["true"]'
-ipfs config show
 		]]>
 		</screen>
-		<para>修改后如下</para>
-		<screen>
-		<![CDATA[
-  "HTTPHeaders": {
-      "Access-Control-Allow-Credentials": [
-        "true"
-      ],
-      "Access-Control-Allow-Methods": [
-        "PUT",
-        "GET",
-        "POST",
-        "OPTIONS"
-      ],
-      "Access-Control-Allow-Origin": [
-        "*"
-      ],
-      "Server": [
-        "go-ipfs/0.4.14"
-      ]
-    }
-  },
-		]]>
-		</screen>
-		<para>现在就可以访问 http://your_ip_address/webui 了</para>
 	</section>
+
 	<section id="ipfs-update">
 		<title>ipfs-update</title>
 		<screen>

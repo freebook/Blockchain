@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="ipfs.cluster">
+	<title>IPFS 集群配置</title>
+	<section id="ipfs.cluster.node">
+		<title>手工添加节点</title>
+		<!-- https://github.com/ipfs/go-ipfs/blob/master/docs/file-transfer.md -->
+		<para>实验内容，链接两个节点 A 和 B，在 A 节点上添加文件，然后 B 节点下载该文件。</para>
+		<para>实验目的，证明两个节点互通，且文件已同步两份。</para>
+		<para>准备工作，两台主机，分别安装好 go、ipfs、关闭防火墙和 SELINUX</para>
+		<section id="ipfs.nodeA">
+			<title></title>
+		</section>
+		<section id="ipfs.nodeB">
+			<title></title>
+		</section>
+	</section>
+</chapter>

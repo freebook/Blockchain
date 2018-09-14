@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="ipfs.webui">
+	<title>IPFS WebUI</title>
+	<section id="ipfs.webui.cors">
+		<title>配置 CORS</title>
+		<para>如果你远程访问 webui 会议都 403 问题,需要配置 IPFS 然后重启 ipfs daemon</para>
+		<screen>
+		<![CDATA[
+ipfs config show
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST", "OPTIONS"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials '["true"]'
+ipfs config show
+		]]>
+		</screen>
+		<para>修改后如下</para>
+		<screen>
+		<![CDATA[
+  "HTTPHeaders": {
+      "Access-Control-Allow-Credentials": [
+        "true"
+      ],
+      "Access-Control-Allow-Methods": [
+        "PUT",
+        "GET",
+        "POST",
+        "OPTIONS"
+      ],
+      "Access-Control-Allow-Origin": [
+        "*"
+      ],
+      "Server": [
+        "go-ipfs/0.4.17"
+      ]
+    }
+  },
+		]]>
+		</screen>
+		<para>生产环境需要严格配置 CORS</para>
+		<screen>
+		<![CDATA[
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http://example.com\"]"
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials "[\"true\"]"
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POST\", \"GET\"]"			
+		]]>
+		</screen>
+	</section>
+	<section id="">
+		<title>访问 Web UI</title>
+		<para>配置好 CORS 就可以访问 http://localhost:5001/ipfs/ 了</para>
+		<graphic format="png" fileref="../images/ipfs/webui.png" width="1024" srccredit="netkiller" />
+	</section>
+
+	<section id="ipfs.gateway">
+		<title>HTTP 网关</title>
+		<para>默认 IPFS 监听 127.0.0.1 使用下面命令启动IPFS守护进程，然后使用 nginx 代理 127.0.0.1</para>
+		<section>
+			<title>查看网关地址</title>
+			<screen>
+			<![CDATA[
+[ipfs@netkiller ~]$ ipfs config Addresses.Gateway
+/ip4/127.0.0.1/tcp/8080			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>添加测试文件</title>
+			<screen>
+			<![CDATA[
+[root@netkiller ~]# hash=$(cat /etc/centos-release | ipfs add -q)
+[root@netkiller ~]# curl "http://127.0.0.1:8080/ipfs/$hash"
+CentOS Linux release 7.4.1708 (Core)
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>配置代理服务器</title>
+			<para>Nginx 配置</para>
+			<screen>
+			<![CDATA[
+    server {
+        listen       80 default_server;
+        listen       [::]:80 default_server;
+        server_name  _;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        location / {
+			proxy_pass      http://127.0.0.1:8080;
+        }
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[
+[root@netkiller ~]# hash=$(cat /etc/centos-release | ipfs add -q)
+[root@netkiller ~]# curl "http://localhost/ipfs/$hash"
+CentOS Linux release 7.4.1708 (Core)
+			]]>
+			</screen>
+			<para>使用浏览器访问文件</para>
+			<para>
+				<ulink url="http://localhost/ipfs/QmdoPoadYA5HYvSzgUrgXYdEVRNL1T7pY38GaWabZ3KLgn" />
+			</para>
+		</section>
+
+		<section>
+			<screen>ipfs.io 节点</screen>
+			<screen>
+			<![CDATA[
+[root@netkiller ~]# hash=$(cat /etc/centos-release | ipfs add -q)
+[root@netkiller ~]# curl "https://ipfs.io/ipfs/$hash"
+CentOS Linux release 7.4.1708 (Core)
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>监听地址</title>
+			<para>或者修改配置文件直接暴漏地址出去</para>
+			<screen>
+			<![CDATA[
+[ipfs@netkiller ~]$ export EDITOR=/usr/bin/vim
+[ipfs@netkiller ~]$ ipfs config edit
+
+"API": "/ip4/127.0.0.1/tcp/5001",
+"Gateway": "/ip4/127.0.0.1/tcp/8080"
+
+"API": "/ip4/你的IP地址/tcp/5001",
+"Gateway": "/ip4/你的IP地址/tcp/8080"
+			]]>
+			</screen>
+
+		</section>
+	</section>
+</chapter>

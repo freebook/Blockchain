@@ -23,6 +23,75 @@
 		]]>
 		</screen>
 	</section>
+	<section>
+		<title>原始 HTTP API</title>
+
+		<section>
+			<title>查看节点</title>
+			<screen>
+			<![CDATA[
+[root@netkiller ~]# curl http://127.0.0.1:5001/api/v0/swarm/peers		
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>上传文件</title>
+			<screen>
+			<![CDATA[
+curl -F "image=@/home/bar.jpg" 127.0.0.1:5001/api/v0/add			
+			]]>
+			</screen>
+			<para>如果你熟悉 curl 命令，可以使用网页版</para>
+			<screen>
+			<![CDATA[
+<form action="http://127.0.0.1:5001/api/v0/add">
+  <input type="file" name="image" accept="image/*">
+  <input type="submit">
+</form>			
+			]]>
+			</screen>
+		</section>
+	</section>
+	<section id="ipfs.infura.io">
+		<title>Infura IPFS API</title>
+		<section id="infura.cat">
+			<title>查看文件</title>
+			<screen>
+			<![CDATA[
+curl "https://ipfs.infura.io:5001/api/v0/cat?arg=QmToBaNbJQ1uNYHr93Z7RTjdPRmUWmenhUFXhBAx2sSke5"		
+			]]>
+			</screen>
+		</section>
+		<section id="">
+			<title>下载文件</title>
+			<screen>
+			<![CDATA[
+请求地址
+
+GET https://ipfs.infura.io:5001/api/v0/get?arg=<ipfs-path>&output=<value>&archive=false&compress=false&compression-level=-1
+
+请求参数
+
+arg [required] - IPFS Hash 值
+output [optional] - 存储路径
+archive [optional] - 打包程 tar 文件. 默认: “false” 不打包.
+compress [optional] - 开启 GZIP 压缩. 默认 “false” 不开启.
+compression-level [optional] - 压缩级别 (1-9). 默认是: “-1”.			
+			]]>
+			</screen>
+			<para>演示</para>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~ % cd /tmp 			
+neo@MacBook-Pro /tmp % wget -q "https://ipfs.infura.io:5001/api/v0/get?arg=QmZtmD2qt6fJot32nabSP3CUjicnypEBz7bHVDhPQt9aAy&archive=true" -O test.tar
+neo@MacBook-Pro /tmp % tar zxvf test.tar 
+x QmZtmD2qt6fJot32nabSP3CUjicnypEBz7bHVDhPQt9aAy
+neo@MacBook-Pro /tmp % cat QmZtmD2qt6fJot32nabSP3CUjicnypEBz7bHVDhPQt9aAy 
+version 1 of my text
+			]]>
+			</screen>
+		</section>
+	</section>
 	&section.devel.java.xml;
 	&section.devel.js.xml;
 </chapter>

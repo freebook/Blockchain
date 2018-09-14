@@ -3,5 +3,7 @@
 	<title>IPFS（InterPlanetary File System 星际文件系统）</title>
 	&chapter.ipfs.xml;
 	&chapter.ipfs.command.xml;
+	&chapter.ipfs.web.xml;
+	&chapter.ipfs.cluster.xml;
 	&chapter.devel.xml;
 </part>
