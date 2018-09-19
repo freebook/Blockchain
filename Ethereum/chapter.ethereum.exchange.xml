@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="exchange">
 	<title>交易所</title>
-	<para>广告招租</para>
+	<para>交易所广告招租</para>
+	<section id="www.0xproject.com">
+		<title>0x: The Protocol for Trading Tokens</title>
+		<para><ulink url="https://www.0xproject.com" /></para>
+	</section>
 <!--
 	<section id="btctrade">
 		<title>btctrade api</title>
