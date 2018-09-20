@@ -5,5 +5,6 @@
 	&chapter.ipfs.command.xml;
 	&chapter.ipfs.web.xml;
 	&chapter.ipfs.cluster.xml;
-	&chapter.devel.xml;
+	&chapter.ipfs.devel.xml;
+	&chapter.ipfs.faq.xml;
 </part>

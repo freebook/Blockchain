@@ -9,6 +9,90 @@
 [ipfs@netkiller ~]$
 		]]>
 	</screen>
+	<section id="ipfs.held">
+		<title>help</title>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~ % ipfs --help         
+USAGE
+  ipfs - Global p2p merkle-dag filesystem.
+
+SYNOPSIS
+  ipfs [--config=<config> | -c] [--debug=<debug> | -D] [--help=<help>] [-h=<h>] [--local=<local> | -L] [--api=<api>] <command> ...
+
+OPTIONS
+
+  -c,              --config   string - Path to the configuration file to use.
+  -D,              --debug    bool   - Operate in debug mode.
+  --help                      bool   - Show the full command help text.
+  -h                          bool   - Show a short version of the command help text.
+  -L,              --local    bool   - Run the command locally, instead of using the daemon.
+  --api                       string - Use a specific API instance (defaults to /ip4/127.0.0.1/tcp/5001).
+  --enc,           --encoding string - The encoding type the output should be encoded with (json, xml, or text). Default: text.
+  --stream-channels           bool   - Stream channel output.
+  --timeout                   string - set a global timeout on the command.
+
+SUBCOMMANDS
+  BASIC COMMANDS
+    init          Initialize ipfs local configuration
+    add <path>    Add a file to IPFS
+    cat <ref>     Show IPFS object data
+    get <ref>     Download IPFS objects
+    ls <ref>      List links from an object
+    refs <ref>    List hashes of links from an object
+  
+  DATA STRUCTURE COMMANDS
+    block         Interact with raw blocks in the datastore
+    object        Interact with raw dag nodes
+    files         Interact with objects as if they were a unix filesystem
+    dag           Interact with IPLD documents (experimental)
+  
+  ADVANCED COMMANDS
+    daemon        Start a long-running daemon process
+    mount         Mount an IPFS read-only mountpoint
+    resolve       Resolve any type of name
+    name          Publish and resolve IPNS names
+    key           Create and list IPNS name keypairs
+    dns           Resolve DNS links
+    pin           Pin objects to local storage
+    repo          Manipulate the IPFS repository
+    stats         Various operational stats
+    p2p           Libp2p stream mounting
+    filestore     Manage the filestore (experimental)
+  
+  NETWORK COMMANDS
+    id            Show info about IPFS peers
+    bootstrap     Add or remove bootstrap peers
+    swarm         Manage connections to the p2p network
+    dht           Query the DHT for values or peers
+    ping          Measure the latency of a connection
+    diag          Print diagnostics
+  
+  TOOL COMMANDS
+    config        Manage configuration
+    version       Show ipfs version information
+    update        Download and apply go-ipfs updates
+    commands      List all available commands
+  
+  Use 'ipfs <command> --help' to learn more about each command.
+  
+  ipfs uses a repository in the local file system. By default, the repo is
+  located at ~/.ipfs. To change the repo location, set the $IPFS_PATH
+  environment variable:
+  
+    export IPFS_PATH=/path/to/ipfsrepo
+  
+  EXIT STATUS
+  
+  The CLI will exit with one of the following values:
+  
+  0     Successful execution.
+  1     Failed executions.
+
+  Use 'ipfs <subcmd> --help' for more information about each command.	
+		]]>
+		</screen>
+	</section>
 	<section id="ipfs.command">
 		<title>ipfs</title>
 
@@ -548,8 +632,37 @@ Published to QmPNH1AKXNidUgsW6MaMABiNRhdXnqpTbthbYoZzhZE9ve: /ipfs/QmWzK72EZJJhW
 		</section>
 		<section id="ipfs.pin">
 			<title>将 Pin 对象存储到本地</title>
-			<para>ls </para>
-			<screen>
+			<para>Pinning 是 IPFS 中一个非常重要的概念。你可以从任何一个节点访问IPFS网络上的文件，如果本地没有就会去整个IPFS网络上检索。</para>
+			<para>你希望将有些文件永久保存在你的服务器中，就需要用到 pin 功能。</para>
+			<itemizedlist>
+				<title>IPFS 中有三种 pin 类型</title>
+				<listitem>direct pins 仅仅pin住一个和其它区块没有关联的独立block</listitem>
+				<listitem>recursive pins pin住给出的block以及递归pin住它的所有children</listitem>
+				<listitem>indirect pins recursive pin的children，不是直接被pin住的，是被递归pin住的</listitem>
+			</itemizedlist>
+			<section>
+				<title>演示 Pin 操作</title>
+				<screen>
+				<![CDATA[
+[ipfs@netkiller ~]$ echo "helloworld" > foo
+
+[ipfs@netkiller ~]$ ipfs add foo 
+added QmUU2HcUBVSXkfWPUc3WUSeCMrWWeEJTuAgR9uyWBhh9Nf foo
+ 11 B / 11 B [==============================================================================] 100.00%
+ 
+ [ipfs@netkiller ~]$ ipfs pin ls --type=all | grep QmUU2HcUBVSXkfWPUc3WUSeCMrWWeEJTuAgR9uyWBhh9Nf
+QmUU2HcUBVSXkfWPUc3WUSeCMrWWeEJTuAgR9uyWBhh9Nf recursive
+
+[ipfs@netkiller ~]$ ipfs pin rm -r QmUU2HcUBVSXkfWPUc3WUSeCMrWWeEJTuAgR9uyWBhh9Nf
+unpinned QmUU2HcUBVSXkfWPUc3WUSeCMrWWeEJTuAgR9uyWBhh9Nf
+
+[ipfs@netkiller ~]$ ipfs pin ls --type=all | grep QmUU2HcUBVSXkfWPUc3WUSeCMrWWeEJTuAgR9uyWBhh9Nf
+				]]>
+				</screen>
+			</section>
+			<section>
+				<title>查看 pin</title>
+				<screen>
 				<![CDATA[
 [root@netkiller ~]# ipfs pin ls
 QmQBcXurY2QBpv7sg8zyS4UXQeHGCqx4DBp86kBLPDzS18 recursive
@@ -577,7 +690,8 @@ QmZTR5bcpQD7cFgTorqxZDYaew1Wqgfbd2ud9QqGPAkK2V indirect
 Qmbh35NHRNYfpaXaj1bQF4gcVYKRjjBvD7eys4dK4iwNrY indirect
 Qmen15DKJhF5ngxiBEzmpMyPA3HpMfXNqgogeyeati2sEx indirect
 				]]>
-			</screen>
+				</screen>
+			</section>
 		</section>
 		<section id="ipfs.stats">
 			<title>查看状态</title>
@@ -657,6 +771,19 @@ RateOut: 3.4 kB/s
 [root@netkiller ~]# ipfs swarm peers
 /ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ
 				]]>
+			</screen>
+		</section>
+		<section id="ipfs.dht.findpeer">
+			<title>查看节点端口详情</title>
+			<screen>
+			<![CDATA[
+[ipfs@netkiller ~]$ ipfs dht findpeer QmUHKXqq4e56BRu16D8wKHsqc8Ere3w6gLLqrfMF7djTwe
+/ip4/10.14.0.16/tcp/4001
+/ip4/95.85.40.97/tcp/4001
+/ip4/127.0.0.1/tcp/4001
+/ip4/10.129.26.130/tcp/4001
+/ip6/::1/tcp/4001			
+			]]>
 			</screen>
 		</section>
 	</section>

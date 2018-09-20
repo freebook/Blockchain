@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="ipfs.faq">
+	<title>IPFS Faq</title>
+	<section id="faq.block">
+		<title>一个大文件将会被分块存储</title>
+		<para>创建测试文件</para>
+		<screen>
+		<![CDATA[
+[ipfs@netkiller ~]$ dd if=/dev/zero of=test bs=258k count=1
+记录了1+0 的读入
+记录了1+0 的写出
+264192字节(264 kB)已复制，0.000655979 秒，403 MB/秒 		
+		]]>
+		</screen>
+		<para>将测试文件添加到 IPFS 文件系统</para>
+		<screen>
+		<![CDATA[
+[ipfs@netkiller ~]$ ipfs add test
+added QmbZHydHNsDVdQJ5hYbCGAJCUPLF8vLdQDgSdxgHNjVKNY test
+ 258.00 KiB / 258.00 KiB [===============================================] 100.00% 		
+		]]>
+		</screen>
+		<para>查看 test 的文件块。</para>
+		<screen>
+		<![CDATA[
+[ipfs@netkiller ~]$ ipfs ls QmbZHydHNsDVdQJ5hYbCGAJCUPLF8vLdQDgSdxgHNjVKNY
+QmRk1rduJvo5DfEYAaLobS2za9tDszk35hzaNSDCJ74DA7 262158 
+Qmcpc1Kk8Hhj3rVSnZGSrxzP4Fcp48cEARxMXxkHryUNJw 2059  		
+		]]>
+		</screen>
+	</section>
+</chapter>
