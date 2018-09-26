@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="index"><?dbhtml dir="baas" ?>
+	<title>BaaS (Blockchain as a Service) 平台</title>
+
+	&chapter.huawei.xml;
+</chapter>
