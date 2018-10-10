@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="solidity" ?>
-	<title>智能合约语言 Solidity v0.4.23</title>
+	<title>智能合约语言 Solidity v0.5.0</title>
 	<subtitle>本文作者最近在找工作，有意向致电 13113668890</subtitle>
 	<info>
 		<keywordset>
@@ -106,7 +106,7 @@ output/HelloWorld.abi
 		<para>将下面代码粘贴到 </para>
 		<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 
 contract HelloWorld
 {
@@ -234,7 +234,7 @@ undefined
 				<title>加 +，减 -，乘 *，除 ／ 运算演示</title>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract Math {
@@ -269,7 +269,7 @@ contract Math {
 				<title>求余 % 运算演示</title>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract Math {
@@ -287,7 +287,7 @@ contract Math {
 				<title>幂运算演示</title>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract Math {
@@ -306,7 +306,7 @@ contract Math {
 				<title>与 &amp;，| 或，非 ～，异或 ^ 演示</title>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract Math {
@@ -352,7 +352,7 @@ contract Math {
 				<title>位移演示</title>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 
@@ -388,7 +388,7 @@ a >> n 表示a的二进制位向右移动n位，在保证位数没有溢出的�
 			<para>string 字符串类型，字符串可以通过""或者''来定义字符串的值</para>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract StringTest {
@@ -414,7 +414,7 @@ contract StringTest {
 				</para>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract StringTest {
@@ -488,7 +488,7 @@ _tmp[2] = 0x6f;
 			</screen>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract BytesTest {
@@ -534,7 +534,7 @@ contract BytesTest {
 			<para>.length可以动态修改字节数组的长度</para>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract BytesTest2 {
@@ -581,7 +581,7 @@ uint [2][3] T = [[1,2],[3,4],[5,6]];
 			</programlisting>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract ArrayTest {
@@ -613,7 +613,7 @@ contract ArrayTest {
 				<para>.length 属性是活动数组的尺寸</para>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract ArrayLength {
@@ -634,7 +634,7 @@ contract ArrayLength {
 				<para>通过 push 可以向数组中添加数据</para>
 				<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract ArrayLength {
@@ -665,7 +665,7 @@ contract ArrayLength {
 			<para>访问枚举方式 State.New 实际等于数字 0</para>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract EnumTest {
@@ -717,7 +717,7 @@ contract Purchase {
 			<para>演示例子</para>
 			<programlisting>
 				<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract Students {
@@ -771,7 +771,7 @@ address public minter;
 			<para>下面是一个获得账号余额的例子。</para>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract AddressTest{
@@ -801,7 +801,7 @@ contract AddressTest{
 			<para>mapping 就是图数据结构，由 key 和 value 组成。</para>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract MappingExample {
@@ -841,7 +841,7 @@ szabo: Nick Szabo 尼克萨博 密码学家、智能合约的提出者
 			</literallayout>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //Author: netkiller <netkiller@msn.com>
 //Home: http://www.netkiller.cn
 contract UnitTest {
@@ -907,7 +907,7 @@ int num;
 		<para>变量赋值</para>
 		<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 
 contract C {
     uint[] data;
@@ -1226,7 +1226,7 @@ interface Token {
 			<para>定义 library</para>
 			<programlisting>
 		<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 
 // This is the same code as before, just without comments
 library Set {
@@ -1285,7 +1285,7 @@ contract C {
 				<title>使用库来扩展数据类型</title>
 				<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 
 library Search {
     function indexOf(uint[] storage self, uint value)
@@ -1567,7 +1567,7 @@ contract Netkiller {
 }
 		]]>
 		</programlisting>
-		
+
 	</section>
 	<section id="solidity.contract.new">
 		<title>合约中实例化另一个合约</title>
@@ -1865,7 +1865,7 @@ add(1157920892373161954235709850086879078532699846656405640394575840079131296399
 			<title>Voting</title>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 //author: netkiller <netkiller@msn.com>
 //homepage: http://www.netkiller.cn
 contract Voting {
@@ -1915,7 +1915,7 @@ contract Voting {
 			<title>MetaCoin</title>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 contract MetaCoin {
 	mapping (address => uint) balances;
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
@@ -2022,7 +2022,7 @@ contract Ballot {
 			<title>Conference</title>
 			<programlisting>
 			<![CDATA[
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.25;
 
 contract Conference {
   address public organizer;
