@@ -402,6 +402,7 @@ contract Crowdsale {
 			</programlisting>
 		</section>
 	</section>
+	
 	<section id="token.erc721">
 		<title>ERC721 - Non-Fungible Tokens</title>
 		<section id="ERC721Interface">
@@ -506,6 +507,7 @@ tokenOfOwnerByIndex(): 所有者可以一次拥有多个的NFT, 此函数返回_
 			</para>
 			<para>该合约可以实现币币兑换</para>
 		</section>
+		<!-- proxy erc20 https://github.com/ccbook/props-token-distribution/blob/master/contracts/token/ERC865Token.sol -->
 	</section>
 	<section id="token.doc">
 		<title>代币合约官方文档</title>
