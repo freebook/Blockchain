@@ -1,7 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="">
-	<title></title>
-	<section id="">
+<section id="art">
+	<title>艺术品区块链溯源防伪平台</title>
+	<section>
+		<title>都有哪些角色参与其中</title>
+		<para>参与艺术品上链，鉴定，交易包含了下面几种角色。</para>
+		<itemizedlist>
+			<title>平台至少有三种角色会</title>
+			<listitem>用户</listitem>
+			<listitem>机构</listitem>
+			<listitem>鉴定师</listitem>
+		</itemizedlist>
+		<para>所以我们需要为不同的角色提供不同的App应用。</para>
+		<para>用户端：功能包括防伪查询，链上资产的浏览，权益转让，资产拍卖，资产抵押，社区互动，分享，数字资产行情，钱包等等</para>
+		<para>机构端：负责信息收集，信息整理，数据提交，数据审查，资产上链，资产划拨等等</para>
+		<para>鉴定师：负责数字资产的鉴定，需要有相关资质。</para>
+
+	</section>
+	<section>
+		<title>需要运用哪些技术</title>
+		<itemizedlist>
+			<title>防伪溯源涉及的技术栈</title>
+			<listitem>纸纹防伪（PaperPrint），纸纹防伪即纸纹防伪技术。它是一种基于提取和识别每张纸与生俱来的、独一无二且无法仿造、克隆的自然纤维纹理作为防伪特征（即纸纹）来实现防伪的新型防伪技术。</listitem>
+			<!-- https://www.sinosun.com.cn/paperprint/ -->
+			<listitem>荧光防伪油墨，使用荧光油墨印刷技术，在特定波长的紫外线或者红外线下才能看到。荧光二维码，荧光印章，荧光指纹，荧光暗记，布满整个宣纸的荧光图案。我们可以为每个艺术家定制带有荧光图案的专属纸张。</listitem>
+			<listitem>DNA防伪, 将艺术家的血液滴在书画上或者头发夹在宣纸中间。据说某中世纪著名画家将自己的精液和油画颜料混合 ：）</listitem>
+			<listitem>特征识别防伪，类似我们手机的面部识别，记录物品的特征，例如使用电子显微镜平射纸文理，画面局部等等。油画还可以拍摄X光片。</listitem>
+			<listitem>3D 建模扫描，例如3D扫描仪，将物品的3D数据记录下来。</listitem>
+			<listitem>激光内雕，例如施华洛世奇将 logo 内雕在他的水晶制品中。</listitem>
+			<listitem>QRcode 二维码，用于链上数据查询</listitem>
+			<listitem>NFC(Near Field Communication) 有两个作用，一可以存储数据，二用来防伪，因为生产相同UID的NFC芯片难度极大，门槛很高。</listitem>
+			<listitem>RFID(Radio Frequency Identification) 是 NFC 的一种，区别是不能存储数据，NFC 不能替代 RFID，RFID 可以实现资产盘点，以及安防。</listitem>
+			<listitem>GPS 定位与地图，记录用户位置，资产位置，机构位置，鉴定师位置，还能实现次产跟踪，例如两次查询资产的GPS坐标，不在安全范围，将视为被盗，系统将通知机构或用户。</listitem>
+			<listitem>高清相机、高清视频设备</listitem>
+			<listitem>安防设备，CCTV监控，门禁等等</listitem>
+		</itemizedlist>
+	</section>
+
+	<section>
+		<title>技术架构</title>
+		<!-- <para>区块链项目与传统有很大不同，由于数据存储再公链或者盟链上，服务器，带宽，需要要的技术。</para> -->
+		<section>
+			<title>前端技术</title>
+			<para>由于 H5 技术无法满足我们的需求，例如相机，麦克风，NFC，定位...等等。我们重点放在 App 开发，H5 紧紧用于官网，区块链浏览器，资讯，等等。</para>
+			<para>由于使用了很多手机上技术，原生App更适合，而混合开发 React Native，Vue.js, Flutter 不在我们选择之列。</para>
+			<para>微信小程序可以考虑，但是如果涉及 Token 可能随时会被下架。</para>
+		</section>
+		<section>
+			<title>微服务端</title>
+			<para>服务端设计为可以水平扩展，可以随时根据用户量，扩展服务器规模。</para>
+			<para>Nginx 负载均衡，HTTP2 （安卓 Okhttp 已经很好的支持 http2）</para>
+			<para>框架采用 Spring cloud</para>
+			<para>数据库开发使用 JPA</para>
+			<para>接口认证 Oauth2 + Jwt</para>
+			<para></para>
+			<para></para>
+		</section>
+		<section>
+			<title>存储层</title>
+			<para>MongoDB</para>
+			<para>Redis</para>
+		</section>
+		<section>
+			<title>消息队列层</title>
+			<para>Kafka</para>
+		</section>
+		<section>
+			<title>搜索层</title>
+			<para>ELK(ElasticSearch, Logstash, Kibana)</para>
+			<para>搜索是非常重要的功能，因为区块链只能通过 hash 值取出链上的数据，虽然 Hyperledger Fabrc 在数据使用 CouchDB 时提供了 World State 的一些高级搜索功能，但是仍然不能满足我们的需求。</para>
+			<para>所以链上数据需要存储一份在搜索引擎中，搜索引擎的分词功能，可以提供快速精准的搜索服务。</para>
+			<para>搜索引擎的工作流程是：</para>
+			<screen>
+			<![CDATA[
+User --> Phone App --> Nginx --> Spring cloud --> Elastsearch --> Hyperledger Fabric	
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>区块链</title>
+			<para>Hyperledger Fabric 盟链：主要用于资产上链，链上资产查询</para>
+			<para>Ethereum 公链：用于 Token ，由于 Hyperledger Fabric 无法实现 Token，所以我们仍然需要以太坊。（作者写过一篇文章关于为什么Hyperledger Fabric 不能实现 Token，请兴趣自己在网上搜索） </para>
+			<para>EOS Token/资产上链：由于在我设计这个系统之时 EOS 还没有 Release 所以当时没有考虑 EOS。现在我们可以使用 EOS，甚至替换掉 Hyperledger Fabrc + Ethereum 方案。因为 EOS 即能实现资产上链，也能实现 Token。 这里我们将资产也在 EOS 上链一份，同时也支持 EOS 发的 Token。</para>
+			<para>IPFS 星际文件系统：用于存储多媒体数据，例如图片，视频。（注意：IPFS 暂时不支持流媒体，我的解决方案是上链同事复制一份到 nginx 中，并开启 mp4 流媒体功能）</para>
+		</section>
+		<section>
+			<title>支持层</title>
+			<para>监控 Zabbix</para>
+		</section>
+	</section>
+
+	<section id="nfc">
 		<title>RFID/NFC</title>
 		<para>NFC基本概念：  </para>
 		<para>NFC(Near Field Communication)缩写，即近距离无线通讯技术。由飞利浦公司和索尼公司共同开发的一项无线技术。NFC由非接触式射频识别及互联互通技术整合演变而来，可以在移动设备、消费类电子产品、PC和智能控件工具间进行近距离无线通信。NFC提供了一种简单、触控式的解决方案，可以让消费者简单直观地交换信息、访问内容与服务。  NFC技术特点：  1、 在13.56MHz频率运行距离在20公分内；  2、 传输速度可分106Kbits/sec，212 Kbits/sec，424 Kbits/sec；  3、 运作可分主动与被动模式。主动模式需使用电池，也需要独立发射模组；被动模式不需使用电池，但无法独立发射讯号；  4、 已成为ISO/IEC IS 18092国家标准、ETSI TS 102 190标准、EMCA-340标准。</para>
@@ -12,37 +100,32 @@
 
 		<itemizedlist>
 			<title>RFID/NFC 比较</title>
-			<listitem>
-				距离，RFID远，NFC进
-			</listitem>
-			<listitem>
-				RIFD由读卡器和标签组成，读卡器只能读取标签上的数据。NFC既可以做读卡器，也能提供标签服务，还能实现P2P点对点传输数据。
-			</listitem>
+			<listitem>距离，RFID远，NFC进</listitem>
+			<listitem>RIFD由读卡器和标签组成，读卡器只能读取标签上的数据。NFC既可以做读卡器，也能提供标签服务，还能实现P2P点对点传输数据。</listitem>
 			<listitem>修改，RFID是只读的，NFC上的数据可以修改，例如公交卡</listitem>
 			<listitem></listitem>
 		</itemizedlist>
 		<para>NFC 标签可以使用易碎纸粘贴在艺术品上，缺点是寿命较短。使用PVC材料又容易撕下。</para>
-		<section id="">
+		<section>
 			<title>手机NFC功能</title>
 			<para>NFC是近场通信，支持13.56MHz，因此用手机的NFC来读取13.56MHz的RFID电子标签，在硬件上是没有问题的.</para>
 		</section>
-	</section>
-	<section id="">
-		<title>NFC 标准</title>
-		<para>历史记录</para>
-		<screen>
+		<section>
+			<title>NFC 标准</title>
+			<para>历史记录</para>
+			<screen>
 			<![CDATA[
 ISO14443-4
 ISO14443-3A
 ISO14443-3B	
 			]]>
-		</screen>
-	</section>
-	<section id="nfc.date">
-		<title>NFC 数据格式</title>
-		<section id="NDEF">
-			<title>NDEF (NFC Data Exchange Format)</title>
-			<screen>
+			</screen>
+		</section>
+		<section id="nfc.date">
+			<title>NFC 数据格式</title>
+			<section id="NDEF">
+				<title>NDEF (NFC Data Exchange Format)</title>
+				<screen>
 			<![CDATA[
 Value    Protocol
 -----    --------
@@ -83,7 +166,9 @@ Value    Protocol
 0x22     urn:epc:
 0x23     urn:nfc:		
 			]]>
-			</screen>
+				</screen>
+			</section>
+
 		</section>
 		<section id="MifareUltralight">
 			<title>MifareUltralight</title>
@@ -101,60 +186,32 @@ Value    Protocol
 			]]>
 			</screen>
 		</section>
-		<section id="">
+		<section>
 			<title>MifareClassic</title>
 		</section>
-	</section>
-	<section id="">
-		<title>NXP（恩智浦）相关产品</title>
-		<section id="">
-			<title>NTAG21x系列容量大小</title>
-			<screen>
+		<section>
+			<title>NXP（恩智浦）相关产品</title>
+			<section>
+				<title>NTAG21x系列容量大小</title>
+				<screen>
 			<![CDATA[
 NTAG210 48byte
 NTAG213 144byte
 NTAG215 504byte
 NTAG216，888byte	
 			]]>
-			</screen>
+				</screen>
+			</section>
+			<section>
+				<title>Mifare</title>
+				<para></para>
+				<screen>
+				<![CDATA[
+	
+				]]>
+				</screen>
+			</section>
 		</section>
-		<section id="">
-			<title>Mifare</title>
-			<para></para>
-			<screen>
-			<![CDATA[
 
-			]]>
-			</screen>
-		</section>
-	</section>
-
-	<section id="">
-		<title>防伪技术</title>
-
-		<section id="">
-			<title>荧光防伪油墨</title>
-			<para>使用荧光油墨印刷技术，在特定波长的紫外线或者红外线下才能看到。</para>
-			<para>荧光二维码</para>
-			<para>荧光印章</para>
-			<para>荧光指纹</para>
-			<para>荧光暗记</para>
-			<para>布满整个宣纸的荧光图案</para>
-			<para>我们可以为每个艺术家定制带有荧光图案的专属纸张</para>
-		</section>
-		<section id="">
-			<title>DNA防伪</title>
-			<para>将艺术家的血液滴在书画上或者头发夹在宣纸中间。</para>
-		</section>
-		<section id="">
-			<title>我品细节，文理</title>
-			<para>使用电子显微镜平射纸文理，画面局部等等。</para>
-			<para>油画还可以拍摄X光片</para>
-		</section>
-		<section id="">
-			<title>纸纹（PaperPrint）</title>
-			<!-- https://www.sinosun.com.cn/paperprint/ -->
-			<para>纸纹防伪，即纸纹防伪技术。它是一种基于提取和识别每张纸与生俱来的、独一无二且无法仿造、克隆的自然纤维纹理作为防伪特征（即纸纹）来实现防伪的新型防伪技术。</para>
-		</section>
 	</section>
 </section>

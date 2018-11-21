@@ -9,3 +9,4 @@
 <!ENTITY section.credit.xml				SYSTEM "section.credit.xml">
 <!ENTITY section.bank.xml				SYSTEM "section.bank.xml">
 <!ENTITY section.hospital.xml			SYSTEM "section.hospital.xml">
+<!ENTITY section.art.xml				SYSTEM "section.art.xml">
