@@ -45,7 +45,7 @@ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POS
 		]]>
 		</screen>
 	</section>
-	<section id="">
+	<section id="ipfs.webui">
 		<title>访问 Web UI</title>
 		<para>配置好 CORS 就可以访问 http://localhost:5001/ipfs/ 了</para>
 		<graphic format="png" fileref="../images/ipfs/webui.png" width="1024" srccredit="netkiller" />

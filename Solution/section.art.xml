@@ -53,7 +53,6 @@
 			<para>数据库开发使用 JPA</para>
 			<para>接口认证 Oauth2 + Jwt</para>
 			<para></para>
-			<para></para>
 		</section>
 		<section>
 			<title>存储层</title>
@@ -78,10 +77,13 @@ User --> Phone App --> Nginx --> Spring cloud --> Elastsearch --> Hyperledger Fa
 		</section>
 		<section>
 			<title>区块链</title>
+			<para>我们不做山寨链，我发现很多国内企业热衷于做山寨链，什么事山寨链呢，就是在现有的区块链(Ethereum, Hyperledger Fabric 或 EOS) 的基础上二次开发，首先开发山寨链需要大量的资金人力，私链是没有任何意义的，没有公信力。即使目前的现有区块链无法满足我们的需求，可以通过架构调节去适应他。</para>
+			<para>所以我们只用最成熟的产品：</para>
 			<para>Hyperledger Fabric 盟链：主要用于资产上链，链上资产查询</para>
 			<para>Ethereum 公链：用于 Token ，由于 Hyperledger Fabric 无法实现 Token，所以我们仍然需要以太坊。（作者写过一篇文章关于为什么Hyperledger Fabric 不能实现 Token，请兴趣自己在网上搜索） </para>
 			<para>EOS Token/资产上链：由于在我设计这个系统之时 EOS 还没有 Release 所以当时没有考虑 EOS。现在我们可以使用 EOS，甚至替换掉 Hyperledger Fabrc + Ethereum 方案。因为 EOS 即能实现资产上链，也能实现 Token。 这里我们将资产也在 EOS 上链一份，同时也支持 EOS 发的 Token。</para>
 			<para>IPFS 星际文件系统：用于存储多媒体数据，例如图片，视频。（注意：IPFS 暂时不支持流媒体，我的解决方案是上链同事复制一份到 nginx 中，并开启 mp4 流媒体功能）</para>
+			<para>注：虽然以太坊目前尝尝拥堵，但是很多应用场景仍是不可替代的。</para>
 		</section>
 		<section>
 			<title>支持层</title>
@@ -120,6 +122,17 @@ ISO14443-3A
 ISO14443-3B	
 			]]>
 			</screen>
+			<para>NTAG21x系列容量大小</para>
+
+			<screen>
+			<![CDATA[
+NTAG210 48byte
+NTAG213 144byte
+NTAG215 504byte
+NTAG216，888byte	
+			]]>
+			</screen>
+
 		</section>
 		<section id="nfc.date">
 			<title>NFC 数据格式</title>
@@ -179,39 +192,261 @@ Value    Protocol
 将NFC标签的存储区域分为16个页，每一个页可以存储4个字节，一个可存储64个字节（512位）。页码从0开始（0至15）。前4页（0至3）存储了NFC标签相关的信息（如NFC标签的序列号、控制位等）。从第5页开始存储实际的数据（4至15页）。
 			]]>
 			</screen>
-			<para></para>
-			<screen>
-			<![CDATA[
-		
-			]]>
-			</screen>
+
 		</section>
 		<section>
 			<title>MifareClassic</title>
 		</section>
 		<section>
 			<title>NXP（恩智浦）相关产品</title>
-			<section>
-				<title>NTAG21x系列容量大小</title>
-				<screen>
-			<![CDATA[
-NTAG210 48byte
-NTAG213 144byte
-NTAG215 504byte
-NTAG216，888byte	
-			]]>
-				</screen>
-			</section>
+
 			<section>
 				<title>Mifare</title>
-				<para></para>
-				<screen>
-				<![CDATA[
-	
-				]]>
-				</screen>
+
 			</section>
 		</section>
+	</section>
+	<section>
+		<title>资产投资与份额持有</title>
+		<para>传统艺术品投资门槛非常高，一是用户不知道从哪些渠道可以投资，二是艺术品价值过高，三是艺术品简单难。这导致了投资艺术品门槛过高。 Token 能实现份额化，实现人人参与，人人持有，P2P交易。</para>
+		<para>例如某机构上链一件艺术品，用户可以投资该艺术品的一定份额，可以转让他持有的权益。且交易去中心化，不受任何机构，管理者的制约。</para>
+		<para>下面的合约可以展示如何分割艺术品份额，最终达到链上资产的份额分割和持有与交易。</para>
+		<screen>
+		<![CDATA[
+pragma solidity ^0.4.25;
 
+/**
+ * @title SafeMath
+ * @dev Math operations with safety checks that revert on error
+ */
+library SafeMath {
+
+  /**
+  * @dev Multiplies two numbers, reverts on overflow.
+  */
+  function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+    // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
+    // benefit is lost if 'b' is also tested.
+    // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522
+    if (a == 0) {
+      return 0;
+    }
+
+    uint256 c = a * b;
+    require(c / a == b);
+
+    return c;
+  }
+
+  /**
+  * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.
+  */
+  function div(uint256 a, uint256 b) internal pure returns (uint256) {
+    require(b > 0); // Solidity only automatically asserts when dividing by 0
+    uint256 c = a / b;
+    // assert(a == b * c + a % b); // There is no case in which this doesn't hold
+
+    return c;
+  }
+
+  /**
+  * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).
+  */
+  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+    require(b <= a);
+    uint256 c = a - b;
+
+    return c;
+  }
+
+  /**
+  * @dev Adds two numbers, reverts on overflow.
+  */
+  function add(uint256 a, uint256 b) internal pure returns (uint256) {
+    uint256 c = a + b;
+    require(c >= a);
+
+    return c;
+  }
+
+  /**
+  * @dev Divides two numbers and returns the remainder (unsigned integer modulo),
+  * reverts when dividing by zero.
+  */
+  function mod(uint256 a, uint256 b) internal pure returns (uint256) {
+    require(b != 0);
+    return a % b;
+  }
+}        
+
+contract Ownable {
+    
+    address public owner;
+    
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    
+    constructor() public {
+        owner = msg.sender;
+    }
+    
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+    
+    function transferOwnership(address newOwner) public onlyOwner {
+        require(newOwner != address(0));
+        emit OwnershipTransferred(owner, newOwner);
+        owner = newOwner;
+    }
+
+}
+
+contract NetkillerAssetsToken is Ownable {
+    using SafeMath for uint256;
+    
+    string public name;
+    string public symbol;
+    uint public decimals;
+    uint256 public totalSupply;
+    
+    mapping(address => mapping(string => uint256)) internal balances;
+    mapping(string => address) internal tokens;
+    
+    event Transfer(address indexed _from, address indexed _to, string indexed _tokenId);
+    event Burn(address indexed from, string _tokenId);
+    
+    constructor(
+        string tokenName,
+        string tokenSymbol,
+        uint decimalUnits
+    ) public {
+        owner = msg.sender;
+        name = tokenName;
+        symbol = tokenSymbol; 
+        decimals = decimalUnits;
+        totalSupply = 0; 
+    }
+    
+    function add(address _owner, string _tokenId) onlyOwner returns(bool status){
+        balances[_owner][_tokenId] = 100 * 10 ** uint256(decimals);
+        tokens[_tokenId] = _owner;
+        totalSupply = totalSupply.add(1);
+        return true;
+    }
+    
+    function balanceOf(address _owner, string _tokenId) constant returns(uint balance){ 
+        return balances[_owner][_tokenId];
+    }
+
+    function ownerOf(string _tokenId) constant returns (address owner) {
+        return tokens[_tokenId];
+    }
+    
+    function transfer(address _to, string _tokenId){
+        
+        address _from = msg.sender;
+        uint256 amount = balances[_from][_tokenId];
+        transfer(_to, amount, _tokenId);
+    }
+    function transfer(address _to, uint256 _value, string _tokenId){
+        require(msg.sender == ownerOf(_tokenId));
+        require(msg.sender != _to);
+        require(_to != address(0));
+        
+        address _from = msg.sender;
+        uint256 amount = balances[_from][_tokenId];
+        require(amount >= _value);
+        
+        balances[_from][_tokenId] = balances[_from][_tokenId].sub(_value);
+        balances[_to][_tokenId] = balances[_to][_tokenId].add(_value);
+        tokens[_tokenId] = _to;
+
+        emit Transfer(_from, _to, _tokenId);
+    }
+    
+    function burn(address _owner, string _tokenId) onlyOwner public returns (bool success) {
+        require(balances[_owner][_tokenId] > 0 && balances[_owner][_tokenId] == 100 * 10 ** uint256(decimals));
+
+        balances[_owner][_tokenId] = 0;
+        tokens[_tokenId] = address(0);
+
+        totalSupply = totalSupply.sub(1);
+        emit Burn(msg.sender, _tokenId);
+        return true;
+    }
+    
+}		
+		]]>
+		</screen>
+		<para>由于 ERC721 不太符合我的需求，所以我结合 ERC20 和 ERC721 写出了我的合约。合约尽量保持了ERC20的使用习惯，函数定义尽量兼容 ERC20。</para>
+		<para>我们来看下面的构造方法，每个种类的物品一个合约，例如字画，陶瓷，青铜器。</para>
+		<screen>
+		<![CDATA[
+    constructor(
+        string tokenName,
+        string tokenSymbol,
+        uint decimalUnits
+    ) public {
+        owner = msg.sender;
+        name = tokenName;
+        symbol = tokenSymbol; 
+        decimals = decimalUnits;
+        totalSupply = 0; 
+    }
+		]]>
+		</screen>
+		<para>通过下面函数，添加资产到 Token，使链上资产与Token绑定。</para>
+		<screen>
+		<![CDATA[
+    function add(address _owner, string _tokenId) onlyOwner returns(bool status){
+        balances[_owner][_tokenId] = 100 * 10 ** uint256(decimals);
+        tokens[_tokenId] = _owner;
+        totalSupply = totalSupply.add(1);
+        return true;
+    }		
+		]]>
+		</screen>
+		<para>balances[_owner][_tokenId] = 100 * 10 ** uint256(decimals); 初始化份额是 100 表示 100%</para>
+		<para>totalSupply = totalSupply.add(1); 物品件数加一。可以用于统计链上资产的数量。</para>
+		<para>下面函数是查询资产的持有人</para>
+		<screen>
+		<![CDATA[
+function ownerOf(string _tokenId) constant returns (address owner) {
+        return tokens[_tokenId];
+    }		
+		]]>
+		</screen>
+		<para>下面函数是，权益转让和权益份额转让。</para>
+		<screen>
+		<![CDATA[
+    function transfer(address _to, string _tokenId){
+        
+        address _from = msg.sender;
+        uint256 amount = balances[_from][_tokenId];
+        transfer(_to, amount, _tokenId);
+    }
+    function transfer(address _to, uint256 _value, string _tokenId){
+        require(msg.sender == ownerOf(_tokenId));
+        require(msg.sender != _to);
+        require(_to != address(0));
+        
+        address _from = msg.sender;
+        uint256 amount = balances[_from][_tokenId];
+        require(amount >= _value);
+        
+        balances[_from][_tokenId] = balances[_from][_tokenId].sub(_value);
+        balances[_to][_tokenId] = balances[_to][_tokenId].add(_value);
+        tokens[_tokenId] = _to;
+
+        emit Transfer(_from, _to, _tokenId);
+    }		
+		]]>
+		</screen>
+		<para>接下来，我们就是可以开发 Dapp 钱包了，在钱包中实现资产的转移交易。</para>
+		<para>这个合约可以一直到 EOS 上，Hyperledger Fabric 不可以，因为 Fabric 没有锁的机制，会导致计算出错。</para>
+	</section>
+	<section>
+		<title>原型设计</title>
 	</section>
 </section>
