@@ -616,8 +616,43 @@ err = stub.PutState(_key, []byte(_data))
 	<section>
 		<title>原型设计</title>
 		<section>
-			<title></title>
+			<title>注册与登录</title>
+			<itemizedlist>
+				<title>注册</title>
+				<listitem>安装APP后，点击注册链接，进入注册界面。</listitem>
+				<listitem>用户类型选择选择 “机构”或者”鉴定师”。对于前台只有用户一种角色。</listitem>
+				<listitem>输入手机号码，然后获取验证码</listitem>
+				<listitem>输入密码</listitem>
+				<listitem>点击注册按钮，完成注册</listitem>
+			</itemizedlist>
 
+			<itemizedlist>
+				<title>登录,平台提供多重登录方式</title>
+				<listitem>密码登录</listitem>
+				<listitem>验证码登录</listitem>
+				<listitem>微信登录</listitem>
+				<listitem>指纹登录</listitem>
+				<listitem>面部识别登录</listitem>
+				<listitem>助记词登录</listitem>
+				<listitem>私钥登录</listitem>
+				<listitem>闪付卡登录(类似银行卡的 QuickPass 闪付，可以在 Post 机上做 Token 付款，转账等操作)</listitem>
+			</itemizedlist>
+		</section>
+		<section>
+			<title>鉴定师角色</title>
+			<para>鉴定师是管理机构认证并颁发资质证书人员，艺术品溯源区块链领域，他主要的职责事艺术品鉴定。鉴定师可以挂靠到机构。</para>
+			<para>如何注册成为鉴定师？</para>
+			<screen>
+			<![CDATA[
+		首先进入APP -> 点击『注册 』->阅读条款->点击同意按钮。
+		输入手机号码，发送验证码，输入密码，重复输入密码，选择『鉴定师』，提交。			
+			]]>
+			</screen>
+			<para>注册成功会自动登录，进入完善资料页面，鉴定师需要实名认证，上传身份证信息，鉴定师证书，等等资质文件。鉴定师需要仔细填写每一项，并保证资料的真实性。</para>
+			<para>提交资料后，等待管理机构审批，管理机构会仔细核对每项数据。如果被拒，需要鉴定师重新填写，再提交。</para>
+			<para>审批通过前，只能看到鉴定师信息页面。 审批通过后，可以看到，鉴定师信息，已签名资产，未处理资产。</para>
+			<para>怎样鉴定物品？</para>
+			<para>鉴定师登录APP后，进入『我的』可以看淡未处理资产菜单，进入菜单可以看到任务列表。点开一件物品，将鉴定结果提交上去，完成鉴定。鉴定师可以在[已签名资产]中查看自己鉴定过的物品。</para>
 		</section>
 	</section>
 </section>
