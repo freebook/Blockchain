@@ -9,6 +9,7 @@
 			<listitem>用户</listitem>
 			<listitem>机构</listitem>
 			<listitem>鉴定师</listitem>
+			<listitem>艺术家</listitem>
 		</itemizedlist>
 		<para>所以我们需要为不同的角色提供不同的App应用。</para>
 		<para>用户端：功能包括防伪查询，链上资产的浏览，权益转让，资产拍卖，资产抵押，社区互动，分享，数字资产行情，钱包等等</para>
@@ -34,6 +35,10 @@
 			<listitem>高清相机、高清视频设备</listitem>
 			<listitem>安防设备，CCTV监控，门禁等等</listitem>
 		</itemizedlist>
+		<para>举例，书画怎样做防伪</para>
+		<para>以国画为例，我们首先找一个宣纸企业合作，在宣纸生产过程中，将NFC芯片夹在宣纸中间，然后我们使用荧光油墨在宣纸上印刷防伪图案。也可以采用人民币上的金属丝方案，最后拍摄纸纹。视频记录下艺术家的整个作画过程，然后再拍摄特征数据。最后使用激光打孔技术，在宣纸上打出防伪图案数据，针孔极小肉眼难以分辨，每个防伪数据都是唯一的。</para>
+		<para>油画可以讲NFC芯片放在纺织布中，使用堆彩技术的画家可以讲NFC芯片覆盖（埋植）在颜料下面</para>
+
 	</section>
 
 	<section>
@@ -122,17 +127,6 @@ ISO14443-3A
 ISO14443-3B	
 			]]>
 			</screen>
-			<para>NTAG21x系列容量大小</para>
-
-			<screen>
-			<![CDATA[
-NTAG210 48byte
-NTAG213 144byte
-NTAG215 504byte
-NTAG216，888byte	
-			]]>
-			</screen>
-
 		</section>
 		<section id="nfc.date">
 			<title>NFC 数据格式</title>
@@ -183,22 +177,32 @@ Value    Protocol
 			</section>
 
 		</section>
-		<section id="MifareUltralight">
-			<title>MifareUltralight</title>
-			<para>艺术品数字身份证</para>
-			<para>ID</para>
-			<screen>
-			<![CDATA[
-将NFC标签的存储区域分为16个页，每一个页可以存储4个字节，一个可存储64个字节（512位）。页码从0开始（0至15）。前4页（0至3）存储了NFC标签相关的信息（如NFC标签的序列号、控制位等）。从第5页开始存储实际的数据（4至15页）。
-			]]>
-			</screen>
-
-		</section>
-		<section>
-			<title>MifareClassic</title>
-		</section>
 		<section>
 			<title>NXP（恩智浦）相关产品</title>
+			<section id="MifareUltralight">
+				<title>MifareUltralight</title>
+				<para>艺术品数字身份证</para>
+				<para>ID</para>
+				<screen>
+				<![CDATA[
+将NFC标签的存储区域分为16个页，每一个页可以存储4个字节，一个可存储64个字节（512位）。页码从0开始（0至15）。前4页（0至3）存储了NFC标签相关的信息（如NFC标签的序列号、控制位等）。从第5页开始存储实际的数据（4至15页）。
+				]]>
+				</screen>
+				<para>NTAG21x系列容量大小</para>
+				<screen>
+				<![CDATA[
+NTAG210 48byte
+NTAG213 144byte
+NTAG215 504byte
+NTAG216，888byte	
+				]]>
+				</screen>
+			</section>
+
+			<section>
+				<title>MifareClassic</title>
+			</section>
+
 
 			<section>
 				<title>Mifare</title>
@@ -208,7 +212,7 @@ Value    Protocol
 	</section>
 	<section>
 		<title>资产投资与份额持有</title>
-		<para>传统艺术品投资门槛非常高，一是用户不知道从哪些渠道可以投资，二是艺术品价值过高，三是艺术品简单难。这导致了投资艺术品门槛过高。 Token 能实现份额化，实现人人参与，人人持有，P2P交易。</para>
+		<para>传统艺术品投资门槛非常高，一是用户不知道从哪些渠道可以投资，二是艺术品价值过高，三是艺术品鉴定难。这导致了投资艺术品门槛过高。 Token 能实现份额化，实现人人参与，人人持有，P2P交易。</para>
 		<para>例如某机构上链一件艺术品，用户可以投资该艺术品的一定份额，可以转让他持有的权益。且交易去中心化，不受任何机构，管理者的制约。</para>
 		<para>下面的合约可以展示如何分割艺术品份额，最终达到链上资产的份额分割和持有与交易。</para>
 		<screen>
@@ -444,9 +448,176 @@ function ownerOf(string _tokenId) constant returns (address owner) {
 		]]>
 		</screen>
 		<para>接下来，我们就是可以开发 Dapp 钱包了，在钱包中实现资产的转移交易。</para>
-		<para>这个合约可以一直到 EOS 上，Hyperledger Fabric 不可以，因为 Fabric 没有锁的机制，会导致计算出错。</para>
+		<para>这个合约可以移植到 EOS 上，Hyperledger Fabric 不可以，因为 Fabric 没有锁的机制，会导致计算出错。</para>
+	</section>
+	<section id="">
+		<title>资产上链的 Hyperledger Fabic 链码</title>
+		<para>我们希望资产上链适用于任何领域，后面也方便将业务拓展。所以我实现了一个万能合约。以不变应万变。</para>
+		<screen>
+		<![CDATA[
+package main
+
+import (
+	"fmt"
+	"github.com/hyperledger/fabric/core/chaincode/shim"
+	pb "github.com/hyperledger/fabric/protos/peer"
+)
+
+type SmartContract struct {}
+
+func (s *SmartContract) Init(stub shim.ChaincodeStubInterface) pb.Response {
+	return shim.Success(nil)
+}
+
+func (s *SmartContract) Query(stub shim.ChaincodeStubInterface) pb.Response {
+	return shim.Success(nil)
+}
+
+func (s *SmartContract) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
+
+	// Retrieve the requested Smart Contract function and arguments
+	function, args := stub.GetFunctionAndParameters()
+	// Route to the appropriate handler function to interact with the ledger appropriately
+	if function == "create" {
+		return s.create(stub, args)
+	} else if function == "find" {
+		return s.find(stub, args)
+	} else if function == "update" {
+		return s.update(stub, args)
+	} else if function == "delete" {
+		return s.delete(stub, args)
+	}
+
+	return shim.Error("Invalid Smart Contract function name.")
+}
+
+func (s *SmartContract) create(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	_key  	:= args[0]
+	_data	:= args[1]
+
+	if(_data == ""){
+		return shim.Error("Incorrect string of data")
+	}
+
+	existAsBytes,err := stub.GetState(_key)
+	if string(existAsBytes) != "" {
+		fmt.Println("Failed to create account, Duplicate key.")
+		return shim.Error("Failed to create account, Duplicate key.")
+	}
+
+	err = stub.PutState(_key, []byte(_data))
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	fmt.Printf("create %s %s \n", _key, string(_data))
+
+	return shim.Success(nil)
+}
+
+func (s *SmartContract) find(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	_key  	:= args[0]
+	_data, err := stub.GetState(_key)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	if string(_data) == "" {
+		return shim.Error("The key isn't exist.")
+	}else{
+		fmt.Printf("query %s %s \n", _key, string(_data))
+	}
+
+	return shim.Success(_data)
+}
+
+func (s *SmartContract) update(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	_key  	:= args[0]
+	_data	:= args[1]
+
+	if(_data == ""){
+		return shim.Error("Incorrect string of data")
+	}
+
+	err := stub.PutState(_key, []byte(_data))
+	if err != nil {
+		return shim.Error(err.Error())
+	}else{
+		fmt.Printf("update %s %s \n", _key, string(_data))
+	}
+	
+	return shim.Success(nil)
+}
+
+// Deletes an entity from state
+func (t *SmartContract) delete(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	_key := args[0]
+
+	// Delete the key from the state in ledger
+	err := stub.DelState(_key)
+	if err != nil {
+		return shim.Error("Failed to delete state")
+	}
+
+	return shim.Success(nil)
+}
+
+func main() {
+
+	err := shim.Start(new(SmartContract))
+	if err != nil {
+		fmt.Printf("Error creating new Smart Contract: %s", err)
+	}
+}
+		
+		]]>
+		</screen>
+		<para>链码有四个函数，分别是创建，查找，更新，删除。</para>
+		<screen>
+		<![CDATA[
+	if function == "create" {
+		return s.create(stub, args)		// 创建
+	} else if function == "find" {
+		return s.find(stub, args)		// 查找
+	} else if function == "update" {
+		return s.update(stub, args)		// 更新
+	} else if function == "delete" {
+		return s.delete(stub, args)		// 删除
+	}		
+		]]>
+		</screen>
+		<para>上链使用 create 方法，函数有两个参数，一个是 key, 另一个是数据。</para>
+		<para>key 使用 UUID 存储再数据库和链上，同时 UUID 对应通证的</para>
+		<para>data 是序列化 byte 数据。例如可以使用 json, hession, msgpack 等序列化后的数据。</para>
+		<screen>
+		<![CDATA[
+err = stub.PutState(_key, []byte(_data))		
+		]]>
+		</screen>
+		<para>这个链码考虑到前期产品上市，不确定性因素很多，需要更新和删除等等。后期我们可以在数据中设置一个 status 变量，当 status = false 就不在允许数据的删除和更新。</para>
 	</section>
 	<section>
 		<title>原型设计</title>
+		<section>
+			<title></title>
+
+		</section>
 	</section>
 </section>
