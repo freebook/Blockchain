@@ -6,6 +6,14 @@
 		<title>0x: The Protocol for Trading Tokens</title>
 		<para><ulink url="https://www.0xproject.com" /></para>
 	</section>
+	<section id="ForkDelta">
+		<title>ForkDelta</title>
+		<para>ForkDelta is a decentralized Ethereum Token Exchange with the most ERC20 listings of any exchange. ForkDelta currently acts as an open source, updated interface for EtherDelta's smart contract with an active and public development team.</para>
+		<para><ulink url="https://dapp.review/dapp/138" /></para>
+		<para><ulink url="https://forkdelta.app" /></para>
+		<para><ulink url="https://etherscan.io/address/0x8d12a197cb00d4747a1fe03395095ce2a5cc6819#code" /></para>
+		<!-- https://www.chongdongshequ.com/article/1541633822833.html -->
+	</section>
 <!--
 	<section id="btctrade">
 		<title>btctrade api</title>
