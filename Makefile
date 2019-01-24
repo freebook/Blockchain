@@ -7,7 +7,7 @@ DOCBOOK=blockchain
 PUBLIC_HTML=~/public_html
 PROJECT_DIR=$(WORKSPACE)/$(PROJECT)
 HTML_DIR=$(PUBLIC_HTML)/$(DOCBOOK)
-HTMLHELP_DIR=~/htmlhelp/$(DOCBOOK)/chm
+HTMLHELP_DIR=~/htmlhelp/$(DOCBOOK)
 
 all: html htmlhelp
 
@@ -23,7 +23,7 @@ html:
 htmlhelp:
 	@rm -rf $(HTMLHELP_DIR) && mkdir -p $(HTMLHELP_DIR)
 	@test -d $(PROJECT_DIR)/images && rsync -a images $(HTMLHELP_DIR)
-	@${XSLTPROC} -o $(HTMLHELP_DIR)/ --stringparam htmlhelp.chm ../$(PROJECT).chm ../docbook-xsl/htmlhelp/template.xsl book.xml
+	@${XSLTPROC} -o $(HTMLHELP_DIR)/ --stringparam htmlhelp.chm ../Netkiller$(PROJECT).chm ../docbook-xsl/htmlhelp/template.xsl book.xml
 	@test -f $(HTMLHELP_DIR)/htmlhelp.hhp && ../common/chm.sh $(HTMLHELP_DIR)
 	@iconv -f UTF-8 -t GB18030 -o $(HTMLHELP_DIR)/htmlhelp.hhp < $(HTMLHELP_DIR)/htmlhelp.hhp
 	@iconv -f UTF-8 -t GB18030 -o $(HTMLHELP_DIR)/toc.hhc < $(HTMLHELP_DIR)/toc.hhc
