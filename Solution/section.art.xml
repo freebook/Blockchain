@@ -640,6 +640,11 @@ err = stub.PutState(_key, []byte(_data))
 		</section>
 		<section>
 			<title>用户角色</title>
+			<para>防伪查询</para>
+			<para>查看链上资产</para>
+			<para>资产交易</para>
+			<para>评论</para>
+			<para>分享</para>
 			<para>用户是权益持有人,当用户（用户端）委托机构负责自己的资产上链。权益持有人一次性获得次产权益100%份额，机构可以查看的机构名下的权益持有人。</para>
 		</section>
 		<section>
@@ -777,16 +782,8 @@ err = stub.PutState(_key, []byte(_data))
 		</section>
 		<section>
 			<title>钱包</title>
-			<!-- 
-			什么是 Token?
-
-			Token 是一种资产通证，钱包的功能是充值 Token，消费 Token，查看消费记录。
-
-			用户可以从交易所，场外交易，等渠道获得 Token
-
-			Token 同时也是用户的权益资产，用户可以在交易所交易 Token。
+			<para></para>
 			
-			 -->
 		</section>
 	</section>
 </section>
