@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ENTITY part.hyperledger.xml				SYSTEM "part.hyperledger.xml">
-<!ENTITY chapter.hyperledger.xml				SYSTEM "chapter.hyperledger.xml">
+<!ENTITY chapter.hyperledger.xml			SYSTEM "chapter.hyperledger.xml">
 <!ENTITY chapter.hyperledger.setup.xml		SYSTEM "chapter.hyperledger.setup.xml">
-<!ENTITY chapter.hyperledger.cluster.xml		SYSTEM "chapter.hyperledger.cluster.xml">
+<!ENTITY chapter.hyperledger.cluster.xml	SYSTEM "chapter.hyperledger.cluster.xml">
+<!ENTITY section.fabric.install.xml			SYSTEM "section.fabric.install.xml">
+<!ENTITY section.fabric.fabric-samples.xml	SYSTEM "section.fabric.fabric-samples.xml">
 <!ENTITY chapter.fabric.chaincode.xml		SYSTEM "chapter.fabric.chaincode.xml">
 <!ENTITY section.chaincode.shim.xml			SYSTEM "section.chaincode.shim.xml">
 <!ENTITY section.chaincode.example.xml		SYSTEM "section.chaincode.example.xml">

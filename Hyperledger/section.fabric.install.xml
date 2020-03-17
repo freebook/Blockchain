@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="fabric.centos8">
+	<title>CentOS 8.0 安装 Fabric 2.0.0</title>
+	<section>
+		<title>CentOS 8 初始化</title>
+		<para></para>
+		<screen>
+		<![CDATA[
+[root@localhost ~]# dnf update -y
+		
+		]]>
+		</screen>
+		<para>禁用防火墙</para>
+		<screen>
+		<![CDATA[
+[root@localhost ~]# systemctl disable firewalld
+Removed /etc/systemd/system/multi-user.target.wants/firewalld.service.
+Removed /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.		
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>安装依赖命令和语言</title>
+		<screen>
+		<![CDATA[
+if [ ! -f /usr/bin/bunzip2 ];then
+    dnf install -y bzip2
+fi
+
+if [ ! -f /usr/bin/git ];then
+    dnf install -y git
+fi
+
+if [ ! -f /usr/bin/go ];then
+    dnf install -y golang
+fi
+		]]>
+		</screen>
+		<para></para>
+		<screen>
+		<![CDATA[
+curl -L --retry 5 --retry-delay 3 https://github.com/hyperledger/fabric/releases/download/v1.4.6/hyperledger-fabric-linux-amd64-1.4.6.tar.gz | tar xz
+curl -L --retry 5 --retry-delay 3 https://github.com/hyperledger/fabric-ca/releases/download/v1.4.6/hyperledger-fabric-ca-linux-amd64-1.4.6.tar.gz | tar xz
+
+mkdir -p /srv/hyperledger/fabric
+mv bin config /srv/hyperledger/fabric
+PATH=$PATH:/srv/hyperledger/fabric/bin
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>安装 Docker</title>
+		<screen>
+		<![CDATA[
+dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+
+dnf install -y docker-ce
+
+systemctl enable docker
+systemctl start docker
+		]]>
+		</screen>
+		<para>安装 docker-compose</para>
+		<screen>
+		<![CDATA[
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose		
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>安装 Fabric 2.0.0</title>
+		<screen>
+		<![CDATA[
+IMAGES=(ca peer orderer couchdb ccenv kafka zookeeper tools javaenv)		
+FABRIC_TAG=latest
+for IMAGE in ${IMAGES}; do
+    echo "==> FABRIC IMAGE: $IMAGE"
+    echo
+    docker pull hyperledger/fabric-$IMAGE:$FABRIC_TAG
+    echo
+done		
+		]]>
+		</screen>
+		<para>按照完成检查镜像</para>
+		<screen>
+		<![CDATA[
+[root@localhost src]# docker images
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+hyperledger/fabric-zookeeper   latest              21e55e9a2862        12 days ago         276MB
+hyperledger/fabric-kafka       latest              28a93b376dbe        12 days ago         270MB
+hyperledger/fabric-couchdb     latest              03ac1654afc5        12 days ago         261MB
+hyperledger/fabric-ca          latest              3b96a893c1e4        2 weeks ago         150MB
+hyperledger/fabric-tools       latest              0f9743ac0662        2 weeks ago         1.49GB
+hyperledger/fabric-ccenv       latest              191911f4454f        2 weeks ago         1.36GB
+hyperledger/fabric-orderer     latest              84eaba5388e7        2 weeks ago         120MB
+hyperledger/fabric-peer        latest              5a52faa5d8c2        2 weeks ago         128MB		
+		]]>
+		</screen>
+	</section>
+
+</section>
