@@ -36,8 +36,7 @@
 	%baas.doctype.entity.xml;
 	
 ]>
-<book xml:base="http://netkiller.sourceforge.net/linux/www"
-	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
+<book xml:base="http://www.netkiller.cn/blockchain" xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
 	<info>
 		<title>Netkiller Blockchain 手札</title>
 		<subtitle>本文作者最近在找工作，有意向致电 13113668890</subtitle>
@@ -54,7 +53,7 @@
 		</publisher>
 		<isbn>ISBN#</isbn>
 		<edition>User's Guide version 1.0 for Linux</edition>
-		<pubdate>2018-06-01</pubdate>
+		<!-- <pubdate>2018-06-01</pubdate> -->
 		<!-- <releaseinfo>文档始创于<date>2018-02-10</date></releaseinfo> -->
 
 		&book.info.legalnotice.xml;
@@ -65,7 +64,7 @@
 	&book.preface.xml;
 	&book.dedication.xml;
 
-<!-- =========================================================================== -->
+	<!-- =========================================================================== -->
 	&chapter.blockchain.xml;
 	&chapter.solution.xml;
 	&part.eos.xml;
@@ -75,6 +74,6 @@
 	&chapter.baas.xml;
 	&chapter.bitcoin.xml;
 	&chapter.other.xml;
-<!-- =========================================================================== -->
+	<!-- =========================================================================== -->
 	&book.appendix.xml;
 </book>
