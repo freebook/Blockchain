@@ -16,4 +16,101 @@
 			<para>https://github.com/ethereum/EIPs/issues/84</para>
 		</section>
 	</section>
+
+
+
+	<section>
+		<title>NXP（恩智浦）相关产品</title>
+		<section id="MifareUltralight">
+			<title>MifareUltralight</title>
+			<para>艺术品数字身份证</para>
+			<para>ID</para>
+			<screen>
+				<![CDATA[
+将NFC标签的存储区域分为16个页，每一个页可以存储4个字节，一个可存储64个字节（512位）。页码从0开始（0至15）。前4页（0至3）存储了NFC标签相关的信息（如NFC标签的序列号、控制位等）。从第5页开始存储实际的数据（4至15页）。
+				]]>
+			</screen>
+			<para>NTAG21x系列容量大小</para>
+			<screen>
+				<![CDATA[
+NTAG210 48byte
+NTAG213 144byte
+NTAG215 504byte
+NTAG216，888byte	
+				]]>
+			</screen>
+		</section>
+
+		<section>
+			<title>MifareClassic</title>
+		</section>
+
+
+		<section>
+			<title>Mifare</title>
+
+		</section>
+	</section>
+
+	<section id="nfc.date">
+		<title>NFC 数据格式</title>
+		<section>
+			<title>NFC 标准</title>
+			<para>历史记录</para>
+			<screen>
+			<![CDATA[
+ISO14443-4
+ISO14443-3A
+ISO14443-3B	
+			]]>
+			</screen>
+		</section>
+		<section id="NDEF">
+			<title>NDEF (NFC Data Exchange Format)</title>
+			<screen>
+			<![CDATA[
+Value    Protocol
+-----    --------
+0x00     No prepending is done ... the entire URI is contained in the URI Field
+0x01     http://www.
+0x02     https://www.
+0x03     http://
+0x04     https://
+0x05     tel:
+0x06     mailto:
+0x07     ftp://anonymous:anonymous@
+0x08     ftp://ftp.
+0x09     ftps://
+0x0A     sftp://
+0x0B     smb://
+0x0C     nfs://
+0x0D     ftp://
+0x0E     dav://
+0x0F     news:
+0x10     telnet://
+0x11     imap:
+0x12     rtsp://
+0x13     urn:
+0x14     pop:
+0x15     sip:
+0x16     sips:
+0x17     tftp:
+0x18     btspp://
+0x19     btl2cap://
+0x1A     btgoep://
+0x1B     tcpobex://
+0x1C     irdaobex://
+0x1D     file://
+0x1E     urn:epc:id:
+0x1F     urn:epc:tag:
+0x20     urn:epc:pat:
+0x21     urn:epc:raw:
+0x22     urn:epc:
+0x23     urn:nfc:		
+			]]>
+			</screen>
+		</section>
+
+	</section>
+
 </appendix>

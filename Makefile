@@ -1,6 +1,6 @@
-XSLTPROC = /usr/bin/xsltproc
-DSSSL = ../docbook-xsl/docbook.xsl
-TMPDIR = $(shell mktemp -d --suffix=.tmp -p /tmp mysql.html.XXXXXX)
+XSLTPROC=/usr/bin/xsltproc
+DSSSL=docbook-xsl/docbook.xsl
+TMPDIR=$(shell mktemp -d --suffix=.tmp -p /tmp mysql.html.XXXXXX)
 WORKSPACE=~/workspace
 PROJECT=Blockchain
 DOCBOOK=blockchain
@@ -9,9 +9,14 @@ PROJECT_DIR=$(WORKSPACE)/$(PROJECT)
 HTML_DIR=$(PUBLIC_HTML)/$(DOCBOOK)
 HTMLHELP_DIR=~/htmlhelp/$(DOCBOOK)
 
-all: html htmlhelp
+all: git html htmlhelp
 
-html:
+git:
+	@git pull
+	@git submodule init
+	@git submodule update
+
+html: git
 	@mkdir -p ${HTML_DIR}
 	@find ${HTML_DIR} -type f -iname "*.html" -exec rm -rf {} \;
 	@rsync -au ../common/docbook.css $(HTML_DIR)/
