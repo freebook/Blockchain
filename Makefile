@@ -13,8 +13,7 @@ all: git html htmlhelp
 
 git:
 	@git pull
-	@git submodule init
-	@git submodule update
+	@git submodule update --init --recursive
 
 html: git
 	@mkdir -p ${HTML_DIR}
