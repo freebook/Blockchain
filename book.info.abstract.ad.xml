@@ -3,10 +3,10 @@
 	<thead>
 		<tr>
 			<td>
-				
+
 			</td>
 			<td>
-				
+
 			</td>
 		</tr>
 	</thead>
@@ -14,7 +14,7 @@
 		<tr>
 			<td></td>
 			<td></td>
-			
+
 		</tr>
 		<tr>
 			<td></td>
@@ -25,12 +25,10 @@
 
 <simplelist type='horiz' columns='5'>
 	<member>
-		<ulink url="http://www.yungeen.cn">
-			<graphic format="png" fileref="images/company/yungeen-logo.png" width="150" srccredit="netkiller" />
-		</ulink>
+		<!-- <ulink url=""> <graphic format="png" fileref="images/company/logo.png" width="150" srccredit="netkiller" /> </ulink> -->
 	</member>
 	<member>
-		
+
 	</member>
 	<member>
 		LOGO 广告位招租
