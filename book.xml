@@ -38,14 +38,14 @@
 ]>
 <book xml:base="http://www.netkiller.cn/blockchain" xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
 	<info>
-		<title>Netkiller Blockchain 手札（<?dbtimestamp format="Y"?>版）</title>
-		<subtitle>本文作者最近在找工作，有意向致电 13113668890</subtitle>
+		<title>Netkiller Blockchain 手札</title>
+		<subtitle>（<?dbtimestamp format="Y"?>版）</subtitle>
 		<!-- <subtitle>电子书广告位招租，代发企业招聘信息，看中哪个位置跟作者说 13113668890</subtitle> -->
 
 		&book.info.author.xml;
 
 		<copyright>
-			<year>2018-2020</year>
+			<year>2018-<?dbtimestamp format="Y"?></year>
 			<holder>Netkiller(Neo Chan). All rights reserved.</holder>
 		</copyright>
 		<publisher>
@@ -73,10 +73,10 @@
 	<!-- =========================================================================== -->
 	&chapter.blockchain.xml;
 	&chapter.solution.xml;
-	&part.eos.xml;
 	&part.ethereum.xml;
 	&part.hyperledger.xml;
 	&part.ipfs.xml;
+	&part.eos.xml;
 	&chapter.baas.xml;
 	&chapter.bitcoin.xml;
 	&chapter.other.xml;
