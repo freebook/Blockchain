@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="nodeos">
+	<title>RPC接口</title>
+	<screen>
+	<![CDATA[
+nodeos -e -p eosio -d /data/eos --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --plugin eosio::bnet_plugin --contracts-console --filter-on "*" --access-control-allow-origin "*" --max-transaction-time=1000 --verbose-http-errors
+keosd --http-server-address 192.168.1.115:8889 --access-control-allow-origin "*" --plugin eosio::wallet_api_plugin --verbose-http-errors --plugin eosio::wallet_plugin
+	]]>
+	</screen>
+	<section>
+		<title>获取节点信息</title>
+		<screen>
+		<![CDATA[
+root@ubuntu:/data/eos/build/bin# ./cleos --url http://192.168.30.120:8888  get info
+{
+  "server_version": "1a14e9cd",
+  "chain_id": "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f",
+  "head_block_num": 12429602,
+  "last_irreversible_block_num": 12429601,
+  "last_irreversible_block_id": "00bda92182275a395be8913bfe8a310ef0709db8e08e7ff9295f35f529cd28f4",
+  "head_block_id": "00bda922a36f164abaeddd36a96dacbb1df1fe3ad22e3eeffecca7a4c5619e33",
+  "head_block_time": "2021-08-30T08:07:16.500",
+  "head_block_producer": "accountpro1",
+  "virtual_block_cpu_limit": 200000000,
+  "virtual_block_net_limit": 1048576000,
+  "block_cpu_limit": 199900,
+  "block_net_limit": 1048576,
+  "server_version_string": "v1.6.1-dirty"
+}		
+		]]>
+		</screen>
+		<para></para>
+		<screen>
+		<![CDATA[
+root@ubuntu:/data/eos/build/bin# curl -s http://192.168.30.120:8888/v1/chain/get_info | jq
+{
+  "server_version": "1a14e9cd",
+  "chain_id": "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f",
+  "head_block_num": 12429784,
+  "last_irreversible_block_num": 12429783,
+  "last_irreversible_block_id": "00bda9d78db50cef3255139f84e69ebae249f5de964cc78f6de980f718cc59bb",
+  "head_block_id": "00bda9d80fc9854368e3e21de37772e6c9e2db396266c4cf8bf96ea8b7f80cdc",
+  "head_block_time": "2021-08-30T08:08:47.500",
+  "head_block_producer": "accountpro1",
+  "virtual_block_cpu_limit": 200000000,
+  "virtual_block_net_limit": 1048576000,
+  "block_cpu_limit": 199900,
+  "block_net_limit": 1048576,
+  "server_version_string": "v1.6.1-dirty"
+}		
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>获取区块信息</title>
+		<screen>
+		<![CDATA[
+root@ubuntu:~# curl -s -XPOST -d'{"block_num_or_id":"12429784"}' http://192.168.30.120:8888/v1/chain/get_block | jq
+{
+  "timestamp": "2021-08-30T08:08:47.500",
+  "producer": "accountpro1",
+  "confirmed": 0,
+  "previous": "00bda9d78db50cef3255139f84e69ebae249f5de964cc78f6de980f718cc59bb",
+  "transaction_mroot": "0000000000000000000000000000000000000000000000000000000000000000",
+  "action_mroot": "9e98bc35b24a469b71d36966f53b82d09dac98721029db9878acebe20d726f0f",
+  "schedule_version": 1,
+  "new_producers": null,
+  "header_extensions": [],
+  "producer_signature": "SIG_K1_K4PdAV2PoNGbY7hm1TcvAWFcDQen4XpGnGkziMMHRc1MgeVpd6d35yv5dDZdMLVYqgmDDZTVN8ruKsJzibc5GxZW79DvLb",
+  "transactions": [],
+  "block_extensions": [],
+  "id": "00bda9d80fc9854368e3e21de37772e6c9e2db396266c4cf8bf96ea8b7f80cdc",
+  "block_num": 12429784,
+  "ref_block_prefix": 501408616
+}
+	
+		]]>
+		</screen>
+	</section>
+</section>

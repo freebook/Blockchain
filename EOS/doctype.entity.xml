@@ -7,4 +7,5 @@
 <!ENTITY chapter.eos.eosjs.xml			SYSTEM "chapter.eos.eosjs.xml">
 <!ENTITY chapter.eos.contract.xml		SYSTEM "chapter.eos.contract.xml">
 <!ENTITY chapter.eos.contract.curd.xml	SYSTEM "chapter.eos.contract.curd.xml">
+<!ENTITY section.eos.nodeos.xml			SYSTEM "section.eos.nodeos.xml">
 <!ENTITY chapter.eos.faq.xml			SYSTEM "chapter.eos.faq.xml">
