@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ENTITY part.eos.xml				      SYSTEM "part.eos.xml">
-<!ENTITY chapter.eos.xml				  SYSTEM "chapter.eos.xml">
-<!ENTITY chapter.eos.setup.xml			SYSTEM "chapter.eos.setup.xml">
+<!ENTITY part.eos.xml				 		SYSTEM "part.eos.xml">
+<!ENTITY chapter.eos.xml					SYSTEM "chapter.eos.xml">
+<!ENTITY section.eos.setup.xml				SYSTEM "section.eos.setup.xml">
 <!ENTITY chapter.eos.cleos.xml			SYSTEM "chapter.eos.cleos.xml">
 <!ENTITY chapter.eos.devel.xml			SYSTEM "chapter.eos.devel.xml">
 <!ENTITY chapter.eos.eosjs.xml			SYSTEM "chapter.eos.eosjs.xml">

@@ -47,4 +47,13 @@ contracts-console = true
 		]]>
 		</screen>
 	</section>
+	<section>
+		<title>database dirty flag set (likely due to unclean shutdown): replay required</title>
+		<screen>
+		<![CDATA[
+启动增加 --replay-blockchain 可以解决
+		]]>
+		</screen>
+		<para>–replay-blockchain --hard-replay-blockchain</para>
+	</section>
 </chapter>

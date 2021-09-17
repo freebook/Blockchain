@@ -2,7 +2,7 @@
 <part id="index"><?dbhtml dir="eos" ?>
 	<title>EOS</title>
 	&chapter.eos.xml;
-	&chapter.eos.setup.xml;
+	&section.eos.setup.xml;
 	&chapter.eos.cleos.xml;
 	&chapter.eos.contract.xml;
 	&chapter.eos.devel.xml;

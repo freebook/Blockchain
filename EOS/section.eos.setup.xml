@@ -1,8 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="eos.setup">
 	<title>EOS 安装</title>
+	<section>
+		<title>CentOS 8 Stream RPM包安装</title>
+		<para>
+			下载 RPM 包
+			<ulink url="https://github.com/EOSIO/eos/releases" />
+		</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# wget -c https://github.com/EOSIO/eos/releases/download/v2.0.13/eosio-2.0.13-1.el7.x86_64.rpm
+[root@netkiller ~]# dnf install eosio-2.0.13-1.el7.x86_64.rpm 
+		]]>
+		</screen>
+		<para>查看 RPM 包中有那些文件</para>
+		<screen>
+		<![CDATA[
+[root@testing ~]# rpm -ql eosio-2.0.13-1.el7.x86_64.rpm 
+/usr/bin/cleos
+/usr/bin/eosio-blocklog
+/usr/bin/keosd
+/usr/bin/nodeos
+/usr/bin/trace_api_util
+/usr/opt/eosio/2.0.13/bin/cleos
+/usr/opt/eosio/2.0.13/bin/eosio-blocklog
+/usr/opt/eosio/2.0.13/bin/keosd
+/usr/opt/eosio/2.0.13/bin/nodeos
+/usr/opt/eosio/2.0.13/bin/trace_api_util
+/usr/opt/eosio/2.0.13/licenses/LICENSE
+/usr/opt/eosio/2.0.13/licenses/LICENSE.eos-vm
+/usr/opt/eosio/2.0.13/licenses/LICENSE.go
+/usr/opt/eosio/2.0.13/licenses/LICENSE.rapidjson
+/usr/opt/eosio/2.0.13/licenses/LICENSE.secp256k1
+/usr/opt/eosio/2.0.13/licenses/LICENSE.softfloat
+/usr/opt/eosio/2.0.13/licenses/LICENSE.wabt
+/usr/opt/eosio/2.0.13/licenses/LICENSE.wavm
+/usr/opt/eosio/2.0.13/licenses/LICENSE.yubihsm
+		]]>
+		</screen>
+	</section>
 	<section id="eos.centos">
-		<title>CentOS</title>
+		<title>CentOS 7 源码安装</title>
 
 		<screen>
 		<![CDATA[ 
@@ -190,9 +228,17 @@ make
 			]]>
 		</screen>
 	</section>
-	<section>
+	<section id="eos.docker">
 		<title>Docker 开发环境</title>
 		<!-- https://developers.eos.io/eosio-nodeos/docs/docker-quickstart -->
+		<screen>
+		<![CDATA[
+#进入容器内
+docker exec -it eosio /bin/bash
+#也可直接调用cleos的命令
+docker exec eosio cleos get account eosio		
+		]]>
+		</screen>
 	</section>
 
 	<section id="eos.mainnet">
@@ -716,6 +762,91 @@ p2p-peer-address = seed2.greymass.com:9876
 			</section>
 		</section>
 	</section>
+	<section>
+		<title>区块数据同步到 mongodb</title>
+		<screen>
+		<![CDATA[
+nodeos -e -p testmongodb \
+--plugin eosio::producer_plugin \
+--plugin eosio::chain_api_plugin \
+--plugin eosio::net_api_plugin \
+--max-transaction-time=30000 \
+--http-server-address 127.0.0.1:4444 \
+--p2p-listen-endpoint 127.0.0.1:8778 \
+--p2p-peer-address 127.0.0.1:9877 \
+--config-dir data/testsynblock \
+--data-dir data/testsynblock \
+--contracts-console --abi-serializer-max-time-ms 5000 \
+--plugin eosio::mongo_db_plugin --mongodb-uri mongodb://eos:eos@192.168.30.10:27017/test?authSource=admin&maxPoolSize=100 \
+--mongodb-filter-out eosio:onblock:
+
+		
+nohup  nodeos -e -p testmongodb \
+--plugin eosio::producer_plugin \
+--plugin eosio::chain_api_plugin \
+--plugin eosio::net_api_plugin \
+--max-transaction-time=30000 \
+--http-server-address 127.0.0.1:4444 \
+--p2p-listen-endpoint 127.0.0.1:8778 \
+--p2p-peer-address 127.0.0.1:9877 \
+--config-dir data/testsynblock \
+--data-dir data/testsynblock \
+--contracts-console --abi-serializer-max-time-ms 5000 \
+--plugin eosio::mongo_db_plugin --mongodb-uri mongodb://eos:eos@192.168.30.10:27017/eos?authSource=eos&maxPoolSize=100 \
+--mongodb-filter-out eosio:onblock:   >>eosio_test_mongodb.log 2>&1 &		
+		
+nodeos -e -p mongodbblock \
+--plugin eosio::producer_plugin \
+--plugin eosio::chain_api_plugin \
+--plugin eosio::net_api_plugin \
+--plugin eosio::mongo_db_plugin \
+--max-transaction-time=30000  \
+--http-server-address 127.0.0.1:6666 
+--p2p-listen-endpoint 127.0.0.1:9878 
+--p2p-peer-address 127.0.0.1:9877 
+--config-dir data/synblock 
+--data-dir data/synblock 
+--contracts-console 
+--abi-serializer-max-time-ms 5000 
+--mongodb-uri mongodb://eos:eos@127.0.0.1:27017/eos 
+--mongodb-filter-out eosio:onblock:
+
+nodeos -e -p eosio \
+--data-dir data/eosio 
+--config-dir data/eosio 
+--max-transaction-time=30000 
+--contracts-console 
+--filter-on=* 
+--http-server-address 0.0.0.0:8888 
+--p2p-max-nodes-per-host 10 
+--p2p-listen-endpoint 127.0.0.1:9876 
+--p2p-peer-address 127.0.0.1:9877 
+--plugin eosio::producer_plugin 
+--plugin eosio::chain_api_plugin 
+--plugin eosio::net_api_plugin 
+--http-validate-host 0 
+--chain-state-db-size-mb 61440
+
+
+nodeos -e -p accountpro1 \
+--plugin eosio::producer_plugin 
+--max-transaction-time=30000 
+--plugin eosio::chain_api_plugin 
+--plugin eosio::net_api_plugin 
+--p2p-max-nodes-per-host 10 
+--http-server-address 127.0.0.1:7778 
+--p2p-listen-endpoint 127.0.0.1:9877 
+--p2p-peer-address 127.0.0.1:9876 
+--config-dir data/node1 --data-dir data/node1 
+--private-key ["EOSydanWnaV95EvkwtwCCD9NX1EZNSpNeBJwdVyU2fM7jmkq5mNhZ","mt6XU1ybgAAM6XD5rebPF7bFrCgbVBG7Jg1NzE5JuUub5nCJxiu"] 
+--contracts-console 
+--filter-on=* 
+--chain-state-db-size-mb 61440
+
+keosd --http-server-address=127.0.0.1:8900  --https-server-address  --unix-socket-path keosd.sock
+		]]>
+		</screen>
+	</section>
 	<section id="eos.config.ini">
 		<title>nodeos 命令</title>
 		<section>
@@ -745,5 +876,55 @@ plugin = eosio::chain_plugin
 				</screen>
 			</section>
 		</section>
+	</section>
+	<section>
+		<title>systemd</title>
+		<screen>
+		<![CDATA[
+$ vim /etc/systemd/system/nodeos.service 
+		
+[Unit]
+Description=EOS nodeos systemd by netkiller
+Documentation=http://www.netkiller.cn/
+After=network.target
+
+[Service]
+Type=forking
+User=root
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+Environment=CONFIG=
+WorkingDirectory=/opt/eos
+PIDFile=/var/run/nodeos.pid
+Restart=on-failure
+
+ExecStart=nodeos -e -p eosio \
+--plugin eosio::producer_plugin 
+--plugin eosio::chain_api_plugin \
+--plugin eosio::history_plugin \
+--plugin eosio::history_api_plugin \
+--plugin eosio::http_plugin \
+--plugin eosio::net_api_plugin \
+--http-server-address=0.0.0.0:8888 \
+--access-control-allow-origin=* \
+--contracts-console \
+--http-validate-host=false \
+--filter-on='*' \
+--chain-state-db-size-mb=2048 \
+--p2p-peer-address 127.0.0.1:9877 \
+--plugin eosio::mongo_db_plugin \ 
+--mongodb-uri=mongodb://eos:eos@127.0.0.1:27017/test?authSource=eos&maxPoolSize=100 \
+--mongodb-filter-out eosio:onblock:
+--mongodb-filter-on=addressbook:: 
+--mongodb-filter-on=test1:: 
+ExecReload=     
+ExecStop=
+
+[Install]
+WantedBy=multi-user.target		
+		]]>
+		</screen>
 	</section>
 </chapter>
