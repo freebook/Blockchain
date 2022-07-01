@@ -17,3 +17,5 @@
 <!ENTITY chapter.ethereum.case.xml			SYSTEM "chapter.ethereum.case.xml">
 <!ENTITY chapter.ethereum.exchange.xml		SYSTEM "chapter.ethereum.exchange.xml">
 <!ENTITY chapter.ethereum.faq.xml			SYSTEM "chapter.ethereum.faq.xml">
+
+<!ENTITY section.ethereum.network.xml		SYSTEM "section.ethereum.network.xml">

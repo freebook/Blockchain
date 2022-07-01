@@ -13,51 +13,59 @@
 	<para>Solidity 是什么？Solidity是以太坊智能合约的编程语言。</para>
 
 	<section id="browser-solidity">
-		<title>Remix - browser-solidity</title>
-		<para>在线使用 browser-solidity</para>
-		<ulink url="https://ethereum.github.io/browser-solidity/">https://ethereum.github.io/browser-solidity/</ulink>
-		<ulink url="https://remix.ethereum.org/">https://remix.ethereum.org/</ulink>
+		<title>Remix</title>
+		<para>
+			在线使用 browser-solidity
+			<ulink url="https://remix.ethereum.org/">https://remix.ethereum.org/</ulink>
+		</para>
 		<para>国内网络有时不给力，建议将 Remix 安装到本地目录。</para>
-		<section id="remix">
-			<title>将 Remix(browser-solidity) 安装到本地</title>
-			<para>共享合约目录</para>
+		<section>
+			<title>NodeJS</title>
 			<screen>
 			<![CDATA[
-npm install -g remixd
-remixd -S "/home/ethereum/codebase/blocks/contracts"		
+cd /usr/local/src
+wget https://nodejs.org/dist/v18.4.0/node-v18.4.0-linux-x64.tar.xz
+tar xf node-v18.4.0-linux-x64.tar.xz
+mv node-v18.4.0-linux-x64 /srv/node-v18.4.0
+rm -f /srv/node
+ln -s /srv/node-v18.4.0 /srv/node
+
+alternatives --install /usr/local/bin/node node /srv/node/bin/node 100 \
+--slave /usr/local/bin/npm npm /srv/node/bin/npm \
+--slave /usr/local/bin/npx npx /srv/node/bin/npx \
+--slave /usr/local/bin/corepack corepack /srv/node/bin/corepack
+
+node -v
 			]]>
 			</screen>
-			<para>安装 browser-solidity </para>
+		</section>
+		<section>
+			<title>Remix Project</title>
+			<para>Docker 安装 Remix</para>
 			<screen>
-				<![CDATA[
-git clone https://github.com/ethereum/browser-solidity 
-cd browser-solidity 
-npm install 
-npm run prepublish
+			<![CDATA[
+cd /usr/local/src
+wget https://nodejs.org/dist/v18.4.0/node-v18.4.0-linux-x64.tar.xz
+tar xf node-v18.4.0-linux-x64.tar.xz
+mv node-v18.4.0-linux-x64 /srv/node-v18.4.0
+rm -f /srv/node
+ln -s /srv/node-v18.4.0 /srv/node
 
-sudo chown -R $USER:$(id -gn $USER) /home/neo/.config
+alternatives --install /usr/local/bin/node node /srv/node/bin/node 100 \
+--slave /usr/local/bin/npm npm /srv/node/bin/npm \
+--slave /usr/local/bin/npx npx /srv/node/bin/npx \
+--slave /usr/local/bin/corepack corepack /srv/node/bin/corepack
 
-npm start
-				]]>
+node -v
+			]]>
 			</screen>
+		</section>
+		
+		<section>
+			<title>Remix 桌面版</title>
 			<para>
-				启动后浏览器中输入
-				<ulink url="http://localhost:8080">http://localhost:8080</ulink>
-				可以看到 Remix 界面
+				<ulink src="https://github.com/ethereum/remix-desktop/releases" />
 			</para>
-			<note>
-				<title>Web3 Provider</title>
-				<para>Remix 提供三种运行环境,常用的有 JavaScript VM 和 Web3 Provider (连接到 --rpc
-					--rpcaddr="0.0.0.0" --rpccorsdomain "*" --rpcport 8545)
-				</para>
-				<para>Web3 Provider 方式需要解锁账号和启动挖矿</para>
-				<screen>
-					<![CDATA[
-> personal.unlockAccount(eth.accounts[0],"");
-> miner.start(2); admin.sleepBlocks(1); miner.stop();			
-					]]>
-				</screen>
-			</note>
 		</section>
 		<section>
 			<title>输入数组</title>

@@ -72,7 +72,6 @@
 
 	<!-- =========================================================================== -->
 	&chapter.blockchain.xml;
-	&chapter.solution.xml;
 	&part.ethereum.xml;
 	&part.hyperledger.xml;
 	&part.ipfs.xml;

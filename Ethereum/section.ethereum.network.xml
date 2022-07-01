@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+	<title>以太坊网络</title>
+	<section>
+		<title>火币测试网</title>
+		<screen>
+		<![CDATA[
+官网地址：hecochain.com
+
+测试网地址：
+
+chainid 256
+
+RPC wss://ws-testnet.hecochain.com
+
+https://http-testnet.hecochain.com
+
+浏览器 https://scan-testnet.hecochain.com
+
+测试币水龙头 https://scan-testnet.hecochain.com/faucet		
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>BNB 测试网</title>
+		<screen>
+		<![CDATA[
+网络名称: BSC TEST
+RPC URL:
+https://data-seed-prebsc-1-s1.binance.org:8545/
+https://data-seed-prebsc-2-s1.binance.org:8545/
+https://data-seed-prebsc-1-s2.binance.org:8545/
+https://data-seed-prebsc-2-s2.binance.org:8545/
+https://data-seed-prebsc-1-s3.binance.org:8545/
+https://data-seed-prebsc-2-s3.binance.org:8545/
+链 ID: 97
+符号: BNB
+测试网浏览器 URL: https://testnet.bscscan.com/
+测试网水龙头 URL: https://testnet.binance.org/faucet-smart		
+		]]>
+		</screen>
+	</section>
+</chapter>

@@ -1,5 +1,6 @@
 	&chapter.ethereum.introduction.xml;
 	&chapter.ethereum.setup.xml;
+	&section.ethereum.network.xml;
 	&chapter.ethereum.geth.xml;
 	&chapter.ethereum.wallet.xml;
 	&chapter.ethereum.token.xml;

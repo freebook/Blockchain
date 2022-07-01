@@ -309,4 +309,48 @@ Caused by: org.web3j.protocol.exceptions.ClientConnectionException: Invalid resp
 		]]>
 		</screen>
 	</section>
+	<section>
+		<title>旧版本 Remix(browser-solidity) 本地安装</title>
+		<para>
+			安装 browser-solidity
+			<ulink url="https://ethereum.github.io/browser-solidity/">https://ethereum.github.io/browser-solidity/</ulink>
+		</para>
+		<screen>
+				<![CDATA[
+git clone https://github.com/ethereum/browser-solidity 
+cd browser-solidity 
+npm install 
+npm run prepublish
+
+sudo chown -R $USER:$(id -gn $USER) /home/neo/.config
+
+npm start
+				]]>
+		</screen>
+		<para>
+			启动后浏览器中输入
+			<ulink url="http://localhost:8080">http://localhost:8080</ulink>
+			可以看到 Remix 界面
+		</para>
+		<para>共享合约目录</para>
+		<screen>
+			<![CDATA[
+npm install -g remixd
+remixd -S "/home/ethereum/codebase/blocks/contracts"		
+			]]>
+		</screen>
+		<note>
+			<title>Web3 Provider</title>
+			<para>Remix 提供三种运行环境,常用的有 JavaScript VM 和 Web3 Provider (连接到 --rpc
+				--rpcaddr="0.0.0.0" --rpccorsdomain "*" --rpcport 8545)
+			</para>
+			<para>Web3 Provider 方式需要解锁账号和启动挖矿</para>
+			<screen>
+					<![CDATA[
+> personal.unlockAccount(eth.accounts[0],"");
+> miner.start(2); admin.sleepBlocks(1); miner.stop();			
+					]]>
+			</screen>
+		</note>
+	</section>
 </chapter>
