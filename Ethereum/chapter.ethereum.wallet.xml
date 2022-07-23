@@ -150,7 +150,6 @@ instance: Geth/v1.8.1-stable-1e67410e/darwin-amd64/go1.9.4
 		</section>
 		<section id="ropsten">
 			<title>Ropsten 测试网络</title>
-			<!-- <para><ulink url="https://ropsten.etherscan.io">https://ropsten.etherscan.io</ulink></para> -->
 			<section>
 				<title>启动参数</title>
 				<screen>

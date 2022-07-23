@@ -15,7 +15,7 @@
 	<section id="browser-solidity">
 		<title>Remix</title>
 		<para>
-			在线使用 browser-solidity
+			在线使用 Remix
 			<ulink url="https://remix.ethereum.org/">https://remix.ethereum.org/</ulink>
 		</para>
 		<para>国内网络有时不给力，建议将 Remix 安装到本地目录。</para>
@@ -59,8 +59,52 @@ alternatives --install /usr/local/bin/node node /srv/node/bin/node 100 \
 node -v
 			]]>
 			</screen>
+			<screen>
+			<![CDATA[
+npm install -g @remix-project/remixd			
+			]]>
+			</screen>
+			<para></para>
+			<screen>
+			<![CDATA[
+[root@netkiller ~]# curl -sL https://dl.yarnpkg.com/rpm/yarn.repo -o /etc/yum.repos.d/yarn.repo
+[root@netkiller ~]# dnf install -y yarn
+[root@netkiller ~]# yarn global bin
+[root@netkiller ~]# yarn global add @remix-project/remixd
+[root@netkiller ~]# remixd -v
+0.6.2
+			]]>
+			</screen>
+			<para></para>
+			<screen>
+			<![CDATA[
+[root@netkiller ~]# su - docker
+Last login: Fri Jul  1 13:27:58 CST 2022 on pts/0
+[docker@netkiller ~]$ ls
+remix
+[docker@netkiller ~]$ cd remix/
+[docker@netkiller remix]$ ls
+docker-compose.yaml
+[docker@netkiller remix]$ cat docker-compose.yaml 
+version: "3.9"
+
+networks:
+  ethereum:
+
+services:
+  remixide:
+    restart: always
+    image: remixproject/remix-ide:latest
+    container_name: remixide
+    ports: 
+      - 8080:80
+      - 65520:65520
+    networks:
+      - ethereum			
+			]]>
+			</screen>
 		</section>
-		
+
 		<section>
 			<title>Remix 桌面版</title>
 			<para>
@@ -110,7 +154,6 @@ output/HelloWorld.abi
 			<para>需要注意的是，你在网上会看到很多例子，对照这例子一步一步操作，始终无法成功，这根Solidity的版本有很大关系。
 			</para>
 		</tip>
-
 		<para>将下面代码粘贴到 </para>
 		<programlisting>
 			<![CDATA[
@@ -217,7 +260,36 @@ undefined
 			]]>
 		</screen>
 	</section>
+	<section>
+		<title>Helloworld Example</title>
+		<programlisting>
+		<![CDATA[
+// SPDX-License-Identifier: MIT
+// http://www.netkiller.cn/blockchain/
+pragma solidity ^0.8.15;
 
+contract HelloWorld
+{
+    string private tmp;
+
+    constructor() {
+
+    }
+
+    function set(string memory _tmp) public 
+    {
+        tmp = _tmp;
+    }
+
+    function get() public view returns (string memory)
+    {
+        return tmp;
+    }
+
+}
+		]]>
+		</programlisting>
+	</section>
 	<section id="solidity.type">
 		<title>数据类型</title>
 		<section id="solidity.type.integer">
@@ -2198,5 +2270,130 @@ contract('Conference', function(accounts) {
 			</programlisting>
 		</section>
 	</section>
+	<section id="zeppelin.solidity">
+		<title>Zeppelin Solidity - OpenZeppelin is a library for writing secure Smart Contracts on Ethereum.</title>
+		<para>OpenZeppelin is an open framework of reusable and secure smart contracts in the Solidity language.</para>
+		<para>
+			网站：
+			<ulink url="https://openzeppelin.org">https://openzeppelin.org</ulink>
+		</para>
+		<para>
+			Github:
+			<ulink url="https://github.com/OpenZeppelin/zeppelin-solidity">https://github.com/OpenZeppelin/zeppelin-solidity</ulink>
+		</para>
+		<section>
+			<title>安装</title>
+			<screen>
+			<![CDATA[
+npm install @openzeppelin/contracts			
+			]]>
+			</screen>
+		</section>
+		<section id="zeppelin.ERC20">
+			<title>ERC20</title>
+			<programlisting>
+			<![CDATA[
+// contracts/GLDToken.sol
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract GLDToken is ERC20 {
+    constructor(uint256 initialSupply) ERC20("Gold", "GLD") {
+        _mint(msg.sender, initialSupply);
+    }
+}
+			]]>
+			</programlisting>
+		</section>
+		<section id="zeppelin.ERC872">
+			<title>ERC872</title>
+			<para>创建项目目录</para>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~/ethereum/truffle % mkdir TokenERC827
+neo@MacBook-Pro ~/ethereum/truffle % cd TokenERC827 
+neo@MacBook-Pro ~/ethereum/truffle/TokenERC827 % truffle init
+Downloading...
+Unpacking...
+Setting up...
+Unbox successful. Sweet!
+
+Commands:
+
+  Compile:        truffle compile
+  Migrate:        truffle migrate
+  Test contracts: truffle test
+			]]>
+			</screen>
+
+			<para>安装 zeppelin-solidity</para>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~/ethereum/truffle/TokenERC827 % npm init -y
+Wrote to /Users/neo/ethereum/truffle/TokenERC827/package.json:
+
+{
+  "name": "TokenERC827",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
+neo@MacBook-Pro ~/ethereum/truffle/TokenERC827 % npm install -E zeppelin-solidity
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN TokenERC827@1.0.0 No description
+npm WARN TokenERC827@1.0.0 No repository field.
+
++ zeppelin-solidity@1.7.0
+added 8 packages in 2.591s
+
+
+   ╭─────────────────────────────────────╮
+   │                                     │
+   │   Update available 5.6.0 → 5.7.1    │
+   │       Run npm i npm to update       │
+   │                                     │
+   ╰─────────────────────────────────────╯			
+			]]>
+			</screen>
+			<para>合约被安装在 node_modules/zeppelin-solidity/contracts 目录</para>
+			<para>创建合约和测试文件</para>
+			<screen>
+			<![CDATA[
+neo@MacBook-Pro ~/ethereum/truffle/TokenERC827 % truffle create contract TokenERC827
+neo@MacBook-Pro ~/ethereum/truffle/TokenERC827 % truffle create test TokenERC827
+			]]>
+			</screen>
+			<para>编辑合约文件</para>
+			<programlisting>
+			<![CDATA[
+pragma solidity ^0.4.19;
+  
+import "zeppelin-solidity/contracts/token/ERC827/ERC827Token.sol";
+
+contract TokenERC827 is ERC827Token {
+
+  string public name = "NetkillerCoin";
+  string public symbol = "NKC";
+  uint8 public decimals = 4;
+  uint256 public INITIAL_SUPPLY = 1000000;
+
+  function TokenERC827() public {
+    // constructor
+    totalSupply = INITIAL_SUPPLY;
+    balances[msg.sender] = INITIAL_SUPPLY;
+  }
+}
+			]]>
+			</programlisting>
+		</section>
+	</section>
 </chapter>

@@ -2,24 +2,49 @@
 <chapter>
 	<title>以太坊网络</title>
 	<section>
+		<title>Ropsten 测试网</title>
+		<para>
+			<ulink url="https://ropsten.etherscan.io">https://ropsten.etherscan.io</ulink>
+		</para>
+		<para>
+			<ulink url="http://faucet.ropsten.be:3001" />
+		</para>
+	</section>
+	<section id="rinkeby">
+		<title>Rinkeby 测试网络</title>
+		<para>
+			<ulink url="https://www.rinkeby.io/">https://www.rinkeby.io/</ulink>
+		</para>
+		<para>想获取Rinkeby测试网络中的以太币，需要去申请，地址：</para>
+		<ulink url="https://faucet.rinkeby.io">https://faucet.rinkeby.io</ulink>
+		<graphic format="png" fileref="../../images/ethereum/rinkeby/home.png" width="1024" srccredit="netkiller" />
+		<para>输入你的钱包地址，并点击“Give me Ether”，有三种选项，前面是获得的以太币数量，后面是冷却时间，在冷却时间过后才能进行下一次以太币申请。例如第一项是生成3个以太币，8小时后才能再次申请。</para>
+		<para>如果一切顺利，你会看到你的钱包地址已经多出了申请数量的以太币。</para>
+		<para>注意：如果申请的人数很多，需要排队等待</para>
+	</section>
+	<section>
 		<title>火币测试网</title>
 		<screen>
 		<![CDATA[
 官网地址：hecochain.com
 
-测试网地址：
+测试网地址：https://http-testnet.hecochain.com
 
 chainid 256
 
 RPC wss://ws-testnet.hecochain.com
 
-https://http-testnet.hecochain.com
 
-浏览器 https://scan-testnet.hecochain.com
-
-测试币水龙头 https://scan-testnet.hecochain.com/faucet		
 		]]>
 		</screen>
+		<para>
+			浏览器:
+			<ulink url="https://scan-testnet.hecochain.com" />
+		</para>
+		<para>
+			测试币水龙头:
+			<ulink url="https://scan-testnet.hecochain.com/faucet" />
+		</para>
 	</section>
 	<section>
 		<title>BNB 测试网</title>
